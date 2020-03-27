@@ -41,6 +41,12 @@ Resources:
       MemorySize: 128
       Timeout: 60
       Description: A Lambda function that returns a static string.
+      DeadLetterQueue:
+        Type: SQS
+        TargetArn: !GetAtt deadLetterQueue.Arn
       Policies:
-        # Give Lambda basic execution Permission to the helloFromLambda
+        - SQSSendMessagePolicy:
+            QueueName: !GetAtt deadLetterQueue.QueueName
         - AWSLambdaBasicExecutionRole
+  deadLetterQueue:
+    Type: AWS::SQS::Queue
