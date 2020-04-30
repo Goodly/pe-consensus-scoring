@@ -1,0 +1,60 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: |
+  FromQueue
+  1. Task created
+  2. Taskrun submitted
+  3. Determine task consensus
+  4. Generate visualizations (if all tasks done) and update newsfeed.
+
+Resources:
+  InputQueue:
+    Type: AWS::SQS::Queue
+    Properties:
+      ReceiveMessageWaitTimeSeconds: 20
+      # Docs recommend 6*(lamda_timeout)
+      # https://docs.aws.amazon.com/lambda/latest/dg/with-sqs.html
+      VisibilityTimeout: 1800
+      KmsMasterKeyId: alias/aws/sqs
+      RedrivePolicy:
+        deadLetterTargetArn: !GetAtt InputDeadLetterQueue.Arn
+        maxReceiveCount: 5
+  OutputQueue:
+    Type: AWS::SQS::Queue
+    Properties:
+      ReceiveMessageWaitTimeSeconds: 20
+      # Docs recommend 6*(lamda_timeout)
+      VisibilityTimeout: 1800
+      KmsMasterKeyId: alias/aws/sqs
+      RedrivePolicy:
+        deadLetterTargetArn: !GetAtt OutputDeadLetterQueue.Arn
+        maxReceiveCount: 5
+  InputDeadLetterQueue:
+    Type: AWS::SQS::Queue
+    Properties:
+      KmsMasterKeyId: alias/aws/sqs
+  OutputDeadLetterQueue:
+    Type: AWS::SQS::Queue
+    Properties:
+      KmsMasterKeyId: alias/aws/sqs
+
+Outputs:
+  InputQueueARN:
+    Description: "Input Queue ARN for Public Editor Algorithms"
+    Value: !GetAtt InputQueue.Arn
+    Export:
+      Name: !Sub '${AWS::StackName}-InputQueueARN'
+  InputQueueName:
+    Description: "Input Queue Name for Public Editor Algorithms"
+    Value: !GetAtt InputQueue.QueueName
+    Export:
+      Name: !Sub '${AWS::StackName}-InputQueueName'
+  OutputQueueARN:
+    Description: "Output Queue ARN for Public Editor Algorithms"
+    Value: !GetAtt OutputQueue.Arn
+    Export:
+      Name: !Sub '${AWS::StackName}-OutputQueueARN'
+  OutputQueueName:
+    Description: "Output Queue Name for Public Editor Algorithms"
+    Value: !GetAtt OutputQueue.QueueName
+    Export:
+      Name: !Sub '${AWS::StackName}-OutputQueueName'
