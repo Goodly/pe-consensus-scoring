@@ -1,4 +1,8 @@
+# Scripts and config with account specific parameters to avoid
+*-acct-*
+# Artifact from deploy-queues.sh
 queues-export.yml
+
 .aws-sam
 node_modules
 
