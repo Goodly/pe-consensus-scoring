@@ -39,14 +39,14 @@ Parameters:
   LayerARN:
     Description: A layer ARN with the dependencies numpy and pandas.
     Type: AWS::SSM::Parameter::Value<String>
-    Default: consensus-processor-layer-arn:1
+    Default: pe-consensus-scoring-layer-arn:1
   QueueStackName:
     Description: Name of an active CloudFormation stack that contains the input and output queues.
     Type: String
     MinLength: 1
     MaxLength: 255
     AllowedPattern: "^[a-zA-Z][-a-zA-Z0-9]*$"
-    Default: "TagQueueStack"
+    Default: "pe-task-queues"
 
 # Resources declares the AWS resources that you want to include in the stack
 # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/resources-section-structure.html
