@@ -61,7 +61,7 @@ Resources:
       Handler: app.lambda_handler
       Runtime: python3.8
       Layers:
-        - '{{resolve:ssm:consensus-processor-layer-arn:1}}'
+        - !Ref LayerARN
       MemorySize: 128
       Timeout: 300
       Description: Listens to an SQS queue and dispatches events to algorithms.
@@ -82,8 +82,18 @@ Resources:
           Queue:
             Fn::ImportValue:
               !Sub '${QueueStackName}-InputQueueARN'
-          BatchSize: 10
+          BatchSize: 1
           Enabled: true
+  LambdaInvokePermission:
+    Type: 'AWS::Lambda::Permission'
+    Properties:
+      FunctionName: !GetAtt PublicEditorDispatcher.Arn
+      Action: 'lambda:InvokeFunction'
+      Principal: 'sqs.amazonaws.com'
+      SourceAccount: !Sub ${AWS::AccountId}
+      SourceArn:
+        Fn::ImportValue:
+          !Sub '${QueueStackName}-InputQueueARN'
 
 Outputs:
   PublicEditorDispatcherARN:
