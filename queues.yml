@@ -6,6 +6,12 @@ Description: |
   3. Determine task consensus
   4. Generate visualizations (if all tasks done) and update newsfeed.
 
+Parameters:
+  KMSKey:
+    Description: The key to encrypt queues with.
+    Type: AWS::SSM::Parameter::Value<String>
+    Default: tag-queue-kms-key:1
+
 Resources:
   InputQueue:
     Type: AWS::SQS::Queue
@@ -14,7 +20,7 @@ Resources:
       # Docs recommend 6*(lamda_timeout)
       # https://docs.aws.amazon.com/lambda/latest/dg/with-sqs.html
       VisibilityTimeout: 1800
-      KmsMasterKeyId: alias/aws/sqs
+      KmsMasterKeyId: !Ref KMSKey
       RedrivePolicy:
         deadLetterTargetArn: !GetAtt InputDeadLetterQueue.Arn
         maxReceiveCount: 5
@@ -24,18 +30,18 @@ Resources:
       ReceiveMessageWaitTimeSeconds: 20
       # Docs recommend 6*(lamda_timeout)
       VisibilityTimeout: 1800
-      KmsMasterKeyId: alias/aws/sqs
+      KmsMasterKeyId: !Ref KMSKey
       RedrivePolicy:
         deadLetterTargetArn: !GetAtt OutputDeadLetterQueue.Arn
         maxReceiveCount: 5
   InputDeadLetterQueue:
     Type: AWS::SQS::Queue
     Properties:
-      KmsMasterKeyId: alias/aws/sqs
+      KmsMasterKeyId: !Ref KMSKey
   OutputDeadLetterQueue:
     Type: AWS::SQS::Queue
     Properties:
-      KmsMasterKeyId: alias/aws/sqs
+      KmsMasterKeyId: !Ref KMSKey
 
 Outputs:
   InputQueueARN:
