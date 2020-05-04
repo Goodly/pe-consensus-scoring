@@ -57,7 +57,7 @@ Resources:
   PublicEditorDispatcher:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: dispatcher/
+      CodeUri: consensus_and_scoring/
       Handler: app.lambda_handler
       Runtime: python3.8
       Layers:
