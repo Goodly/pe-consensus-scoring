@@ -5,6 +5,9 @@ phases:
       python: 3.8
     commands:
       # Install all dependencies (including dependencies for running tests)
+      - pip install --upgrade pip
+      - pip install -r ./consensus_and_scoring/requirements.txt -t ./consensus_and_scoring
+      - rm -rf ./consensus_and_scoring/*.dist-info
   pre_build:
     commands:
       # Discover and run unit tests in the '__tests__' directory
