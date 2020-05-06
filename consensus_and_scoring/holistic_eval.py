@@ -16,7 +16,7 @@ def eval_triage_scoring(tua, pointsdf, scoring_dir, threshold_func='logis_0', re
     quoted_sources = get_dep_iaa(scoring_dir, schema="source")
     holistic = get_dep_iaa(scoring_dir, schema="holistic")
     for art_sha256 in tua['article_sha256'].unique():
-        if holistic!=None:
+        if holistic is not None:
             art_holistic = holistic[holistic['article_sha256'] == art_sha256]
         else:
             art_holistic  =None
@@ -24,7 +24,7 @@ def eval_triage_scoring(tua, pointsdf, scoring_dir, threshold_func='logis_0', re
         art_num = art_tua['article_number'].iloc[0]
         art_id = threshold_func + art_sha256
         art_length = art_tua['article_text_length'].iloc[0]
-        if quoted_sources!= None:
+        if quoted_sources is not None:
             art_sources = quoted_sources[quoted_sources['article_sha256'] == art_sha256]
         else:
             art_sources = None
@@ -41,7 +41,7 @@ def eval_triage_scoring(tua, pointsdf, scoring_dir, threshold_func='logis_0', re
         # Handle Quoted Sources Schema here:
         num_vague_quals = 0
         num_vague_sources = 0
-        if art_sources !=None:
+        if art_sources is not None:
             for task in art_sources['quiz_task_uuid'].unique():
                 task_df = art_sources[art_sources['quiz_task_uuid'] == task]
                 task_df['question_Number'] = task_df['question_Number'].apply(int)
@@ -132,7 +132,7 @@ def eval_triage_scoring(tua, pointsdf, scoring_dir, threshold_func='logis_0', re
     return pointsdf
 
 def checkArtType(question_number, answer_number, holistic_df):
-    if holistic_df == None:
+    if holistic_df is None:
         return False
     ques_df = holistic_df[holistic_df['question_Number'] == question_number]
     ans_df = ques_df[ques_df['agreed_Answer'] == answer_number]
@@ -173,7 +173,7 @@ def get_dep_iaa(directory, schema='sources'):
             if file.endswith('.csv'):
                 if 'Dep_S_IAA' in file and search_term in file:
                     df = pd.read_csv(directory + '/' + file)
-    if df == None:
+    if df is None:
         print("HOLISTIC EVAL, No specialist agreement for :", schema, "task")
         return None
     return df
