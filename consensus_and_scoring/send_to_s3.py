@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 from time import sleep
 def send_s3(scoring_dir, input_dir, texts_path, prefix = '', func = ''):
-    print("pushing to s3")
+    print("pushing to s3 from dir {}".format(scoring_dir))
     art_ids = []
     for root, dir, files in os.walk(scoring_dir):
         for file in files:
@@ -78,4 +78,3 @@ def send_s3(scoring_dir, input_dir, texts_path, prefix = '', func = ''):
     #                       "article's sha256 and SSSArticle.txt is that, regardless of article title")
     return art_ids
 
-#send_s3('scoring_covid', 'covid', 'raw_30')

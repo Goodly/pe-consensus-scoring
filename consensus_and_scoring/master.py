@@ -239,17 +239,20 @@ def load_args():
 
 
 if __name__ == '__main__':
+    #python3 master.py -i ../data/covid_input/  -u ../data/covid_input/tua/
+    #                  -o ../data/covid_out/ -s ../data/covid_scoring/ -v ../data/covid_viz/
     args = load_args()
-    input_dir = '../../covid'
-    tua_file = './config/allTUAS.csv'
-    output_dir = None
-    scoring_dir  = None
-    rep_file = './UserRepScores.csv'
-    out_prefix = ''
-    threshold_function = 'raw_30'
-    tua_dir = '../../covid/tua'
     config_path = './config/'
-    viz_dir = '../../visualization_covid'
+    input_dir = '../data/covid_input/'
+    texts_dir = '../data/covid_input/texts/' # send_s3 overrides with: text_dir = in_path+'/texts'
+    tua_dir = '../data/covid_input/tua/'
+    tua_file = './config/allTUAS.csv' # This appears to be unused
+    output_dir = '../data/covid_out/'
+    rep_file = './UserRepScores.csv'
+    out_prefix = '' # used by send_s3
+    threshold_function = 'raw_30'
+    viz_dir = '../data/covid_viz/'
+    scoring_dir  = viz_dir
     if args.input_dir:
         input_dir = args.input_dir
     if args.tua_file:
@@ -269,7 +272,7 @@ if __name__ == '__main__':
     if args.viz_dir:
         viz_dir = args.viz_dir
 
-    calculate_scores_master(input_dir, '../../covid/texts',config_path, tua_file=tua_file, iaa_dir=output_dir, scoring_dir=scoring_dir, repCSV=rep_file,
+    calculate_scores_master(input_dir, texts_dir,config_path, tua_file=tua_file, iaa_dir=output_dir, scoring_dir=scoring_dir, repCSV=rep_file,
                             viz_dir=viz_dir, out_prefix = out_prefix, threshold_func=threshold_function, tua_dir=tua_dir)
 
 #calculate_scores_master("nyu_0")

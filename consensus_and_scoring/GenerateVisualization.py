@@ -32,5 +32,3 @@ def visualize(articleID, prefix = ''):
     cmdString = "aws s3 mv "+ curName + " s3://dev.publiceditor.io/visualization/" + curName + " --acl public-read-write"
     os.system(cmdString)
     print('viz sent to aws')
-
-visualize
