@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 from time import sleep
 def send_s3(scoring_dir, input_dir, texts_path, prefix = '', func = ''):
-    print("pushing to s3 from dir {}".format(scoring_dir))
+    print("pushing to s3")
     art_ids = []
     for root, dir, files in os.walk(scoring_dir):
         for file in files:
@@ -22,7 +22,7 @@ def send_s3(scoring_dir, input_dir, texts_path, prefix = '', func = ''):
     #have to look at all of them in case one article didn't get sent to a certain specialist
     for root, dir, files in os.walk(input_dir):
         for file in files:
-            if ('Answers' in file or 'Crosstab' in file)and 'lock' not in file:
+            if 'DataHunt' in file and 'lock' not in file:
                 print(file)
                 ans = pd.read_csv(os.path.join(input_dir, file))
                 filnams = ans['article_filename']
@@ -43,7 +43,7 @@ def send_s3(scoring_dir, input_dir, texts_path, prefix = '', func = ''):
         if filename in filenames:
             i = filenames.index(filename)
             new_sha = sha_256s[i]
-            new_name = func+new_sha+'SSSArticle.txt'
+            new_name = new_sha+'SSSArticle.txt'
             src = os.path.join(text_dir, filename)
             dst = os.path.join(text_dir, new_name)
             cmd_str = "aws s3 cp " + src + " s3://dev.publiceditor.io/visualization/" + \
