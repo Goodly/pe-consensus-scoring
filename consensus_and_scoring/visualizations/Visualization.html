@@ -1,16 +1,3 @@
-<!--
-Copyright (C) <2018> <Goodly Labs>
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-    -->
 
 <!DOCTYPE html>
 <head>
@@ -21,7 +8,7 @@ Copyright (C) <2018> <Goodly Labs>
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,500,600,700,800" rel="stylesheet" type='text/css'>
 
     <!-- Relative Stylesheets -->
-    <link rel="stylesheet" href="scoredArticleCSS.css">
+    <link rel="stylesheet" href="scoredArticleCSS-copy.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!--<link rel="stylesheet" href="file:///Users/Artemis1/node_modules/aos/dist/aos.css"> -->
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
@@ -33,7 +20,12 @@ Copyright (C) <2018> <Goodly Labs>
     <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script type="text/javascript" src="sequencesV1.js"></script>
+    <script type="text/javascript" src="createHighlights.js"></script>
+    <script type="text/javascript" src="sunburstGenerator.js"></script>
+    <script type="text/javascript" src="FlexArray.js"></script>
+    <script type="text/javascript" src="colorFinder.js"></script>
+    <script src="dataConverter.js"></script>
+
 </head>
 
 <!-- Begin body -->
@@ -63,7 +55,6 @@ Copyright (C) <2018> <Goodly Labs>
 
         <!-- Grid start -->
         <div class="homepage-section">
-
             <div class="categories" id="categories">
                 <h2 class="dropTitle">Categories</h2>
                 <div class="extra-small-space"></div>
@@ -82,12 +73,26 @@ Copyright (C) <2018> <Goodly Labs>
 
             <!-- Cred score begin -->
             <div class="cred-score-container">
-                <script type="text/javascript">scoreArticle("ARTICLEIDHERE");</script>
+                <script type="text/javascript">
+                  var textFileUrl = "ARTICLE_TEXT_URL";
+                  var dataFileUrl = "DATA_CSV_URL";
+                  scoreArticle(textFileUrl, dataFileUrl);
+                  hallmark(dataFileUrl);
+                </script>
                 <div class="sunburst">
                     <svg id="chart" viewBox="0 0 500 500"  preserveAspectRatio="xMidYMid meet">
                     </svg>
                 </div>
             </div>
+            <style>
+                .sunburst {
+                    position: -webkit-sticky;
+                    position: sticky;
+                    top: 10%;
+                    left: 85%;
+                }
+
+            </style>
             <!-- Cred score end -->
 
         </div>
