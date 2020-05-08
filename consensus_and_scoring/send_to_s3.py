@@ -54,8 +54,8 @@ def send_s3(viz_dir, text_dir, s3_bucket, s3_prefix):
             'DATA_CSV_URL': viz_data_filename_s3,
             'ARTICLE_TEXT_URL': article_filename_s3,
         }
-        html_output = html_template.substitute(context)
         # Merge template URLs into HTML file
+        html_output = html_template.substitute(context)
         with tempfile.NamedTemporaryFile(mode="w", suffix=".html", \
             encoding="utf-8", delete=True) as html_file:
             html_file.write(html_output)
@@ -68,7 +68,10 @@ def send_assets(asset_dir, s3_bucket, s3_prefix):
     for dirpath, dirnames, filenames in os.walk(asset_dir):
         for asset_name in filenames:
             source_path = os.path.join(dirpath, asset_name)
-            asset_s3_key = os.path.join(s3_prefix, asset_name)
+            # Preserve directory nesting below asset_dir
+            common_path = os.path.commonpath([asset_dir, dirpath])
+            subpath = dirpath[len(common_path):].lstrip('/')
+            asset_s3_key = os.path.join(s3_prefix, subpath, asset_name)
             send_command(source_path, s3_bucket, asset_s3_key)
 
 def send_command(source_filename, s3_bucket, s3_key, wait=False):
