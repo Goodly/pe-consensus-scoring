@@ -8,9 +8,8 @@
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,500,600,700,800" rel="stylesheet" type='text/css'>
 
     <!-- Relative Stylesheets -->
-    <link rel="stylesheet" href="scoredArticleCSS-copy.css">
+    <link rel="stylesheet" href="/visualizations/assets/scoredArticleCSS-copy.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <!--<link rel="stylesheet" href="file:///Users/Artemis1/node_modules/aos/dist/aos.css"> -->
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
 
     <!-- JS -->
@@ -20,11 +19,11 @@
     <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script type="text/javascript" src="createHighlights.js"></script>
-    <script type="text/javascript" src="sunburstGenerator.js"></script>
-    <script type="text/javascript" src="FlexArray.js"></script>
-    <script type="text/javascript" src="colorFinder.js"></script>
-    <script src="dataConverter.js"></script>
+    <script type="text/javascript" src="/visualizations/assets/createHighlights.js"></script>
+    <script type="text/javascript" src="/visualizations/assets/sunburstGenerator.js"></script>
+    <script type="text/javascript" src="/visualizations/assets/FlexArray.js"></script>
+    <script type="text/javascript" src="/visualizations/assets/colorFinder.js"></script>
+    <script type="text/javascript" src="/visualizations/assets/dataConverter.js"></script>
 
 </head>
 
@@ -65,7 +64,7 @@
             <div class="text article">
                 <p id="headerArticle"></p>
                 <p class="p-article" id="textArticle">
-                    ARTICLETEXTHERE
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                 </p>
             </div>
 
@@ -74,9 +73,11 @@
             <!-- Cred score begin -->
             <div class="cred-score-container">
                 <script type="text/javascript">
-                  var textFileUrl = "ARTICLE_TEXT_URL";
-                  var dataFileUrl = "DATA_CSV_URL";
+                  var textFileUrl = "$ARTICLE_TEXT_URL";
+                  var dataFileUrl = "$DATA_CSV_URL";
                   scoreArticle(textFileUrl, dataFileUrl);
+                </script>
+                <script type="text/javascript">
                   hallmark(dataFileUrl);
                 </script>
                 <div class="sunburst">

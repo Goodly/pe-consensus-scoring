@@ -10,14 +10,13 @@ from IAA_report import make_iaa_human_readable
 from dataV3 import make_directory
 from time import time
 from send_to_s3 import send_s3
-from GenerateVisualization import visualize
 from holistic_eval import eval_triage_scoring
 from art_to_id_key import make_key
 
 def calculate_scores_master(directory, texts_path ,config_path, tua_file = None, iaa_dir = None, scoring_dir = None, repCSV = None,
                             just_s_iaa = False, just_dep_iaa = False, use_rep = False, reporting  = False,
                             single_task = False, highlights_file = None, schema_file = None, answers_file = None,
-                            push_aws = True, tua_dir = None, out_prefix = '',viz_dir = None, threshold_func = 'logis_0'):
+                            push_aws = True, tua_dir = None, s3_bucket = None, s3_prefix = '',viz_dir = None, threshold_func = 'logis_0'):
     """
 
     :param directory: the directory that holds all files from the tagworks datahunt export
@@ -42,7 +41,7 @@ def calculate_scores_master(directory, texts_path ,config_path, tua_file = None,
     **if in the future the data import is adjusted to depend on other file outputs from tagworks, new parameters would
         have to be added to accomodate the change in importing procedures
     :param push_aws: True if we want outputs sent to the s3 AWS folder, false to just store locally
-    :param out_prefix: add something to the prefix of output files to keep everything tidy
+    :param s3_prefix: add something to the prefix of output files to keep everything tidy
     :param: threshold_func: the threshold function being used to determine inter-annotator agreement; for a
         comprehensive test of all the threshold functions set this to 'all'; this will not work if an iaa_directory is
         specified
@@ -71,7 +70,7 @@ def calculate_scores_master(directory, texts_path ,config_path, tua_file = None,
                                     repCSV=repCSV, just_s_iaa=just_s_iaa, just_dep_iaa=just_dep_iaa, use_rep=use_rep,
                                     reporting=reporting,single_task=single_task, highlights_file=highlights_file,
                                     schema_file=schema_file, answers_file=answers_file,
-                                    push_aws=push_aws, out_prefix=out_prefix, threshold_func=func)
+                                    push_aws=push_aws, s3_bucket=s3_bucket, s3_prefix=s3_prefix, threshold_func=func)
         return
 
     print("IAA PROPER")
@@ -119,12 +118,7 @@ def calculate_scores_master(directory, texts_path ,config_path, tua_file = None,
     #print("DONE, time elapsed", time()-start)
     ids = []
     if push_aws:
-        print("Pushing to aws")
-
-        ids = send_s3(viz_dir, directory, texts_path, prefix=out_prefix, func = threshold_func)
-
-    for id in ids:
-        visualize(id, prefix=out_prefix)
+        send_s3(viz_dir, texts_path, s3_bucket, s3_prefix=s3_prefix)
 
 def iaa_only(directory, use_rep = False, repCSV = None, iaa_dir = None, scoring_dir = None, threshold_func = 'raw_30',):
     """
@@ -148,13 +142,13 @@ def iaa_only(directory, use_rep = False, repCSV = None, iaa_dir = None, scoring_
     return scoring_dir
 
 def score_post_iaa(scoring_dir, input_dir,
-                            push_aws = True, out_prefix = '', threshold_func = 'raw_30', reporting = False):
+                   push_aws = True, s3_bucket = None, s3_prefix = '', threshold_func = 'raw_30', reporting = False):
     """
     :param input_dir: the directory that holds all files from the tagworks datahunt export; used to match
 
 
     :param push_aws: True if we want outputs sent to the s3 AWS folder, false to just store locally
-    :param out_prefix: add something to the prefix of output files to keep everything tidy
+    :param s3_prefix: add something to the prefix of output files to keep everything tidy
     :param: threshold_func: the threshold function being used to determine inter-annotator agreement; for a
         comprehensive test of all the threshold functions set this to 'all'; this will not work if an iaa_directory is
         specified
@@ -172,11 +166,8 @@ def score_post_iaa(scoring_dir, input_dir,
     #print("DONE, time elapsed", time()-start)
     ids = []
     if push_aws:
-        print("Pushing to aws")
-        ids = send_s3(scoring_dir, input_dir, prefix=out_prefix, func = threshold_func)
+        send_s3(viz_dir, texts_path, s3_bucket, s3_prefix=s3_prefix)
 
-    for id in ids:
-        visualize(id, prefix=out_prefix)
 def load_args():
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -223,7 +214,7 @@ def load_args():
         '-p', '--push_aws',
         help= "true if you want to push the visualization data to the aws s3; false by default")
     parser.add_argument(
-        '-pre', '--out_prefix',
+        '-pre', '--s3_prefix',
         help='optional, if you need a prefix before the visualization data for testing, make this variable not be a zero string')
     parser.add_argument(
         '-tf', '--threshold_function',
@@ -246,12 +237,13 @@ if __name__ == '__main__':
     args = load_args()
     config_path = './config/'
     input_dir = '../data/covid_input/'
-    texts_dir = '../data/covid_input/texts/' # send_s3 overrides with: text_dir = in_path+'/texts'
+    texts_dir = '../data/covid_input/texts/'
     tua_dir = '../data/covid_input/tua/'
     tua_file = './config/allTUAS.csv' # This appears to be unused
     output_dir = '../data/covid_out/'
     rep_file = './UserRepScores.csv'
-    out_prefix = '' # used by send_s3
+    s3_bucket = 'dev.publiceditor.io'
+    s3_prefix = 'visualizations'
     threshold_function = 'raw_30'
     viz_dir = '../data/covid_viz/'
     scoring_dir  = viz_dir
@@ -265,8 +257,8 @@ if __name__ == '__main__':
         scoring_dir = args.scoring_dir
     if args.rep_file:
         rep_file = args.rep_file
-    if args.out_prefix:
-        out_prefix = args.out_prefix
+    if args.s3_prefix:
+        s3_prefix = args.s3_prefix
     if args.threshold_function:
         threshold_function = args.threshold_function
     if args.tua_dir:
@@ -275,6 +267,4 @@ if __name__ == '__main__':
         viz_dir = args.viz_dir
 
     calculate_scores_master(input_dir, texts_dir,config_path, tua_file=tua_file, iaa_dir=output_dir, scoring_dir=scoring_dir, repCSV=rep_file,
-                            viz_dir=viz_dir, out_prefix = out_prefix, threshold_func=threshold_function, tua_dir=tua_dir)
-
-#calculate_scores_master("nyu_0")
+                            viz_dir=viz_dir, s3_bucket=s3_bucket, s3_prefix = s3_prefix, threshold_func=threshold_function, tua_dir=tua_dir)
