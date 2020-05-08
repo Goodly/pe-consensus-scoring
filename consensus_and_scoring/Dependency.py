@@ -5,24 +5,25 @@ import os
 import json
 from multiprocessing import Pool
 from dataV3 import *
-def eval_dependency(directory, iaa_dir, schema_dir, out_dir = None):
+def eval_dependency(directory, iaa_dir, schema_dir, out_dir):
     print("DEPENDENCY STARTING")
-    if out_dir is None:
-        x = directory.rfind("/")
-        x += 1
-        out_dir = '../../scoring_' + directory[x:]
     schema = []
     iaa = []
-    for root, dir, files in os.walk(schema_dir):
+    for dirpath, dirnames, files in os.walk(schema_dir):
         for file in files:
-            #no safety check here; everything in the schema directory shoul dbe a schema csv
-            schema.append(schema_dir+'/'+file)
-    for root, dir, files in os.walk(iaa_dir):
+            # minimal check here; everything in the schema directory should be a schema csv
+            if file.endswith('.csv'):
+                file_path = os.path.join(dirpath, file)
+                print("found schema " + file_path)
+                schema.append(file_path)
+
+    for dirpath, dirnames, files in os.walk(iaa_dir):
         for file in files:
             if file.endswith('.csv') and 'Dep' not in file:
-                print("evaluating dependencies for "+directory+'/'+file)
                 if 'S_IAA' in file:
-                    iaa.append(iaa_dir+'/'+file)
+                    file_path = os.path.join(dirpath, file)
+                    print("evaluating dependencies for " + file_path)
+                    iaa.append(file_path)
 
     temp = []
     for h in iaa:
@@ -47,7 +48,6 @@ def eval_dependency(directory, iaa_dir, schema_dir, out_dir = None):
         print('pool ins:\n',ins)
         pool.map(unpack_dependency_ins, ins)
 
-    return out_dir
 
 def unpack_dependency_ins(input):
     return handleDependencies(input[0], input[1], input[2])

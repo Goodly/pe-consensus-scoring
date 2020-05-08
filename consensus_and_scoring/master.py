@@ -13,14 +13,14 @@ from send_to_s3 import send_s3
 from holistic_eval import eval_triage_scoring
 from art_to_id_key import make_key
 
-def calculate_scores_master(directory, texts_path ,config_path, tua_file = None, iaa_dir = None, scoring_dir = None, repCSV = None,
+def calculate_scores_master(directory, texts_path, config_path, schema_dir = None, iaa_dir = None, scoring_dir = None, repCSV = None,
                             just_s_iaa = False, just_dep_iaa = False, use_rep = False, reporting  = False,
                             single_task = False, highlights_file = None, schema_file = None, answers_file = None,
                             push_aws = True, tua_dir = None, s3_bucket = None, s3_prefix = '',viz_dir = None, threshold_func = 'logis_0'):
     """
 
     :param directory: the directory that holds all files from the tagworks datahunt export
-    :param tua_file: directory to the file holding all the TUAs that created the datahunt tasks
+    :param schema_dir: directory to the file holding all the TUAs that created the datahunt tasks
     :param iaa_dir: the directory to output the raw IAA data to; if no input default is s_iaa_<directory>
     :param scoring_dir: directory to output data from every other stage of the scoring algorithm to; if no
         input default is scoring_<directory>
@@ -66,7 +66,7 @@ def calculate_scores_master(directory, texts_path ,config_path, tua_file = None,
                     scoring_direc = 'scoring_' + func + '_' + directory[2:]
                 else:
                     scoring_direc = 'scoring_' + func + '_' + directory
-            calculate_scores_master(directory, tua_file=tua_file, iaa_dir=iaa_direc, scoring_dir=scoring_direc,
+            calculate_scores_master(directory, schema_dir=schema_dir, iaa_dir=iaa_direc, scoring_dir=scoring_direc,
                                     repCSV=repCSV, just_s_iaa=just_s_iaa, just_dep_iaa=just_dep_iaa, use_rep=use_rep,
                                     reporting=reporting,single_task=single_task, highlights_file=highlights_file,
                                     schema_file=schema_file, answers_file=answers_file,
@@ -82,7 +82,7 @@ def calculate_scores_master(directory, texts_path ,config_path, tua_file = None,
         make_directory(rep_direc)
     start = time()
     if not single_task:
-        iaa_dir = calc_agreement_directory(directory, './config/schema/', config_path, hardCodedTypes=True, repCSV=repCSV, outDirectory=iaa_dir,
+        iaa_dir = calc_agreement_directory(directory, schema_dir, config_path, hardCodedTypes=True, repCSV=repCSV, outDirectory=iaa_dir,
                                            useRep=use_rep, threshold_func=threshold_func)
     else:
 
@@ -97,7 +97,7 @@ def calculate_scores_master(directory, texts_path ,config_path, tua_file = None,
     print("IAA TIME ELAPSED", end - start)
     print('iaaaa', iaa_dir)
     print("DEPENDENCY")
-    scoring_dir = eval_dependency(directory, iaa_dir, './config/schema/', out_dir=scoring_dir)
+    eval_dependency(directory, iaa_dir, schema_dir, out_dir=scoring_dir)
     if just_dep_iaa:
         return
 
@@ -120,7 +120,8 @@ def calculate_scores_master(directory, texts_path ,config_path, tua_file = None,
     if push_aws:
         send_s3(viz_dir, texts_path, s3_bucket, s3_prefix=s3_prefix)
 
-def iaa_only(directory, use_rep = False, repCSV = None, iaa_dir = None, scoring_dir = None, threshold_func = 'raw_30',):
+def iaa_only(directory, use_rep = False, repCSV = None, iaa_dir = None, schema_dir = None,
+             scoring_dir = None, threshold_func = 'raw_30',):
     """
 
     :param directory: the directory that holds all files from the tagworks datahunt export
@@ -138,7 +139,7 @@ def iaa_only(directory, use_rep = False, repCSV = None, iaa_dir = None, scoring_
     """
     iaa_dir = calc_agreement_directory(directory, hardCodedTypes=True, repCSV=repCSV, outDirectory=iaa_dir,
                                        useRep=use_rep, threshold_func=threshold_func)
-    scoring_dir = eval_dependency(directory, iaa_dir, out_dir=scoring_dir)
+    eval_dependency(directory, iaa_dir, schema_dir, out_dir=scoring_dir)
     return scoring_dir
 
 def score_post_iaa(scoring_dir, input_dir,
@@ -175,8 +176,8 @@ def load_args():
         help='Directory containing DataHuntHighlights DataHuntAnswers, '
              'and Schema .csv files.')
     parser.add_argument(
-        '-t', '--tua-file',
-        help='Filename to use for file with TUAs for taskruns in input-dir.')
+        '-t', '--schema-dir',
+        help='path to directory with schemas CSVs named by SHA-256 of source')
     parser.add_argument(
         '-o', '--output-dir',
         help='Pathname to use for IAA output directory.')
@@ -235,26 +236,30 @@ if __name__ == '__main__':
     #python3 master.py -i ../data/covid_input/  -u ../data/covid_input/tua/
     #                  -o ../data/covid_out/ -s ../data/covid_scoring/ -v ../data/covid_viz/
     args = load_args()
+    # input
     config_path = './config/'
     input_dir = '../data/covid_input/'
-    texts_dir = '../data/covid_input/texts/'
-    tua_dir = '../data/covid_input/tua/'
-    tua_file = './config/allTUAS.csv' # This appears to be unused
+    texts_dir = '../data/texts/'
+    tua_dir = '../data/tuas/'
+    schema_dir = '../data/schemas/'
+    # output
     output_dir = '../data/covid_out/'
+    scoring_dir = '../data/covid_scoring/'
+    viz_dir = '../data/covid_viz/'
     rep_file = './UserRepScores.csv'
     s3_bucket = 'dev.publiceditor.io'
     s3_prefix = 'visualizations'
     threshold_function = 'raw_30'
-    viz_dir = '../data/covid_viz/'
-    scoring_dir  = viz_dir
     if args.input_dir:
         input_dir = args.input_dir
-    if args.tua_file:
-        tua_file = args.tua_file
+    if args.schema_dir:
+        schema_dir = args.schema_dir
     if args.output_dir:
         output_dir = args.output_dir
     if args.scoring_dir:
         scoring_dir = args.scoring_dir
+    if args.viz_dir:
+        viz_dir = args.viz_dir
     if args.rep_file:
         rep_file = args.rep_file
     if args.s3_prefix:
@@ -263,8 +268,6 @@ if __name__ == '__main__':
         threshold_function = args.threshold_function
     if args.tua_dir:
         tua_dir = args.tua_dir
-    if args.viz_dir:
-        viz_dir = args.viz_dir
 
-    calculate_scores_master(input_dir, texts_dir,config_path, tua_file=tua_file, iaa_dir=output_dir, scoring_dir=scoring_dir, repCSV=rep_file,
+    calculate_scores_master(input_dir, texts_dir,config_path, schema_dir=schema_dir, iaa_dir=output_dir, scoring_dir=scoring_dir, repCSV=rep_file,
                             viz_dir=viz_dir, s3_bucket=s3_bucket, s3_prefix = s3_prefix, threshold_func=threshold_function, tua_dir=tua_dir)
