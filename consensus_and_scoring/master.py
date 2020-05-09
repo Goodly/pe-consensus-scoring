@@ -233,7 +233,7 @@ def load_args():
 
 
 if __name__ == '__main__':
-    #python3 master.py -i ../data/covid_input/  -u ../data/covid_input/tua/
+    #python3 master.py -i ../data/covid_input/  -u ../data/tuas/ -s ../data/schemas/
     #                  -o ../data/covid_out/ -s ../data/covid_scoring/ -v ../data/covid_viz/
     args = load_args()
     # input
