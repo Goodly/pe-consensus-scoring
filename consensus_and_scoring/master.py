@@ -120,28 +120,6 @@ def calculate_scores_master(directory, texts_path, config_path, schema_dir = Non
     if push_aws:
         send_s3(viz_dir, texts_path, s3_bucket, s3_prefix=s3_prefix)
 
-def iaa_only(directory, use_rep = False, repCSV = None, iaa_dir = None, schema_dir = None,
-             scoring_dir = None, threshold_func = 'raw_30',):
-    """
-
-    :param directory: the directory that holds all files from the tagworks datahunt export
-    :param iaa_dir: the directory to output the raw IAA data to; if no input default is s_iaa_<directory>
-    :param scoring_dir: directory to output data from every other stage of the scoring algorithm to; if no
-        input default is scoring_<directory>
-    :param repCSV: the csv that holds the rep score data
-    :param use_rep: True if the scores should be computed using user rep scores; false otherwise
-    :param: threshold_func: the threshold function being used to determine inter-annotator agreement; for a
-        comprehensive test of all the threshold functions set this to 'all'; this will not work if an iaa_directory is
-        specified
-    :return: No explicit return.  Running will create two directories named by the inputs. the iaa_dir will house
-        a csv output from the IAA algorithm.  The scoring_dir will house the csvs output from the dependency evaluation
-        algorithm;
-    """
-    iaa_dir = calc_agreement_directory(directory, hardCodedTypes=True, repCSV=repCSV, outDirectory=iaa_dir,
-                                       useRep=use_rep, threshold_func=threshold_func)
-    eval_dependency(directory, iaa_dir, schema_dir, out_dir=scoring_dir)
-    return scoring_dir
-
 def score_post_iaa(scoring_dir, input_dir,
                    push_aws = True, s3_bucket = None, s3_prefix = '', threshold_func = 'raw_30', reporting = False):
     """
