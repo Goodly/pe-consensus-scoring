@@ -79,10 +79,13 @@ Resources:
             QueueName:
               Fn::ImportValue:
                 !Sub '${QueueStackName}-OutputQueueName'
-        - KMSDecryptPolicy:
-            KeyId: !Ref KMSKey
-        - KMSEncryptPolicy:
-            KeyId: !Ref KMSKey
+        - Statement:
+          - Sid: AllowKMSForQueue
+            Effect: Allow
+            Action:
+            - kms:Decrypt
+            - kms:Encrypt
+            Resource: !Ref KMSKey
     Events:
       InputSQSEvents:
         Type: SQS
