@@ -47,6 +47,10 @@ Parameters:
     MaxLength: 255
     AllowedPattern: "^[a-zA-Z][-a-zA-Z0-9]*$"
     Default: "pe-task-queues"
+  KMSKey:
+    Description: The key to encrypt queues with.
+    Type: AWS::SSM::Parameter::Value<String>
+    Default: tag-queue-kms-key:1
 
 # Resources declares the AWS resources that you want to include in the stack
 # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/resources-section-structure.html
@@ -75,6 +79,10 @@ Resources:
             QueueName:
               Fn::ImportValue:
                 !Sub '${QueueStackName}-OutputQueueName'
+        - KMSDecryptPolicy:
+            KeyId: !Ref KMSKey
+        - KMSEncryptPolicy:
+            KeyId: !Ref KMSKey
     Events:
       InputSQSEvents:
         Type: SQS
