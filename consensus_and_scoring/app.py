@@ -38,6 +38,7 @@ def lambda_handler(sqs_message, context):
     body = json.loads(sqs_message.body)
     if body.get('Action', '') == "notify_all" and body.get('Version','') == "1":
         handle_notify_all(body)
+        sqs_message.delete()
 
     return {'done': True}
 
@@ -60,44 +61,40 @@ def handle_notify_all(body):
     logger.info(u"datahunts count {}".format(len(datahunts)))
     logger.info(u"tags count {}".format(len(tags)))
     logger.info(u"negative_tasks count {}".format(len(negative_tasks)))
-    parent_dirname = "./IAATEMP/"
-    #with tempfile.TemporaryDirectory() as parent_dirname:
-    texts_dir = os.path.join(parent_dirname, 'texts')
-    schemas_dir = os.path.join(parent_dirname, 'schemas')
-    datahunts_dir = os.path.join(parent_dirname, 'datahunts')
-    tags_dir = os.path.join(parent_dirname, 'tags')
-    negative_tasks_dir = os.path.join(parent_dirname, 'negative_tasks')
-    retrieve_file_list(texts, texts_dir)
-    retrieve_file_list(schemas, schemas_dir)
-    retrieve_file_list(datahunts, datahunts_dir)
-    retrieve_file_list(tags, tags_dir)
-    retrieve_file_list(negative_tasks, negative_tasks_dir)
-    rename_schema_files(schemas_dir)
+    with tempfile.TemporaryDirectory() as parent_dirname:
+        texts_dir = os.path.join(parent_dirname, 'texts')
+        schemas_dir = os.path.join(parent_dirname, 'schemas')
+        datahunts_dir = os.path.join(parent_dirname, 'datahunts')
+        tags_dir = os.path.join(parent_dirname, 'tags')
+        negative_tasks_dir = os.path.join(parent_dirname, 'negative_tasks')
+        retrieve_file_list(texts, texts_dir)
+        retrieve_file_list(schemas, schemas_dir)
+        retrieve_file_list(datahunts, datahunts_dir)
+        retrieve_file_list(tags, tags_dir)
+        retrieve_file_list(negative_tasks, negative_tasks_dir)
+        rename_schema_files(schemas_dir)
 
-    s3_bucket = 'articles.publiceditor.io'
-    s3_prefix = 'visualizations'
-    config_path = './config/'
-    output_dir = tempfile.mkdtemp()
-    scoring_dir = tempfile.mkdtemp()
-    viz_dir = tempfile.mkdtemp()
-    threshold_function = 'raw_30'
-    calculate_scores_master(
-        datahunts_dir,
-        texts_dir,
-        config_path,
-        schema_dir = schemas_dir,
-        iaa_dir = output_dir,
-        scoring_dir = scoring_dir,
-        repCSV = rep_file,
-        viz_dir = viz_dir,
-        s3_bucket = s3_bucket,
-        s3_prefix = s3_prefix,
-        threshold_func = threshold_function,
-        tua_dir = tags_dir
-    )
-    shutil.rmtree(output_dir)
-    shutil.rmtree(scoring_dir)
-    shutil.rmtree(viz_dir)
+        s3_bucket = 'articles.publiceditor.io'
+        s3_prefix = 'visualizations'
+        config_path = './config/'
+        output_dir = tempfile.mkdtemp(dir=parent_dirname)
+        scoring_dir = tempfile.mkdtemp(dir=parent_dirname)
+        viz_dir = tempfile.mkdtemp(dir=parent_dirname)
+        threshold_function = 'raw_30'
+        calculate_scores_master(
+            datahunts_dir,
+            texts_dir,
+            config_path,
+            schema_dir = schemas_dir,
+            iaa_dir = output_dir,
+            scoring_dir = scoring_dir,
+            repCSV = rep_file,
+            viz_dir = viz_dir,
+            s3_bucket = s3_bucket,
+            s3_prefix = s3_prefix,
+            threshold_func = threshold_function,
+            tua_dir = tags_dir
+        )
     logger.info("------END notify_all handler-------")
 
 def retrieve_file_list(s3_locations, dest_dirname):
@@ -142,7 +139,7 @@ def rename_schema_files(schemas_dir):
             with open(filepath, 'rb') as csv_file:
                 reader = unicodecsv.DictReader(csv_file, encoding='utf-8-sig')
                 if u'schema_sha256' in reader.fieldnames:
-                    row = reader.next()
+                    row = next(reader)
             if row:
                 new_path = os.path.join(schemas_dir, row['schema_sha256'] + ".csv")
                 logger.warn(u"Renaming '{}' to '{}'".format(filepath, new_path))
