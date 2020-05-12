@@ -38,7 +38,7 @@ def lambda_handler(event, context):
     if isinstance(event.get('Records'), list):
         for record in event['Records']:
             if record.get('eventSource','') == "aws:sqs":
-                body = json.loads(record.get('body','{}')
+                body = json.loads(record.get('body','{}'))
                 if body.get('Action', '') == "notify_all" and body.get('Version','') == "1":
                     handle_notify_all(body)
 
