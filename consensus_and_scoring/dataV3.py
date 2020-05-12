@@ -100,6 +100,9 @@ def dataStorer(data_hunt_path, schema_path):
 
 
     # Finds schema name and sha
+    if len(data_hunt.index) == 0:
+        raise Exception(u"Datahunt {} dataframe has zero rows. Can't match to schema."
+                        .format(data_hunt_path))
     schema_name = data_hunt["schema_namespace"].iloc[0]
     schema_sha = data_hunt["schema_sha256"].iloc[0]
     schema_topic = schemaData["topic_name"].iloc[0]

@@ -28,6 +28,8 @@ def eval_dependency(directory, iaa_dir, schema_dir, out_dir):
     temp = []
     for h in iaa:
         hdf = pd.read_csv(h, encoding = 'utf-8')
+        if len(hdf.index) == 0:
+            raise Exception("TOFIX: eval_dependency has S_IAA with length 0.")
         schem_sha = hdf['schema_sha256'].iloc[0]
         matched_schema = False
         for sch in schema:

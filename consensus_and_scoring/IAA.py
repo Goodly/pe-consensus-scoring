@@ -38,6 +38,9 @@ def calc_agreement_directory(directory, schema_dir, config_path, hardCodedTypes 
     temp = []
     for h in highlights:
         hdf = pd.read_csv(h, encoding = 'utf-8')
+        if len(hdf.index) == 0:
+            raise Exception(u"{} dataframe has zero rows. Can't match to schema."
+                            .format(h))
         schem_sha = hdf['schema_sha256'].iloc[0]
         matched_schema = False
         for sch in schema:
