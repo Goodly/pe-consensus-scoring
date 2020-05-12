@@ -3,8 +3,8 @@ import pandas as pd
 import numpy as np
 import os
 import json
-from multiprocessing import Pool
 from dataV3 import *
+
 def eval_dependency(directory, iaa_dir, schema_dir, out_dir):
     print("DEPENDENCY STARTING")
     schema = []
@@ -46,9 +46,8 @@ def eval_dependency(directory, iaa_dir, schema_dir, out_dir):
         ins.append((schema[i], iaa[i], out_dir))
         #handleDependencies(schema[i], iaa[i], out_dir)
 
-    with Pool() as pool:
-        print('pool ins:\n',ins)
-        pool.map(unpack_dependency_ins, ins)
+    print('ins:\n',ins)
+    map(unpack_dependency_ins, ins)
 
 
 def unpack_dependency_ins(input):
