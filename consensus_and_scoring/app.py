@@ -19,7 +19,7 @@ from master import calculate_scores_master
 sqs = boto3.resource('sqs')
 s3 = boto3.resource('s3')
 
-def lambda_handler(sqs_message, context):
+def lambda_handler(event, context):
     """
     Parameters
     ----------
@@ -35,10 +35,12 @@ def lambda_handler(sqs_message, context):
     ------
 
     """
-    body = json.loads(sqs_message.body)
-    if body.get('Action', '') == "notify_all" and body.get('Version','') == "1":
-        handle_notify_all(body)
-        sqs_message.delete()
+    if isinstance(event.get('Records'), list):
+        for record in event['Records']:
+            if record.get('eventSource','') == "aws:sqs":
+                body = json.loads(record.get('body','{}')
+                if body.get('Action', '') == "notify_all" and body.get('Version','') == "1":
+                    handle_notify_all(body)
 
     return {'done': True}
 
@@ -145,7 +147,7 @@ def rename_schema_files(schemas_dir):
                     row = next(reader)
             if row:
                 new_path = os.path.join(schemas_dir, row['schema_sha256'] + ".csv")
-                logger.warn(u"Renaming '{}' to '{}'".format(filepath, new_path))
+                logger.info(u"Renaming '{}' to '{}'".format(filepath, new_path))
                 os.rename(filepath, new_path)
             else:
                 logger.warn(u"Failed to find SHA-256 for '{}'".format(filepath))
