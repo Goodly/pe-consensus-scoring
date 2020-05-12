@@ -233,19 +233,17 @@ def load_args():
 
 
 if __name__ == '__main__':
-    #python3 master.py -i ../data/covid_input/  -u ../data/tuas/ -s ../data/schemas/
-    #                  -o ../data/covid_out/ -s ../data/covid_scoring/ -v ../data/covid_viz/
     args = load_args()
     # input
     config_path = './config/'
-    input_dir = '../data/covid_input/'
+    input_dir = '../data/datahunts/'
     texts_dir = '../data/texts/'
-    tua_dir = '../data/tuas/'
+    tua_dir = '../data/tags/'
     schema_dir = '../data/schemas/'
     # output
-    output_dir = '../data/covid_out/'
-    scoring_dir = '../data/covid_scoring/'
-    viz_dir = '../data/covid_viz/'
+    output_dir = '../data/out_iaa/'
+    scoring_dir = '../data/out_scoring/'
+    viz_dir = '../data/out_viz/'
     rep_file = './UserRepScores.csv'
     s3_bucket = 'dev.publiceditor.io'
     s3_prefix = 'visualizations'
@@ -269,5 +267,17 @@ if __name__ == '__main__':
     if args.tua_dir:
         tua_dir = args.tua_dir
 
-    calculate_scores_master(input_dir, texts_dir,config_path, schema_dir=schema_dir, iaa_dir=output_dir, scoring_dir=scoring_dir, repCSV=rep_file,
-                            viz_dir=viz_dir, s3_bucket=s3_bucket, s3_prefix = s3_prefix, threshold_func=threshold_function, tua_dir=tua_dir)
+    calculate_scores_master(
+        input_dir,
+        texts_dir,
+        config_path,
+        schema_dir = schema_dir,
+        iaa_dir = output_dir,
+        scoring_dir = scoring_dir,
+        repCSV = rep_file,
+        viz_dir = viz_dir,
+        s3_bucket = s3_bucket,
+        s3_prefix = s3_prefix,
+        threshold_func = threshold_function,
+        tua_dir = tua_dir
+    )
