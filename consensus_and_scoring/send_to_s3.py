@@ -16,9 +16,9 @@ def send_s3(viz_dir, text_dir, s3_bucket, s3_prefix):
             if file.endswith('.csv') and 'VisualizationData_' in file:
                 # -4 to strip .csv
                 article_sha256 = file.split('Data_', 1)[1][:-4]
-                # Use the first 32 of 64 characters in SHA-256
+                # Output paths will use the first 32 of 64 characters in SHA-256
                 article_shorter = article_sha256[:32]
-                article_filepath = os.path.join(text_dir, article_shorter + ".txt")
+                article_filepath = os.path.join(text_dir, article_sha256 + ".txt")
                 if os.path.exists(article_filepath):
                     viz = {
                         'sha_256': article_sha256,
