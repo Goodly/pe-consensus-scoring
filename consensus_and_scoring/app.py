@@ -74,13 +74,16 @@ def handle_notify_all(body):
         retrieve_file_list(negative_tasks, negative_tasks_dir)
         rename_schema_files(schemas_dir)
 
+        # additional input config data
+        config_path = './config/'
+        rep_file = './UserRepScores.csv'
+        threshold_function = 'raw_30'
+        # outputs
         s3_bucket = 'articles.publiceditor.io'
         s3_prefix = 'visualizations'
-        config_path = './config/'
         output_dir = tempfile.mkdtemp(dir=parent_dirname)
         scoring_dir = tempfile.mkdtemp(dir=parent_dirname)
         viz_dir = tempfile.mkdtemp(dir=parent_dirname)
-        threshold_function = 'raw_30'
         calculate_scores_master(
             datahunts_dir,
             texts_dir,
