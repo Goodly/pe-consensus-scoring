@@ -10,7 +10,7 @@ Parameters:
   KMSKey:
     Description: The key to encrypt queues with.
     Type: AWS::SSM::Parameter::Value<String>
-    Default: tag-queue-kms-key:1
+    Default: public-editor-queues-key:1
 
 Resources:
   InputQueue:

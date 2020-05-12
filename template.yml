@@ -50,7 +50,7 @@ Parameters:
   KMSKey:
     Description: The key to encrypt queues with.
     Type: AWS::SSM::Parameter::Value<String>
-    Default: tag-queue-kms-key:1
+    Default: public-editor-queues-key:1
 
 # Resources declares the AWS resources that you want to include in the stack
 # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/resources-section-structure.html
