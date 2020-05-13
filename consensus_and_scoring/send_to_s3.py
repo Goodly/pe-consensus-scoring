@@ -1,15 +1,59 @@
 import os
+import json
 from string import Template
 import tempfile
+from io import StringIO
 import mimetypes
 mimetypes.init()
 import boto3
 
 s3 = boto3.resource('s3')
 
-def send_s3(viz_dir, text_dir, s3_bucket, s3_prefix):
-    print("Pushing to s3")
+def send_s3(viz_dir, text_dir, metadata_dir, s3_bucket, s3_prefix):
+    viz_to_send = collect_files_to_send(viz_dir, text_dir)
+
+    print("Sending visualization files to S3.")
+    # Retrieve HTML template.
+    with open("visualizations/Visualization.html", "r") as f:
+        html_source = f.read()
+        html_template = Template(html_source)
+
+    for viz in viz_to_send:
+        # Group visualization files into a directory that is a shortened SHA-256.
+        viz_data_filename_s3 = 'viz_data.csv'
+        data_s3_key = os.path.join(s3_prefix, viz['article_shorter'], viz_data_filename_s3)
+        viz['data_s3_key'] = data_s3_key
+        send_command(viz['data_filepath'], s3_bucket, data_s3_key)
+
+        article_filename_s3 = 'article.txt'
+        article_s3_key = os.path.join(s3_prefix,  viz['article_shorter'], article_filename_s3)
+        viz['article_s3_key'] = article_s3_key
+        send_command(viz['article_filepath'], s3_bucket, article_s3_key)
+
+        html_s3_key = os.path.join(s3_prefix,  viz['article_shorter'], 'visualization.html')
+        viz['html_s3_key'] = html_s3_key
+        # Since the data files are in the same directory as the html, the
+        # relative url is just the filename.
+        context = {
+            'DATA_CSV_URL': viz_data_filename_s3,
+            'ARTICLE_TEXT_URL': article_filename_s3,
+        }
+        # Merge template URLs into HTML file
+        html_output = html_template.substitute(context)
+        with tempfile.NamedTemporaryFile(mode="w", suffix=".html", \
+            encoding="utf-8", delete=True) as html_file:
+            html_file.write(html_output)
+            html_file.seek(0, os.SEEK_SET)
+            send_command(html_file.name, s3_bucket, html_s3_key, wait=True)
+
+    send_assets("visualizations/assets", s3_bucket, "visualizations/assets")
+
+    newsfeed_items = generate_newsfeed_items(viz_to_send, metadata_dir)
+    send_newsfeed_update(newsfeed_items, s3_bucket, "visualizations/newsfeed/visData.json")
+
+def collect_files_to_send(viz_dir, text_dir):
     # Collect the list of sha256 of by iterating over the VisualizationData_sha256.csv files
+    print("Gathering files to send for visualization")
     viz_to_send = []
     for dirpath, dirnames, filenames in os.walk(viz_dir):
         for file in filenames:
@@ -30,39 +74,39 @@ def send_s3(viz_dir, text_dir, s3_bucket, s3_prefix):
                     viz_to_send.append(viz)
                 else:
                     print(article_filepath, 'not found')
+    return viz_to_send
 
-
-    # Retrieve HTML template.
-    with open("visualizations/Visualization.html", "r") as f:
-        html_source = f.read()
-        html_template = Template(html_source)
-
+def generate_newsfeed_items(viz_to_send, metadata_dir):
+    newsfeed_items = []
     for viz in viz_to_send:
-        # Group visualization files into a directory that is a shortened SHA-256.
-        viz_data_filename_s3 = 'viz_data.csv'
-        data_s3_key = os.path.join(s3_prefix, viz['article_shorter'], viz_data_filename_s3)
-        send_command(viz['data_filepath'], s3_bucket, data_s3_key)
-
-        article_filename_s3 = 'article.txt'
-        article_s3_key = os.path.join(s3_prefix,  viz['article_shorter'], article_filename_s3)
-        send_command(viz['article_filepath'], s3_bucket, article_s3_key)
-
-        html_s3_key = os.path.join(s3_prefix,  viz['article_shorter'], 'visualization.html')
-        # Since the data files are in the same directory as the html, the
-        # relative url is just the filename.
-        context = {
-            'DATA_CSV_URL': viz_data_filename_s3,
-            'ARTICLE_TEXT_URL': article_filename_s3,
+        metadata = {}
+        metadata_filepath = os.path.join(metadata_dir, viz['sha_256'] + ".metadata.json")
+        if os.path.exists(metadata_filepath):
+            print("Opening metadata {}".format(metadata_filepath))
+            with open(metadata_filepath, "r") as f:
+                metadata = json.load(f)
+        item = {
+            "article_sha256": viz['sha_256'],
+            "articleHash": metadata.get('articleHash', ''),
+            "Title": metadata.get('articleTitle', ''),
+            "Author": metadata.get('author', ''),
+            "Date": metadata.get('publishedDate', ''),
+            "ID": metadata.get('tagworksId', ''),
+            "Article Link": metadata.get('url', ''),
+            "Visualization Link": os.path.join("../", viz['html_s3_key']),
+            "Plain Text": os.path.join("../", viz['article_s3_key']),
+            "Highlight Data": os.path.join("../", viz['data_s3_key'])
         }
-        # Merge template URLs into HTML file
-        html_output = html_template.substitute(context)
-        with tempfile.NamedTemporaryFile(mode="w", suffix=".html", \
-            encoding="utf-8", delete=True) as html_file:
-            html_file.write(html_output)
-            html_file.seek(0, os.SEEK_SET)
-            send_command(html_file.name, s3_bucket, html_s3_key, wait=True)
+        newsfeed_items.append(item)
+    return newsfeed_items
 
-    send_assets("visualizations/assets", s3_bucket, "visualizations/assets")
+def send_newsfeed_update(newsfeed_items, s3_bucket, newsfeed_s3_key):
+    newsfeed_json = json.dumps(newsfeed_items)
+    with tempfile.NamedTemporaryFile(mode="w", suffix=".json", \
+        encoding="utf-8", delete=True) as newsfeed_file:
+        newsfeed_file.write(newsfeed_json)
+        newsfeed_file.seek(0, os.SEEK_SET)
+        send_command(newsfeed_file.name, s3_bucket, newsfeed_s3_key, wait=True)
 
 def send_assets(asset_dir, s3_bucket, s3_prefix):
     for dirpath, dirnames, filenames in os.walk(asset_dir):

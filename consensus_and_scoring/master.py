@@ -13,10 +13,12 @@ from send_to_s3 import send_s3
 from holistic_eval import eval_triage_scoring
 from art_to_id_key import make_key
 
-def calculate_scores_master(directory, texts_path, config_path, schema_dir = None, iaa_dir = None, scoring_dir = None, repCSV = None,
+def calculate_scores_master(directory, texts_path, config_path,
+                            schema_dir = None, iaa_dir = None, scoring_dir = None, repCSV = None,
                             just_s_iaa = False, just_dep_iaa = False, use_rep = False, reporting  = False,
                             single_task = False, highlights_file = None, schema_file = None, answers_file = None,
-                            push_aws = True, tua_dir = None, s3_bucket = None, s3_prefix = '',viz_dir = None, threshold_func = 'logis_0'):
+                            push_aws = True, tua_dir = None, metadata_dir = None,
+                            s3_bucket = None, s3_prefix = '',viz_dir = None, threshold_func = 'logis_0'):
     """
 
     :param directory: the directory that holds all files from the tagworks datahunt export
@@ -118,9 +120,9 @@ def calculate_scores_master(directory, texts_path, config_path, schema_dir = Non
     #print("DONE, time elapsed", time()-start)
     ids = []
     if push_aws:
-        send_s3(viz_dir, texts_path, s3_bucket, s3_prefix=s3_prefix)
+        send_s3(viz_dir, texts_path, metadata_dir, s3_bucket, s3_prefix=s3_prefix)
 
-def score_post_iaa(scoring_dir, input_dir,
+def score_post_iaa(scoring_dir, input_dir, metadata_dir,
                    push_aws = True, s3_bucket = None, s3_prefix = '', threshold_func = 'raw_30', reporting = False):
     """
     :param input_dir: the directory that holds all files from the tagworks datahunt export; used to match
@@ -145,7 +147,7 @@ def score_post_iaa(scoring_dir, input_dir,
     #print("DONE, time elapsed", time()-start)
     ids = []
     if push_aws:
-        send_s3(viz_dir, texts_path, s3_bucket, s3_prefix=s3_prefix)
+        send_s3(viz_dir, input_dir, metadata_dir, s3_bucket, s3_prefix=s3_prefix)
 
 def load_args():
     parser = argparse.ArgumentParser()
@@ -216,6 +218,7 @@ if __name__ == '__main__':
     config_path = './config/'
     input_dir = '../data/datahunts/'
     texts_dir = '../data/texts/'
+    metadata_dir = '../data/metadata/'
     tua_dir = '../data/tags/'
     schema_dir = '../data/schemas/'
     # output
@@ -257,5 +260,6 @@ if __name__ == '__main__':
         s3_bucket = s3_bucket,
         s3_prefix = s3_prefix,
         threshold_func = threshold_function,
-        tua_dir = tua_dir
+        tua_dir = tua_dir,
+        metadata_dir = metadata_dir
     )

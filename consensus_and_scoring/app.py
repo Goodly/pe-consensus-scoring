@@ -2,6 +2,8 @@ import os
 
 import logging
 logger = logging.getLogger(__name__)
+logging.basicConfig(level=os.environ.get("LOGLEVEL", "INFO"))
+
 
 import json
 import tempfile
@@ -95,11 +97,13 @@ def handle_notify_all(body, parent_dirname):
         s3_bucket = s3_bucket,
         s3_prefix = s3_prefix,
         threshold_func = threshold_function,
-        tua_dir = tags_dir
+        tua_dir = tags_dir,
+        metadata_dir = metadata_dir
     )
     logger.info("------END notify_all handler-------")
 
 def retrieve_file_list(s3_locations, dest_dirname):
+    logger.info("Making dir {}".format(dest_dirname))
     if not os.path.exists(dest_dirname):
         os.makedirs(dest_dirname)
     for s3_location in s3_locations:
