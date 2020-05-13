@@ -32,11 +32,12 @@ def lambda_handler(event, context):
             if record.get('eventSource','') == "aws:sqs":
                 body = json.loads(record.get('body','{}'))
                 if body.get('Action', '') == "notify_all" and body.get('Version','') == "1":
-                    handle_notify_all(body)
+                    with tempfile.TemporaryDirectory() as parent_dirname:
+                        handle_notify_all(body, parent_dirname)
 
     return {'done': True}
 
-def handle_notify_all(body):
+def handle_notify_all(body, parent_dirname):
     logger.info("------BEGIN notify_all handler-------")
     pipeline_name = body.get('pipeline_name', '')
     pipeline_uuid = body.get('pipeline_uuid', '')
@@ -46,52 +47,56 @@ def handle_notify_all(body):
                 .format(message_action, message_version, pipeline_name))
     texts = body.get('Texts', [])
     texts = use_article_sha256_filenames(texts)
+    metadata_for_texts = unnest_metadata_key(texts)
     schemas = body.get('Schemas', [])
     datahunts = body.get('DataHunts', [])
     tags = body.get('Tags', [])
     negative_tasks = body.get('Negative Tasks', [])
     logger.info("texts count {}".format(len(texts)))
+    logger.info("metadata count {}".format(len(metadata_for_texts)))
     logger.info("schemas count {}".format(len(schemas)))
     logger.info("datahunts count {}".format(len(datahunts)))
     logger.info("tags count {}".format(len(tags)))
     logger.info("negative_tasks count {}".format(len(negative_tasks)))
-    with tempfile.TemporaryDirectory() as parent_dirname:
-        texts_dir = os.path.join(parent_dirname, 'texts')
-        schemas_dir = os.path.join(parent_dirname, 'schemas')
-        datahunts_dir = os.path.join(parent_dirname, 'datahunts')
-        tags_dir = os.path.join(parent_dirname, 'tags')
-        negative_tasks_dir = os.path.join(parent_dirname, 'negative_tasks')
-        retrieve_file_list(texts, texts_dir)
-        retrieve_file_list(schemas, schemas_dir)
-        retrieve_file_list(datahunts, datahunts_dir)
-        retrieve_file_list(tags, tags_dir)
-        retrieve_file_list(negative_tasks, negative_tasks_dir)
-        rename_schema_files(schemas_dir)
+    texts_dir = os.path.join(parent_dirname, 'texts')
+    metadata_dir = os.path.join(parent_dirname, 'metadata')
+    schemas_dir = os.path.join(parent_dirname, 'schemas')
+    datahunts_dir = os.path.join(parent_dirname, 'datahunts')
+    tags_dir = os.path.join(parent_dirname, 'tags')
+    negative_tasks_dir = os.path.join(parent_dirname, 'negative_tasks')
+    retrieve_file_list(texts, texts_dir)
+    retrieve_file_list(metadata_for_texts, metadata_dir)
+    retrieve_file_list(schemas, schemas_dir)
+    retrieve_file_list(datahunts, datahunts_dir)
+    retrieve_file_list(tags, tags_dir)
+    retrieve_file_list(negative_tasks, negative_tasks_dir)
+    rename_schema_files(schemas_dir)
+    logger.info("------FILES RETRIEVED SUCCESSFULLY in notify_all handler-------")
 
-        # additional input config data
-        config_path = './config/'
-        rep_file = './UserRepScores.csv'
-        threshold_function = 'raw_30'
-        # outputs
-        s3_bucket = 'articles.publiceditor.io'
-        s3_prefix = 'visualizations'
-        output_dir = tempfile.mkdtemp(dir=parent_dirname)
-        scoring_dir = tempfile.mkdtemp(dir=parent_dirname)
-        viz_dir = tempfile.mkdtemp(dir=parent_dirname)
-        calculate_scores_master(
-            datahunts_dir,
-            texts_dir,
-            config_path,
-            schema_dir = schemas_dir,
-            iaa_dir = output_dir,
-            scoring_dir = scoring_dir,
-            repCSV = rep_file,
-            viz_dir = viz_dir,
-            s3_bucket = s3_bucket,
-            s3_prefix = s3_prefix,
-            threshold_func = threshold_function,
-            tua_dir = tags_dir
-        )
+    # additional input config data
+    config_path = './config/'
+    rep_file = './UserRepScores.csv'
+    threshold_function = 'raw_30'
+    # outputs
+    s3_bucket = 'articles.publiceditor.io'
+    s3_prefix = 'visualizations'
+    output_dir = tempfile.mkdtemp(dir=parent_dirname)
+    scoring_dir = tempfile.mkdtemp(dir=parent_dirname)
+    viz_dir = tempfile.mkdtemp(dir=parent_dirname)
+    calculate_scores_master(
+        datahunts_dir,
+        texts_dir,
+        config_path,
+        schema_dir = schemas_dir,
+        iaa_dir = output_dir,
+        scoring_dir = scoring_dir,
+        repCSV = rep_file,
+        viz_dir = viz_dir,
+        s3_bucket = s3_bucket,
+        s3_prefix = s3_prefix,
+        threshold_func = threshold_function,
+        tua_dir = tags_dir
+    )
     logger.info("------END notify_all handler-------")
 
 def retrieve_file_list(s3_locations, dest_dirname):
@@ -117,7 +122,7 @@ def retrieve_s3_file(s3_location, dest_dirname):
             shutil.copyfileobj(f_in, f_out)
         os.remove(dest_path)
 
-# text file names are all "text.txt.gz" because source uses SHA256 as parent dir.
+# text file names are all "text.txt.gz" because source uses SHA-256 as parent dir.
 def use_article_sha256_filenames(texts):
     for s3_location in texts:
         old_filename = s3_location['filename']
@@ -126,6 +131,20 @@ def use_article_sha256_filenames(texts):
             new_filename += ".gz"
         s3_location['filename'] = new_filename
     return texts
+
+# Each article location has its metadata_location nested. Unnest.
+# Also need to change metadata filenames from metadata.json.gz to use SHA-256.
+def unnest_metadata_key(text_locations):
+    metadata_locations = []
+    for article_location in text_locations:
+        if article_location.get('metadata_location'):
+            metadata = article_location['metadata_location']
+            new_filename = article_location['article_sha256'] + ".metadata.json"
+            if metadata['filename'].endswith(".gz"):
+                new_filename += ".gz"
+            metadata['filename'] = new_filename
+            metadata_locations.append(metadata)
+    return metadata_locations
 
 # Rename schema files from the friendly name to the SHA-256 of the schema source.
 def rename_schema_files(schemas_dir):
