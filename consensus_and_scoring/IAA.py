@@ -317,6 +317,8 @@ def calcAgreement(codingScore, unitizingScore):
         return codingScore
     elif unitizingScore == 'L' or unitizingScore == 'M' or unitizingScore == 'U':
         unitizingScore = 0
+    elif math.isnan(unitizingScore):
+        return codingScore
 
     return (float(codingScore) + float(unitizingScore)) / 2
 
