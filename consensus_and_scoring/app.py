@@ -21,19 +21,11 @@ s3 = boto3.resource('s3')
 
 def lambda_handler(event, context):
     """
-    Parameters
-    ----------
-    sqs_message: dict, required
-        SQS Receive Message
-
-    context: object, required
-        Lambda Context runtime methods and attributes
-        Context doc: https://docs.aws.amazon.com/lambda/latest/dg/python-context-object.html
-
-    Sends to output queue.
-    Returns None
-    ------
-
+        event: will have Records with eventSource=="aws:sqs".
+        Each sqs message body will have one of several messages requesting an action
+        and lists of files to retrieve from S3 for processing.
+        context:
+        See Context doc: https://docs.aws.amazon.com/lambda/latest/dg/python-context-object.html
     """
     if isinstance(event.get('Records'), list):
         for record in event['Records']:
@@ -50,7 +42,7 @@ def handle_notify_all(body):
     pipeline_uuid = body.get('pipeline_uuid', '')
     message_action = body.get('Action', '')
     message_version = body.get('Version', '')
-    logger.info(u"Message '{}:{}' from pipeline '{}'"
+    logger.info("Message '{}:{}' from pipeline '{}'"
                 .format(message_action, message_version, pipeline_name))
     texts = body.get('Texts', [])
     texts = use_article_sha256_filenames(texts)
@@ -58,11 +50,11 @@ def handle_notify_all(body):
     datahunts = body.get('DataHunts', [])
     tags = body.get('Tags', [])
     negative_tasks = body.get('Negative Tasks', [])
-    logger.info(u"texts count {}".format(len(texts)))
-    logger.info(u"schemas count {}".format(len(schemas)))
-    logger.info(u"datahunts count {}".format(len(datahunts)))
-    logger.info(u"tags count {}".format(len(tags)))
-    logger.info(u"negative_tasks count {}".format(len(negative_tasks)))
+    logger.info("texts count {}".format(len(texts)))
+    logger.info("schemas count {}".format(len(schemas)))
+    logger.info("datahunts count {}".format(len(datahunts)))
+    logger.info("tags count {}".format(len(tags)))
+    logger.info("negative_tasks count {}".format(len(negative_tasks)))
     with tempfile.TemporaryDirectory() as parent_dirname:
         texts_dir = os.path.join(parent_dirname, 'texts')
         schemas_dir = os.path.join(parent_dirname, 'schemas')
@@ -147,19 +139,27 @@ def rename_schema_files(schemas_dir):
                     row = next(reader)
             if row:
                 new_path = os.path.join(schemas_dir, row['schema_sha256'] + ".csv")
-                logger.info(u"Renaming '{}' to '{}'".format(filepath, new_path))
+                logger.info("Renaming '{}' to '{}'".format(filepath, new_path))
                 os.rename(filepath, new_path)
             else:
-                logger.warn(u"Failed to find SHA-256 for '{}'".format(filepath))
+                logger.warn("Failed to find SHA-256 for '{}'".format(filepath))
 
+# To use, send a message with TagWorks pipeline.sqs_notify.notify_all
+# and then call this to receive. Must use a queue that is NOT attached to
+# a lambda that will consume the event first.
+# Or to bypass queue testing, save the JSON from
+# pipeline.sqs_notify.build_notify_all_message and pass that to handle_notify_all.
 def test_receive_notify_all(input_SQS_url):
     # SQS URL like 'https://sqs.us-west-2.amazonaws.com/012345678901/public-editor-covid'
     queue = sqs.Queue(input_SQS_url)
     # Long poll. Recommend queue be configured to longest poll time of 20 seconds.
     messages = queue.receive_messages()
     for message in messages:
-        lambda_handler(message, {})
+        body = json.loads(message.body)
+        if body.get('Action', '') == "notify_all" and body.get('Version','') == "1":
+            handle_notify_all(body)
         message.delete()
+
 
 if __name__ == '__main__':
     pass
