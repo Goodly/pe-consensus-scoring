@@ -82,7 +82,7 @@ def calculate_scores_master(directory, texts_path, config_path, schema_dir = Non
         make_directory(rep_direc)
     start = time()
     if not single_task:
-        iaa_dir = calc_agreement_directory(directory, schema_dir, config_path, hardCodedTypes=True, repCSV=repCSV, outDirectory=iaa_dir,
+        iaa_dir = calc_agreement_directory(directory, schema_dir, config_path,  repCSV=repCSV, outDirectory=iaa_dir,
                                            useRep=use_rep, threshold_func=threshold_func)
     else:
 
