@@ -23,6 +23,7 @@ def calc_agreement_directory(directory, schema_dir, config_path, hardCodedTypes 
     schema = []
     for root, dir, files in os.walk(directory):
         for file in files:
+            print("IAA FILE FIND:", file)
             if file.endswith('.csv') and 'IAA' not in file:
                 print("Checking Agreement for "+directory+'/'+file)
                 if 'DataHunt' in file:
@@ -36,23 +37,32 @@ def calc_agreement_directory(directory, schema_dir, config_path, hardCodedTypes 
 
     #pick out the schemas actually being used
     temp = []
-    for h in highlights:
+    print("highlights before", highlights)
+    i = 0
+    while i<len(highlights):
+        h = highlights[i]
         hdf = pd.read_csv(h, encoding = 'utf-8')
         if len(hdf.index) == 0:
-            raise Exception(u"{} dataframe has zero rows. Can't match to schema."
-                            .format(h))
-        schem_sha = hdf['schema_sha256'].iloc[0]
-        matched_schema = False
-        for sch in schema:
-            if schem_sha in sch:
-                temp.append(sch)
-                matched_schema = True
-                break
-        if not matched_schema:
-            raise NameError("No schema matching file:", h)
+            #remove h from highlights
+            highlights.remove(h)
+            # raise Exception(u"{} dataframe has zero rows. Can't match to schema."
+            #                 .format(h))
+        else:
+            schem_sha = hdf['schema_sha256'].iloc[0]
+            matched_schema = False
+            for sch in schema:
+                if schem_sha in sch:
+                    temp.append(sch)
+                    matched_schema = True
+                    break
+            if not matched_schema:
+                raise NameError("No schema matching file:", h)
+            i +=1
+    print("highlights after", highlights)
     schema = temp
 
-
+    print("FILENAMECHECK:\n",len(schema), len(highlights))
+    assert(len(schema) == len(highlights))
     for i in range(len(highlights)):
         calc_scores(highlights[i], config_path, hardCodedTypes=hardCodedTypes, repCSV = repCSV,
                           schemaFile=schema[i], outDirectory=outDirectory, useRep=useRep,
@@ -70,6 +80,7 @@ def unpack_iaa(input):
 def calc_scores(highlightfilename, config_path, hardCodedTypes = True, repCSV=None, schemaFile = None,
                 fileName = None, thirtycsv = None, outDirectory = None, useRep = False, directory = None,
                 threshold_func = 'logis_0'):
+    print("CALC SCORES:", highlightfilename)
     uberDict = dataStorer(highlightfilename, schemaFile)
     #print("old ", uberDict)
     #uberDict = data_storer(highlightfilename, answersFile, schemaFile)
@@ -190,6 +201,7 @@ def calc_scores(highlightfilename, config_path, hardCodedTypes = True, repCSV=No
 
     outDirectory = make_directory(outDirectory)
     path, name = get_path(highlightfilename)
+    print("IAA outputs to:", outDirectory + 'S_IAA_' + name)
     scores = open(outDirectory + 'S_IAA_' + name, 'w', encoding='utf-8')
     with scores:
         writer = csv.writer(scores)
