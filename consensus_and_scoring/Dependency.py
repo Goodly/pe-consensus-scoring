@@ -16,9 +16,10 @@ def eval_dependency(directory, iaa_dir, schema_dir, out_dir):
                 file_path = os.path.join(dirpath, file)
                 print("found schema " + file_path)
                 schema.append(file_path)
-
+    print("looking for IAA", iaa_dir)
     for dirpath, dirnames, files in os.walk(iaa_dir):
         for file in files:
+            print("IAA OUTPUT",file)
             if file.endswith('.csv') and 'Dep' not in file:
                 if 'S_IAA' in file:
                     file_path = os.path.join(dirpath, file)
@@ -26,6 +27,7 @@ def eval_dependency(directory, iaa_dir, schema_dir, out_dir):
                     iaa.append(file_path)
 
     temp = []
+    print("IAA files found", iaa)
     for h in iaa:
         hdf = pd.read_csv(h, encoding = 'utf-8')
         if len(hdf.index) == 0:
@@ -44,10 +46,7 @@ def eval_dependency(directory, iaa_dir, schema_dir, out_dir):
     ins = []
     for i in range(len(iaa)):
         ins.append((schema[i], iaa[i], out_dir))
-        #handleDependencies(schema[i], iaa[i], out_dir)
-
-    print('ins:\n',ins)
-    map(unpack_dependency_ins, ins)
+        handleDependencies(schema[i], iaa[i], out_dir)
 
 
 def unpack_dependency_ins(input):
@@ -154,8 +153,9 @@ def handleDependencies(schemaPath, iaaPath, out_dir):
                     iaaData.at[row, 'alpha_unitizing_score_inclusive'] = alphainc
     print('exporting to csv')
     path, name = get_path(iaaPath)
-
-    iaaData.to_csv(out_dir+'Dep_'+name,  encoding = 'utf-8')
+    outputpath  = out_dir+'Dep_'+name
+    print("outputting dependency to", outputpath)
+    iaaData.to_csv(outputpath,  encoding = 'utf-8')
 
     print("Table complete")
     return out_dir
