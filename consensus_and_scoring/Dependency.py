@@ -41,7 +41,6 @@ def eval_dependency(directory, iaa_dir, schema_dir, out_dir):
                 break
         if not matched_schema:
             raise NameError("No schema matching file:", h)
-    assert(len(schema)==len(iaa), 'mismatched files ', len(schema), 'schema', len(iaa), 'iaa oututs')
     out_dir = make_directory(out_dir)
     ins = []
     for i in range(len(iaa)):

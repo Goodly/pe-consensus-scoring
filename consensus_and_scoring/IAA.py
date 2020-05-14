@@ -355,7 +355,6 @@ def get_answer_uuid(schema_sha, topic, question, answer, schema_file):
     if isinstance(answer, str):
         return 0
     schema_data = pd.read_csv(schema_file, encoding='utf-8')
-    assert (schema_data['schema_sha256'].iloc[0] == schema_sha, 'schema misalignment')
     tqa = "T"+str(topic)+".Q"+str(question)+".A"+str(answer)
     row = schema_data[schema_data['answer_label'] == tqa]
     if row.shape[0]<1:
