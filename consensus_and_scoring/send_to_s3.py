@@ -49,7 +49,7 @@ def send_s3(viz_dir, text_dir, metadata_dir, s3_bucket, s3_prefix):
     send_assets("visualizations/assets", s3_bucket, "visualizations/assets")
 
     newsfeed_items = generate_newsfeed_items(viz_to_send, metadata_dir)
-    send_newsfeed_update(newsfeed_items, s3_bucket, "visualizations/newsfeed/visData.json")
+    send_newsfeed_update(newsfeed_items, s3_bucket, "newsfeed/visData.json")
 
 def collect_files_to_send(viz_dir, text_dir):
     # Collect the list of sha256 of by iterating over the VisualizationData_sha256.csv files
@@ -85,17 +85,18 @@ def generate_newsfeed_items(viz_to_send, metadata_dir):
             print("Opening metadata {}".format(metadata_filepath))
             with open(metadata_filepath, "r") as f:
                 metadata = json.load(f)
+                extra = metadata.get('extra', {})
         item = {
             "article_sha256": viz['sha_256'],
-            "articleHash": metadata.get('articleHash', ''),
-            "Title": metadata.get('articleTitle', ''),
-            "Author": metadata.get('author', ''),
-            "Date": metadata.get('publishedDate', ''),
-            "ID": metadata.get('tagworksId', ''),
-            "Article Link": metadata.get('url', ''),
-            "Visualization Link": os.path.join("../", viz['html_s3_key']),
-            "Plain Text": os.path.join("../", viz['article_s3_key']),
-            "Highlight Data": os.path.join("../", viz['data_s3_key'])
+            "articleHash": extra.get('articleHash', ''),
+            "Title": extra.get('articleTitle', ''),
+            "Author": extra.get('author', ''),
+            "Date": extra.get('publishedDate', ''),
+            "ID": metadata.get('article_number', ''),
+            "Article Link": extra.get('url', ''),
+            "Visualization Link": os.path.join("/", viz['html_s3_key']),
+            "Plain Text": os.path.join("/", viz['article_s3_key']),
+            "Highlight Data": os.path.join("/", viz['data_s3_key'])
         }
         newsfeed_items.append(item)
     return newsfeed_items
