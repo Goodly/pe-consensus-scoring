@@ -49,57 +49,65 @@ def lambda_handler(event, context):
     return {'done': True}
 
 def handle_request_consensus(body, parent_dirname):
-    logger.info("------BEGIN request_consensus handler-------")
+    logger.info("---BEGIN request_consensus handler---")
     project_name = body.get('project_name', '')
     project_uuid = body.get('project_uuid', '')
     task_type = body.get('task_type', '')
-    if task_type == "HLTR":
-        highlighters = body.get('Highlighters', [])
-        highlighters_dir = os.path.join(parent_dirname, 'highlighters')
-        retrieve_file_list(highlighters, highlighters_dir)
-        logger.info("highlighters count {}".format(len(highlighters)))
-    elif task_type == "QUIZ":
-        schemas = body.get('Schemas', [])
-        datahunts = body.get('DataHunts', [])
-        schemas_dir = os.path.join(parent_dirname, 'schemas')
-        datahunts_dir = os.path.join(parent_dirname, 'datahunts')
-        retrieve_file_list(schemas, schemas_dir)
-        retrieve_file_list(datahunts, datahunts_dir)
-        rename_schema_files(schemas_dir)
-        logger.info("schemas count {}".format(len(schemas)))
-        logger.info("datahunts count {}".format(len(datahunts)))
-    else:
-        raise Exception(u"request_consensus: Project '{}' has unknown task_type '{}'."
-                        .format(project_name, task_type))
+
     tags = body.get('Tags', [])
     negative_tasks = body.get('Negative Tasks', [])
     tags_dir = os.path.join(parent_dirname, 'tags')
     negative_tasks_dir = os.path.join(parent_dirname, 'negative_tasks')
     retrieve_file_list(tags, tags_dir)
     retrieve_file_list(negative_tasks, negative_tasks_dir)
-    logger.info("------FILES RETRIEVED SUCCESSFULLY in request_consensus handler-------")
-    output_dir = tempfile.mkdtemp(dir=parent_dirname)
+
     if task_type == "HLTR":
-        for filename in os.listdir(highlighters_dir):
-            if filename.endswith(".csv"):
-                input_file = os.path.join(highlighters_dir, filename)
-                output_file = os.path.join(output_dir, "S_IAA_" + input_file)
-                importData(input_file, output_file)
+        handle_highlighter_consensus(body, parent_dirname)
     elif task_type == "QUIZ":
-        config_path = './config/'
-        rep_file = './UserRepScores.csv'
-        scoring_dir = tempfile.mkdtemp(dir=parent_dirname)
-        iaa_only(
-            datahunts_dir,
-            config_path,
-            use_rep = False,
-            repCSV = None,
-            iaa_dir = output_dir,
-            schema_dir = schemas_dir,
-            scoring_dir = scoring_dir,
-            threshold_func = 'raw_30'
-        )
-    logger.info("------END request_consensus handler-------")
+        handle_datahunt_consensus(body, parent_dirname)
+    else:
+        raise Exception(u"request_consensus: Project '{}' has unknown task_type '{}'."
+                        .format(project_name, task_type))
+    logger.info("---END request_consensus handler---")
+
+def handle_highlighter_consensus(body, parent_dirname):
+    highlighters = body.get('Highlighters', [])
+    highlighters_dir = os.path.join(parent_dirname, 'highlighters')
+    retrieve_file_list(highlighters, highlighters_dir)
+    logger.info("highlighters count {}".format(len(highlighters)))
+    logger.info("---FILES RETRIEVED SUCCESSFULLY in request_highlighter_consensus handler---")
+    output_dir = tempfile.mkdtemp(dir=parent_dirname)
+    for filename in os.listdir(highlighters_dir):
+        if filename.endswith(".csv"):
+            input_file = os.path.join(highlighters_dir, filename)
+            output_file = os.path.join(output_dir, "S_IAA_" + filename)
+            importData(input_file, output_file)
+
+def handle_datahunt_consensus(body, parent_dirname):
+    schemas = body.get('Schemas', [])
+    datahunts = body.get('DataHunts', [])
+    schemas_dir = os.path.join(parent_dirname, 'schemas')
+    datahunts_dir = os.path.join(parent_dirname, 'datahunts')
+    retrieve_file_list(schemas, schemas_dir)
+    retrieve_file_list(datahunts, datahunts_dir)
+    rename_schema_files(schemas_dir)
+    logger.info("schemas count {}".format(len(schemas)))
+    logger.info("datahunts count {}".format(len(datahunts)))
+    logger.info("---FILES RETRIEVED SUCCESSFULLY in request_datahunt_consensus handler---")
+    config_path = './config/'
+    rep_file = './UserRepScores.csv'
+    output_dir = tempfile.mkdtemp(dir=parent_dirname)
+    scoring_dir = tempfile.mkdtemp(dir=parent_dirname)
+    iaa_only(
+        datahunts_dir,
+        config_path,
+        use_rep = False,
+        repCSV = None,
+        iaa_dir = output_dir,
+        schema_dir = schemas_dir,
+        scoring_dir = scoring_dir,
+        threshold_func = 'raw_30'
+    )
 
 def handle_notify_all(body, parent_dirname):
     logger.info("------BEGIN notify_all handler-------")
