@@ -55,7 +55,7 @@ def handle_request_consensus(body, parent_dirname):
     task_type = body.get('task_type', '')
 
     tags = body.get('Tags', [])
-    negative_tasks = body.get('Negative Tasks', [])
+    negative_tasks = body.get('NegativeTasks', [])
     tags_dir = os.path.join(parent_dirname, 'tags')
     negative_tasks_dir = os.path.join(parent_dirname, 'negative_tasks')
     retrieve_file_list(tags, tags_dir)
@@ -117,7 +117,7 @@ def handle_notify_all(body, parent_dirname):
     schemas = body.get('Schemas', [])
     datahunts = body.get('DataHunts', [])
     tags = body.get('Tags', [])
-    negative_tasks = body.get('Negative Tasks', [])
+    negative_tasks = body.get('NegativeTasks', [])
     logger.info("texts count {}".format(len(texts)))
     logger.info("metadata count {}".format(len(metadata_for_texts)))
     logger.info("schemas count {}".format(len(schemas)))
