@@ -211,7 +211,7 @@ def determinePassingIndices(starts, ends, numUsers, users, length, category):
                 'scale': 1.6
             },
         #keepstrict
-        'Needs Fact-check':
+        'Needs Fact-Check':
             {
                 'passingFunc': evalThresholdMatrix,
                 'scale': 1.6
