@@ -9,7 +9,7 @@ import os
 
 path = 'sss_pull_8_22/SSSPECaus2-2018-08-22T2019-DataHuntHighlights.csv'
 
-def calc_agreement_directory(directory, schema_dir, config_path, hardCodedTypes = False, repCSV=None,  outDirectory = None,
+def calc_agreement_directory(directory, schema_dir, config_path,  repCSV=None,  outDirectory = None,
                              useRep = False, threshold_func = 'raw_30'):
     print("IAA STARTING")
     if outDirectory is None:
@@ -23,6 +23,7 @@ def calc_agreement_directory(directory, schema_dir, config_path, hardCodedTypes 
     schema = []
     for root, dir, files in os.walk(directory):
         for file in files:
+            print("IAA FILE FIND:", file)
             if file.endswith('.csv') and 'IAA' not in file:
                 print("Checking Agreement for "+directory+'/'+file)
                 if 'DataHunt' in file:
@@ -36,25 +37,34 @@ def calc_agreement_directory(directory, schema_dir, config_path, hardCodedTypes 
 
     #pick out the schemas actually being used
     temp = []
-    for h in highlights:
+    print("highlights before", highlights)
+    i = 0
+    while i<len(highlights):
+        h = highlights[i]
         hdf = pd.read_csv(h, encoding = 'utf-8')
         if len(hdf.index) == 0:
-            raise Exception(u"{} dataframe has zero rows. Can't match to schema."
-                            .format(h))
-        schem_sha = hdf['schema_sha256'].iloc[0]
-        matched_schema = False
-        for sch in schema:
-            if schem_sha in sch:
-                temp.append(sch)
-                matched_schema = True
-                break
-        if not matched_schema:
-            raise NameError("No schema matching file:", h)
+            #remove h from highlights
+            highlights.remove(h)
+            # raise Exception(u"{} dataframe has zero rows. Can't match to schema."
+            #                 .format(h))
+        else:
+            schem_sha = hdf['schema_sha256'].iloc[0]
+            matched_schema = False
+            for sch in schema:
+                if schem_sha in sch:
+                    temp.append(sch)
+                    matched_schema = True
+                    break
+            if not matched_schema:
+                raise NameError("No schema matching file:", h)
+            i +=1
+    print("highlights after", highlights)
     schema = temp
 
-
+    print("FILENAMECHECK:\n",len(schema), len(highlights))
+    assert(len(schema) == len(highlights))
     for i in range(len(highlights)):
-        calc_scores(highlights[i], config_path, hardCodedTypes=hardCodedTypes, repCSV = repCSV,
+        calc_scores(highlights[i], config_path,  repCSV = repCSV,
                           schemaFile=schema[i], outDirectory=outDirectory, useRep=useRep,
                     directory=directory, threshold_func = threshold_func)
     #                 #will be an error for every file that isn't the right file, there's a more graceful solution, but
@@ -63,13 +73,14 @@ def calc_agreement_directory(directory, schema_dir, config_path, hardCodedTypes 
 
 def unpack_iaa(input):
     print("unpacking", input)
-    calc_scores(input[0], hardCodedTypes=input[1], repCSV = input[2],
+    calc_scores(input[0],  repCSV = input[2],
                             answersFile = input[3], schemaFile=input[4], outDirectory=input[5], useRep=input[6],
                 directory = input[7], threshold_func=input[8])
 
-def calc_scores(highlightfilename, config_path, hardCodedTypes = True, repCSV=None, schemaFile = None,
+def calc_scores(highlightfilename, config_path,  repCSV=None, schemaFile = None,
                 fileName = None, thirtycsv = None, outDirectory = None, useRep = False, directory = None,
                 threshold_func = 'logis_0'):
+    print("CALC SCORES:", highlightfilename)
     uberDict = dataStorer(highlightfilename, schemaFile)
     #print("old ", uberDict)
     #uberDict = data_storer(highlightfilename, answersFile, schemaFile)
@@ -112,7 +123,7 @@ def calc_scores(highlightfilename, config_path, hardCodedTypes = True, repCSV=No
         #has to be sorted for questions depending on each other to be handled correctly
         for ques in sorted(questions):  # Iterates through each question in an article
 
-            agreements = score(task, ques, uberDict, config_path, repDF,hardCodedTypes = hardCodedTypes, useRep=useRep, threshold_func=threshold_func)
+            agreements = score(task, ques, uberDict, config_path, repDF, useRep=useRep, threshold_func=threshold_func)
             # if it's a list then it was a checklist question
             question_text = get_question_text(uberDict, task, ques)
             if type(agreements) is list:
@@ -190,6 +201,7 @@ def calc_scores(highlightfilename, config_path, hardCodedTypes = True, repCSV=No
 
     outDirectory = make_directory(outDirectory)
     path, name = get_path(highlightfilename)
+    print("IAA outputs to:", outDirectory + 'S_IAA_' + name)
     scores = open(outDirectory + 'S_IAA_' + name, 'w', encoding='utf-8')
     with scores:
         writer = csv.writer(scores)
@@ -218,20 +230,14 @@ def adjustForJson(units):
 
 
 
-def score(article, ques, data, config_path, repDF = None,  hardCodedTypes = True, useRep = False, threshold_func = 'logis_0'):
+def score(article, ques, data, config_path, repDF = None,   useRep = False, threshold_func = 'logis_0'):
     """calculates the relevant scores for the article
     returns a tuple (question answer most chosen, units passing the threshold,
         the Unitizing Score of the users who highlighted something that passed threshold, the unitizing score
         among all users who coded the question the same way (referred to as the inclusive unitizing score),
          the percentage agreement of the category with the highest percentage agreement """
 
-    """ Commnted code below previously denoted different types of questions for hard-coding,
-    can still be used for hard-coding but eventually will be phased out by a line of code that
-    checks the question_type based off the table data"""
-    # ordinal_questions = [1,2,4,12,13,14,15,16,17,18,19,20,21,25]
-    # nominal_questions = [7,22]
-    # unit_questions = [9,10,11, 24] #asks users to highlight, nothing else OR they highlight w/ txt answer
-    # multiple_questions = [3,5,8,23]
+
 
     starts = get_question_start(data,article, ques)
     ends = get_question_end(data, article, ques)
@@ -343,32 +349,9 @@ def get_answer_uuid(schema_sha, topic, question, answer, schema_file):
     if isinstance(answer, str):
         return 0
     schema_data = pd.read_csv(schema_file, encoding='utf-8')
-    assert (schema_data['schema_sha256'].iloc[0] == schema_sha, 'schema misalignment')
     tqa = "T"+str(topic)+".Q"+str(question)+".A"+str(answer)
     row = schema_data[schema_data['answer_label'] == tqa]
     if row.shape[0]<1:
         return 'XXX'
     return row['answer_uuid'].iloc[0]
 
-
-# # # TEST STUFF
-#calc_agreement_directory('./covid','./config/schema/', './config', hardCodedTypes= True)
-# calc_scores('./demo1/Demo1ArgRel3-2018-09-01T0658-DataHuntHighlights.csv', answersFile='./demo1/Demo1ArgRel3-2018-09-01T0658-DataHuntAnswers.csv',
-#             schemaFile = './demo1/Demo1ArgRel3-2018-09-01T0658-Schema.csv', hardCodedTypes=True)
-# calc_scores('./demo1/Demo1QuoSour-2018-09-01T0658-DataHuntHighlights.csv', answersFile='./demo1/Demo1QuoSour-2018-09-01T0658-DataHuntAnswers.csv',
-#             schemaFile = './demo1/Demo1QuoSour-2018-09-01T0658-Schema.csv', hardCodedTypes=True)
-# calc_scores('./demo1/Demo1Prob-2018-09-01T0758-DataHuntHighlights.csv', answersFile='./demo1/Demo1Prob-2018-09-01T0758-DataHuntAnswers.csv',
-#             schemaFile = './demo1/Demo1Prob-2018-09-01T0758-Schema.csv', hardCodedTypes=True)
-# calc_scores('./demo1/DemoLang-2018-09-01T0815-DataHuntHighlights.csv', answersFile='./demo1/DemoLang-2018-09-01T0815-DataHuntAnswers.csv',
-#             schemaFile = './demo1/DemoLang-2018-09-01T0815-Schema.csv', hardCodedTypes=True)
-#calc_scores('testhl.csv', answersFile = 'testans.csv', schemaFile='testsch.csv', hardCodedTypes=True)
-#calc_agreement_directory('demo1',  hardCodedTypes=True)
-
-#calc_scores('demo1/Demo1Prob-2018-08-28T2257-DataHuntHighlights.csv', hardCodedTypes= True)
-# # calc_scores('data_pull_8_10/PreAlphaLanguage-2018-08-10T0420-DataHuntHighlights.csv', hardCodedTypes=True)
-#calc_scores(path, hardCodedTypes=True)
-# #in sss file I renamed the filenamecolumn to be sha256 so it fits in with the other mechanisms for extracting data
-# calc_scores('data_pull_8_10/SSSPECaus2-2018-08-08T0444-DataHuntHighlights.csv', hardCodedTypes=True)
-# calc_scores('data_pull_8_17/ArgumentRelevance1.0C2-2018-08-17T2012-DataHuntHighlights.csv')
-# # calc_scores('data_pull_8_17/ArgumentRelevance1.0C2-2018-08-17T2012-DataHuntHighlights.csv')
-#calc_scores('data_pull_8_17/ArgumentRelevance1.0C2-2018-08-17T2012-DataHuntHighlights.csv')

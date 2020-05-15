@@ -24,7 +24,6 @@ def iaa_only(directory, config_path, use_rep = False, repCSV = None, iaa_dir = N
         directory,
         schema_dir,
         config_path,
-        hardCodedTypes=True,
         repCSV=repCSV,
         outDirectory=iaa_dir,
         useRep=use_rep,

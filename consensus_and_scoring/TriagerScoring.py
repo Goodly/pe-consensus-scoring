@@ -41,7 +41,7 @@ def importData(path, out_path):
         #numUsers = len(np.unique(art_users))
         numUsers = art_data['taskrun_count'].iloc[0]
         #redundancy = art_data['']
-        length = art_data['source_text_length'].iloc[0]
+        length = art_data['article_text_length'].iloc[0]
         #print(length)
         source_text = makeList(length)
         #flagExclusions = exclusionList(users, flags, cats)
@@ -58,7 +58,7 @@ def importData(path, out_path):
                 flags = cat_data['case_number'].tolist()
                 namespaces = cat_data['namespace'].tolist()
 
-                length = floor(cat_data['source_text_length'].tolist()[0])
+                length = floor(cat_data['article_text_length'].tolist()[0])
                 texts = cat_data['target_text'].str.decode('unicode-escape').tolist()
 
                 print('//Article:', a, 'Category:', c, 'numUsers:', numUsers)
@@ -367,32 +367,7 @@ def getText(start,end, sourceText):
     for i in range(int(start),int(end)):
         out = out+sourceText[i]
     return out
-print("#####Form TRIAGER AGREED UPON DATA!!!#####")
-#importData("SemanticsTriager1.4C2-2018-11-16T1913-Highlighter.csv")
-#importData('data_pull_8_17/FormTriager1.2C2-2018-08-17T2009-Highlighter.csv')
-#importData('data_pull_8_17/SemanticsTriager1.4C2-2018-08-17T2005-Highlighter.csv')
 
-#evalTriage(jpath2)
-print()
-print()
-print("#####Sem TRIAGER AGREED UPON DATA!!!#####")
-
-#importData('./demo1/Demo1SemTri-2018-10-09T1924-Highlighter.csv')
-
-
-#evalTriage(jpath1)
-#importData(path2)
-# s = [5, 45, 3, 80, 6, 65]
-#
-# e1 = [30,100, 30,100, 30,100]
-# l = 120
-# u = [4,4,7,7,3,3]
-# f = [1,3,4,6,7,2]
-# f2 = [1,1,4,4,7,7]
-# c = 3
-
-# scoreTriager(s,e1,l,u,3,f,c)
-# scoreTriager(s,e1,l,u,3,f2,c)
 
 def load_args():
     parser = argparse.ArgumentParser()
@@ -404,7 +379,6 @@ def load_args():
         '-o', '--output-file',
         help='Output file')
     return parser.parse_args()
-
 
 if __name__ == '__main__':
     args = load_args()
