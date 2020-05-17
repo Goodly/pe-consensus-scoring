@@ -201,6 +201,7 @@ def dataStorer(data_hunt_path, schema_path):
                     "users" : getUsers(highlight, uuid, question_label),
                     "numUsers" : len(newUsers[question_label]),
                     "answer_content": find_answer_contents(task_schema, question_label),
+                    #"answer_text": find_answer_text(highlight, uuid, question_label),
                     "question_text": quest_label_text.loc[question_label, "question_text"],
                     "target_text": target_text, #TODO: currently returns a list of target texts, check!
                     "hlUsers": hightlightUsers,
@@ -453,6 +454,17 @@ def find_answer_contents(schemadata, qlabel):
     pot_answers.insert(0,'zero')
     return pot_answers
 
+def find_answer_text(task_question_answer_labels, task_uuid, question_label):
+    task_data = task_question_answer_labels.loc[task_uuid]
+    ans = task_data[task_data["question_label"] == question_label].drop_duplicates(subset = ["contributor_uuid", "answer_uuid"])
+    texts = ans["answer_text"].tolist()
+    nums =  getAnsNumsList(task_question_answer_labels, task_uuid, question_label)
+    assert len(texts) == len(nums), "mismatch between answer texts and answer numbres"
+    dic = {}
+    for i in range(len(nums)):
+        dic[nums[i]] = texts[i]
+    return dic
+
 
 ##################### GET the data from UberDict ##############
 
@@ -506,6 +518,9 @@ def get_question_hlAns(data, task_id, question_num):
 def get_article_num(data,task_id):
     return data[task_id]['taskData']['article_num']
 
+def get_article_filename(data,task_id):
+    return data[task_id]['taskData']['article_filename']
+
 def get_tua_uuid(data,task_id):
     return data[task_id]['taskData']['tua_uuid']
 
@@ -521,6 +536,18 @@ def get_answer_content(data, task_id, question_num, answer_num):
     if answer_num == 'U' or answer_num == 'L' or answer_num == 'M' or answer_num == 'N/A':
         return answer_num
     contents = data[task_id]['quesData'][question_num]['answer_content']
+    myAnswer = contents[answer_num]
+    return myAnswer
+
+def get_answer_text(data, task_id, question_num, answer_num):
+    if answer_num == 'U' or answer_num == 'L' or answer_num == 'M' or answer_num == 'N/A':
+        return answer_num
+    if answer_num == 0:
+        print("ZERROOR")
+        return 'zeroeororororororo'
+    contents = data[task_id]['quesData'][question_num]['answer_text']
+    print(answer_num)
+    print(contents)
     myAnswer = contents[answer_num]
     return myAnswer
 
