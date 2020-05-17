@@ -335,7 +335,7 @@ def input_specialist_answers(all_tuas, spec, prefix):
         id = all_tuas.iloc[i]['tua_uuid']
         spec_crop = spec[spec['tua_uuid'] == id]
         if len(spec_crop )>0:
-            schema = spec_crop['schema_namespace'].iloc[0]
+            schema = spec_crop['namespace'].iloc[0]
             #this check shouldn't be necessary but just in case
             if ('gumen' in schema.lower() and 'arg' in prefix) or ('ource' in schema.lower() and 'source' in prefix):
                 for s in range(spec_crop.shape[0]):

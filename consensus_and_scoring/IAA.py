@@ -93,7 +93,7 @@ def calc_scores(highlightfilename, config_path,  repCSV=None, schemaFile = None,
         if outDirectory[0] == '.':
             outDirectory == outDirectory[1:]
     #print("donegettingdata")
-    data = [["article_num", "article_sha256", "article_id","source_task_uuid", "tua_uuid", "schema_namespace","schema_sha256","question_Number", "answer_uuid", "question_type", "agreed_Answer", "coding_perc_agreement", "one_two_diff",
+    data = [["article_num", "article_sha256", "article_id","source_task_uuid", "tua_uuid", "namespace","schema_sha256","question_Number", "answer_uuid", "question_type", "agreed_Answer", "coding_perc_agreement", "one_two_diff",
              "highlighted_indices", "alpha_unitizing_score", "alpha_unitizing_score_inclusive", "agreement_score",
              "num_users", "num_answer_choices","target_text", 'question_text', 'answer_content']]
     #initialize rep

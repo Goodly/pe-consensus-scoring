@@ -103,7 +103,7 @@ def dataStorer(data_hunt_path, schema_path):
     if len(data_hunt.index) == 0:
         raise Exception(u"Datahunt {} dataframe has zero rows. Can't match to schema."
                         .format(data_hunt_path))
-    schema_name = data_hunt["schema_namespace"].iloc[0]
+    schema_name = data_hunt["namespace"].iloc[0]
     schema_sha = data_hunt["schema_sha256"].iloc[0]
     schema_topic = schemaData["topic_name"].iloc[0]
 
@@ -116,7 +116,7 @@ def dataStorer(data_hunt_path, schema_path):
         article_record = task_article.loc[uuid, :]
 
         # Set up Schemma
-        task_schema = schemaData[schemaData['schema_namespace'] == schema_name]
+        task_schema = schemaData[schemaData['namespace'] == schema_name]
         dependencies = create_dependencies_dict(task_schema)
         schema_id = getSchemaSha(task_schema)
 
@@ -266,7 +266,7 @@ def getSchemaSha(schemaData):
     return schemaData.iloc[0]['schema_sha256']
 
 def getSchemaNamespace(ansData):
-    return ansData['schema_namespace'].iloc[0]
+    return ansData['namespace'].iloc[0]
 
 
 ########### Helper Functions to Check DEPENDENCIES and PARENTS  ############

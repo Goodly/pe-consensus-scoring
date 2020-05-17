@@ -21,7 +21,7 @@ def make_iaa_human_readable(iaa_dir, report_dir):
     for i in range(1,len(iaa)):
         s_iaa = pd.read_csv(iaa[i])
         collapsed = collapsed.append(s_iaa)
-    useful_cols = collapsed[['article_num', 'schema_namespace', 'question_Number', 'question_type',
+    useful_cols = collapsed[['article_num', 'namespace', 'question_Number', 'question_type',
                              'agreed_Answer', 'coding_perc_agreement', 'alpha_unitizing_score', 'agreement_score',
                              'num_users', 'num_answer_choices', 'target_text', 'question_text', 'answer_content']]
     make_directory(report_dir)

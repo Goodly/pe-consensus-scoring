@@ -27,7 +27,7 @@ def weighting_alg(IAA_csv_file, credibility_weights_csv_file, weight_scale_csv, 
     IAA_csv = pd.read_csv(IAA_csv_file)
     #IndexError when the csv is empty
     try:
-        IAA_csv_schema_name = IAA_csv.schema_namespace.iloc[0]
+        IAA_csv_schema_name = IAA_csv.namespace.iloc[0]
     except IndexError:
         if IAA_csv.shape[0]<1:
             return
