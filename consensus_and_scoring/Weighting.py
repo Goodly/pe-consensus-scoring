@@ -97,8 +97,8 @@ def weighting_alg(IAA_csv_file, credibility_weights_csv_file, weight_scale_csv, 
     IAA_csv = IAA_csv.loc[IAA_csv.Answer_Number != -1]
     for_visualization = pd.DataFrame()
     #uncomment when we want to scale question scores based on answers to other questions
-    for task in np.unique(IAA_csv['quiz_task_uuid']):
-        task_IAA = IAA_csv[IAA_csv['quiz_task_uuid'] == task]
+    for task in np.unique(IAA_csv['source_task_uuid']):
+        task_IAA = IAA_csv[IAA_csv['source_task_uuid'] == task]
         scaled_cred_weights = scale_weights_csv(credibility_weights_csv, weight_scale_table, task_IAA,
                                                     IAA_csv_schema_type)
 
@@ -109,7 +109,7 @@ def weighting_alg(IAA_csv_file, credibility_weights_csv_file, weight_scale_csv, 
     for_visualization = for_visualization.append(new_csv)
 
 
-    column_names = ["article_num", "article_sha256", "article_id", "quiz_task_uuid", "Question_Number", "agreed_Answer",
+    column_names = ["article_num", "article_sha256", "article_id", "source_task_uuid", "Question_Number", "agreed_Answer",
                     "highlighted_indices", "Point_Recommendation", "agreement_adjusted_points", "Label", "target_text"]
 
     # if IAA_csv_schema_type == "Evidence":
