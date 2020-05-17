@@ -1,0 +1,13 @@
+Article ID,Credibility Indicator ID,Credibility Indicator Category,Credibility Indicator Name,Points,Indices of Label in Article,Start,End,target_text
+7d1747829a65cd4dad0faf30a704875a125e9decce3b3bcc82f151193923aad8,E0,Evidence,Statistical uncertainty,-0.6780719051126377,[],-1,-1,nan
+7d1747829a65cd4dad0faf30a704875a125e9decce3b3bcc82f151193923aad8,E0,Evidence,Statistical uncertainty,-0.5,[],-1,-1,nan
+7d1747829a65cd4dad0faf30a704875a125e9decce3b3bcc82f151193923aad8,E0,Evidence,Systematic uncertainty,-2.034215715337913,[],-1,-1,nan
+7d1747829a65cd4dad0faf30a704875a125e9decce3b3bcc82f151193923aad8,E0,Evidence,Systematic uncertainty,-1.3561438102252754,[],-1,-1,nan
+7d1747829a65cd4dad0faf30a704875a125e9decce3b3bcc82f151193923aad8,E0,Evidence,Open to evidence,-0.2924812503605781,[],-1,-1,nan
+7d1747829a65cd4dad0faf30a704875a125e9decce3b3bcc82f151193923aad8,E0,Evidence,Open to evidence,-0.40367746102880203,[],-1,-1,nan
+7d1747829a65cd4dad0faf30a704875a125e9decce3b3bcc82f151193923aad8,E0,Evidence,Open to evidence,-1.0,[],-1,-1,nan
+7d1747829a65cd4dad0faf30a704875a125e9decce3b3bcc82f151193923aad8,E0,Evidence,Open to evidence,-2.0,[],-1,-1,nan
+7d1747829a65cd4dad0faf30a704875a125e9decce3b3bcc82f151193923aad8,H0,Holistic,Vaguely Sourced,-1.0,[],-1,-1,nan
+7d1747829a65cd4dad0faf30a704875a125e9decce3b3bcc82f151193923aad8,H0,Holistic,Qualified Source,1.0,[],-1,-1,nan
+7d1747829a65cd4dad0faf30a704875a125e9decce3b3bcc82f151193923aad8,H0,Holistic,Qualified Source,2.0,[],-1,-1,nan
+,,,,,,,,

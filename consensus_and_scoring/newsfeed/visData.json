@@ -1,0 +1,42 @@
+[
+ {
+   "Title": "How Brain Science Could Determine the Midterms",
+   "Author": "Daniel Z. Lieberman, Michael E. Long",
+   "Date": "2018-11-04",
+   "ID": 100005,
+   "Article Link": "https://www.politico.com/magazine/story/2018/11/04/2018-elections-liberal-conservative-voting-brains-midterms-222186",
+   "Visualization Link": "https://s3-us-west-2.amazonaws.com/publiceditor.io/Articles/100005/Visualization100005.html",
+   "Plain Text": "https://s3-us-west-2.amazonaws.com/publiceditor.io/Articles/100005/100005SSSArticle.txt",
+   "Highlight Data": "https://s3-us-west-2.amazonaws.com/publiceditor.io/Articles/100005/VisualizationData_100005.csv"
+ },
+ {
+   "Title": "Certain doctors are more likely to create opioid addicts. Understanding why is key to solving the crisis.",
+   "Author": "Julia Belluz",
+   "Date": "2017-02-16",
+   "ID": 1712,
+   "Article Link": "https://www.vox.com/science-and-health/2017/2/16/14622198/doctors-prescribe-opioids-varies-patients-hooked",
+   "Visualization Link": "https://s3-us-west-2.amazonaws.com/publiceditor.io/Articles/1712/Visualization1712_Gold_Standard.html",
+   "Plain Text": "https://s3-us-west-2.amazonaws.com/publiceditor.io/Articles/1712/1712SSSArticle.txt",
+   "Highlight Data": "https://s3-us-west-2.amazonaws.com/publiceditor.io/Articles/1712/VisualizationData_1712.csv"
+ },
+ {
+   "Title": "Autism Starts Months before Symptoms Appear, Study Shows",
+   "Author": "Karen Weintraub",
+   "Date": "2017-02-15",
+   "ID": 1721,
+   "Article Link": "https://www.scientificamerican.com/article/autism-starts-months-before-symptoms-appear-study-shows/",
+   "Visualization Link": "https://s3-us-west-2.amazonaws.com/publiceditor.io/Articles/1721/Visualization1721.html",
+   "Plain Text": "https://s3-us-west-2.amazonaws.com/publiceditor.io/Articles/1721/1721SSSArticle.txt",
+   "Highlight Data": "https://s3-us-west-2.amazonaws.com/publiceditor.io/Articles/1721/VisualizationData_1721.csv"
+ },
+ {
+   "Title": "MRIs of astronauts prove that space messes with the human brain",
+   "Author": "Mike Wehner",
+   "Date": "2017-02-01",
+   "ID": 1737,
+   "Article Link": "https://bgr.com/2017/02/01/space-news-astronaut-brains/",
+   "Visualization Link": "https://s3-us-west-2.amazonaws.com/publiceditor.io/Articles/1737/Visualization1737.html",
+   "Plain Text": "https://s3-us-west-2.amazonaws.com/publiceditor.io/Articles/1737/1737SSSArticle.txt",
+   "Highlight Data": "https://s3-us-west-2.amazonaws.com/publiceditor.io/Articles/1737/VisualizationData_1737.csv"
+ }
+]

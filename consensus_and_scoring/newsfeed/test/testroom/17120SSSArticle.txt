@@ -1,0 +1,38 @@
+TITLE: Certain doctors are more likely to create opioid addicts. Understanding why is key to solving the crisis.
+How doctors prescribe opioids varies — and unlucky patients end up getting hooked.
+AUTHOR: By Julia Belluz@juliaoftorontojulia.belluz@voxmedia.com  
+DATE: Feb 16, 2017, 7:30am EST
+
+Patients who, by chance, saw a doctor that more frequently prescribed opioids were 30 percent more likely to become long-term users of painkillers. Priscilla Prentice/Shutterstock
+There’s a huge amount of discussion these days about the opioid epidemic in America: how the overdose rate got so shockingly high and what should be done to stop it.
+
+A common belief is that opioid addiction often begins with a single prescription from a doctor: Patients seek relief from some minor problem like a toothache or back pain, leave with a prescription, and wind up hooked.
+
+But there’s not much actual evidence tying doctors’ prescription patterns to individual patients’ long-term use of opioids or complications caused by the drugs later on.
+
+In a new study in the New England Journal of Medicine, researchers tried to tease out that link. And they found doctors’ prescribing habits — whether they give out opioids at a higher rate versus a lower rate — matter a lot.
+
+For the study, researchers from Harvard Medical School and the Harvard School of  Public Health looked at 375,000 Medicare patients who turned up in an emergency department for common reasons — such as falls, chest pain, ankle sprain, or back pain — and hadn’t used opioids in the six months before their hospital stay.
+
+The study authors then split the group into patients who happened to be assigned to doctors who prescribed a lot of opioids, and patients who met doctors who didn’t. This was a clever study design, since the major difference between the groups was how the doctors prescribed opioids, which allowed the researchers to figure out whether the prescribing patterns influenced patients’ long-term use of painkillers. (In the study, “long-term use” was described as six or more months of daily opioids in the 12-month period following the ER visit.)
+
+It turns out the doctors’ actions mattered hugely. The patients who saw the heavy opioid prescribers were three times more likely to receive a prescription for opioids compared with the patients who saw the more judicious opioid prescribers at the same hospital. The high prescribers doled out opioids to a quarter of their patients, while the more conservative prescribers only treated 7 percent with opioids on average, a variation the researchers thought was likely the result of inappropriate prescribing.
+
+
+“If our results represent a causal relationship, for every 48 patients prescribed a new opioid in the emergency department who might not otherwise use opioids, 1 will become a long-term user,” the researchers wrote.
+
+What’s more, the patients who, by chance, saw a doctor who more frequently prescribed the drugs were 30 percent more likely to become long-term users of painkillers. So the higher the chances of getting opioids at a single doctor visit, the higher the risk of becoming a regular user. These patients also had higher rates of opioid-related health complications like falls, fractures, constipation, and overdoses.
+
+In a separate analysis, the researchers looked at doctors who gave out high doses versus low doses of painkillers when they prescribe, and found the same effect: 30 percent higher use when patients saw higher dose prescribers, though the researchers also acknowledged this long-term use required prescriptions from other doctors after the ER visit.
+
+“When it comes to opioids, it certainly seems to be the case that [the doctor] you see matters,” said Anupam Jena, a professor at Harvard Medical School and an author on the study.
+
+He and his co-authors tried to figure out what caused some doctors to prescribe more than others, looking at details like age, gender, and where the doctor trained — but they didn’t find much. “It could be something as simple as prescribing the way that your mentors prescribed when you were training,” Jena explained.
+
+The research highlights the need to better educate doctors on how to safely prescribe these drugs, said lead  study author Michael  Barnett, an assistant professor of health policy and management at Harvard. There’s very little guidance in training and in medical practice on how much opioids to prescribe — which is why the profession is now galvanizing to change that.
+
+The findings were specific to emergency room doctors and Medicare recipients. But other researchers have found that in terms of sheer volume, family practice and internal medicine doctors, as well as nurse practitioners and physician assistants, prescribed the most opioids. ER doctors aren’t the heaviest opioid prescribers, as you can see in this chart of prescriptions per doctor. So the researchers can't say how the trend they found might be different for younger patients or those who see non-ER doctors.
+
+
+Top 25 Prescriber Specialties by Total Medicare Part D Claims for Schedule II Opioids in 2013. JAMA Internal Medicine
+For patients, Barnett said the message is clear: “Patients should ask their physicians, ‘What are the side effects of me taking this opioid and do you think my pain could be treated effectively [another way], because I know how dangerous these medicines can be.’”

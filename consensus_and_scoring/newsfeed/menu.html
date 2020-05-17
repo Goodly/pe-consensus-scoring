@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="navig.css">
+    <script src="https://d3js.org/d3.v4.min.js" charset="utf-8"></script>
+    <script src="sunburstCode.js" charset="utf-8"></script>
+    <script src="sequences.js" charset="utf-8"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+
+<body>
+    <h3>
+        Search
+    </h3>
+    <div>
+        <input id = "textField">
+        </input>
+        <button onclick = "checkInput1()">
+            search 
+        </button>
+    </div>
+
+    <h1> Select Filter </h1>
+
+    <div>
+        Author:
+        <select id="authorSelect">
+            <option value="None" selected>None</option>
+        </select>
+
+        From ...
+        <input id="fromDate" type="date" name="bday">
+
+        To ...
+        <input id="toDate" type="date" name="bday">
+    </div>
+
+    <!--
+    <div id = qualFilter>
+        <select>
+            <option value="None" selected>None</option>
+            <option value="Bloomsbury">Bloomsbury</option>
+            <option value="number_sales">Over 100 million copies</option>
+        </select>
+    </div>
+
+    <div id = quantFilter>
+        <select>
+            <option value="None" selected>None</option>
+            <option value="Alphabetical">Alphabetical</option>
+            <option value="Date Published">Date Published</option>
+        </select>
+    </div>
+
+    -->
+
+    <div href="#" class="active">
+        <div class = "header">
+            <center>
+                Scored Articles
+            </center>
+        </div>
+    </div>
+
+    <script src="ArticleReadv2.js"></script>
+
+    <table id="artlist" style="width:100%">
+            <tr>
+                <th onclick="sortTable(5)"> Sunburst</th>
+                <th onclick="sortTable(1)"> Title </th>
+                <th onclick="sortTable(2)"> Date </th>
+                <th onclick="sortTable(3)"> Author</th>
+                <th> Article </th>
+                <th hidden> Hidden </th>
+            </tr>
+    </table>
+
+</body>
+</html>

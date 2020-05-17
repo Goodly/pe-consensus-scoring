@@ -1,0 +1,143 @@
+<!--
+Copyright (C) <2018> <Goodly Labs>
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    -->
+
+<!DOCTYPE html>
+<head>
+    <title>D3 Visualization for Mock Data</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8"/>
+
+    <!-- Google Web Fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,500,600,700' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,500,600,700,800" rel="stylesheet" type='text/css'>
+
+    <!-- Relative Stylesheets -->
+    <link rel="stylesheet" href="scoredArticleCSS.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!--<link rel="stylesheet" href="file:///Users/Artemis1/node_modules/aos/dist/aos.css"> -->
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+
+    <!-- JS -->
+    <script src="https://d3js.org/d3.v4.min.js" charset="utf-8"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script type="text/javascript" src="sequencesRead.js"></script>
+</head>
+
+<!-- Begin body -->
+
+<body>
+
+<div class="base-grid">
+
+    <!-- Navigation -->
+
+    <div class="nav-wrap">
+        <div class="nav-light">
+            <ul class="nav-bar" role="navigation">
+                <li class="nav-brand"><a href="http://publiceditor.io/index.html" class="navlink">Public Editor</a></li>
+                <li><a href="http://publiceditor.io/about.html" class="navlink">About</a></li>
+                <li><a href="http://publiceditor.io/contact.html" class="navlink">Contact</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="nav-pad">
+
+        <!-- Gradient start -->
+        <div class="teal-gradient">
+            <div class="small-space"></div>
+        </div>
+
+        <!-- Grid start -->
+        <div class="homepage-section">
+
+            <div class="categories" id="categories">
+                <h2 class="dropTitle">Categories</h2>
+                <div class="extra-small-space"></div>
+            </div>
+
+
+            <!-- Content: Features 1, 2, 3-->
+            <div class="text article">
+                <h2>Example Article with Public Editor labels</h2>
+                <p class="p-article" id="textArticle">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque pretium elementum odio id egestas. Curabitur at dapibus sapien, nec consequat metus. Vivamus eget imperdiet elit, non aliquam purus. Nam ipsum eros, sagittis in cursus commodo, pretium vel magna. Cras dapibus blandit mi vitae condimentum. Fusce porttitor orci et ipsum dignissim euismod. Morbi sodales velit a tincidunt consectetur.
+
+                    Phasellus eget eleifend est. Sed quis arcu et orci gravida blandit pretium id risus. Nullam felis lorem, luctus id placerat eget, sollicitudin in purus. Sed ut nibh convallis, vulputate urna vitae, gravida leo. Maecenas non diam dapibus, volutpat ligula at, convallis neque. Vestibulum suscipit ex elit, a suscipit nulla vulputate et. Mauris pretium luctus accumsan. Donec facilisis libero et sem malesuada, eu placerat lectus congue. Proin cursus mauris tortor, in gravida ligula rhoncus et. Nunc nisl risus, auctor eu sapien nec, auctor vulputate orci. Nunc convallis pellentesque nunc. Proin arcu erat, posuere at sem sed, pretium hendrerit erat.
+
+                    Nam at metus luctus, dapibus ante at, tincidunt est. Aenean ullamcorper ex vehicula enim laoreet pharetra. Sed consequat pellentesque sapien et ornare. Duis vehicula dolor non tellus hendrerit tristique. Donec ut mauris bibendum, euismod sem imperdiet, laoreet est. In non lectus ornare, luctus nisi quis, ultricies erat. Nullam risus libero, efficitur vel tincidunt at, vulputate sit amet elit. Sed dignissim nisi consectetur blandit accumsan. Vestibulum eu massa placerat, ornare augue quis, lobortis nibh. Nunc nec nisi at turpis suscipit aliquam nec sed mi. Morbi vestibulum lacus ex, at gravida metus vehicula ut. Ut cursus est id eros commodo ultricies. Nulla eu posuere enim. Integer id diam sollicitudin, semper est nec, malesuada leo. Proin nec libero accumsan, porttitor metus pulvinar, tempor metus.
+
+                    Curabitur vel dapibus nibh. Praesent ullamcorper, nibh vitae ullamcorper bibendum, mi ex facilisis urna, ut lacinia magna elit at neque. Maecenas venenatis erat eu mauris aliquet, vitae varius felis tincidunt. Nulla sed sem eu turpis pulvinar ultricies. Morbi dapibus felis ac dictum cursus. Cras finibus mauris eget nisl blandit auctor. Duis fringilla lobortis dolor, et consequat arcu hendrerit quis. In a libero non turpis consectetur porttitor.
+
+                    Maecenas felis massa, congue ac tincidunt ornare, sodales at augue. Morbi dignissim dignissim arcu, sit amet dignissim massa tristique at. Vivamus a arcu id metus commodo interdum eu vitae erat. Vivamus consectetur justo id blandit pulvinar. Mauris rutrum elementum magna ac tempus. Proin sollicitudin ante at neque malesuada blandit. Integer sed magna ut massa gravida consequat. Praesent accumsan hendrerit ipsum vitae sollicitudin. Integer finibus enim ac risus viverra pharetra.
+
+                    Duis mattis vestibulum semper. Duis sollicitudin felis nec condimentum posuere. Integer tincidunt enim in lacus iaculis interdum. Nullam posuere lacinia aliquam. Pellentesque efficitur leo et tempor tincidunt. Etiam vestibulum feugiat nibh, vel maximus sapien finibus convallis. Maecenas odio dui, mollis at ipsum et, maximus lacinia velit. Nam eu diam facilisis massa sagittis condimentum. Maecenas maximus pretium consequat. Sed ut quam egestas quam volutpat placerat. Suspendisse potenti. Duis ex massa, ullamcorper et est sit amet, viverra semper nisi. Donec placerat maximus porta. Sed consequat semper dui et suscipit. Donec vitae nulla tortor.
+
+                    Nullam eget varius neque, nec ultricies nibh. Nunc fermentum sapien id dolor interdum, at iaculis quam viverra. Fusce sed tincidunt erat. Vestibulum ornare risus dolor, sed porta nisl hendrerit a. Nullam sit amet felis lorem. Phasellus feugiat dui in ipsum suscipit, id suscipit risus facilisis. Nunc sit amet purus laoreet, malesuada nulla ut, suscipit tellus. Maecenas placerat sit amet nunc ut porttitor. Proin at cursus lorem, ac aliquam erat. In at eros sit amet lorem tempus commodo. Sed et quam id sem molestie fringilla. Nulla mi urna, pulvinar tristique venenatis eu, elementum eget diam. Integer auctor commodo tempor. Nulla egestas fringilla ante, porttitor volutpat lectus sagittis non. Donec gravida, massa non scelerisque tincidunt, enim libero lobortis metus, et aliquet massa neque at mi. Quisque commodo neque sit amet convallis tincidunt.
+
+                    Cras rhoncus maximus nisl vitae dignissim. Aliquam elementum gravida molestie. In id lacus mauris. In ultricies viverra maximus. Aenean ut facilisis urna. In hac habitasse platea dictumst. Suspendisse lobortis placerat felis, vel pharetra sapien ultrices convallis. Nullam vehicula, turpis a malesuada pulvinar, lectus sem condimentum leo, et elementum magna velit in turpis. Morbi ut eros cursus, condimentum lectus non, aliquam orci. Suspendisse sed erat nisi. Maecenas quis dui nunc.
+
+                    Praesent viverra est non mauris scelerisque, quis finibus magna sodales. Aenean lobortis pulvinar nisl, lobortis iaculis nulla blandit eget. Sed a metus nec sem facilisis elementum. Aenean sit amet sagittis ex. Donec porttitor eros tristique vehicula tempus. Pellentesque quis diam semper, porttitor augue et, fermentum justo. Nam vitae sapien sit amet sem tincidunt efficitur sit amet vitae magna. Morbi aliquet vehicula cursus. Donec venenatis suscipit elementum. Suspendisse efficitur felis in cursus dapibus. Aenean non risus fermentum, aliquam leo eget, laoreet ex. Nulla eget vehicula turpis. Maecenas lacinia in massa at finibus. Etiam ipsum eros, viverra a scelerisque at, efficitur et libero.
+
+                    Ut tincidunt viverra condimentum. Aliquam faucibus vulputate tellus, ac dignissim ipsum gravida ac. Nunc scelerisque sit amet enim vitae maximus. Proin maximus volutpat erat, vitae molestie sem efficitur id. Donec molestie sapien eu sapien auctor tincidunt. Vestibulum sit amet ipsum sit amet elit aliquet imperdiet sit amet ac tortor. Fusce purus turpis, suscipit in eros id, maximus ultricies metus. Quisque a neque finibus, luctus lectus sed, sodales lectus. Integer eu diam sapien. Fusce consequat ut quam eget dignissim. Cras convallis id sem eget efficitur. Quisque semper, urna sed elementum sodales, tortor felis euismod leo, vel luctus orci est vel elit. Sed id gravida massa. Duis tincidunt orci pellentesque diam pretium porta. Phasellus consectetur ligula vel turpis ultrices varius.
+                </p>
+            </div>
+
+            <!-- Article end -->
+
+            <!-- Cred score begin -->
+            <div class="cred-score-container">
+                <script type="text/javascript">scoreArticle("1712");</script>
+                <div class="sunburst">
+                    <svg id="chart" viewBox="0 0 500 500"  preserveAspectRatio="xMidYMid meet">
+                    </svg>
+                </div>
+            </div>
+            <!-- Cred score end -->
+
+        </div>
+        <!-- Grid end -->
+
+        <div class="small-space"></div>
+
+        <!-- Footer -->
+
+        <div class="footer-span">
+            <div class="footer-flex-wrap">
+                <div class="footer-block">
+                    <ul>
+                        <li><b>System</b></li>
+                        <li><a href="./annotate.html" class="footer-link">How we generate scores</a></li>
+                        <li><a href="./d3.html" class="footer-link">Explore scored articles</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-block">
+                    <ul>
+                        <li><b>About</b></li>
+                        <li><a href="./about.html" class="footer-link">About</a></li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+        <!-- End footer -->
+
+    </div>
+</div>
+</body>
