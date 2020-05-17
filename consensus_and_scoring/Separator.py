@@ -38,11 +38,12 @@ def splitcsv(directory, pointsFile = None, viz_dir = None, textseparator = '//',
             sch_df = artdf[artdf['Schema'] == s]
             cred_cat = sch_df['Schema'].iloc[0]
             count = 0
-            cred_id = cred_cat[0]+str(count)
+
             #Following loop goes through each entry in the weights table
             for j in range(sch_df.shape[0]):
                 start = -1
                 end = -1
+                cred_id = cred_cat[0] + str(count)
                 cred_ind_name = sch_df['Label'].iloc[j]
                 indices = sch_df['highlighted_indices'].iloc[j]
                 points = sch_df['points'].iloc[j]
@@ -70,6 +71,7 @@ def splitcsv(directory, pointsFile = None, viz_dir = None, textseparator = '//',
                     #addend = pd.DataFrame([art_id, cred_id, cred_cat, cred_ind_name, points, indices, start, end])
                     addend = [art_id, cred_id, cred_cat, cred_ind_name, points, indices, start, end, text]
                     final_out.append(addend)
+                count +=1
                 #final_out = pd.concat([final_out, addend], axis =0, names = final_cols)
         final_out.append([None, None, None, None,None,None,None, None, None])
         path = directory + '/VisualizationData_' + art_id + '.csv'
