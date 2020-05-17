@@ -93,9 +93,9 @@ def calc_scores(highlightfilename, config_path,  repCSV=None, schemaFile = None,
         if outDirectory[0] == '.':
             outDirectory == outDirectory[1:]
     #print("donegettingdata")
-    data = [["article_num", "article_sha256", "article_id","source_task_uuid", "tua_uuid", "schema_namespace","schema_sha256","question_Number", "answer_uuid", "question_type", "agreed_Answer", "coding_perc_agreement", "one_two_diff",
+    data = [["article_num", "article_sha256", "article_id","article_filename","source_task_uuid", "tua_uuid", "schema_namespace","schema_sha256","question_Number", "answer_uuid", "question_type", "agreed_Answer", "coding_perc_agreement", "one_two_diff",
              "highlighted_indices", "alpha_unitizing_score", "alpha_unitizing_score_inclusive", "agreement_score",
-             "num_users", "num_answer_choices","target_text", 'question_text', 'answer_content']]
+             "num_users", "num_answer_choices","target_text", 'question_text', 'answer_text', 'answer_content']]
     #initialize rep
     # print('starting rep')
     # try:
@@ -114,6 +114,7 @@ def calc_scores(highlightfilename, config_path,  repCSV=None, schemaFile = None,
         task_id = task
         article_num = get_article_num(uberDict,task_id)
         article_sha = get_article_sha(uberDict, task_id)
+        article_filename = get_article_filename(uberDict, task_id)
         article_id =threshold_func+article_sha
         schema_namespace = get_schema(uberDict, task_id)
         schema_sha = get_schema_sha256(uberDict, task_id)
@@ -136,7 +137,9 @@ def calc_scores(highlightfilename, config_path,  repCSV=None, schemaFile = None,
                     question_type, num_choices = agreements[i][8], agreements[i][9]
                     num_users = agreements[i][5]
                     totalScore = calcAgreement(codingPercentAgreement, unitizingScore)
-                    answer_text = get_answer_content(uberDict,task, ques, agreements[i][0])
+                    #print(agreements)
+                    answer_content = get_answer_content(uberDict,task, ques, agreements[i][0])
+                    #answer_text = get_answer_text(uberDict, task, ques, agreements[i][0])
                     # parent_data, units, unitizingScore, inclusiveUnitizing = evalDependency(uberDict, task, parentData,
                     #                                                                         ques, winner, units,
                     #                                                                         unitizingScore, inclusiveUnitizing)
@@ -149,10 +152,10 @@ def calc_scores(highlightfilename, config_path,  repCSV=None, schemaFile = None,
                     units = units.replace(' ', ', ')
                     #TODO: when separate topics implemented; replace the 1 with th the topicnum
                     ans_uuid = get_answer_uuid(schema_sha, 1, ques_num, winner, schemaFile)
-                    data.append([article_num, article_sha, article_id, task_id, tua_uuid, schema_namespace, schema_sha, ques_num, ans_uuid, agreements[i][8], winner,
+                    data.append([article_num, article_sha, article_id, article_filename, task_id, tua_uuid, schema_namespace, schema_sha, ques_num, ans_uuid, agreements[i][8], winner,
                                  codingPercentAgreement, agreements[i][7], units,
                                  unitizingScore, inclusiveUnitizing, totalScore, num_users, agreements[i][9],agreements[i][6],
-                                question_text, answer_text])
+                                question_text,  answer_content])
 
             else:
                 #winner, units, uScore, iScore, highScore, numUsers, selectedText, firstSecondScoreDiff
@@ -170,7 +173,8 @@ def calc_scores(highlightfilename, config_path,  repCSV=None, schemaFile = None,
                 # bin chance odds and chance odds are deprecated and aren't being output; code to calculate them being elf there in cas eit's useful in the future
                 #bin_chance_odds = oddsDueToChance(codingPercentAgreement,num_users=num_users, num_choices=2)
                 #chance_odds = oddsDueToChance(codingPercentAgreement,num_users=num_users, num_choices=num_choices)
-                answer_text = get_answer_content(uberDict, task, ques, agreements[0])
+                answer_content = get_answer_content(uberDict, task, ques, agreements[0])
+                #answer_text = get_answer_text(uberDict, task, ques, agreements[0])
                 totalScore = calcAgreement(codingPercentAgreement, unitizingScore)
                 #ques_num = parse(ques, 'Q')
                 ques_num = ques
@@ -178,11 +182,11 @@ def calc_scores(highlightfilename, config_path,  repCSV=None, schemaFile = None,
                 units = units.replace(' ', ', ')
                 ans_uuid = get_answer_uuid(schema_sha, 1, ques_num, winner, schemaFile)
 
-                data.append([article_num, article_sha, article_id, task_id,tua_uuid,schema_namespace, schema_sha,
+                data.append([article_num, article_sha, article_id, article_filename, task_id,tua_uuid,schema_namespace, schema_sha,
                              ques_num, ans_uuid, agreements[8], winner, codingPercentAgreement, agreements[7],
                              units, unitizingScore, inclusiveUnitizing,
                              totalScore, num_users, agreements[9], selectedText,
-                             question_text, answer_text])
+                             question_text, answer_content])
 
 
     # push out of womb, into world
