@@ -42,8 +42,8 @@ def eval_triage_scoring(tua, pointsdf, scoring_dir, threshold_func='logis_0', re
         num_vague_quals = 0
         num_vague_sources = 0
         if art_sources is not None:
-            for task in art_sources['quiz_task_uuid'].unique():
-                task_df = art_sources[art_sources['quiz_task_uuid'] == task]
+            for task in art_sources['source_task_uuid'].unique():
+                task_df = art_sources[art_sources['source_task_uuid'] == task]
                 task_df['question_Number'] = task_df['question_Number'].apply(int)
                 # handle Q2 (koalifications)
                 # Can't be done on weightin.py because has to count number of occurrences of the same error.

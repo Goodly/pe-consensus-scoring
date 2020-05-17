@@ -27,7 +27,7 @@ def importData(path, out_path):
     #Quang Gold--Duplicate Data from the real Quang
     #excludedUsers.append('40bbbf7e-a77b-498d-bb44-2ef6601061ef')
     article_shas = np.unique(data['article_sha256'])
-    out = [['article_filename','article_sha256', 'task_uuid', 'namespace','start_pos', 'end_pos', 'topic_name', 'case_number', 'target_text']]
+    out = [['article_filename','article_sha256', 'source_task_uuid', 'namespace','start_pos', 'end_pos', 'topic_name', 'case_number', 'target_text']]
     for a in article_shas:
         print('---------------------------')
         art_data = data.loc[data['article_sha256'] == a]
@@ -54,7 +54,7 @@ def importData(path, out_path):
                 starts = [int(s) for s in cat_data['start_pos'].tolist()]
                 ends = [int(e) for e in cat_data['end_pos'].tolist()]
                 users = cat_data['contributor_uuid'].tolist()
-                task_uuids = cat_data['hg_tua_uuid'].tolist()
+                task_uuids = cat_data['highlight_task_uuid'].tolist()
                 flags = cat_data['case_number'].tolist()
                 namespaces = cat_data['namespace'].tolist()
 

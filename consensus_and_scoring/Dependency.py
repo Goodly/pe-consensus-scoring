@@ -55,7 +55,7 @@ def handleDependencies(schemaPath, iaaPath, out_dir):
     schemData = pd.read_csv(schemaPath, encoding = 'utf-8')
     iaaData = pd.read_csv(iaaPath,encoding = 'utf-8')
     dependencies = create_dependencies_dict(schemData)
-    tasks = np.unique(iaaData['quiz_task_uuid'].tolist())
+    tasks = np.unique(iaaData['source_task_uuid'].tolist())
     iaaData['prereq_passed'] = iaaData['agreed_Answer']
 
     iaaData = iaaData.sort_values(['question_Number'])
@@ -64,7 +64,7 @@ def handleDependencies(schemaPath, iaaPath, out_dir):
     for q in range(len(iaaData)):
         qnum = iaaData['question_Number'].iloc[q]
         ans = iaaData['agreed_Answer'].iloc[q]
-        tsk = iaaData['quiz_task_uuid'].iloc[q]
+        tsk = iaaData['source_task_uuid'].iloc[q]
         iaaData['prereq_passed'].iloc[q] = checkPassed(qnum, dependencies, iaaData, tsk, ans)
     iaaData = iaaData[iaaData['prereq_passed'] == True]
 
@@ -73,7 +73,7 @@ def handleDependencies(schemaPath, iaaPath, out_dir):
 
 
     for t in tasks:
-        iaaTask = iaaData[iaaData['quiz_task_uuid'] == t]
+        iaaTask = iaaData[iaaData['source_task_uuid'] == t]
         #childQuestions
         #TODO: speed this up by only checking the
         for ch in dependencies.keys():
@@ -181,7 +181,7 @@ def checkPassed(qnum, dependencies, iaadata, task, answer):
     """
     checks if the question passed and if a prerequisite question passed
     """
-    iaatask = iaadata[iaadata['quiz_task_uuid'] == task]
+    iaatask = iaadata[iaadata['source_task_uuid'] == task]
     qdata = iaatask[iaatask['question_Number'] == qnum]
     if not checkIsVal(answer):
         return False

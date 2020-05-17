@@ -110,7 +110,7 @@ def pointSort(scoring_directory, input_dir = None, weights = None,
     #BUG: Someehere in there we're getting duplicates of everything: the following line shouldprevent it from hapening but should
     #investigate the root
 
-    weights = weights.drop_duplicates(subset=['quiz_task_uuid', 'schema_sha256', 'Answer_Number', 'Question_Number'])
+    weights = weights.drop_duplicates(subset=['source_task_uuid', 'schema_sha256', 'Answer_Number', 'Question_Number'])
     if reporting:
         weights.to_csv(scoring_directory + '/SortedPts.csv')
     return tuas, weights, tuas_raw
@@ -296,7 +296,7 @@ def add_indices_column(all_tuas):
 def collapse_all_tuas(all_tuas, has_arg, arg_spec, has_source, source_spec, reporting = False):
     """
     collapses the alltuas dataframe to only include the rows that have a corresponding argument/source relevance task
-    quiz_task_uuid is unique and is shared by the allTUAs csv and all the IAA csvs.
+    source_task_uuid is unique and is shared by the allTUAs csv and all the IAA csvs.
     """
     #get list of all the task_uuids we care about
     collapsed = None
