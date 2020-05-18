@@ -19,7 +19,7 @@ if __name__ == '__main__':
     ]
     for filename in test_messages:
         file_path = os.path.join("../tests", filename)
-        dest_dirname = "../test_iaa_"
+        dest_dirname = "../data_iaa_"
         dest_dirname += filename[len("request_consensus_Covid_"):-len(".json")]
         if not os.path.exists(dest_dirname):
             os.makedirs(dest_dirname)
