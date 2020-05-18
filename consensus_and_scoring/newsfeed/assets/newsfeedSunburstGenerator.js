@@ -70,12 +70,13 @@ d3.csv(dataFileName, function(error, data) {
   if (error) throw error;
   delete data["columns"];
   data = addDummyData(data);
-  var root = convertToHierarchy(data);
   
+  var root = convertToHierarchy(data);
+  condense(root);
   ROOT = root;
   totalScore = 100 + scoreSum(root);
 
-    root.sum(function(d) {
+  root.sum(function(d) {
     return Math.abs(parseInt(d.data.Points));
   });
 
@@ -356,9 +357,10 @@ function scoreSum(d) {
         var sum = 0;
         for (var i = 0; i < d.children.length; i++) {
             sum += parseFloat(scoreSum(d.children[i]));
+            console.log(sum);
         }
         if (d.height == 2) {
-            articleScore = parseInt(sum);
+            articleScore = parseFloat(sum);
             return Math.round(articleScore);
         }
         return Math.round(sum);
