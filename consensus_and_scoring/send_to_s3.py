@@ -33,7 +33,7 @@ def send_s3(viz_dir, text_dir, metadata_dir, s3_bucket, s3_prefix):
 
     print("Sending visualization files to S3.")
     # Retrieve HTML template.
-    with open("visualizations/Visualization.html", "r") as f:
+    with open("visualizations_src/Visualization.html", "r") as f:
         html_source = f.read()
         html_template = Template(html_source)
 
@@ -66,7 +66,7 @@ def send_s3(viz_dir, text_dir, metadata_dir, s3_bucket, s3_prefix):
             send_command(html_file.name, s3_bucket, html_s3_key,
                          wait=True, ACL='public-read')
 
-    send_assets("visualizations/assets", s3_bucket, "visualizations/assets")
+    send_assets("visualizations_src/assets", s3_bucket, "visualizations/assets")
 
     newsfeed_items = generate_newsfeed_items(viz_to_send, metadata_dir)
     send_newsfeed_update(newsfeed_items, s3_bucket, "newsfeed/visData.json")
@@ -102,7 +102,7 @@ def generate_newsfeed_items(viz_to_send, metadata_dir):
         metadata = {}
         metadata_filepath = os.path.join(metadata_dir, viz['sha_256'] + ".metadata.json")
         if os.path.exists(metadata_filepath):
-            print("Opening metadata {}".format(metadata_filepath))
+            print("Merging metadata from {}".format(metadata_filepath))
             with open(metadata_filepath, "r") as f:
                 metadata = json.load(f)
                 extra = metadata.get('extra', {})
