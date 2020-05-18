@@ -1,13 +1,32 @@
 import os
 import json
+import re
 from string import Template
 import tempfile
 from io import StringIO
 import mimetypes
 mimetypes.init()
+from requests.compat import urlparse
 import boto3
 
 s3 = boto3.resource('s3')
+
+def get_s3_config(s3_url):
+    s3_parts = urlparse(s3_url)
+    if s3_parts.scheme != "s3":
+        raise Exception("{} must be an S3 URL with protocol s3://".format(s3_url))
+    s3_bucket = s3_parts.netloc
+    s3_prefix = s3_parts.path.lstrip('/')
+    return s3_bucket, s3_prefix
+
+unsafe_chars = re.compile(r"[^-_.0-9a-zA-Z]")
+
+def s3_safe_path(unsafe_name, fallback):
+    safe_name = re.sub(unsafe_chars, '-', unsafe_name)
+    # if the name consisted entirely of unsafe characters, fallback to id.
+    if safe_name == "":
+        safe_name = re.sub(unsafe_chars, '-', fallback)
+    return safe_name
 
 def send_s3(viz_dir, text_dir, metadata_dir, s3_bucket, s3_prefix):
     viz_to_send = collect_files_to_send(viz_dir, text_dir)
@@ -23,12 +42,12 @@ def send_s3(viz_dir, text_dir, metadata_dir, s3_bucket, s3_prefix):
         viz_data_filename_s3 = 'viz_data.csv'
         data_s3_key = os.path.join(s3_prefix, viz['article_shorter'], viz_data_filename_s3)
         viz['data_s3_key'] = data_s3_key
-        send_command(viz['data_filepath'], s3_bucket, data_s3_key)
+        send_command(viz['data_filepath'], s3_bucket, data_s3_key, ACL='public-read')
 
         article_filename_s3 = 'article.txt'
         article_s3_key = os.path.join(s3_prefix,  viz['article_shorter'], article_filename_s3)
         viz['article_s3_key'] = article_s3_key
-        send_command(viz['article_filepath'], s3_bucket, article_s3_key)
+        send_command(viz['article_filepath'], s3_bucket, article_s3_key, ACL='public-read')
 
         html_s3_key = os.path.join(s3_prefix,  viz['article_shorter'], 'visualization.html')
         viz['html_s3_key'] = html_s3_key
@@ -44,7 +63,8 @@ def send_s3(viz_dir, text_dir, metadata_dir, s3_bucket, s3_prefix):
             encoding="utf-8", delete=True) as html_file:
             html_file.write(html_output)
             html_file.seek(0, os.SEEK_SET)
-            send_command(html_file.name, s3_bucket, html_s3_key, wait=True)
+            send_command(html_file.name, s3_bucket, html_s3_key,
+                         wait=True, ACL='public-read')
 
     send_assets("visualizations/assets", s3_bucket, "visualizations/assets")
 
@@ -107,7 +127,11 @@ def send_newsfeed_update(newsfeed_items, s3_bucket, newsfeed_s3_key):
         encoding="utf-8", delete=True) as newsfeed_file:
         newsfeed_file.write(newsfeed_json)
         newsfeed_file.seek(0, os.SEEK_SET)
-        send_command(newsfeed_file.name, s3_bucket, newsfeed_s3_key, wait=True)
+        send_command(newsfeed_file.name, s3_bucket, newsfeed_s3_key,
+                     wait=True, ACL='public-read')
+    send_assets("newsfeed/assets", s3_bucket, "newsfeed/assets")
+    send_command("newsfeed/newsfeed.html", s3_bucket, "newsfeed",
+                 wait=True, ACL='public-read')
 
 def send_assets(asset_dir, s3_bucket, s3_prefix):
     for dirpath, dirnames, filenames in os.walk(asset_dir):
@@ -117,9 +141,10 @@ def send_assets(asset_dir, s3_bucket, s3_prefix):
             common_path = os.path.commonpath([asset_dir, dirpath])
             subpath = dirpath[len(common_path):].lstrip('/')
             asset_s3_key = os.path.join(s3_prefix, subpath, asset_name)
-            send_command(source_path, s3_bucket, asset_s3_key)
+            send_command(source_path, s3_bucket, asset_s3_key,
+                         ACL='public-read')
 
-def send_command(source_filename, s3_bucket, s3_key, wait=False):
+def send_command(source_filename, s3_bucket, s3_key, wait=False, ACL='private'):
     print("Pushing s3://{}/{}".format(s3_bucket, s3_key))
     s3_obj = s3.Object(s3_bucket, s3_key)
     (content_type, encoding_type) = mimetypes.guess_type(source_filename, strict=False)
@@ -127,7 +152,7 @@ def send_command(source_filename, s3_bucket, s3_key, wait=False):
         s3_obj.put(
             Body=file_obj,
             ContentType=content_type,
-            ACL='public-read',
+            ACL=ACL,
         )
         if wait:
             s3_obj.wait_until_exists()

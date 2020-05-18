@@ -9,7 +9,6 @@ import tempfile
 import gzip
 import shutil
 import unicodecsv
-#import pathlib # Python >= 3.5
 
 import boto3
 from botocore.exceptions import ClientError
@@ -17,10 +16,16 @@ from botocore.exceptions import ClientError
 from iaa_only import iaa_only
 from TriagerScoring import importData
 from master import calculate_scores_master
+from send_to_s3 import get_s3_config, s3_safe_path, send_command
 
 # Do setup outside of listener
 sqs = boto3.resource('sqs')
 s3 = boto3.resource('s3')
+
+S3_CONSENSUS_OUTPUT = os.getenv('S3_CONSENSUS_OUTPUT', 's3://dev.publiceditor.io/consensus')
+consensus_s3_bucket, consensus_s3_prefix = get_s3_config(S3_CONSENSUS_OUTPUT)
+S3_VISUALIZATION_OUTPUT = os.getenv('S3_VISUALIZATION_OUTPUT', 's3://dev.publiceditor.io/visualizations')
+viz_s3_bucket, viz_s3_prefix = get_s3_config(S3_VISUALIZATION_OUTPUT)
 
 def lambda_handler(event, context):
     """
@@ -44,12 +49,15 @@ def lambda_handler(event, context):
                     if message_action == "notify_all" and message_version == "1":
                         handle_notify_all(body, parent_dirname)
                     if message_action == "request_consensus" and message_version == "1":
-                        handle_request_consensus(body, parent_dirname)
+                        logger.info("---BEGIN request_consensus handler---")
+                        message = handle_request_consensus(body, parent_dirname)
+                        response_sqs_url = body.get('response_sqs_url', '')
+                        send_pipeline_message(response_sqs_url, message)
+                        logger.info("---END request_consensus handler---")
 
     return {'done': True}
 
 def handle_request_consensus(body, parent_dirname):
-    logger.info("---BEGIN request_consensus handler---")
     project_name = body.get('project_name', '')
     project_uuid = body.get('project_uuid', '')
     task_type = body.get('task_type', '')
@@ -62,13 +70,18 @@ def handle_request_consensus(body, parent_dirname):
     retrieve_file_list(negative_tasks, negative_tasks_dir)
 
     if task_type == "HLTR":
-        handle_highlighter_consensus(body, parent_dirname)
+        consensus_dir = handle_highlighter_consensus(body, parent_dirname)
     elif task_type == "QUIZ":
-        handle_datahunt_consensus(body, parent_dirname)
+        consensus_dir = handle_datahunt_consensus(body, parent_dirname)
     else:
         raise Exception(u"request_consensus: Project '{}' has unknown task_type '{}'."
                         .format(project_name, task_type))
-    logger.info("---END request_consensus handler---")
+    fallback_path = "00000000-0000-0000-0000-000000000000_NoProject"
+    project_path = s3_safe_path(project_uuid + "_" + project_name, fallback_path)
+    project_s3_prefix = os.path.join(consensus_s3_prefix, project_path)
+    s3_locations = send_consensus_files(consensus_dir, consensus_s3_bucket, project_s3_prefix)
+    message = build_consensus_message(body, s3_locations)
+    return message
 
 def handle_highlighter_consensus(body, parent_dirname):
     highlighters = body.get('Highlighters', [])
@@ -82,6 +95,7 @@ def handle_highlighter_consensus(body, parent_dirname):
             input_file = os.path.join(highlighters_dir, filename)
             output_file = os.path.join(output_dir, "S_IAA_" + filename)
             importData(input_file, output_file)
+    return output_dir
 
 def handle_datahunt_consensus(body, parent_dirname):
     schemas = body.get('Schemas', [])
@@ -108,6 +122,54 @@ def handle_datahunt_consensus(body, parent_dirname):
         scoring_dir = scoring_dir,
         threshold_func = 'raw_30'
     )
+    return scoring_dir
+
+def send_consensus_files(consensus_dir, consensus_s3_bucket, consensus_s3_prefix):
+    s3_locations = []
+    for filename in os.listdir(consensus_dir):
+        if filename.endswith(".csv") or filename.endswith(".csv.gz"):
+            src_path = os.path.join(consensus_dir, filename)
+            dest_key = os.path.join(consensus_s3_prefix, filename)
+            # Must wait for transfer because the parent dir will be deleted on exit.
+            send_command(src_path, consensus_s3_bucket, dest_key, wait=True)
+            s3_locations.append({
+                "bucket_name": consensus_s3_bucket,
+                "key": dest_key,
+                "filename": filename,
+            })
+    return s3_locations
+
+def build_consensus_message(body, s3_locations):
+    message = {
+        'Action': 'consensus_tags',
+        'Version': '1',
+        'Tags': s3_locations,
+        'project_name': body.get('project_name', ''),
+        'project_uuid': body.get('project_uuid', ''),
+        'task_type': body.get('task_type', ''),
+    }
+    message['log_message'] = (u"{} for '{}'"
+        .format(message['Action'], message['project_name'])
+    )
+    return message
+
+def send_pipeline_message(response_sqs_url, message):
+    # Expect SQS URL like
+    # https://sqs.us-west-2.amazonaws.com/012345678901/pe-task-queues-InputQueue
+    response = None
+    log_message = message.get('log_message', '')
+    if response_sqs_url:
+        logger.info("Sending message {} to output queue {}."
+                    .format(log_message, response_sqs_url))
+        queue = sqs.Queue(response_sqs_url)
+        response = queue.send_message(
+            MessageBody=json.dumps(message),
+        )
+    else:
+        logger.warn("send_pipeline_message can't send message '{}' "
+                    "because no output queue was specified."
+                    .format(log_message))
+    return response
 
 def handle_notify_all(body, parent_dirname):
     logger.info("------BEGIN notify_all handler-------")
@@ -144,8 +206,6 @@ def handle_notify_all(body, parent_dirname):
     rep_file = './UserRepScores.csv'
     threshold_function = 'raw_30'
     # outputs
-    s3_bucket = 'articles.publiceditor.io'
-    s3_prefix = 'visualizations'
     output_dir = tempfile.mkdtemp(dir=parent_dirname)
     scoring_dir = tempfile.mkdtemp(dir=parent_dirname)
     viz_dir = tempfile.mkdtemp(dir=parent_dirname)
@@ -158,8 +218,8 @@ def handle_notify_all(body, parent_dirname):
         scoring_dir = scoring_dir,
         repCSV = rep_file,
         viz_dir = viz_dir,
-        s3_bucket = s3_bucket,
-        s3_prefix = s3_prefix,
+        s3_bucket = viz_s3_bucket,
+        s3_prefix = viz_s3_prefix,
         threshold_func = threshold_function,
         tua_dir = tags_dir,
         metadata_dir = metadata_dir
