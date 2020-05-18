@@ -9,9 +9,6 @@ A rough roadmap of the contents:
 **/
 
 
-
-
-
 //var dataFileName = "VisualizationData_1712.csv";
 var chartDiv = document.getElementById("chart");
 
@@ -73,11 +70,12 @@ d3.csv(dataFileName, function(error, data) {
   
   var root = convertToHierarchy(data);
   condense(root);
+  console.log(root);
   ROOT = root;
   totalScore = 100 + scoreSum(root);
 
   root.sum(function(d) {
-    return Math.abs(parseInt(d.data.Points));
+    return Math.abs(parseFloat(d.data.Points));
   });
 
 //Fill in the colors
@@ -92,7 +90,7 @@ svg.selectAll("path")
         if (d.height == 0 || d.height == 2) {
             return "none";
         }  
-        });
+    });
 
 
 //Setting the center circle to the score
@@ -357,7 +355,6 @@ function scoreSum(d) {
         var sum = 0;
         for (var i = 0; i < d.children.length; i++) {
             sum += parseFloat(scoreSum(d.children[i]));
-            console.log(sum);
         }
         if (d.height == 2) {
             articleScore = parseFloat(sum);
