@@ -50,9 +50,9 @@ def lambda_handler(event, context):
                         handle_notify_all(body, parent_dirname)
                     if message_action == "request_consensus" and message_version == "1":
                         logger.info("---BEGIN request_consensus handler---")
-                        message = handle_request_consensus(body, parent_dirname)
+                        response = handle_request_consensus(body, parent_dirname)
                         response_sqs_url = body.get('response_sqs_url', '')
-                        send_pipeline_message(response_sqs_url, message)
+                        sqs_response = send_pipeline_message(response_sqs_url, response)
                         logger.info("---END request_consensus handler---")
 
     return {'done': True}
@@ -166,7 +166,7 @@ def send_pipeline_message(response_sqs_url, message):
             MessageBody=json.dumps(message),
         )
     else:
-        logger.warn("send_pipeline_message can't send message '{}' "
+        logger.warn("send_pipeline_message can't send message {} "
                     "because no output queue was specified."
                     .format(log_message))
     return response
