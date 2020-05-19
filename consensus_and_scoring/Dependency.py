@@ -42,6 +42,9 @@ def eval_dependency(directory, iaa_dir, schema_dir, out_dir):
                 break
         if not matched_schema:
             raise NameError("No schema matching file:", h)
+    schema = temp
+    print(schema)
+    print(iaa)
     out_dir = make_directory(out_dir)
     ins = []
     for i in range(len(iaa)):
@@ -55,6 +58,7 @@ def unpack_dependency_ins(input):
 def handleDependencies(schemaPath, iaaPath, out_dir):
     schemData = pd.read_csv(schemaPath, encoding = 'utf-8')
     iaaData = pd.read_csv(iaaPath,encoding = 'utf-8')
+    assert schemData['namespace'].iloc[0] == iaaData['namespace'].iloc[0], "schema IAA mismatch_"+schemData['namespace'].iloc[0]+"\\/"+iaaData['namespace'].iloc[0]
     dependencies = create_dependencies_dict(schemData)
     tasks = np.unique(iaaData['source_task_uuid'].tolist())
     iaaData['prereq_passed'] = iaaData['agreed_Answer']
@@ -67,9 +71,10 @@ def handleDependencies(schemaPath, iaaPath, out_dir):
         ans = iaaData['agreed_Answer'].iloc[q]
         tsk = iaaData['source_task_uuid'].iloc[q]
         iaaData['prereq_passed'].iloc[q] = checkPassed(qnum, dependencies, iaaData, tsk, ans)
+    iaaData = iaaData.sort_values(["article_num",'prereq_passed','question_Number','answer_text'])
+
     iaaData = iaaData[iaaData['prereq_passed'] == True]
 
-    iaaData = iaaData.sort_values("article_num")
 
 
 
@@ -151,6 +156,7 @@ def handleDependencies(schemaPath, iaaPath, out_dir):
                     iaaData.at[row, 'highlighted_indices'] = json.dumps(indices)
                     iaaData.at[row, 'alpha_unitizing_score'] = alpha
                     iaaData.at[row, 'alpha_unitizing_score_inclusive'] = alphainc
+
     print('exporting to csv')
     path, name = get_path(iaaPath)
     outputpath  = out_dir+'Dep_'+name
@@ -166,6 +172,8 @@ def parseList(iterable):
         addendum = indicesFromString(iterable[i])
         out.append(addendum)
     return out
+
+
 def checkNeedsLove(df, qNum):
     #Checks if the question's parent prompts users for a highlight
     qdf = df[df['question_Number'] == qNum]

@@ -157,7 +157,7 @@ def calc_scores(highlightfilename, config_path,  repCSV=None, schemaFile = None,
                     ans_uuid = get_answer_uuid(schema_sha, 1, ques_num, winner, schemaFile)
                     data.append([article_num, article_sha, article_id, article_filename, task_id, tua_uuid, schema_namespace, schema_sha, ques_num, ans_uuid, agreements[i][8], winner,
                                  codingPercentAgreement, agreements[i][7], units,
-                                 unitizingScore, inclusiveUnitizing, totalScore, num_users, agreements[i][9],agreements[i][6],
+                                 unitizingScore, inclusiveUnitizing, totalScore, num_users, num_choices,selectedText,
                                 question_text,  answer_content])
 
             else:
@@ -186,9 +186,9 @@ def calc_scores(highlightfilename, config_path,  repCSV=None, schemaFile = None,
                 ans_uuid = get_answer_uuid(schema_sha, 1, ques_num, winner, schemaFile)
 
                 data.append([article_num, article_sha, article_id, article_filename, task_id,tua_uuid,schema_namespace, schema_sha,
-                             ques_num, ans_uuid, agreements[8], winner, codingPercentAgreement, agreements[7],
+                             ques_num, ans_uuid, question_type, winner, codingPercentAgreement, agreements[7],
                              units, unitizingScore, inclusiveUnitizing,
-                             totalScore, num_users, agreements[9], selectedText,
+                             totalScore, num_users, num_choices, selectedText,
                              question_text, answer_content])
 
 
