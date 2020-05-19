@@ -3,7 +3,7 @@ import pandas as pd
 from dataV3 import get_indices_hard
 from dataV3 import  get_path
 from Separator import  indicesToStartEnd
-def formatDirectory(path, outdir = None):
+def exportDataHuntTags(path, outdir = None):
     if outdir ==None:
         outdir = path
     dep_iaa = []
@@ -40,6 +40,7 @@ def formatFile(filePath, outdir):
             print("text not found")
             texts = 'scdscs//sxasx//ds/csd//ds/cs/cds//cdscs//cdscsd//cdscsd//cdscsd//cdscsa//sdcadscsa//dsfads//adsfa/ds//afdsfas////////afdsfsa//dfasd//'
         texts = texts.split('//')
+        #print(starts, ends, texts)
         for j in range(len(starts)):
             newrow = row
             newrow['case_number'] = 0 #no case numbers in datahunts
@@ -53,6 +54,6 @@ def formatFile(filePath, outdir):
     out.to_csv(outdir+"Adj_"+name, encoding='utf-8')
     return
 
-
-formatDirectory('../data/out_scoring/')
+if __name__ == '__main__':
+    exportDataHuntTags('../data/out_scoring_evi/')
 

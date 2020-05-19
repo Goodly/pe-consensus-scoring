@@ -61,20 +61,25 @@ def eval_triage_scoring(tua, pointsdf, scoring_dir, threshold_func='logis_0', re
                         points = 1
                         desc = 'Qualified Source'
                         q2scored = True
-                    # q2.a3
-                    elif ans == '3':
+                    # q2.a5
+                    elif ans == '5':
                         points = -1
                         num_vague_quals += 1
                         desc = 'Vaguely Sourced'
                         q2scored = True
+                    elif ans == '6':
+                        points = -2
+                        num_vague_quals += 1
+                        desc = 'Unqualified Source'
+                        q2scored = True
                     # q2.a7
                     elif ans == '7':
-                        points = -1
+                        points = -3
                         desc = 'Unqualified Source'
                         q2scored = True
                     # q2.a8
                     elif ans == '8':
-                        points = -2
+                        points = -5
                         desc = 'Unqualified Source'
                         q2scored = True
                     if q2scored:

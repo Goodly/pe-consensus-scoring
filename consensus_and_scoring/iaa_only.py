@@ -2,7 +2,7 @@ import argparse
 
 from IAA import calc_agreement_directory
 from Dependency import eval_dependency
-from formatForAdjudication import formatDirectory
+from export_tags import exportDataHuntTags
 def iaa_only(directory, config_path, use_rep = False, repCSV = None, iaa_dir = None, schema_dir = None,
              scoring_dir = None, adjud_dir = None, threshold_func = 'raw_30'):
     """
@@ -32,7 +32,7 @@ def iaa_only(directory, config_path, use_rep = False, repCSV = None, iaa_dir = N
     if adjud_dir == None:
         adjud_dir = scoring_dir
     eval_dependency(directory, iaa_dir, schema_dir, out_dir=scoring_dir)
-    formatDirectory(scoring_dir, adjud_dir)
+    exportDataHuntTags(scoring_dir, adjud_dir)
     return scoring_dir
 
 def load_args():
@@ -77,8 +77,8 @@ if __name__ == '__main__':
     use_rep = False
     threshold_function = 'raw_30'
     # output
-    output_dir = '../data/out_iaa/'
-    scoring_dir = '../data/out_scoring/'
+    output_dir = '../data/datahunts/'
+    scoring_dir = '../data/datahunts/'
     if args.input_dir:
         input_dir = args.input_dir
     if args.schema_dir:
