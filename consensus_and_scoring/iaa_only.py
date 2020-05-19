@@ -2,9 +2,9 @@ import argparse
 
 from IAA import calc_agreement_directory
 from Dependency import eval_dependency
-
+from formatForAdjudication import formatDirectory
 def iaa_only(directory, config_path, use_rep = False, repCSV = None, iaa_dir = None, schema_dir = None,
-             scoring_dir = None, threshold_func = 'raw_30'):
+             scoring_dir = None, adjud_dir = None, threshold_func = 'raw_30'):
     """
 
     :param directory: the directory that holds all files from the tagworks datahunt export
@@ -29,7 +29,10 @@ def iaa_only(directory, config_path, use_rep = False, repCSV = None, iaa_dir = N
         useRep=use_rep,
         threshold_func=threshold_func
     )
+    if adjud_dir == None:
+        adjud_dir = scoring_dir
     eval_dependency(directory, iaa_dir, schema_dir, out_dir=scoring_dir)
+    formatDirectory(scoring_dir, adjud_dir)
     return scoring_dir
 
 def load_args():

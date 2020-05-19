@@ -37,7 +37,6 @@ def calc_agreement_directory(directory, schema_dir, config_path,  repCSV=None,  
 
     #pick out the schemas actually being used
     temp = []
-    print("highlights before", highlights)
     i = 0
     while i<len(highlights):
         h = highlights[i]
@@ -58,10 +57,8 @@ def calc_agreement_directory(directory, schema_dir, config_path,  repCSV=None,  
             if not matched_schema:
                 raise NameError("No schema matching file:", h)
             i +=1
-    print("highlights after", highlights)
     schema = temp
 
-    print("FILENAMECHECK:\n",len(schema), len(highlights))
     assert(len(schema) == len(highlights))
     for i in range(len(highlights)):
         calc_scores(highlights[i], config_path,  repCSV = repCSV,
@@ -101,6 +98,7 @@ def calc_scores(highlightfilename, config_path,  repCSV=None, schemaFile = None,
              "alpha_unitizing_score_inclusive", "agreement_score",
              "num_users", "num_answer_choices",
              "target_text", "question_text", "answer_text", "answer_content"]]
+
     #initialize rep
     # print('starting rep')
     # try:
@@ -211,6 +209,7 @@ def calc_scores(highlightfilename, config_path,  repCSV=None, schemaFile = None,
     outDirectory = make_directory(outDirectory)
     path, name = get_path(highlightfilename)
     print("IAA outputs to:", outDirectory + 'S_IAA_' + name)
+    out_path = outDirectory + 'S_IAA_' + name
     scores = open(outDirectory + 'S_IAA_' + name, 'w', encoding='utf-8')
     with scores:
         writer = csv.writer(scores)
