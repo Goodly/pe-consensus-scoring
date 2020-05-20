@@ -21,7 +21,11 @@ def export_datahunt_tags(path, outdir = None):
 
 def formatFile(filePath, outdir):
     print("FORMATTING<", filePath)
-    df = pd.read_csv(filePath, encoding = 'utf-8')
+    dep_iaa_dtypes = {
+        'start_pos': 'Int64',
+        'end_pos': 'Int64',
+    }
+    df = pd.read_csv(filePath, dtype = dep_iaa_dtypes, encoding = 'utf-8')
     out = pd.DataFrame()
     for i in range(len(df)):
         row = df.iloc[i]
@@ -45,6 +49,11 @@ def formatFile(filePath, outdir):
         for j in range(len(starts)):
             newrow = row
             newrow['case_number'] = 0 #no case numbers in datahunts
+            # For Data Hunts, topic_name should be a friendly name,
+            # but unique to the answer in the schema.
+            # Usually, T1.Q3.A4 for topic 1, question 3, answer 4.
+            # For now, just use first 8 chars of answer uuid.
+            newrow['topic_name'] = row['answer_uuid'][:8]
             newrow['highlight_count'] = len(starts)
             newrow['start_pos'] = starts[j]
             newrow['end_pos'] = ends[j]
