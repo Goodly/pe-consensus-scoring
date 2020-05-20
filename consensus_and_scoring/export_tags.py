@@ -74,7 +74,6 @@ def formatFile(filePath, outdir):
     path, name = get_path(filePath)
     dest_path = os.path.join(outdir, "Adj_" + name)
     print("outputting TagWorks tag format to ", dest_path)
-    #out['end_pos'] = out['end_pos'].fillna(0).astype('Int64')
     #out.to_csv(dest_path, encoding='utf-8')
     #take it out of pandas so we can make it not be a float.
     for_csv = [['article_filename', 'article_sha256', 'source_task_uuid',
