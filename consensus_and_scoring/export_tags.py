@@ -22,6 +22,7 @@ def export_datahunt_tags(path, outdir = None):
 def formatFile(filePath, outdir):
     print("FORMATTING<", filePath)
     dep_iaa_dtypes = {
+        'case_number': 'Int64',
         'start_pos': 'Int64',
         'end_pos': 'Int64',
     }
@@ -59,6 +60,9 @@ def formatFile(filePath, outdir):
             newrow['end_pos'] = ends[j]
             newrow['target_text'] = texts[j]
             out = out.append(newrow)
+    out['case_number'] = out['case_number'].fillna(0).astype('Int64')
+    out['start_pos'] = out['start_pos'].fillna(0).astype('Int64')
+    out['end_pos'] = out['end_pos'].fillna(0).astype('Int64')
     path, name = get_path(filePath)
     dest_path = os.path.join(outdir, "Adj_" + name)
     print("outputting TagWorks tag format to ", dest_path)
