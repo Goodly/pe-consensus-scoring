@@ -112,6 +112,7 @@ def handle_datahunt_consensus(body, parent_dirname):
     rep_file = './UserRepScores.csv'
     output_dir = tempfile.mkdtemp(dir=parent_dirname)
     scoring_dir = tempfile.mkdtemp(dir=parent_dirname)
+    adjud_dir = tempfile.mkdtemp(dir=parent_dirname)
     iaa_only(
         datahunts_dir,
         config_path,
@@ -120,9 +121,10 @@ def handle_datahunt_consensus(body, parent_dirname):
         iaa_dir = output_dir,
         schema_dir = schemas_dir,
         scoring_dir = scoring_dir,
+        adjud_dir = adjud_dir,
         threshold_func = 'raw_30'
     )
-    return scoring_dir
+    return adjud_dir
 
 def send_consensus_files(consensus_dir, consensus_s3_bucket, consensus_s3_prefix):
     s3_locations = []

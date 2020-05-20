@@ -3,7 +3,8 @@ import pandas as pd
 from dataV3 import get_indices_hard
 from dataV3 import  get_path
 from Separator import  indicesToStartEnd
-def exportDataHuntTags(path, outdir = None):
+
+def export_datahunt_tags(path, outdir = None):
     if outdir ==None:
         outdir = path
     dep_iaa = []
@@ -50,10 +51,13 @@ def formatFile(filePath, outdir):
             newrow['target_text'] = texts[j]
             out = out.append(newrow)
     path, name = get_path(filePath)
-    print("outputting formatted stuff to", outdir+"Adj_"+name)
-    out.to_csv(outdir+"Adj_"+name, encoding='utf-8')
+    dest_path = os.path.join(outdir, "Adj_" + name)
+    print("outputting TagWorks tag format to ", dest_path)
+    out.to_csv(dest_path, encoding='utf-8')
     return
 
 if __name__ == '__main__':
-    exportDataHuntTags('../data/out_scoring_evi/')
-
+    output_tags_dir = '../data/output_tags/'
+    if not os.path.exists(output_tags_dir):
+        os.makedirs(output_tags_dir)
+    exportDataHuntTags('../data/out_scoring_evi/', output_tags_dir)
