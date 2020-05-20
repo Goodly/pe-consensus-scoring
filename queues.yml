@@ -23,7 +23,7 @@ Resources:
       KmsMasterKeyId: !Ref KMSKey
       RedrivePolicy:
         deadLetterTargetArn: !GetAtt InputDeadLetterQueue.Arn
-        maxReceiveCount: 5
+        maxReceiveCount: 2
   OutputQueue:
     Type: AWS::SQS::Queue
     Properties:
@@ -33,7 +33,7 @@ Resources:
       KmsMasterKeyId: !Ref KMSKey
       RedrivePolicy:
         deadLetterTargetArn: !GetAtt OutputDeadLetterQueue.Arn
-        maxReceiveCount: 5
+        maxReceiveCount: 2
   InputDeadLetterQueue:
     Type: AWS::SQS::Queue
     Properties:
