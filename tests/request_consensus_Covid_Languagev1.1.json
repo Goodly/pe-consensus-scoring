@@ -1,1 +1,72 @@
-{"project_name": "Covid_Languagev1.1", "Action": "request_consensus", "Version": "1", "Highlighters": [], "log_message": "request_consensus for project 'Covid_Languagev1.1' task_type 'QUIZ'", "task_type": "QUIZ", "Tags": [{"bucket_name": "tagworks.thusly.co", "key": "development/ProjectExports/Covid_Languagev1.1/Tags/Covid_Languagev1.1.IAA-2020-05-17T1911-Tags.csv.gz", "filename": "Covid_Languagev1.1/Tags/Covid_Languagev1.1.IAA-2020-05-17T1911-Tags.csv.gz"}], "project_uuid": "25e1034a-e4f1-4dc7-a46a-7a0930c3e40c", "DataHunts": [{"bucket_name": "tagworks.thusly.co", "key": "development/ProjectExports/Covid_Languagev1.1/DataHunt/Covid_Languagev1.1-2020-05-17T1911-DataHunt.csv.gz", "filename": "Covid_Languagev1.1/DataHunt/Covid_Languagev1.1-2020-05-17T1911-DataHunt.csv.gz"}], "Texts": [{"metadata_location": {"bucket_name": "tagworks.thusly.co", "key": "development/Articles/47990959103662e94e796d979018922afddc880fb4b867c7ca2ac8aa2146e7c4/metadata.json.gz", "filename": "47990959103662e94e796d979018922afddc880fb4b867c7ca2ac8aa2146e7c4/metadata.json.gz"}, "bucket_name": "tagworks.thusly.co", "article_sha256": "47990959103662e94e796d979018922afddc880fb4b867c7ca2ac8aa2146e7c4", "key": "development/Articles/47990959103662e94e796d979018922afddc880fb4b867c7ca2ac8aa2146e7c4/text.txt.gz", "filename": "47990959103662e94e796d979018922afddc880fb4b867c7ca2ac8aa2146e7c4/text.txt.gz"}, {"metadata_location": {"bucket_name": "tagworks.thusly.co", "key": "development/Articles/7360da3cdcf83a48e365821654ef0750810f3483efb8e25ad792eed6f4bf0b6f/metadata.json.gz", "filename": "7360da3cdcf83a48e365821654ef0750810f3483efb8e25ad792eed6f4bf0b6f/metadata.json.gz"}, "bucket_name": "tagworks.thusly.co", "article_sha256": "7360da3cdcf83a48e365821654ef0750810f3483efb8e25ad792eed6f4bf0b6f", "key": "development/Articles/7360da3cdcf83a48e365821654ef0750810f3483efb8e25ad792eed6f4bf0b6f/text.txt.gz", "filename": "7360da3cdcf83a48e365821654ef0750810f3483efb8e25ad792eed6f4bf0b6f/text.txt.gz"}, {"metadata_location": {"bucket_name": "tagworks.thusly.co", "key": "development/Articles/3be14d67e2d88964904dcbe7df176bb81dacfc76a6f2e4ec66b45681c86c9301/metadata.json.gz", "filename": "3be14d67e2d88964904dcbe7df176bb81dacfc76a6f2e4ec66b45681c86c9301/metadata.json.gz"}, "bucket_name": "tagworks.thusly.co", "article_sha256": "3be14d67e2d88964904dcbe7df176bb81dacfc76a6f2e4ec66b45681c86c9301", "key": "development/Articles/3be14d67e2d88964904dcbe7df176bb81dacfc76a6f2e4ec66b45681c86c9301/text.txt.gz", "filename": "3be14d67e2d88964904dcbe7df176bb81dacfc76a6f2e4ec66b45681c86c9301/text.txt.gz"}], "NegativeTasks": [{"bucket_name": "tagworks.thusly.co", "key": "development/ProjectExports/Covid_Languagev1.1/NegativeTasks/Covid_Languagev1.1.IAA-2020-05-17T1911-NegativeTasks.csv.gz", "filename": "Covid_Languagev1.1/NegativeTasks/Covid_Languagev1.1.IAA-2020-05-17T1911-NegativeTasks.csv.gz"}], "Schemas": [{"bucket_name": "tagworks.thusly.co", "key": "development/ProjectExports/Covid_Languagev1.1/Schema/Covid_Languagev1.1-Schema.csv.gz", "filename": "Covid_Languagev1.1/Schema/Covid_Languagev1.1-Schema.csv.gz"}]}
+{
+  "project_name": "Covid_Languagev1.1", 
+  "Action": "request_consensus", 
+  "Version": "1", 
+  "Highlighters": [], 
+  "log_message": "request_consensus for project 'Covid_Languagev1.1' task_type 'QUIZ'", 
+  "task_type": "QUIZ", 
+  "Tags": [
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_Languagev1.1/Tags/Covid_Languagev1.1.IAA-2020-05-20T2128-Tags.csv.gz", 
+      "filename": "Covid_Languagev1.1/Tags/Covid_Languagev1.1.IAA-2020-05-20T2128-Tags.csv.gz"
+    }
+  ], 
+  "project_uuid": "25e1034a-e4f1-4dc7-a46a-7a0930c3e40c", 
+  "DataHunts": [
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_Languagev1.1/DataHunt/Covid_Languagev1.1-2020-05-20T2128-DataHunt.csv.gz", 
+      "filename": "Covid_Languagev1.1/DataHunt/Covid_Languagev1.1-2020-05-20T2128-DataHunt.csv.gz"
+    }
+  ], 
+  "Texts": [
+    {
+      "metadata_location": {
+        "bucket_name": "tagworks.thusly.co", 
+        "key": "development/Articles/47990959103662e94e796d979018922afddc880fb4b867c7ca2ac8aa2146e7c4/metadata.json.gz", 
+        "filename": "47990959103662e94e796d979018922afddc880fb4b867c7ca2ac8aa2146e7c4/metadata.json.gz"
+      }, 
+      "bucket_name": "tagworks.thusly.co", 
+      "article_sha256": "47990959103662e94e796d979018922afddc880fb4b867c7ca2ac8aa2146e7c4", 
+      "key": "development/Articles/47990959103662e94e796d979018922afddc880fb4b867c7ca2ac8aa2146e7c4/text.txt.gz", 
+      "filename": "47990959103662e94e796d979018922afddc880fb4b867c7ca2ac8aa2146e7c4/text.txt.gz"
+    }, 
+    {
+      "metadata_location": {
+        "bucket_name": "tagworks.thusly.co", 
+        "key": "development/Articles/7360da3cdcf83a48e365821654ef0750810f3483efb8e25ad792eed6f4bf0b6f/metadata.json.gz", 
+        "filename": "7360da3cdcf83a48e365821654ef0750810f3483efb8e25ad792eed6f4bf0b6f/metadata.json.gz"
+      }, 
+      "bucket_name": "tagworks.thusly.co", 
+      "article_sha256": "7360da3cdcf83a48e365821654ef0750810f3483efb8e25ad792eed6f4bf0b6f", 
+      "key": "development/Articles/7360da3cdcf83a48e365821654ef0750810f3483efb8e25ad792eed6f4bf0b6f/text.txt.gz", 
+      "filename": "7360da3cdcf83a48e365821654ef0750810f3483efb8e25ad792eed6f4bf0b6f/text.txt.gz"
+    }, 
+    {
+      "metadata_location": {
+        "bucket_name": "tagworks.thusly.co", 
+        "key": "development/Articles/3be14d67e2d88964904dcbe7df176bb81dacfc76a6f2e4ec66b45681c86c9301/metadata.json.gz", 
+        "filename": "3be14d67e2d88964904dcbe7df176bb81dacfc76a6f2e4ec66b45681c86c9301/metadata.json.gz"
+      }, 
+      "bucket_name": "tagworks.thusly.co", 
+      "article_sha256": "3be14d67e2d88964904dcbe7df176bb81dacfc76a6f2e4ec66b45681c86c9301", 
+      "key": "development/Articles/3be14d67e2d88964904dcbe7df176bb81dacfc76a6f2e4ec66b45681c86c9301/text.txt.gz", 
+      "filename": "3be14d67e2d88964904dcbe7df176bb81dacfc76a6f2e4ec66b45681c86c9301/text.txt.gz"
+    }
+  ], 
+  "NegativeTasks": [
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_Languagev1.1/NegativeTasks/Covid_Languagev1.1.IAA-2020-05-20T2128-NegativeTasks.csv.gz", 
+      "filename": "Covid_Languagev1.1/NegativeTasks/Covid_Languagev1.1.IAA-2020-05-20T2128-NegativeTasks.csv.gz"
+    }
+  ], 
+  "Schemas": [
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_Languagev1.1/Schema/Covid_Languagev1.1-Schema.csv.gz", 
+      "filename": "Covid_Languagev1.1/Schema/Covid_Languagev1.1-Schema.csv.gz"
+    }
+  ]
+}
