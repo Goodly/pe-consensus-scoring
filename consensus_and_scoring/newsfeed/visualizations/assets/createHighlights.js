@@ -9,7 +9,7 @@ function sortJSONentries(json) {
     let uniqueID = json[i]["Credibility Indicator ID"] + "-" + json[i].Start + "-" + json[i].End;
 
     let startEntry = [uniqueID, colorFinder(json[i]), parseInt(json[i].Start), true];
-    let endEntry = [uniqueID, colorFinder(json[i]), parseInt(json[i].End)+1, false];
+    let endEntry = [uniqueID, colorFinder(json[i]), parseInt(json[i].End), false];
 
     sortArray.push(startEntry);
     sortArray.push(endEntry);
@@ -50,7 +50,6 @@ function createHighlights(json) {
   })
 
   finalHTML = textArray.join('');
-  console.log(textArray);
   document.getElementById('textArticle').innerHTML = finalHTML;
   $(".highlight").hover(highlight, normal);
 }
@@ -84,25 +83,25 @@ function openHighlights(textArray, index, highlightStack) {
 }
 
 function closeHighlights(textArray, index, highlightStack) {
-  let text = textArray[index-1];
+  let text = textArray[index];
   let closeSpans = '';
   for (var i = 0; i < highlightStack.getSize(); i++) {
     closeSpans += "</span>";
   }
-  textArray[index-1] = text + closeSpans;
+  textArray[index] = text + closeSpans;
   return textArray;
 }
 
 function highlight(x) {
-
   // console.log(x.toElement);
   //console.log(x.toElement.style);
   var topID = x.toElement.getAttribute("name");
   var color = x.toElement.style.borderBottomColor;      // grab color of border underline in rgb form
   var color = color.match(/\d+/g);                      // split rgb into r, g, b, components
+  //console.log(color);
   var allIds = x.toElement.getAttribute("allIDsBelow").concat(" " + topID).split(" ");
-  console.log(allIds);
-  if (allIds[0] == "") {
+
+  if (allIds == [""]) {
     highlightHallmark(topID);
   } else {
       highlightManyHallmark(allIds, ROOT);

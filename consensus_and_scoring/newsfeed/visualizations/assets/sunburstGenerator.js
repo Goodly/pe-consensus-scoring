@@ -84,11 +84,11 @@ d3.csv(dataFileName, function(error, data) {
   
   var root = convertToHierarchy(data);
   condense(root);
-  console.log(root);
   ROOT = root;
   totalScore = 100 + scoreSum(root);
 
-  root.sum(function(d) {
+    root.sum(function(d) {
+    
     return Math.abs(parseFloat(d.data.Points));
   });
 
