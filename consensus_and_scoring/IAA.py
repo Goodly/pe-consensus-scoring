@@ -124,13 +124,9 @@ def calc_scores(highlightfilename, config_path,  texts_path, repCSV=None, schema
         tua_uuid = get_tua_uuid(uberDict, task_id)
         questions = uberDict[task]['quesData'].keys()
         #get the textfile
-        text_file = None
-        for root, dir, files in os.walk(texts_path):
-            for file in files:
-                if article_sha in file:
-                    text_filename = file
-                    text_file = os.path.join(texts_path, text_filename)
-                    break
+        text_file = os.path.join(texts_path, article_sha + ".txt")
+        if not(os.path.exists(text_file)):
+            raise  Exception("Couldn't find text_file for article {}".format(text_file))
 
         #print("checking agreement for "+schema_namespace+" task "+task_id)
         #has to be sorted for questions depending on each other to be handled correctly
@@ -246,7 +242,6 @@ def adjustForJson(units):
     return out
 
 
-
 def score(article, ques, data, config_path, text_file, repDF = None,   useRep = False, threshold_func = 'logis_0'):
     """calculates the relevant scores for the article
     returns a tuple (question answer most chosen, units passing the threshold,
@@ -254,24 +249,16 @@ def score(article, ques, data, config_path, text_file, repDF = None,   useRep = 
         among all users who coded the question the same way (referred to as the inclusive unitizing score),
          the percentage agreement of the category with the highest percentage agreement """
 
-
-
     starts = get_question_start(data,article, ques)
     ends = get_question_end(data, article, ques)
     length = get_text_length(data, article, ques)
     if len(ends)>0 and max(ends)>0:
         hlUsers = get_question_hlUsers(data, article,ques)
         hlAns = get_question_hlAns(data, article, ques)
-        #Now unload the source_text
-        if text_file == None:
-            #print("TEXT FILE NOT FOUND")
-            #sourceText = range(10000)
-            raise  Exception("Couldn't find text_file for article", article)
 
         with open(text_file, 'r', encoding='utf-8') as file:
-            print('openieng', text_file)
+            print('opening', text_file)
             sourceText = file.read()
-
     else:
         sourceText = []
         hlUsers = []
