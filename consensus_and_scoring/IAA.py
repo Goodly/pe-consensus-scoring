@@ -271,7 +271,6 @@ def score(article, ques, data, config_path, text_file, repDF = None,   useRep = 
         with open(text_file, 'r', encoding='utf-8') as file:
             print('openieng', text_file)
             sourceText = file.read()
-        print(sourceText)
 
     else:
         sourceText = []

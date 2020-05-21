@@ -48,7 +48,7 @@ def formatFile(filePath, outdir):
         #print(texts)
         elif pd.isna(texts):
             #print("text not found")
-            texts = 'target_textshould be empty here'+6*'k//break//'
+            texts = 'target_textshould be empty here//break//'+6*'k//break//'
         if type(texts) == str:
             texts = texts.split('//break//')
         print(starts, ends, texts)
@@ -66,7 +66,7 @@ def formatFile(filePath, outdir):
             newrow['highlight_count'] = len(starts)
             newrow['start_pos'] = starts[j]
             newrow['end_pos'] = en
-            newrow['target_text'] = texts[j]
+            newrow['target_text'] = texts[j].encode(encoding = 'utf-8')
             out = out.append(newrow)
     out['end_pos2'] = out['end_pos'].apply(floor)
     out.astype({'end_pos2':'Int64'})
