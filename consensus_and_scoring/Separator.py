@@ -7,7 +7,7 @@ from dataV3 import make_directory
 from dataV3 import get_indices_hard
 
 
-def splitcsv(directory, pointsFile = None, viz_dir = None, textseparator = '//', reporting = True):
+def splitcsv(directory, pointsFile = None, viz_dir = None, textseparator = '//break//', reporting = True):
     #print('splitting')
     if pointsFile is None:
         pointsFile = findWeights(directory)
@@ -114,5 +114,6 @@ def indicesToStartEnd(indices):
         chunks.append(indices[base:breakpointer[i]])
         base = breakpointer[i]
     #ends.append(indices[len(indices)-1])
-    return sorted(starts), sorted(ends), sorted(chunks)
+    #removed sorting here, not sure if it broke anything in the visualization
+    return sorted(starts), sorted(ends), chunks
 #splitcsv('scoring_covid')

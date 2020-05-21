@@ -9,7 +9,7 @@ import os
 
 path = 'sss_pull_8_22/SSSPECaus2-2018-08-22T2019-DataHuntHighlights.csv'
 
-def calc_agreement_directory(directory, schema_dir, config_path,  repCSV=None,  outDirectory = None,
+def calc_agreement_directory(directory, schema_dir, config_path,  texts_path, repCSV=None,  outDirectory = None,
                              useRep = False, threshold_func = 'raw_30'):
     print("IAA STARTING")
     if outDirectory is None:
@@ -61,7 +61,7 @@ def calc_agreement_directory(directory, schema_dir, config_path,  repCSV=None,  
 
     assert(len(schema) == len(highlights))
     for i in range(len(highlights)):
-        calc_scores(highlights[i], config_path,  repCSV = repCSV,
+        calc_scores(highlights[i], config_path,  texts_path, repCSV = repCSV,
                           schemaFile=schema[i], outDirectory=outDirectory, useRep=useRep,
                     directory=directory, threshold_func = threshold_func)
     #                 #will be an error for every file that isn't the right file, there's a more graceful solution, but
@@ -74,7 +74,7 @@ def unpack_iaa(input):
                             answersFile = input[3], schemaFile=input[4], outDirectory=input[5], useRep=input[6],
                 directory = input[7], threshold_func=input[8])
 
-def calc_scores(highlightfilename, config_path,  repCSV=None, schemaFile = None,
+def calc_scores(highlightfilename, config_path,  texts_path, repCSV=None, schemaFile = None,
                 fileName = None, thirtycsv = None, outDirectory = None, useRep = False, directory = None,
                 threshold_func = 'logis_0'):
     print("CALC SCORES:", highlightfilename)
@@ -123,11 +123,20 @@ def calc_scores(highlightfilename, config_path,  repCSV=None, schemaFile = None,
         schema_sha = get_schema_sha256(uberDict, task_id)
         tua_uuid = get_tua_uuid(uberDict, task_id)
         questions = uberDict[task]['quesData'].keys()
+        #get the textfile
+        text_file = None
+        for root, dir, files in os.walk(texts_path):
+            for file in files:
+                if article_sha in file:
+                    text_filename = file
+                    text_file = os.path.join(texts_path, text_filename)
+                    break
+
         #print("checking agreement for "+schema_namespace+" task "+task_id)
         #has to be sorted for questions depending on each other to be handled correctly
         for ques in sorted(questions):  # Iterates through each question in an article
 
-            agreements = score(task, ques, uberDict, config_path, repDF, useRep=useRep, threshold_func=threshold_func)
+            agreements = score(task, ques, uberDict, config_path, text_file, repDF, useRep=useRep, threshold_func=threshold_func)
             # if it's a list then it was a checklist question
             question_text = get_question_text(uberDict, task, ques)
             if type(agreements) is list:
@@ -238,7 +247,7 @@ def adjustForJson(units):
 
 
 
-def score(article, ques, data, config_path, repDF = None,   useRep = False, threshold_func = 'logis_0'):
+def score(article, ques, data, config_path, text_file, repDF = None,   useRep = False, threshold_func = 'logis_0'):
     """calculates the relevant scores for the article
     returns a tuple (question answer most chosen, units passing the threshold,
         the Unitizing Score of the users who highlighted something that passed threshold, the unitizing score
@@ -251,11 +260,19 @@ def score(article, ques, data, config_path, repDF = None,   useRep = False, thre
     ends = get_question_end(data, article, ques)
     length = get_text_length(data, article, ques)
     if len(ends)>0 and max(ends)>0:
-        texts = get_answer_texts(data, article, ques)
-        sourceText = makeList(length)
-        sourceText = addToSourceText(starts, ends, texts, sourceText)
         hlUsers = get_question_hlUsers(data, article,ques)
         hlAns = get_question_hlAns(data, article, ques)
+        #Now unload the source_text
+        if text_file == None:
+            #print("TEXT FILE NOT FOUND")
+            #sourceText = range(10000)
+            raise  Exception("Couldn't find text_file for article", article)
+
+        with open(text_file, 'r', encoding='utf-8') as file:
+            print('openieng', text_file)
+            sourceText = file.read()
+        print(sourceText)
+
     else:
         sourceText = []
         hlUsers = []

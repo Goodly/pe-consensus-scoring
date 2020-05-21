@@ -68,7 +68,7 @@ def calculate_scores_master(directory, texts_path, config_path,
                     scoring_direc = 'scoring_' + func + '_' + directory[2:]
                 else:
                     scoring_direc = 'scoring_' + func + '_' + directory
-            calculate_scores_master(directory, schema_dir=schema_dir, iaa_dir=iaa_direc, scoring_dir=scoring_direc,
+            calculate_scores_master(directory, schema_dir=schema_dir, iaa_dir=iaa_direc, scoring_dir=scoring_direc, texts_path=texts_path,
                                     repCSV=repCSV, just_s_iaa=just_s_iaa, just_dep_iaa=just_dep_iaa, use_rep=use_rep,
                                     reporting=reporting,single_task=single_task, highlights_file=highlights_file,
                                     schema_file=schema_file, answers_file=answers_file,
@@ -84,7 +84,7 @@ def calculate_scores_master(directory, texts_path, config_path,
         make_directory(rep_direc)
     start = time()
     if not single_task:
-        iaa_dir = calc_agreement_directory(directory, schema_dir, config_path,  repCSV=repCSV, outDirectory=iaa_dir,
+        iaa_dir = calc_agreement_directory(directory, schema_dir, config_path,  texts_path=texts_path, repCSV=repCSV, outDirectory=iaa_dir,
                                            useRep=use_rep, threshold_func=threshold_func)
     else:
 

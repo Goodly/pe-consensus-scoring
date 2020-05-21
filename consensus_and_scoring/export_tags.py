@@ -36,19 +36,22 @@ def formatFile(filePath, outdir):
         indices = get_indices_hard(indices)
         starts, ends, c = indicesToStartEnd(indices)
         texts = row['target_text']
+        #print("txts:", texts)
         answerid = row['answer_uuid']
 
         # print(c)
         if starts[0] < 0:
             starts[0] = 0
             ends[0] = 0
-            texts = ''
+            texts = ['']
+
         #print(texts)
-        if pd.isna(texts):
-            print("text not found")
-            texts = 'scdscs//sxasx//ds/csd//ds/cs/cds//cdscs//cdscsd//cdscsd//cdscsd//cdscsa//sdcadscsa//dsfads//adsfa/ds//afdsfas////////afdsfsa//dfasd//'
-        texts = texts.split('//')
-        #print(starts, ends, texts)
+        elif pd.isna(texts):
+            #print("text not found")
+            texts = 'target_textshould be empty here'+6*'k//break//'
+        if type(texts) == str:
+            texts = texts.split('//break//')
+        print(starts, ends, texts)
         for j in range(len(starts)):
             newrow = row
             newrow['case_number'] = 0 #no case numbers in datahunts

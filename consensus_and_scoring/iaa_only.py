@@ -4,7 +4,7 @@ from IAA import calc_agreement_directory
 from Dependency import eval_dependency
 from export_tags import export_datahunt_tags
 
-def iaa_only(directory, config_path, use_rep = False, repCSV = None, iaa_dir = None, schema_dir = None,
+def iaa_only(directory, texts_path, config_path, use_rep = False, repCSV = None, iaa_dir = None, schema_dir = None,
              scoring_dir = None, adjud_dir = None, threshold_func = 'raw_30'):
     """
 
@@ -25,6 +25,7 @@ def iaa_only(directory, config_path, use_rep = False, repCSV = None, iaa_dir = N
         directory,
         schema_dir,
         config_path,
+        texts_path,
         repCSV=repCSV,
         outDirectory=iaa_dir,
         useRep=use_rep,
@@ -73,10 +74,11 @@ if __name__ == '__main__':
     input_dir = '../data/datahunts/'
     schema_dir = '../data/schemas/'
     rep_file = './UserRepScores.csv'
+    texts_dir = '../data/texts/'
     use_rep = False
     threshold_function = 'raw_30'
     # output
-    output_dir = '../data/datahunts/'
+    output_dir = '../data/out_iaa/'
     scoring_dir = '../data/scoring/'
     adjud_dir = '../data/output_tags/'
     if args.input_dir:
@@ -98,6 +100,7 @@ if __name__ == '__main__':
 
     iaa_only(
         input_dir,
+        texts_dir,
         config_path,
         use_rep = use_rep,
         repCSV = rep_file,

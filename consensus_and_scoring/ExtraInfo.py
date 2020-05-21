@@ -2,7 +2,7 @@
 #outputs more readable, and hopefully easier for the public to understand what goes on under the hood
 
 import numpy as np
-
+from Separator import  indicesToStartEnd
 def addToSourceText(starts, ends, texts, sourceText):
     #print(texts)
     for i in range(len(starts)):
@@ -18,12 +18,22 @@ def addToSourceText(starts, ends, texts, sourceText):
 
 def getTextFromIndices(indices,  sourceText):
     out = ''
-    last = indices[0] - 1
-    for i in range(len(indices)):
-        if int(indices[i]) -1 != int(last):
-            out = out + '//'
-        last = indices[i]
-        out = out+str(sourceText[indices[i]])
+    #print(sourceText)
+    starts, ends, chunks = indicesToStartEnd(indices)
+    for i in range(len(starts)):
+       start = starts[i]
+       end = ends[i]
+       for l in range(start, end+1):
+
+          if type(sourceText[l]) == str:
+             #print(sourceText[l])
+             out+=sourceText[l]
+          else:
+              print(sourceText[l],'foundzerochar', l)
+
+       out+= "//break//"
+    assert out.count("//break//") == len(starts)
+    print(out.count("//break//"))
     return out
 def makeList(size):
     out = []
