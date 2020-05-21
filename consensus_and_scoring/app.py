@@ -98,10 +98,14 @@ def handle_highlighter_consensus(body, parent_dirname):
     return output_dir
 
 def handle_datahunt_consensus(body, parent_dirname):
+    texts = body.get('Texts', [])
+    texts = use_article_sha256_filenames(texts)
     schemas = body.get('Schemas', [])
     datahunts = body.get('DataHunts', [])
+    texts_dir = os.path.join(parent_dirname, 'texts')
     schemas_dir = os.path.join(parent_dirname, 'schemas')
     datahunts_dir = os.path.join(parent_dirname, 'datahunts')
+    retrieve_file_list(texts, texts_dir)
     retrieve_file_list(schemas, schemas_dir)
     retrieve_file_list(datahunts, datahunts_dir)
     rename_schema_files(schemas_dir)
@@ -115,6 +119,7 @@ def handle_datahunt_consensus(body, parent_dirname):
     adjud_dir = tempfile.mkdtemp(dir=parent_dirname)
     iaa_only(
         datahunts_dir,
+        texts_dir,
         config_path,
         use_rep = False,
         repCSV = None,
