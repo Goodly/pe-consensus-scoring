@@ -241,7 +241,6 @@ def adjustForJson(units):
     out+=']'
     return out
 
-
 def score(article, ques, data, config_path, text_file, repDF = None,   useRep = False, threshold_func = 'logis_0'):
     """calculates the relevant scores for the article
     returns a tuple (question answer most chosen, units passing the threshold,
@@ -255,6 +254,10 @@ def score(article, ques, data, config_path, text_file, repDF = None,   useRep = 
     if len(ends)>0 and max(ends)>0:
         hlUsers = get_question_hlUsers(data, article,ques)
         hlAns = get_question_hlAns(data, article, ques)
+
+        #Now load the source_text
+        if text_file == None:
+            raise  Exception("Couldn't find text_file for article", article)
 
         with open(text_file, 'r', encoding='utf-8') as file:
             print('opening', text_file)
