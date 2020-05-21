@@ -77,8 +77,9 @@ def formatFile(filePath, outdir):
     #out['end_pos'] = out['end_pos'].fillna(0).astype('Int64')
     #out.to_csv(dest_path, encoding='utf-8')
     #take it out of pandas so we can make it not be a float.
-    for_csv = [['article_filename', 'article_sha256', 'source_task_uuid', 'namespace', 'case_number',
-               'start_pos', 'end_pos', 'target_text', 'answer_uuid', 'answer_text' ]]
+    for_csv = [['article_filename', 'article_sha256', 'source_task_uuid',
+                'namespace', 'topic_name', 'case_number', 'start_pos', 'end_pos',
+                'target_text', 'answer_uuid', 'answer_text' ]]
     for i in range(len(out['namespace'])):
         article_filename = out['article_filename'].iloc[i]
         article_sha256 = out['article_sha256'].iloc[i]
@@ -89,9 +90,11 @@ def formatFile(filePath, outdir):
         end_pos = int(out['end_pos'].iloc[i])
         target_text = out['target_text'].iloc[i]
         answer_uuid = out['answer_uuid'].iloc[i]
+        topic_name = out['topic_name'].iloc[i]
         answer_text = out['answer_text'].iloc[i]
-        for_csv.append([article_filename, article_sha256, source_task_uuid, namespace, case_number, start_pos, end_pos,
-                       target_text, answer_uuid, answer_text])
+        for_csv.append([article_filename, article_sha256, source_task_uuid,
+                        namespace, topic_name, case_number, start_pos, end_pos,
+                        target_text, answer_uuid, answer_text])
     with open(dest_path, 'w', encoding='utf-8') as outfile:
         writer = csv.writer(outfile)
         writer.writerows(for_csv)
