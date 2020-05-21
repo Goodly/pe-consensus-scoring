@@ -130,7 +130,7 @@ def send_newsfeed_update(newsfeed_items, s3_bucket, newsfeed_s3_key):
         send_command(newsfeed_file.name, s3_bucket, newsfeed_s3_key,
                      wait=True, ACL='public-read')
     send_assets("newsfeed/assets", s3_bucket, "newsfeed/assets")
-    send_command("newsfeed/newsfeed.html", s3_bucket, "newsfeed",
+    send_command("newsfeed/newsfeed.html", s3_bucket, "newsfeed/newsfeed.html",
                  wait=True, ACL='public-read')
 
 def send_assets(asset_dir, s3_bucket, s3_prefix):
