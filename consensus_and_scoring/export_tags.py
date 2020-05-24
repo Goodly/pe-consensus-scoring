@@ -66,7 +66,7 @@ def formatFile(filePath, outdir):
             newrow['highlight_count'] = len(starts)
             newrow['start_pos'] = starts[j]
             newrow['end_pos'] = en
-            newrow['target_text'] = texts[j].encode(encoding = 'utf-8')
+            newrow['target_text'] = texts[j].encode('unicode-escape').decode('utf-8')
             out = out.append(newrow)
     out['end_pos2'] = out['end_pos'].apply(floor)
     out.astype({'end_pos2':'Int64'})
