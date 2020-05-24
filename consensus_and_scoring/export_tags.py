@@ -48,7 +48,7 @@ def formatFile(filePath, outdir):
         #print(texts)
         elif pd.isna(texts):
             #print("text not found")
-            texts = 'target_textshould be empty here//break//'+6*'k//break//'
+            texts = 'target_textshould be empty here//break//'+50*'k//break//'
         if type(texts) == str:
             texts = texts.split('//break//')
         print(starts, ends, texts)
