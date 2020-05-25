@@ -42,7 +42,8 @@ def send_s3(viz_dir, text_dir, metadata_dir, s3_bucket, s3_prefix):
         viz_data_filename_s3 = 'viz_data.csv'
         data_s3_key = os.path.join(s3_prefix, viz['article_shorter'], viz_data_filename_s3)
         viz['data_s3_key'] = data_s3_key
-        send_command(viz['data_filepath'], s3_bucket, data_s3_key, ACL='public-read')
+        send_with_max_age(viz['data_filepath'], s3_bucket, data_s3_key,
+                          ACL='public-read', max_age=10)
 
         article_filename_s3 = 'article.txt'
         article_s3_key = os.path.join(s3_prefix,  viz['article_shorter'], article_filename_s3)
@@ -127,8 +128,8 @@ def send_newsfeed_update(newsfeed_items, s3_bucket, newsfeed_s3_key):
         encoding="utf-8", delete=True) as newsfeed_file:
         newsfeed_file.write(newsfeed_json)
         newsfeed_file.seek(0, os.SEEK_SET)
-        send_command(newsfeed_file.name, s3_bucket, newsfeed_s3_key,
-                     wait=True, ACL='public-read')
+        send_with_max_age(newsfeed_file.name, s3_bucket, newsfeed_s3_key,
+                          wait=True, ACL='public-read', max_age=10)
     send_assets("newsfeed/assets", s3_bucket, "newsfeed/assets")
     send_command("newsfeed/newsfeed.html", s3_bucket, "newsfeed/newsfeed.html",
                  wait=True, ACL='public-read')
@@ -144,15 +145,32 @@ def send_assets(asset_dir, s3_bucket, s3_prefix):
             send_command(source_path, s3_bucket, asset_s3_key,
                          ACL='public-read')
 
-def send_command(source_filename, s3_bucket, s3_key, wait=False, ACL='private'):
+def send_with_max_age(source_filename, s3_bucket, s3_key,
+                      wait=False, ACL='private', max_age=24*60*60):
+    metadata = {
+        'Cache-Control': 'max-age: {:d}'.format(max_age)
+    }
+    send_command(source_filename, s3_bucket, s3_key,
+                 wait=wait, ACL=ACL, metadata=metadata)
+
+def send_command(source_filename, s3_bucket, s3_key,
+                 wait=False, ACL='private', metadata=None):
     print("Pushing s3://{}/{}".format(s3_bucket, s3_key))
     s3_obj = s3.Object(s3_bucket, s3_key)
     (content_type, encoding_type) = mimetypes.guess_type(source_filename, strict=False)
     with open(source_filename, 'rb') as file_obj:
-        s3_obj.put(
-            Body=file_obj,
-            ContentType=content_type,
-            ACL=ACL,
-        )
+        if isinstance(metadata, dict):
+            s3_obj.put(
+                Body=file_obj,
+                ContentType=content_type,
+                ACL=ACL,
+                Metadata=metadata
+            )
+        else:
+            s3_obj.put(
+                Body=file_obj,
+                ContentType=content_type,
+                ACL=ACL,
+            )
         if wait:
             s3_obj.wait_until_exists()
