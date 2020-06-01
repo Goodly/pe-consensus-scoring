@@ -23,7 +23,6 @@ def calc_agreement_directory(directory, schema_dir, config_path,  texts_path, re
     schema = []
     for root, dir, files in os.walk(directory):
         for file in files:
-            print("IAA FILE FIND:", file)
             if file.endswith('.csv') and 'IAA' not in file:
                 print("Checking Agreement for "+directory+'/'+file)
                 if 'DataHunt' in file:

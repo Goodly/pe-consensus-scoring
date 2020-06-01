@@ -23,13 +23,7 @@ def getTextFromIndices(indices,  sourceText):
     for i in range(len(starts)):
        start = starts[i]
        end = ends[i]
-       for l in range(start, end+1):
-
-          if type(sourceText[l]) == str:
-             #print(sourceText[l])
-             out+=sourceText[l]
-          else:
-              print(sourceText[l],'foundzerochar', l)
+       out += sourceText[start: end]
 
        out+= "//break//"
     assert out.count("//break//") == len(starts)
