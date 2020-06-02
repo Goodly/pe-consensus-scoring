@@ -20,7 +20,7 @@ def eval_dependency(directory, iaa_dir, schema_dir, out_dir):
     for dirpath, dirnames, files in os.walk(iaa_dir):
         for file in files:
             print("IAA OUTPUT",file)
-            if file.endswith('.csv') and 'Dep' not in file:
+            if file.endswith('.csv') and 'Dep' not in file and len(file)>10:
                 if 'S_IAA' in file:
                     file_path = os.path.join(dirpath, file)
                     print("evaluating dependencies for " + file_path)
@@ -71,7 +71,7 @@ def handleDependencies(schemaPath, iaaPath, out_dir):
         ans = iaaData['agreed_Answer'].iloc[q]
         tsk = iaaData['source_task_uuid'].iloc[q]
         iaaData['prereq_passed'].iloc[q] = checkPassed(qnum, dependencies, iaaData, tsk, ans)
-    iaaData = iaaData.sort_values(["article_num",'prereq_passed','question_Number','answer_text'])
+    iaaData = iaaData.sort_values(["article_sha256",'prereq_passed','question_Number','answer_text'])
 
     iaaData = iaaData[iaaData['prereq_passed'] == True]
 

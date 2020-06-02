@@ -1,8 +1,8 @@
 import os
 import pandas as pd
-
-from dataV3 import  getAnsNumberFromLabel
-from dataV3 import   getQuestionNumberFromLabel
+import json
+from dataV3 import getAnsNumberFromLabel
+from dataV3 import  getQuestionNumberFromLabel
 #workflow
 
 #import all s_iaa, concat into a single df
@@ -52,13 +52,14 @@ def import_tags(old_s_iaa_dir, tags_dir, schema_dir, output_dir):
         temp_dfs.append(pd.read_csv(schema_files[i]))
     schema = pd.concat(temp_dfs)
     #namespace_to_schema = make_namespace_to_schema_dict(tags, iaa, schema_dir)
-    tags['question_number'] = 'ERICYOUMISSEDASPOT'
-    tags['agreed_answer'] = 'ERICYOUMISSEDASPOT'
+    tags['question_Number'] = 'ERICYOUMISSEDASPOT'
+    tags['agreed_Answer'] = 'ERICYOUMISSEDASPOT'
     tags['namespace'] = 'ERICYOUMISSEDASPOT'
     tags['schema_sha256'] = 'ERICYOUMISSEDASPOT'
     tags['tua_uuid'] = 'ERICYOUMISSEDASPOT'
     tags['agreement_score'] = 'ERICYOUMISSEDASPOT'
-    tags['highlighted_indices'] = []
+    tags['highlighted_indices'] = 'L'
+    tags['alpha_unitizing_score'] = 'N/A'
 
     for i in range(len(tags.index)):
         a_uid = tags['answer_uuid'].iloc[i]
@@ -75,11 +76,13 @@ def import_tags(old_s_iaa_dir, tags_dir, schema_dir, output_dir):
                 raise Exception("no schema has answer_uuid matching the tag")
             a_label = schem_row['answer_label'].iloc[0]
             answer_number = getAnsNumberFromLabel(a_label)
-            question_number = getAnsNumberFromLabel(a_label)
+            question_number = getQuestionNumberFromLabel(a_label)
             namespace = schem_row['namespace'].iloc[0]
             schema_sha = schem_row['schema_sha256'].iloc[0]
             task_id = tags['source_task_uuid'].iloc[i]
             task_iaa = iaa[iaa['source_task_uuid'] == task_id]
+            if len(task_iaa.index) == 0:
+                raise Exception("Need TaskRuns in order to score")
             tua_id = task_iaa['tua_uuid'].iloc[0] #TUA UUID is same throughout the whole task
             row_iaa = task_iaa[task_iaa['answer_uuid'] == a_uid]
             if len(row_iaa.index) == 0:
@@ -89,13 +92,13 @@ def import_tags(old_s_iaa_dir, tags_dir, schema_dir, output_dir):
             start = tags['start_pos'].iloc[i]
             end = tags['end_pos'].iloc[i]
             highlight_indices = list(range(start,end+1))
-        tags.iloc[i, tags.columns.get_loc('question_number')] = question_number
-        tags.iloc[i, tags.columns.get_loc('agreed_answer')] = answer_number
+        tags.iloc[i, tags.columns.get_loc('question_Number')] = question_number
+        tags.iloc[i, tags.columns.get_loc('agreed_Answer')] = answer_number
         tags.iloc[i, tags.columns.get_loc('namespace')] = namespace
         tags.iloc[i, tags.columns.get_loc('schema_sha256')] = schema_sha
         tags.iloc[i, tags.columns.get_loc('tua_uuid')] = tua_id
         tags.iloc[i, tags.columns.get_loc('agreement_score')] = agreement_score
-        tags.iloc[i, tags.columns.get_loc('highlighted_indices')] = highlight_indices
+        tags.iloc[i, tags.columns.get_loc('highlighted_indices')] = json.dumps(highlight_indices)
     for n in tags['namespace'].unique():
         out = tags[tags['namespace'] == n]
         out_path = output_dir+"S_IAA"+n+".csv"
