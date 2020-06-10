@@ -125,7 +125,6 @@ def handle_datahunt_consensus(body, parent_dirname):
         repCSV = None,
         iaa_dir = output_dir,
         schema_dir = schemas_dir,
-        scoring_dir = scoring_dir,
         adjud_dir = adjud_dir,
         threshold_func = 'raw_30'
     )
