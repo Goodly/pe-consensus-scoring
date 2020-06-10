@@ -104,7 +104,8 @@ def indicesToStartEnd(indices):
     for i in range(len(indices)):
         if indices[i]-last>1 and indices[i] not in starts:
             starts.append(indices[i])
-            ends.append(indices[i-1])
+            ends.append(indices[i-1] + 1)
+            #works because inclusive at start, doesn't include the last point when slicing
             breakpointer.append(i)
         last = indices[i]
     chunks = []
