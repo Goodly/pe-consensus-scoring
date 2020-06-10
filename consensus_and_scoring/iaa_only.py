@@ -17,9 +17,8 @@ def iaa_only(directory, texts_path, config_path, use_rep = False, repCSV = None,
     :param: threshold_func: the threshold function being used to determine inter-annotator agreement; for a
         comprehensive test of all the threshold functions set this to 'all'; this will not work if an iaa_directory is
         specified
-    :return: No explicit return.  Running will create two directories named by the inputs. the iaa_dir will house
-        a csv output from the IAA algorithm.  The scoring_dir will house the csvs output from the dependency evaluation
-        algorithm;
+    :return: The directory with the output.  Running will create two directories named by the inputs. the iaa_dir will house
+        a csv output from the IAA algorithm.
     """
     iaa_dir = calc_agreement_directory(
         directory,
@@ -33,7 +32,7 @@ def iaa_only(directory, texts_path, config_path, use_rep = False, repCSV = None,
     )
     #eval_dependency(directory, iaa_dir, schema_dir, out_dir=scoring_dir)
     export_datahunt_tags(iaa_dir, adjud_dir)
-    return scoring_dir
+    return adjud_dir
 
 def load_args():
     parser = argparse.ArgumentParser()

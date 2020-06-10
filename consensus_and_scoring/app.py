@@ -117,7 +117,7 @@ def handle_datahunt_consensus(body, parent_dirname):
     output_dir = tempfile.mkdtemp(dir=parent_dirname)
     scoring_dir = tempfile.mkdtemp(dir=parent_dirname)
     adjud_dir = tempfile.mkdtemp(dir=parent_dirname)
-    iaa_only(
+    result_dir = iaa_only(
         datahunts_dir,
         texts_dir,
         config_path,
@@ -129,7 +129,7 @@ def handle_datahunt_consensus(body, parent_dirname):
         adjud_dir = adjud_dir,
         threshold_func = 'raw_30'
     )
-    return adjud_dir
+    return result_dir
 
 def send_consensus_files(consensus_dir, consensus_s3_bucket, consensus_s3_prefix):
     s3_locations = []
