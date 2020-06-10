@@ -31,8 +31,8 @@ def iaa_only(directory, texts_path, config_path, use_rep = False, repCSV = None,
         useRep=use_rep,
         threshold_func=threshold_func
     )
-    eval_dependency(directory, iaa_dir, schema_dir, out_dir=scoring_dir)
-    export_datahunt_tags(scoring_dir, adjud_dir)
+    #eval_dependency(directory, iaa_dir, schema_dir, out_dir=scoring_dir)
+    export_datahunt_tags(iaa_dir, adjud_dir)
     return scoring_dir
 
 def load_args():
