@@ -2,12 +2,11 @@ import csv
 import pandas as pd
 from ChecklistCoding import *
 from ExtraInfo import *
-
+import json
 from dataV3 import *
 from repScores import *
 import os
 
-path = 'sss_pull_8_22/SSSPECaus2-2018-08-22T2019-DataHuntHighlights.csv'
 
 def calc_agreement_directory(directory, schema_dir, config_path,  texts_path, repCSV=None,  outDirectory = None,
                              useRep = False, threshold_func = 'raw_30'):
@@ -155,8 +154,9 @@ def calc_scores(highlightfilename, config_path,  texts_path, repCSV=None, schema
                     #Treat each q as a binary yes/no
                     #chance_odds = bin_chance_odds
                     ques_num = ques
-                    units = str(units).replace('\n', '')
-                    units = units.replace(' ', ', ')
+                    units = json.dumps(np.array(units).tolist())
+                    # units = str(units).replace('\n', '')
+                    # units = units.replace(' ', ', ')
                     #TODO: when separate topics implemented; replace the 1 with th the topicnum
                     ans_uuid = get_answer_uuid(schema_sha, 1, ques_num, winner, schemaFile)
                     data.append([article_num, article_sha, article_id, article_filename, task_id, tua_uuid, schema_namespace, schema_sha, ques_num, ans_uuid, agreements[i][8], winner,
@@ -185,8 +185,12 @@ def calc_scores(highlightfilename, config_path,  texts_path, repCSV=None, schema
                 totalScore = calcAgreement(codingPercentAgreement, unitizingScore)
                 #ques_num = parse(ques, 'Q')
                 ques_num = ques
-                units = str(units).replace('\n', '')
-                units = units.replace(' ', ', ')
+                #units = json.dumps(units.tolist())
+                #Don't need to convert to json because is always a list not an ndarray
+                #print(type(units))
+                units = json.dumps(np.array(units).tolist())
+                # units = str(units).replace('\n', '')
+                # units = units.replace(' ', ', ')
                 ans_uuid = get_answer_uuid(schema_sha, 1, ques_num, winner, schemaFile)
 
                 data.append([article_num, article_sha, article_id, article_filename, task_id,tua_uuid,schema_namespace, schema_sha,
@@ -201,7 +205,6 @@ def calc_scores(highlightfilename, config_path,  texts_path, repCSV=None, schema
     # print(repDF)
 #    repDF.to_csv('RepScores/Repscore10.csv', mode='a', header=False)
  #   userid_to_CSV(repDF)
-    print('exporting to csv')
     # if outDirectory[-1] != '/':
     #     outDirectory = outDirectory +'/'
     #
@@ -218,8 +221,7 @@ def calc_scores(highlightfilename, config_path,  texts_path, repCSV=None, schema
     with scores:
         writer = csv.writer(scores)
         writer.writerows(data)
-    print("Table complete")
-    print('iaa outdir', outDirectory)
+
     if useRep:
         user_rep_task(uberDict, outDirectory + 'S_IAA_' + name, repDF)
         print("user_rep_df updated and saved as UserRepScores.csv")
@@ -259,7 +261,6 @@ def score(article, ques, data, config_path, text_file, repDF = None,   useRep = 
             raise  Exception("Couldn't find text_file for article", article)
 
         with open(text_file, 'r', encoding='utf-8') as file:
-            print('opening', text_file)
             sourceText = file.read()
     else:
         sourceText = []

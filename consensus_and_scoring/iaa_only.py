@@ -5,7 +5,7 @@ from Dependency import eval_dependency
 from export_tags import export_datahunt_tags
 
 def iaa_only(directory, texts_path, config_path, use_rep = False, repCSV = None, iaa_dir = None, schema_dir = None,
-             scoring_dir = None, adjud_dir = None, threshold_func = 'raw_30'):
+             adjud_dir = None, threshold_func = 'raw_30'):
     """
 
     :param directory: the directory that holds all files from the tagworks datahunt export
@@ -105,7 +105,6 @@ if __name__ == '__main__':
         repCSV = rep_file,
         iaa_dir = output_dir,
         schema_dir = schema_dir,
-        scoring_dir = scoring_dir,
         adjud_dir = adjud_dir,
         threshold_func = threshold_function
     )

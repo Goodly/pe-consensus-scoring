@@ -50,7 +50,6 @@ def formatFile(filePath, outdir):
             texts = 'target_textshould be empty here//break//'+50*'k//break//'
         if type(texts) == str:
             texts = texts.split('//break//')
-        print(starts, ends, texts)
         for j in range(len(starts)):
             newrow = row
             newrow['case_number'] = 0 #no case numbers in datahunts

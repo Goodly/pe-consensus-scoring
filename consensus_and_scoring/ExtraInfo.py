@@ -23,11 +23,10 @@ def getTextFromIndices(indices,  sourceText):
     for i in range(len(starts)):
        start = starts[i]
        end = ends[i]
-       out += sourceText[start: end]
+       out += sourceText[start: end+1]
 
        out+= "//break//"
     assert out.count("//break//") == len(starts)
-    print(out.count("//break//"))
     return out
 def makeList(size):
     out = []
