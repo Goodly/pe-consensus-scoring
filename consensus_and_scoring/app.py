@@ -151,6 +151,7 @@ def build_consensus_message(body, s3_locations):
         'Action': 'consensus_tags',
         'Version': '1',
         'Tags': s3_locations,
+        'user_id': body.get('user_id', 1),
         'project_name': body.get('project_name', ''),
         'project_uuid': body.get('project_uuid', ''),
         'task_type': body.get('task_type', ''),
