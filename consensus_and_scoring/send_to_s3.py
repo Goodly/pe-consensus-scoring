@@ -71,6 +71,7 @@ def send_s3(viz_dir, text_dir, metadata_dir, s3_bucket, s3_prefix):
 
     newsfeed_items = generate_newsfeed_items(viz_to_send, metadata_dir)
     send_newsfeed_update(newsfeed_items, s3_bucket, "newsfeed/visData.json")
+    return viz_to_send
 
 def collect_files_to_send(viz_dir, text_dir):
     # Collect the list of sha256 of by iterating over the VisualizationData_sha256.csv files

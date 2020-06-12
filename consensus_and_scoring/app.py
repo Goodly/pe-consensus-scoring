@@ -16,7 +16,7 @@ from botocore.exceptions import ClientError
 from iaa_only import iaa_only
 from TriagerScoring import importData
 from master import calculate_scores_master
-from send_to_s3 import get_s3_config, s3_safe_path, send_command
+from send_to_s3 import send_s3, get_s3_config, s3_safe_path, send_command
 
 # Do setup outside of listener
 sqs = boto3.resource('sqs')
@@ -43,21 +43,21 @@ def lambda_handler(event, context):
                 message_version = body.get('Version', '')
                 pipeline_name = body.get('pipeline_name', '')
                 pipeline_uuid = body.get('pipeline_uuid', '')
+                response_sqs_url = body.get('response_sqs_url', '')
                 logger.info("Message '{}:{}' from pipeline '{}'"
                             .format(message_action, message_version, pipeline_name))
                 with tempfile.TemporaryDirectory() as parent_dirname:
-                    if message_action == "notify_all" and message_version == "1":
-                        handle_notify_all(body, parent_dirname)
                     if message_action == "request_consensus" and message_version == "1":
-                        logger.info("---BEGIN request_consensus handler---")
                         response = handle_request_consensus(body, parent_dirname)
-                        response_sqs_url = body.get('response_sqs_url', '')
+                    if message_action == "publish_article" and message_version == "1":
+                        response = handle_publish_article(body, parent_dirname)
+                    if response:
                         sqs_response = send_pipeline_message(response_sqs_url, response)
-                        logger.info("---END request_consensus handler---")
 
     return {'done': True}
 
 def handle_request_consensus(body, parent_dirname):
+    logger.info("---BEGIN request_consensus handler---")
     project_name = body.get('project_name', '')
     project_uuid = body.get('project_uuid', '')
     task_type = body.get('task_type', '')
@@ -178,8 +178,8 @@ def send_pipeline_message(response_sqs_url, message):
                     .format(log_message))
     return response
 
-def handle_notify_all(body, parent_dirname):
-    logger.info("------BEGIN notify_all handler-------")
+def handle_publish_article(body, parent_dirname):
+    logger.info("------BEGIN publish_article handler-------")
     texts = body.get('Texts', [])
     texts = use_article_sha256_filenames(texts)
     metadata_for_texts = unnest_metadata_key(texts)
@@ -187,26 +187,34 @@ def handle_notify_all(body, parent_dirname):
     datahunts = body.get('DataHunts', [])
     tags = body.get('Tags', [])
     negative_tasks = body.get('NegativeTasks', [])
+    adj_tags = body.get('AdjTags', [])
+    adj_negative_tasks = body.get('AdjNegativeTasks', [])
     logger.info("texts count {}".format(len(texts)))
     logger.info("metadata count {}".format(len(metadata_for_texts)))
     logger.info("schemas count {}".format(len(schemas)))
     logger.info("datahunts count {}".format(len(datahunts)))
     logger.info("tags count {}".format(len(tags)))
     logger.info("negative_tasks count {}".format(len(negative_tasks)))
+    logger.info("adj_tags count {}".format(len(adj_tags)))
+    logger.info("adj_negative_tasks count {}".format(len(adj_negative_tasks)))
     texts_dir = os.path.join(parent_dirname, 'texts')
     metadata_dir = os.path.join(parent_dirname, 'metadata')
     schemas_dir = os.path.join(parent_dirname, 'schemas')
     datahunts_dir = os.path.join(parent_dirname, 'datahunts')
     tags_dir = os.path.join(parent_dirname, 'tags')
     negative_tasks_dir = os.path.join(parent_dirname, 'negative_tasks')
+    adj_tags_dir = os.path.join(parent_dirname, 'adj_tags')
+    adj_negative_tasks_dir = os.path.join(parent_dirname, 'adj_negative_tasks')
     retrieve_file_list(texts, texts_dir)
     retrieve_file_list(metadata_for_texts, metadata_dir)
     retrieve_file_list(schemas, schemas_dir)
     retrieve_file_list(datahunts, datahunts_dir)
     retrieve_file_list(tags, tags_dir)
     retrieve_file_list(negative_tasks, negative_tasks_dir)
+    retrieve_file_list(adj_tags, adj_tags_dir)
+    retrieve_file_list(adj_negative_tasks, adj_negative_tasks_dir)
     rename_schema_files(schemas_dir)
-    logger.info("------FILES RETRIEVED SUCCESSFULLY in notify_all handler-------")
+    logger.info("------FILES RETRIEVED SUCCESSFULLY in publish_article handler-------")
 
     # additional input config data
     config_path = './config/'
@@ -231,7 +239,52 @@ def handle_notify_all(body, parent_dirname):
         tua_dir = tags_dir,
         metadata_dir = metadata_dir
     )
-    logger.info("------END notify_all handler-------")
+    viz_files_sent = send_s3(viz_dir, texts_dir, metadata_dir, viz_s3_bucket, s3_prefix=viz_s3_prefix)
+    message = build_published_message(body, viz_s3_bucket, viz_files_sent)
+    logger.info("------END publish_article handler-------")
+    return message
+
+def build_published_message(body, viz_s3_bucket, viz_files_sent):
+    viz_urls = [
+        {
+            'html_s3_key': viz['html_s3_key'],
+            'data_s3_key': viz['data_s3_key'],
+            'article_s3_key': viz['article_s3_key'],
+        }
+        for viz in viz_files_sent
+    ]
+    if len(viz_files_sent) == 1:
+        viz_group = viz_files_sent[0]
+        pipeline_name = body.get('pipeline_name')
+        article_number = body.get('article_number')
+        html_s3_key = viz_group.get('html_s3_key')
+        user_message = (u"Pipeline '{}' published article {} to https://{}/{}"
+            .format(
+                pipeline_name, article_number, viz_s3_bucket, html_s3_key
+            )
+        )
+    else:
+        # Not expecting this to be reached. Articles sent one per message.
+        user_message = (u"Pipeline '{}' published {} articles."
+            .format(len(viz_files_sent))
+        )
+
+    message = {
+        'Action': 'publish_article_response',
+        'Version': '1',
+        'user_id': body.get('user_id', 1),
+        'pipeline_name': body.get('pipeline_name', 'MissingPipelineName'),
+        'pipeline_uuid': body.get('pipeline_uuid'),
+        'article_number': body.get('article_number'),
+        'article_sha256': body.get('article_sha256'),
+        'viz_s3_bucket': viz_s3_bucket,
+        'viz_files_sent': viz_urls,
+        'user_message': user_message,
+    }
+    message['log_message'] = (u"{} for '{}'"
+        .format(message['Action'], message['pipeline_name'])
+    )
+    return message
 
 def retrieve_file_list(s3_locations, dest_dirname):
     logger.info("Making dir {}".format(dest_dirname))

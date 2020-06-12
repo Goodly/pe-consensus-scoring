@@ -119,8 +119,6 @@ def calculate_scores_master(directory, texts_path, config_path,
     splitcsv(scoring_dir, pointsFile = points, viz_dir=viz_dir, reporting=reporting)
     #print("DONE, time elapsed", time()-start)
     ids = []
-    if push_aws:
-        send_s3(viz_dir, texts_path, metadata_dir, s3_bucket, s3_prefix=s3_prefix)
 
 def score_post_iaa(scoring_dir, input_dir, metadata_dir,
                    push_aws = True, s3_bucket = None, s3_prefix = '', threshold_func = 'raw_30', reporting = False):
@@ -146,8 +144,6 @@ def score_post_iaa(scoring_dir, input_dir, metadata_dir,
     splitcsv(scoring_dir, pointsFile = points, reporting=reporting)
     #print("DONE, time elapsed", time()-start)
     ids = []
-    if push_aws:
-        send_s3(viz_dir, input_dir, metadata_dir, s3_bucket, s3_prefix=s3_prefix)
 
 def load_args():
     parser = argparse.ArgumentParser()
@@ -263,3 +259,4 @@ if __name__ == '__main__':
         tua_dir = tua_dir,
         metadata_dir = metadata_dir
     )
+    send_s3(viz_dir, texts_dir, metadata_dir, s3_bucket, s3_prefix=s3_prefix)
