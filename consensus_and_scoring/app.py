@@ -265,9 +265,11 @@ def build_published_message(body, viz_s3_bucket, viz_files_sent):
         )
     else:
         # Not expecting this to be reached. Articles sent one per message.
+        pipeline_name = body.get('pipeline_name')
         user_message = (u"Pipeline '{}' published {} articles."
-            .format(len(viz_files_sent))
+            .format(pipeline_name, len(viz_files_sent))
         )
+    logger.info(user_message)
 
     message = {
         'Action': 'publish_article_response',
