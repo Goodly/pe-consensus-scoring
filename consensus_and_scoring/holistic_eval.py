@@ -87,23 +87,23 @@ def eval_triage_scoring(tua, pointsdf, scoring_dir, threshold_func='logis_0', re
                         indices = get_indices_by_uuid(tua, tua_uuid)
                         overallChange = addPoints(overallChange, points, desc, art_num, art_sha256, art_id,
                                                   indices=str(indices))
-            # Handle q5 (identification)
+                # Handle q5 (identification)
 
-            # >> Scoring note: If ONLY 1.05.07, 1.05.08, or 1.05.09 (i.e not any of the others) then -2 points for each
-            # source ... and if there are 2 or more such vague sources in a short article (or 3 in a long article), the
-            # article should be dinged -5pts and tagged as 'vague sourcing'
-            q5_df = task_df[task_df['question_Number'] == 5]
-            q5_df = q5_df.loc[q5_df.agreed_Answer != 'U']
-            q5_df = q5_df.loc[q5_df.agreed_Answer != 'M']
-            q5_df = q5_df.loc[q5_df.agreed_Answer != 'L']
-            if len(q5_df) > 0:
-                ans = q5_df['agreed_Answer'].apply(int).tolist()
-                if min(ans) > 6:
-                    tua_uuid = q5_df['tua_uuid'].iloc[0]
-                    indices = get_indices_by_uuid(tua, tua_uuid)
-                    num_vague_sources += 1
-                    overallChange = addPoints(overallChange, -2, 'Vague Sourcing', art_num, art_sha256, art_id,
-                                              indices=str(indices))
+                # >> Scoring note: If ONLY 1.05.07, 1.05.08, or 1.05.09 (i.e not any of the others) then -2 points for each
+                # source ... and if there are 2 or more such vague sources in a short article (or 3 in a long article), the
+                # article should be dinged -5pts and tagged as 'vague sourcing'
+                q5_df = task_df[task_df['question_Number'] == 5]
+                q5_df = q5_df.loc[q5_df.agreed_Answer != 'U']
+                q5_df = q5_df.loc[q5_df.agreed_Answer != 'M']
+                q5_df = q5_df.loc[q5_df.agreed_Answer != 'L']
+                if len(q5_df) > 0:
+                    ans = q5_df['agreed_Answer'].apply(int).tolist()
+                    if min(ans) > 6:
+                        tua_uuid = q5_df['tua_uuid'].iloc[0]
+                        indices = get_indices_by_uuid(tua, tua_uuid)
+                        num_vague_sources += 1
+                        overallChange = addPoints(overallChange, -2, 'Vague Sourcing', art_num, art_sha256, art_id,
+                                                  indices=str(indices))
         vagueness_index = (num_vague_sources + num_vague_quals) / article_size_index
         if vagueness_index > 4:
             overallChange = addPoints(overallChange, -10, 'Vague Sourcing', art_num, art_sha256, art_id)
