@@ -191,30 +191,21 @@ def send_assets(asset_dir, s3_bucket, s3_prefix):
 
 def send_with_max_age(source_filename, s3_bucket, s3_key,
                       wait=False, ACL='private', max_age=24*60*60):
-    metadata = {
-        'Cache-Control': 'max-age={:d}'.format(max_age)
-    }
+    cache_control = 'max-age={:d}'.format(max_age)
     send_command(source_filename, s3_bucket, s3_key,
-                 wait=wait, ACL=ACL, metadata=metadata)
+                 wait=wait, ACL=ACL, CacheControl=cache_control)
 
 def send_command(source_filename, s3_bucket, s3_key,
-                 wait=False, ACL='private', metadata=None):
+                 wait=False, ACL='private', **kwargs):
     print("Pushing s3://{}/{}".format(s3_bucket, s3_key))
     s3_obj = s3.Object(s3_bucket, s3_key)
     (content_type, encoding_type) = mimetypes.guess_type(source_filename, strict=False)
     with open(source_filename, 'rb') as file_obj:
-        if isinstance(metadata, dict):
-            s3_obj.put(
-                Body=file_obj,
-                ContentType=content_type,
-                ACL=ACL,
-                Metadata=metadata
-            )
-        else:
-            s3_obj.put(
-                Body=file_obj,
-                ContentType=content_type,
-                ACL=ACL,
-            )
+        s3_obj.put(
+            Body=file_obj,
+            ContentType=content_type,
+            ACL=ACL,
+            **kwargs
+        )
         if wait:
             s3_obj.wait_until_exists()
