@@ -4,10 +4,14 @@ import re
 from string import Template
 import tempfile
 from io import StringIO
+import logging
+logger = logging.getLogger(__name__)
+logging.basicConfig(level=os.environ.get("LOGLEVEL", "INFO"))
 import mimetypes
 mimetypes.init()
 from requests.compat import urlparse
 import boto3
+from botocore.exceptions import ClientError
 
 s3 = boto3.resource('s3')
 
@@ -124,16 +128,47 @@ def generate_newsfeed_items(viz_to_send, metadata_dir):
     return newsfeed_items
 
 def send_newsfeed_update(newsfeed_items, s3_bucket, newsfeed_s3_key):
-    newsfeed_json = json.dumps(newsfeed_items)
-    with tempfile.NamedTemporaryFile(mode="w", suffix=".json", \
+    # Read the current newsfeed json, add new article(s), write out.
+    # Obvi, Newsfeed updates should be using a database like DynamoDB.
+    newsfeed_json = load_existing_newsfeed(s3_bucket, newsfeed_s3_key)
+    newsfeed_json = update_newsfeed(newsfeed_json, newsfeed_items)
+    with tempfile.NamedTemporaryFile(mode="w+", suffix=".json", \
         encoding="utf-8", delete=True) as newsfeed_file:
-        newsfeed_file.write(newsfeed_json)
+        json.dump(newsfeed_json, newsfeed_file)
         newsfeed_file.seek(0, os.SEEK_SET)
         send_with_max_age(newsfeed_file.name, s3_bucket, newsfeed_s3_key,
                           wait=True, ACL='public-read', max_age=10)
     send_assets("newsfeed/assets", s3_bucket, "newsfeed/assets")
     send_command("newsfeed/newsfeed.html", s3_bucket, "newsfeed/newsfeed.html",
                  wait=True, ACL='public-read')
+
+def load_existing_newsfeed(s3_bucket, newsfeed_s3_key):
+    newsfeed_json = []
+    try:
+        with tempfile.NamedTemporaryFile(mode="wb+", suffix=".json", \
+            delete=True) as newsfeed_file:
+                s3_obj = s3.Object(s3_bucket, newsfeed_s3_key)
+                s3_obj.download_fileobj(newsfeed_file)
+                newsfeed_file.seek(0, os.SEEK_SET)
+                newsfeed_json = json.load(newsfeed_file)
+    except ClientError as e:
+        logger.info(u"While retrieving s3://{}/{}, received error {}."
+                    .format(s3_bucket, newsfeed_s3_key, str(e)))
+    return newsfeed_json
+
+def update_newsfeed(newsfeed_json, newsfeed_items):
+    current_items = make_article_lookup(newsfeed_json)
+    update_items = make_article_lookup(newsfeed_items)
+    current_items.update(update_items)
+    return list(current_items.values())
+
+def make_article_lookup(newsfeed_json):
+    lookup_article = {}
+    for article_info in newsfeed_json:
+        item_key = article_info.get('article_sha256')
+        if item_key:
+            lookup_article[item_key] = article_info
+    return lookup_article
 
 def send_assets(asset_dir, s3_bucket, s3_prefix):
     for dirpath, dirnames, filenames in os.walk(asset_dir):
