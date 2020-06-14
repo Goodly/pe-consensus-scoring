@@ -192,7 +192,7 @@ def send_assets(asset_dir, s3_bucket, s3_prefix):
 def send_with_max_age(source_filename, s3_bucket, s3_key,
                       wait=False, ACL='private', max_age=24*60*60):
     metadata = {
-        'Cache-Control': 'max-age: {:d}'.format(max_age)
+        'Cache-Control': 'max-age={:d}'.format(max_age)
     }
     send_command(source_filename, s3_bucket, s3_key,
                  wait=wait, ACL=ACL, metadata=metadata)
