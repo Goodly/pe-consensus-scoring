@@ -82,7 +82,7 @@ def send_s3(viz_dir, text_dir, metadata_dir, s3_bucket, s3_prefix):
     send_assets("visualizations_src/assets", s3_bucket, "visualizations/assets")
 
     newsfeed_items = generate_newsfeed_items(viz_to_send, metadata_dir)
-    send_newsfeed_update(newsfeed_items, s3_bucket, "newsfeed/visData.json")
+    update_newsfeed(newsfeed_items, s3_bucket, "newsfeed/visData.json")
     return viz_to_send
 
 def collect_files_to_send(viz_dir, text_dir):
@@ -135,20 +135,23 @@ def generate_newsfeed_items(viz_to_send, metadata_dir):
         newsfeed_items.append(item)
     return newsfeed_items
 
-def send_newsfeed_update(newsfeed_items, s3_bucket, newsfeed_s3_key):
+def update_newsfeed(newsfeed_items, s3_bucket, newsfeed_s3_key):
     # Read the current newsfeed json, add new article(s), write out.
     # Obvi, Newsfeed updates should be using a database like DynamoDB.
     newsfeed_json = load_existing_newsfeed(s3_bucket, newsfeed_s3_key)
-    newsfeed_json = update_newsfeed(newsfeed_json, newsfeed_items)
+    newsfeed_json = merge_newsfeed_articles(newsfeed_json, newsfeed_items)
+    send_newsfeed(newsfeed_json, s3_bucket, newsfeed_s3_key)
+    send_assets("newsfeed/assets", s3_bucket, "newsfeed/assets")
+    send_command("newsfeed/newsfeed.html", s3_bucket, "newsfeed/newsfeed.html",
+                 wait=True, ACL='public-read')
+
+def send_newsfeed(newsfeed_json, s3_bucket, newsfeed_s3_key):
     with tempfile.NamedTemporaryFile(mode="w+", suffix=".json", \
         encoding="utf-8", delete=True) as newsfeed_file:
         json.dump(newsfeed_json, newsfeed_file)
         newsfeed_file.seek(0, os.SEEK_SET)
         send_with_max_age(newsfeed_file.name, s3_bucket, newsfeed_s3_key,
                           wait=True, ACL='public-read', max_age=10)
-    send_assets("newsfeed/assets", s3_bucket, "newsfeed/assets")
-    send_command("newsfeed/newsfeed.html", s3_bucket, "newsfeed/newsfeed.html",
-                 wait=True, ACL='public-read')
 
 def load_existing_newsfeed(s3_bucket, newsfeed_s3_key):
     newsfeed_json = []
@@ -164,11 +167,19 @@ def load_existing_newsfeed(s3_bucket, newsfeed_s3_key):
                     .format(s3_bucket, newsfeed_s3_key, str(e)))
     return newsfeed_json
 
-def update_newsfeed(newsfeed_json, newsfeed_items):
+def merge_newsfeed_articles(newsfeed_json, newsfeed_items):
     current_items = make_article_lookup(newsfeed_json)
     update_items = make_article_lookup(newsfeed_items)
     current_items.update(update_items)
     return list(current_items.values())
+
+def remove_newsfeed_article(article_sha256, s3_bucket, newsfeed_s3_key):
+    newsfeed_json = load_existing_newsfeed(s3_bucket, newsfeed_s3_key)
+    current_items = make_article_lookup(newsfeed_json)
+    if article_sha256 in current_items:
+        del current_items[article_sha256]
+    newsfeed_json = list(current_items.values())
+    send_newsfeed(newsfeed_json, s3_bucket, newsfeed_s3_key)
 
 def make_article_lookup(newsfeed_json):
     lookup_article = {}
@@ -209,3 +220,27 @@ def send_command(source_filename, s3_bucket, s3_key,
         )
         if wait:
             s3_obj.wait_until_exists()
+
+def handle_unpublish_article(body, s3_bucket):
+    article_sha256 = body.get('article_sha256')
+    newsfeed_s3_key = "newsfeed/visData.json"
+    if article_sha256:
+        remove_newsfeed_article(article_sha256, s3_bucket, newsfeed_s3_key)
+        article_number = body.get('article_number')
+        user_message = "Removed article number {} from newsfeed.".format(article_number)
+    message = {
+        'Action': 'publish_article_response',
+        'Version': '1',
+        'user_id': body.get('user_id', 1),
+        'pipeline_name': body.get('pipeline_name', 'MissingPipelineName'),
+        'pipeline_uuid': body.get('pipeline_uuid'),
+        'article_number': body.get('article_number'),
+        'article_sha256': body.get('article_sha256'),
+        'viz_s3_bucket': s3_bucket,
+        'newsfeed_s3_key': newsfeed_s3_key,
+        'user_message': user_message,
+    }
+    message['log_message'] = (u"{} for '{}'"
+        .format(message['Action'], message['pipeline_name'])
+    )
+    return message

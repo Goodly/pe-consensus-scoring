@@ -24,6 +24,7 @@ from iaa_only import iaa_only
 from TriagerScoring import importData
 from master import calculate_scores_master
 from send_to_s3 import send_s3, get_s3_config, s3_safe_path, send_command
+from send_to_s3 import handle_unpublish_article
 
 # Do setup outside of listener
 sqs = boto3.resource('sqs')
@@ -58,6 +59,8 @@ def lambda_handler(event, context):
                         response = handle_request_consensus(body, parent_dirname)
                     if message_action == "publish_article" and message_version == "1":
                         response = handle_publish_article(body, parent_dirname)
+                    if message_action == "unpublish_article" and message_version == "1":
+                        response = handle_unpublish_article(body, viz_s3_bucket)
                     if response:
                         sqs_response = send_pipeline_message(response_sqs_url, response)
 
