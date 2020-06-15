@@ -176,10 +176,13 @@ def merge_newsfeed_articles(newsfeed_json, newsfeed_items):
 def remove_newsfeed_article(article_sha256, s3_bucket, newsfeed_s3_key):
     newsfeed_json = load_existing_newsfeed(s3_bucket, newsfeed_s3_key)
     current_items = make_article_lookup(newsfeed_json)
+    removed = False
     if article_sha256 in current_items:
         del current_items[article_sha256]
+        removed = True
     newsfeed_json = list(current_items.values())
     send_newsfeed(newsfeed_json, s3_bucket, newsfeed_s3_key)
+    return removed
 
 def make_article_lookup(newsfeed_json):
     lookup_article = {}
@@ -224,12 +227,14 @@ def send_command(source_filename, s3_bucket, s3_key,
 def handle_unpublish_article(body, s3_bucket):
     article_sha256 = body.get('article_sha256')
     newsfeed_s3_key = "newsfeed/visData.json"
+    article_number = body.get('article_number')
+    user_message = "Request to remove article missing article_sha256."
     if article_sha256:
-        remove_newsfeed_article(article_sha256, s3_bucket, newsfeed_s3_key)
-        article_number = body.get('article_number')
-        user_message = "Removed article number {} from newsfeed.".format(article_number)
-    else:
-        user_message = "Article number {} not currently in newsfeed.".format(article_number)
+        removed = remove_newsfeed_article(article_sha256, s3_bucket, newsfeed_s3_key)
+        if removed:
+            user_message = "Removed article number {} from newsfeed.".format(article_number)
+        else:
+            user_message = "Article number {} not currently in newsfeed.".format(article_number)
     message = {
         'Action': 'publish_article_response',
         'Version': '1',
