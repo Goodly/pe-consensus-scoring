@@ -60,7 +60,12 @@ def formatFile(filePath, outdir):
             en = ends[j]
             if type(en)!= int:
                 print(en, type(en))
-            newrow['topic_name'] = row['answer_uuid'][:8]
+            print(row)
+            print(row['answer_uuid'])
+            try:
+                newrow['topic_name'] = row['answer_uuid'][:8]
+            except IndexError:
+                newrow['topic_name'] = row['answer_uuid']
             newrow['highlight_count'] = len(starts)
             newrow['start_pos'] = starts[j]
             newrow['end_pos'] = en

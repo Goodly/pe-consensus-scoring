@@ -70,16 +70,16 @@ if __name__ == '__main__':
     args = load_args()
     # input
     config_path = './config/'
-    input_dir = '../data/datahunts/'
+    input_dir = '../data/debug_hunts/'
     schema_dir = '../data/schemas/'
     rep_file = './UserRepScores.csv'
     texts_dir = '../data/texts/'
     use_rep = False
     threshold_function = 'raw_30'
     # output
-    output_dir = '../data/out_iaa/'
+    output_dir = '../data/debug_out_iaa/'
     scoring_dir = '../data/scoring/'
-    adjud_dir = '../data/output_tags/'
+    adjud_dir = '../data/debug_output_tags/'
     if args.input_dir:
         input_dir = args.input_dir
     if args.schema_dir:
