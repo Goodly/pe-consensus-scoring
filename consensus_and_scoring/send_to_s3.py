@@ -228,6 +228,8 @@ def handle_unpublish_article(body, s3_bucket):
         remove_newsfeed_article(article_sha256, s3_bucket, newsfeed_s3_key)
         article_number = body.get('article_number')
         user_message = "Removed article number {} from newsfeed.".format(article_number)
+    else:
+        user_message = "Article number {} not currently in newsfeed.".format(article_number)
     message = {
         'Action': 'publish_article_response',
         'Version': '1',
