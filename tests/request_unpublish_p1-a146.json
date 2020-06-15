@@ -1,0 +1,9 @@
+{
+  "article_number": 2005, 
+  "pipeline_uuid": "df599191-18f7-4117-a8f8-b2ff49d917e3", 
+  "article_sha256": "47990959103662e94e796d979018922afddc880fb4b867c7ca2ac8aa2146e7c4", 
+  "Version": "1", 
+  "pipeline_name": "Covid_v1", 
+  "Action": "unpublish_article", 
+  "user_id": 1
+}

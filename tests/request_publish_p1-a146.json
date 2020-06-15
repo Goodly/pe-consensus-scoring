@@ -1,0 +1,384 @@
+{
+  "article_number": 2005, 
+  "pipeline_uuid": "df599191-18f7-4117-a8f8-b2ff49d917e3", 
+  "Action": "publish_article", 
+  "Version": "1", 
+  "pipeline_name": "Covid_v1", 
+  "Highlighters": [
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_Form1.0/HighlighterTask/Covid_Form1.0-Task-857-Highlighter.csv.gz", 
+      "filename": "Covid_Form1.0/HighlighterTask/Covid_Form1.0-Task-857-Highlighter.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_Semantics1.0/HighlighterTask/Covid_Semantics1.0-Task-854-Highlighter.csv.gz", 
+      "filename": "Covid_Semantics1.0/HighlighterTask/Covid_Semantics1.0-Task-854-Highlighter.csv.gz"
+    }
+  ], 
+  "AdjTags": [
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_Form1.0/TaskTags/Covid_Form1.0.adjudicated-a6b4bf8a-e6b3-4ab7-93cc-cda717a321b8-Tags.csv.gz", 
+      "filename": "Covid_Form1.0/TaskTags/Covid_Form1.0.adjudicated-a6b4bf8a-e6b3-4ab7-93cc-cda717a321b8-Tags.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_Semantics1.0/TaskTags/Covid_Semantics1.0.adjudicated-ec2f8acd-f57b-4033-94ba-7d454a30c1ec-Tags.csv.gz", 
+      "filename": "Covid_Semantics1.0/TaskTags/Covid_Semantics1.0.adjudicated-ec2f8acd-f57b-4033-94ba-7d454a30c1ec-Tags.csv.gz"
+    }
+  ], 
+  "user_id": 1, 
+  "Tags": [
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_Form1.0/TaskTags/Covid_Form1.0.IAA-a6b4bf8a-e6b3-4ab7-93cc-cda717a321b8-Tags.csv.gz", 
+      "filename": "Covid_Form1.0/TaskTags/Covid_Form1.0.IAA-a6b4bf8a-e6b3-4ab7-93cc-cda717a321b8-Tags.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_Semantics1.0/TaskTags/Covid_Semantics1.0.IAA-ec2f8acd-f57b-4033-94ba-7d454a30c1ec-Tags.csv.gz", 
+      "filename": "Covid_Semantics1.0/TaskTags/Covid_Semantics1.0.IAA-ec2f8acd-f57b-4033-94ba-7d454a30c1ec-Tags.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_ArgumentRelevancev1.2/TaskTags/Covid_ArgumentRelevancev1.2.IAA-77edb0f9-95ae-4083-9d26-e8553a69fe32-Tags.csv.gz", 
+      "filename": "Covid_ArgumentRelevancev1.2/TaskTags/Covid_ArgumentRelevancev1.2.IAA-77edb0f9-95ae-4083-9d26-e8553a69fe32-Tags.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_ArgumentRelevancev1.2/TaskTags/Covid_ArgumentRelevancev1.2.IAA-5eb93742-5040-413e-9174-d3660c8e477d-Tags.csv.gz", 
+      "filename": "Covid_ArgumentRelevancev1.2/TaskTags/Covid_ArgumentRelevancev1.2.IAA-5eb93742-5040-413e-9174-d3660c8e477d-Tags.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_ArgumentRelevancev1.2/TaskTags/Covid_ArgumentRelevancev1.2.IAA-51c3475d-b122-4dd4-926f-0c97dd52b8d0-Tags.csv.gz", 
+      "filename": "Covid_ArgumentRelevancev1.2/TaskTags/Covid_ArgumentRelevancev1.2.IAA-51c3475d-b122-4dd4-926f-0c97dd52b8d0-Tags.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_Languagev1.1/TaskTags/Covid_Languagev1.1.IAA-cbe5ccd4-d275-4025-b44e-f4a99b49b298-Tags.csv.gz", 
+      "filename": "Covid_Languagev1.1/TaskTags/Covid_Languagev1.1.IAA-cbe5ccd4-d275-4025-b44e-f4a99b49b298-Tags.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_Languagev1.1/TaskTags/Covid_Languagev1.1.IAA-06a60a10-cf7d-4d58-b57d-b99fa3e9cd40-Tags.csv.gz", 
+      "filename": "Covid_Languagev1.1/TaskTags/Covid_Languagev1.1.IAA-06a60a10-cf7d-4d58-b57d-b99fa3e9cd40-Tags.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_Languagev1.1/TaskTags/Covid_Languagev1.1.IAA-a6012395-1d36-4cdd-bb4f-5bb7842cf10d-Tags.csv.gz", 
+      "filename": "Covid_Languagev1.1/TaskTags/Covid_Languagev1.1.IAA-a6012395-1d36-4cdd-bb4f-5bb7842cf10d-Tags.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_Languagev1.1/TaskTags/Covid_Languagev1.1.IAA-849998f9-bf3e-4d3a-a834-da809e74ca2d-Tags.csv.gz", 
+      "filename": "Covid_Languagev1.1/TaskTags/Covid_Languagev1.1.IAA-849998f9-bf3e-4d3a-a834-da809e74ca2d-Tags.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_Languagev1.1/TaskTags/Covid_Languagev1.1.IAA-9f12ada4-435b-40f5-9e4b-a0662c5877a9-Tags.csv.gz", 
+      "filename": "Covid_Languagev1.1/TaskTags/Covid_Languagev1.1.IAA-9f12ada4-435b-40f5-9e4b-a0662c5877a9-Tags.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_Languagev1.1/TaskTags/Covid_Languagev1.1.IAA-82ef0986-46ce-4b8b-9551-74b750f35465-Tags.csv.gz", 
+      "filename": "Covid_Languagev1.1/TaskTags/Covid_Languagev1.1.IAA-82ef0986-46ce-4b8b-9551-74b750f35465-Tags.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_Probabilityv1/TaskTags/Covid_Probabilityv1.IAA-3b5cdc96-0bb8-4b25-90b6-6766682b70b9-Tags.csv.gz", 
+      "filename": "Covid_Probabilityv1/TaskTags/Covid_Probabilityv1.IAA-3b5cdc96-0bb8-4b25-90b6-6766682b70b9-Tags.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_Probabilityv1/TaskTags/Covid_Probabilityv1.IAA-2ebf155a-18e2-4552-a0b4-440877df74cb-Tags.csv.gz", 
+      "filename": "Covid_Probabilityv1/TaskTags/Covid_Probabilityv1.IAA-2ebf155a-18e2-4552-a0b4-440877df74cb-Tags.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_Probabilityv1/TaskTags/Covid_Probabilityv1.IAA-18115c41-fbba-4943-bcd5-19b272390f85-Tags.csv.gz", 
+      "filename": "Covid_Probabilityv1/TaskTags/Covid_Probabilityv1.IAA-18115c41-fbba-4943-bcd5-19b272390f85-Tags.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_Probabilityv1/TaskTags/Covid_Probabilityv1.IAA-bdd80524-b482-4f27-9ac4-cf371f5893dd-Tags.csv.gz", 
+      "filename": "Covid_Probabilityv1/TaskTags/Covid_Probabilityv1.IAA-bdd80524-b482-4f27-9ac4-cf371f5893dd-Tags.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_Probabilityv1/TaskTags/Covid_Probabilityv1.IAA-1ec3b603-ba25-42f7-8404-bf47fcdf1f2b-Tags.csv.gz", 
+      "filename": "Covid_Probabilityv1/TaskTags/Covid_Probabilityv1.IAA-1ec3b603-ba25-42f7-8404-bf47fcdf1f2b-Tags.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_Reasoningv1/TaskTags/Covid_Reasoningv1.IAA-15ef356a-f41f-404f-af06-92f099871319-Tags.csv.gz", 
+      "filename": "Covid_Reasoningv1/TaskTags/Covid_Reasoningv1.IAA-15ef356a-f41f-404f-af06-92f099871319-Tags.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_Reasoningv1/TaskTags/Covid_Reasoningv1.IAA-aee6c90e-90cf-460e-a62c-5bf6b055ffa9-Tags.csv.gz", 
+      "filename": "Covid_Reasoningv1/TaskTags/Covid_Reasoningv1.IAA-aee6c90e-90cf-460e-a62c-5bf6b055ffa9-Tags.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_Reasoningv1/TaskTags/Covid_Reasoningv1.IAA-d463bb7f-4e42-4f56-bf9d-35e6dbc3d6c2-Tags.csv.gz", 
+      "filename": "Covid_Reasoningv1/TaskTags/Covid_Reasoningv1.IAA-d463bb7f-4e42-4f56-bf9d-35e6dbc3d6c2-Tags.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_Reasoningv1/TaskTags/Covid_Reasoningv1.IAA-b761a105-e599-4438-96e9-3c10076bcbcf-Tags.csv.gz", 
+      "filename": "Covid_Reasoningv1/TaskTags/Covid_Reasoningv1.IAA-b761a105-e599-4438-96e9-3c10076bcbcf-Tags.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_Reasoningv1/TaskTags/Covid_Reasoningv1.IAA-2aab5e54-c71c-4415-b121-c7e328e56d26-Tags.csv.gz", 
+      "filename": "Covid_Reasoningv1/TaskTags/Covid_Reasoningv1.IAA-2aab5e54-c71c-4415-b121-c7e328e56d26-Tags.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_SourceRelevancev1/TaskTags/Covid_SourceRelevancev1.IAA-9d4ac736-52b7-40df-b2a9-6164fa081960-Tags.csv.gz", 
+      "filename": "Covid_SourceRelevancev1/TaskTags/Covid_SourceRelevancev1.IAA-9d4ac736-52b7-40df-b2a9-6164fa081960-Tags.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_SourceRelevancev1/TaskTags/Covid_SourceRelevancev1.IAA-8f31e026-d321-46c0-83ee-dbe9816ab11c-Tags.csv.gz", 
+      "filename": "Covid_SourceRelevancev1/TaskTags/Covid_SourceRelevancev1.IAA-8f31e026-d321-46c0-83ee-dbe9816ab11c-Tags.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_SourceRelevancev1/TaskTags/Covid_SourceRelevancev1.IAA-65fc3c92-5aef-4fef-a3c4-56145a077a33-Tags.csv.gz", 
+      "filename": "Covid_SourceRelevancev1/TaskTags/Covid_SourceRelevancev1.IAA-65fc3c92-5aef-4fef-a3c4-56145a077a33-Tags.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_SourceRelevancev1/TaskTags/Covid_SourceRelevancev1.IAA-d97d6501-b50f-4f8c-a3c5-59cd05a9b752-Tags.csv.gz", 
+      "filename": "Covid_SourceRelevancev1/TaskTags/Covid_SourceRelevancev1.IAA-d97d6501-b50f-4f8c-a3c5-59cd05a9b752-Tags.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_SourceRelevancev1/TaskTags/Covid_SourceRelevancev1.IAA-7c635fe6-8cc5-4671-a22a-c30fb324b1cf-Tags.csv.gz", 
+      "filename": "Covid_SourceRelevancev1/TaskTags/Covid_SourceRelevancev1.IAA-7c635fe6-8cc5-4671-a22a-c30fb324b1cf-Tags.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_SourceRelevancev1/TaskTags/Covid_SourceRelevancev1.IAA-4479a237-11ec-4a69-bab1-090b44fb62a9-Tags.csv.gz", 
+      "filename": "Covid_SourceRelevancev1/TaskTags/Covid_SourceRelevancev1.IAA-4479a237-11ec-4a69-bab1-090b44fb62a9-Tags.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_SourceRelevancev1/TaskTags/Covid_SourceRelevancev1.IAA-00ef0777-da36-47b0-94d4-135eb520bcfb-Tags.csv.gz", 
+      "filename": "Covid_SourceRelevancev1/TaskTags/Covid_SourceRelevancev1.IAA-00ef0777-da36-47b0-94d4-135eb520bcfb-Tags.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_SourceRelevancev1/TaskTags/Covid_SourceRelevancev1.IAA-b27a22c1-bea6-4620-abfa-428d27316d2a-Tags.csv.gz", 
+      "filename": "Covid_SourceRelevancev1/TaskTags/Covid_SourceRelevancev1.IAA-b27a22c1-bea6-4620-abfa-428d27316d2a-Tags.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_SourceRelevancev1/TaskTags/Covid_SourceRelevancev1.IAA-87c60a91-a55a-4a83-84f0-da127ad152c8-Tags.csv.gz", 
+      "filename": "Covid_SourceRelevancev1/TaskTags/Covid_SourceRelevancev1.IAA-87c60a91-a55a-4a83-84f0-da127ad152c8-Tags.csv.gz"
+    }
+  ], 
+  "article_sha256": "47990959103662e94e796d979018922afddc880fb4b867c7ca2ac8aa2146e7c4", 
+  "DataHunts": [
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_ArgumentRelevancev1.2/DataHuntTask/Covid_ArgumentRelevancev1.2-Task-2124-DataHunt.csv.gz", 
+      "filename": "Covid_ArgumentRelevancev1.2/DataHuntTask/Covid_ArgumentRelevancev1.2-Task-2124-DataHunt.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_ArgumentRelevancev1.2/DataHuntTask/Covid_ArgumentRelevancev1.2-Task-2126-DataHunt.csv.gz", 
+      "filename": "Covid_ArgumentRelevancev1.2/DataHuntTask/Covid_ArgumentRelevancev1.2-Task-2126-DataHunt.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_ArgumentRelevancev1.2/DataHuntTask/Covid_ArgumentRelevancev1.2-Task-2125-DataHunt.csv.gz", 
+      "filename": "Covid_ArgumentRelevancev1.2/DataHuntTask/Covid_ArgumentRelevancev1.2-Task-2125-DataHunt.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_Holisiticv1.2/DataHuntTask/Covid_Holisiticv1.2-Task-2218-DataHunt.csv.gz", 
+      "filename": "Covid_Holisiticv1.2/DataHuntTask/Covid_Holisiticv1.2-Task-2218-DataHunt.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_Languagev1.1/DataHuntTask/Covid_Languagev1.1-Task-2162-DataHunt.csv.gz", 
+      "filename": "Covid_Languagev1.1/DataHuntTask/Covid_Languagev1.1-Task-2162-DataHunt.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_Languagev1.1/DataHuntTask/Covid_Languagev1.1-Task-2161-DataHunt.csv.gz", 
+      "filename": "Covid_Languagev1.1/DataHuntTask/Covid_Languagev1.1-Task-2161-DataHunt.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_Languagev1.1/DataHuntTask/Covid_Languagev1.1-Task-2160-DataHunt.csv.gz", 
+      "filename": "Covid_Languagev1.1/DataHuntTask/Covid_Languagev1.1-Task-2160-DataHunt.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_Languagev1.1/DataHuntTask/Covid_Languagev1.1-Task-2165-DataHunt.csv.gz", 
+      "filename": "Covid_Languagev1.1/DataHuntTask/Covid_Languagev1.1-Task-2165-DataHunt.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_Languagev1.1/DataHuntTask/Covid_Languagev1.1-Task-2164-DataHunt.csv.gz", 
+      "filename": "Covid_Languagev1.1/DataHuntTask/Covid_Languagev1.1-Task-2164-DataHunt.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_Languagev1.1/DataHuntTask/Covid_Languagev1.1-Task-2163-DataHunt.csv.gz", 
+      "filename": "Covid_Languagev1.1/DataHuntTask/Covid_Languagev1.1-Task-2163-DataHunt.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_Probabilityv1/DataHuntTask/Covid_Probabilityv1-Task-2173-DataHunt.csv.gz", 
+      "filename": "Covid_Probabilityv1/DataHuntTask/Covid_Probabilityv1-Task-2173-DataHunt.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_Probabilityv1/DataHuntTask/Covid_Probabilityv1-Task-2175-DataHunt.csv.gz", 
+      "filename": "Covid_Probabilityv1/DataHuntTask/Covid_Probabilityv1-Task-2175-DataHunt.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_Probabilityv1/DataHuntTask/Covid_Probabilityv1-Task-2176-DataHunt.csv.gz", 
+      "filename": "Covid_Probabilityv1/DataHuntTask/Covid_Probabilityv1-Task-2176-DataHunt.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_Probabilityv1/DataHuntTask/Covid_Probabilityv1-Task-2172-DataHunt.csv.gz", 
+      "filename": "Covid_Probabilityv1/DataHuntTask/Covid_Probabilityv1-Task-2172-DataHunt.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_Probabilityv1/DataHuntTask/Covid_Probabilityv1-Task-2174-DataHunt.csv.gz", 
+      "filename": "Covid_Probabilityv1/DataHuntTask/Covid_Probabilityv1-Task-2174-DataHunt.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_Reasoningv1/DataHuntTask/Covid_Reasoningv1-Task-2195-DataHunt.csv.gz", 
+      "filename": "Covid_Reasoningv1/DataHuntTask/Covid_Reasoningv1-Task-2195-DataHunt.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_Reasoningv1/DataHuntTask/Covid_Reasoningv1-Task-2194-DataHunt.csv.gz", 
+      "filename": "Covid_Reasoningv1/DataHuntTask/Covid_Reasoningv1-Task-2194-DataHunt.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_Reasoningv1/DataHuntTask/Covid_Reasoningv1-Task-2193-DataHunt.csv.gz", 
+      "filename": "Covid_Reasoningv1/DataHuntTask/Covid_Reasoningv1-Task-2193-DataHunt.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_Reasoningv1/DataHuntTask/Covid_Reasoningv1-Task-2197-DataHunt.csv.gz", 
+      "filename": "Covid_Reasoningv1/DataHuntTask/Covid_Reasoningv1-Task-2197-DataHunt.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_Reasoningv1/DataHuntTask/Covid_Reasoningv1-Task-2196-DataHunt.csv.gz", 
+      "filename": "Covid_Reasoningv1/DataHuntTask/Covid_Reasoningv1-Task-2196-DataHunt.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_SourceRelevancev1/DataHuntTask/Covid_SourceRelevancev1-Task-2050-DataHunt.csv.gz", 
+      "filename": "Covid_SourceRelevancev1/DataHuntTask/Covid_SourceRelevancev1-Task-2050-DataHunt.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_SourceRelevancev1/DataHuntTask/Covid_SourceRelevancev1-Task-2055-DataHunt.csv.gz", 
+      "filename": "Covid_SourceRelevancev1/DataHuntTask/Covid_SourceRelevancev1-Task-2055-DataHunt.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_SourceRelevancev1/DataHuntTask/Covid_SourceRelevancev1-Task-2056-DataHunt.csv.gz", 
+      "filename": "Covid_SourceRelevancev1/DataHuntTask/Covid_SourceRelevancev1-Task-2056-DataHunt.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_SourceRelevancev1/DataHuntTask/Covid_SourceRelevancev1-Task-2057-DataHunt.csv.gz", 
+      "filename": "Covid_SourceRelevancev1/DataHuntTask/Covid_SourceRelevancev1-Task-2057-DataHunt.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_SourceRelevancev1/DataHuntTask/Covid_SourceRelevancev1-Task-2058-DataHunt.csv.gz", 
+      "filename": "Covid_SourceRelevancev1/DataHuntTask/Covid_SourceRelevancev1-Task-2058-DataHunt.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_SourceRelevancev1/DataHuntTask/Covid_SourceRelevancev1-Task-2053-DataHunt.csv.gz", 
+      "filename": "Covid_SourceRelevancev1/DataHuntTask/Covid_SourceRelevancev1-Task-2053-DataHunt.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_SourceRelevancev1/DataHuntTask/Covid_SourceRelevancev1-Task-2052-DataHunt.csv.gz", 
+      "filename": "Covid_SourceRelevancev1/DataHuntTask/Covid_SourceRelevancev1-Task-2052-DataHunt.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_SourceRelevancev1/DataHuntTask/Covid_SourceRelevancev1-Task-2051-DataHunt.csv.gz", 
+      "filename": "Covid_SourceRelevancev1/DataHuntTask/Covid_SourceRelevancev1-Task-2051-DataHunt.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_SourceRelevancev1/DataHuntTask/Covid_SourceRelevancev1-Task-2054-DataHunt.csv.gz", 
+      "filename": "Covid_SourceRelevancev1/DataHuntTask/Covid_SourceRelevancev1-Task-2054-DataHunt.csv.gz"
+    }
+  ], 
+  "Texts": [
+    {
+      "metadata_location": {
+        "bucket_name": "tagworks.thusly.co", 
+        "key": "development/Articles/47990959103662e94e796d979018922afddc880fb4b867c7ca2ac8aa2146e7c4/metadata.json.gz", 
+        "filename": "47990959103662e94e796d979018922afddc880fb4b867c7ca2ac8aa2146e7c4/metadata.json.gz"
+      }, 
+      "bucket_name": "tagworks.thusly.co", 
+      "article_sha256": "47990959103662e94e796d979018922afddc880fb4b867c7ca2ac8aa2146e7c4", 
+      "key": "development/Articles/47990959103662e94e796d979018922afddc880fb4b867c7ca2ac8aa2146e7c4/text.txt.gz", 
+      "filename": "47990959103662e94e796d979018922afddc880fb4b867c7ca2ac8aa2146e7c4/text.txt.gz"
+    }
+  ], 
+  "NegativeTasks": [], 
+  "AdjNegativeTasks": [], 
+  "Schemas": [
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_SourceRelevancev1/Schema/Covid_Sources_2002_03_20v2.1-Schema.csv.gz", 
+      "filename": "Covid_SourceRelevancev1/Schema/Covid_Sources_2002_03_20v2.1-Schema.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_Reasoningv1/Schema/Covid_Reasoning-Schema.csv.gz", 
+      "filename": "Covid_Reasoningv1/Schema/Covid_Reasoning-Schema.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_Probabilityv1/Schema/Covid_Probability-Schema.csv.gz", 
+      "filename": "Covid_Probabilityv1/Schema/Covid_Probability-Schema.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_Languagev1.1/Schema/Covid_Languagev1.1-Schema.csv.gz", 
+      "filename": "Covid_Languagev1.1/Schema/Covid_Languagev1.1-Schema.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_Holisiticv1.2/Schema/Covid_Holisticv1.2-Schema.csv.gz", 
+      "filename": "Covid_Holisiticv1.2/Schema/Covid_Holisticv1.2-Schema.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_Evidencev1/Schema/Covid_Evidence2020_03_21-Schema.csv.gz", 
+      "filename": "Covid_Evidencev1/Schema/Covid_Evidence2020_03_21-Schema.csv.gz"
+    }, 
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_ArgumentRelevancev1.2/Schema/Covid_ArgumentRelevance_2020_03_20v2-Schema.csv.gz", 
+      "filename": "Covid_ArgumentRelevancev1.2/Schema/Covid_ArgumentRelevance_2020_03_20v2-Schema.csv.gz"
+    }
+  ]
+}

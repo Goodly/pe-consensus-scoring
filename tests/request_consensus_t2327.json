@@ -1,0 +1,38 @@
+{
+  "project_name": "Covid_Evidencev1", 
+  "Action": "request_consensus", 
+  "Version": "1", 
+  "Highlighters": [], 
+  "log_message": "request_consensus for project 'Covid_Evidencev1' task_type 'QUIZ'", 
+  "task_type": "QUIZ", 
+  "Tags": [], 
+  "project_uuid": "84d506d6-0f9e-4003-a147-7f91b9eca150", 
+  "DataHunts": [
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_Evidencev1/DataHuntTask/Covid_Evidencev1-Task-2186-DataHunt.csv.gz", 
+      "filename": "Covid_Evidencev1/DataHuntTask/Covid_Evidencev1-Task-2186-DataHunt.csv.gz"
+    }
+  ], 
+  "Texts": [
+    {
+      "metadata_location": {
+        "bucket_name": "tagworks.thusly.co", 
+        "key": "development/Articles/09a894f06d1157dd7a22a198c6ef78c2b9f4116266d2b0a177d7bb129a51f6e8/metadata.json.gz", 
+        "filename": "09a894f06d1157dd7a22a198c6ef78c2b9f4116266d2b0a177d7bb129a51f6e8/metadata.json.gz"
+      }, 
+      "bucket_name": "tagworks.thusly.co", 
+      "article_sha256": "09a894f06d1157dd7a22a198c6ef78c2b9f4116266d2b0a177d7bb129a51f6e8", 
+      "key": "development/Articles/09a894f06d1157dd7a22a198c6ef78c2b9f4116266d2b0a177d7bb129a51f6e8/text.txt.gz", 
+      "filename": "09a894f06d1157dd7a22a198c6ef78c2b9f4116266d2b0a177d7bb129a51f6e8/text.txt.gz"
+    }
+  ], 
+  "NegativeTasks": [], 
+  "Schemas": [
+    {
+      "bucket_name": "tagworks.thusly.co", 
+      "key": "development/ProjectExports/Covid_Evidencev1/Schema/Covid_Evidence2020_03_21-Schema.csv.gz", 
+      "filename": "Covid_Evidencev1/Schema/Covid_Evidence2020_03_21-Schema.csv.gz"
+    }
+  ]
+}
