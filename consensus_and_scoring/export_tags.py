@@ -58,10 +58,11 @@ def formatFile(filePath, outdir):
             # Usually, T1.Q3.A4 for topic 1, question 3, answer 4.
             # For now, just use first 8 chars of answer uuid.
             en = ends[j]
-            if type(en)!= int:
-                print(en, type(en))
-            print(row)
-            print(row['answer_uuid'])
+            if type(en) != int:
+                print("When exporting tags, end_pos value {} should be an int, but is a {}"
+                      .format(en, type(en))
+                )
+            #print(row['answer_uuid'])
             try:
                 newrow['topic_name'] = row['answer_uuid'][:8]
             except IndexError:
