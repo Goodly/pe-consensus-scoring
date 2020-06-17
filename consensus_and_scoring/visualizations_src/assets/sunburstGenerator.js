@@ -15,8 +15,8 @@ A rough roadmap of the contents:
 //var dataFileName = "VisualizationData_1712.csv";
 var chartDiv = document.getElementById("chart");
 
-var width = 310,
-    height = 310,
+var width = 400,
+    height = 400,
     radius = (Math.min(width, height) / 2);
 
 var formatNumber = d3.format(",d");
@@ -55,7 +55,7 @@ var SVG;
 function hallmark(dataFileName) {
 
 
-var svg = d3.select("body").append("svg")
+var svg = d3.select("#chart").append("svg")
     .attr("width", width)
     .attr("height", height)
     .append('g')
@@ -93,15 +93,14 @@ d3.csv(dataFileName, function(error, data) {
   });
 
 //Fill in the colors
-svg.selectAll("path")
+svg.selectAll("g")
     .data(partition(root).descendants())
     .enter().append("path")
       .attr("d", arc)
       .style("fill", function(d) {
         nodeToPath.set(d, this)
         return color(d.data.data["Credibility Indicator Category"]);
-      })
-
+      }) 
 
 //Setting the center circle to the score
 svg.selectAll(".center-text")
@@ -117,15 +116,19 @@ svg.selectAll(".center-text")
 
 //Setting the outer and inside rings to be transparent.
 d3.selectAll("path").transition().each(function(d) {
-    if (!d.children) {
-        this.style.display = "none";
-    } else if (d.height == 2) {
-        this.style.opacity = 0;
+    if (d) {
+        if (!d.children) {
+            this.style.display = "none";
+        } else if (d.height == 2) {
+            this.style.opacity = 0;
+        }
+    } else {
+        console.log("error catching");
     }
-})
+});
 
 //Mouse animations.
-svg.selectAll('path')
+svg.selectAll("path")
     .on('mouseover', function(d) {
         if (d.height == 1) {
         }
@@ -153,7 +156,7 @@ svg.selectAll('path')
         scrolltoView(d);
     })
     .style("fill", colorFinderSun);
-
+    
 }); 
 d3.select(self.frameElement).style("height", height + "px");
 
@@ -210,9 +213,13 @@ function resetVis(d) {
         .duration(800)
         .attr('stroke-width',2)
         .style("opacity", function(d) {
-            if (d.height == 1) {
+            if (d) {
+                if (d.height == 1) {
+                    } else {
+                        return 0;
+                    }
             } else {
-                return 0;
+                console.log("printing becuz error");
             }
         })
     d3.selectAll("path")
@@ -220,10 +227,14 @@ function resetVis(d) {
         .delay(1000)
         .attr('stroke-width',2)
         .style("display", function(d) {
+        if (d) {
             if (d.children) {
             } else {
                 return "none";
             }
+        } else {
+            console.log("printing becuz other error");
+        }
         })
     DIV.transition()
             .delay(200)

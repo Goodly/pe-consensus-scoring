@@ -135,9 +135,13 @@ function resetHallmark() {
         .duration(800)
         .attr('stroke-width',2)
         .style("opacity", function(d) {
-            if (d.height == 1) {
+            if (d) {
+                if (d.height == 1) {
+                } else {
+                    return 0;
+                }
             } else {
-                return 0;
+                console.log("we caught a bird y'all");
             }
         })
     d3.selectAll("path")
@@ -145,9 +149,13 @@ function resetHallmark() {
         .delay(1000)
         .attr('stroke-width',2)
         .style("opacity", function(d) {
-            if (d.height == 1) {
+            if (d) {
+                 if (d.height == 1) {
+                } else {
+                    return 0;
+                }   
             } else {
-                return 0;
+                console.log("nothing to see here");
             }
         })
     SVG.selectAll(".center-text").style('display', 'none');

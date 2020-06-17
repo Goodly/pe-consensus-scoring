@@ -31,9 +31,7 @@
   fill: #fff;
 }
 
-#chart {
-  position: relative;
-}
+
 
 #chart path {
   stroke: #fff;
@@ -127,15 +125,7 @@ div.pseudobox {
     left: 0;
 }
 
-svg {
-    position: fixed;
-    position: -webkit-sticky;
-    font-weight: bold;
-    top: 10%;
-    left: 80%;
-    stroke: #fff;
 
-}
 
 
 
@@ -167,9 +157,26 @@ svg {
 }
 
 .sunburst {
-  position: fixed;
-    bottom: 40;
-    right: 80;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 40px;
+  left: -1000px;
+  height: 400px;
+  width: 400px;
+    font-weight: bold;
+    stroke: #fff;
+}
+
+#chart {
+  position: absolute;
+  top: -20px;
+  left: 0;
+  height: 400px;
+  width: 400px;
+}
+
+#shadow-roor {
+    fill: #000;
 }
 
 .dropTitle {
@@ -217,9 +224,13 @@ svg {
         border: 2px #fff solid;
 }
 
+a {
+    opacity: 1;
+    transition: opacity .5s;
+}
+
 a:hover {
-    background-color: #4d4d4d;
-    color: white !important;
+    opacity: .7;
 }
 
 .active, .collapsible:hover {
@@ -352,6 +363,13 @@ form {
   margin-bottom: 0px;
 }
 
+
+
+br {
+    display: block; /* makes it have a width */
+    content: ""; /* clears default height */
+    margin-top: 13px; /* change this to whatever height you want it */
+}
 
 
 input {
@@ -492,8 +510,19 @@ a:active {
     color:inherit;
 }
 
+.header-display {
+    transition: background-color 2s;
+    background-color:#e0edef;
+}
 
 
+
+.embedded-message {
+    background-color: #e1eaec;
+    text-align: center;
+    color: #000000 !important;
+    height: 30px;
+}
 
 
 /* ====== global styles =======*/
@@ -573,13 +602,6 @@ h3 {
     }
 
 /* Katie come back  */
-p {
-  color: #5b5e6d;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 32px;
-  letter-spacing: .3px;
-}
 
 p.p-explain {
   font-weight: 400;
@@ -860,7 +882,7 @@ This is mobile
     position: fixed;
     width: 100%;
     height: 32px;
-    padding-top: 12px;
+    padding-top: 0px;
     background-color: white;
     box-shadow: 0 1px 2px 0 rgba(36,50,66,.15);
     z-index: 2;
@@ -1734,68 +1756,31 @@ main {
 
 
 .footer-span {
+  grid-area: footer;
+  display: flex;
+  font-family: Poppins;
+  font-weight: 300;
+  font-size: 26px;
+  font-style: normal;
+  letter-spacing: 0em;
+  text-transform: none;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: flex-start;
   width: 100%;
-  background-color: #3f69af;
-  color: white;
-  font-weight: 200;
-  font-size: 12px;
-  padding-bottom: 10vh
+  background-color: #e1eaec;
+  color: black;
+  padding-bottom: 10vh;
+  background-color:#e1eaec;
   box-shadow: inset 0 1px 0 rgba(12,13,14,0.15),
   0 0 0 transparent,
   0 0 0 transparent,
   0 0 0 transparent;
+  height: 230px;
 }
 
 
-
-.footer-flex-wrap {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  padding-bottom: 32px;
-}
-
-.footer-block {
-  display: flex;
-  flex-direction: column;
-  padding: 0 0 0 7vw;
-  line-height: 40px;
-  margin-top: 28px;
-}
-
-.footer-block > ul {
-  margin: 0px;
-}
-
-
-.footer-brand {
-  margin-right: auto;
-  padding-left: 10px;
-}
-
-.footer-link {
-   font-size: 12px;
-   display: inline-block;
-   color: #fff;
-   text-decoration: none;
-}
-
-
-.footer-link:hover {
-   color: #777;
-   -webkit-transition-duration: 0.5s; /* Safari */
-   transition-duration: 0.5s;
-}
-
-.footer-block > ul > :first-child {
-  font-size: 14px;
-  font-weight: 500;
-}
 
 .homepage-container {
    display: flex;
@@ -1817,57 +1802,38 @@ main {
 
 
 
-
-@media screen and (min-width: 890px) {
-
-
-  .footer-span {
-    grid-area: footer;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-    width: 100%;
-    background-color: #3f69af;
-    color: white;
-    font-weight: 200;
-    font-size: 12px;
-    padding-bottom: 10vh;
-    box-shadow: inset 0 1px 0 rgba(12,13,14,0.15),
-    0 0 0 transparent,
-    0 0 0 transparent,
-    0 0 0 transparent;
-  }
-
-
-.footer-flex-wrap {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-    padding-top: 2vh;
-    height: 20vh;
-    padding-bottom: 40px;
-  }
-
-.footer-block {
-    display: flex;
-    flex-direction: column;
-    padding: 0 4rem 0 0;
-    line-height: 3rem;
-  }
-
-  .footer-link {
-     font-size: 14px;
-  }
-
-.footer-block > ul > :first-child {
-  font-size: 16px;
-  font-weight: 500;
+.footer-stuff {
+    position: relative;
+    width:100%;
 }
 
+.footer-links {
+   position:relative;
+   top: 11%;
+   width: 100%;
+   height: 100%;
+   color: #4d61b3;
+   text-decoration: underline;
 }
 
+.description_project {
+    position: absolute;
+    left: 5%;
+    top: 5%;
+}
+
+.links_1 {
+    position: absolute;
+    right: 200px;
+    width:150px;
+}
+
+.links_2 {
+    position: absolute;
+    right: 20px;
+    width:140px;
+    
+}
 
 /* = header ========= */
 
