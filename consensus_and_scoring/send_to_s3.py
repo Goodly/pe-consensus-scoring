@@ -41,7 +41,7 @@ def s3_safe_path(unsafe_name, fallback):
     return safe_name
 
 def send_s3(viz_dir, text_dir, metadata_dir, s3_bucket, s3_prefix):
-    viz_to_send = collect_files_to_send(viz_dir, text_dir)
+    viz_to_send = collect_files_to_send(viz_dir, text_dir, metadata_dir)
 
     print("Sending visualization files to S3.")
     # Retrieve HTML template.
@@ -64,11 +64,13 @@ def send_s3(viz_dir, text_dir, metadata_dir, s3_bucket, s3_prefix):
 
         html_s3_key = os.path.join(s3_prefix,  viz['article_shorter'], 'visualization.html')
         viz['html_s3_key'] = html_s3_key
-        # Since the data files are in the same directory as the html, the
+        original_url = viz['metadata'].get('extra', {}).get('url','')
+        # Since the data files we pushed are in the same directory as the html, the
         # relative url is just the filename.
         context = {
             'DATA_CSV_URL': viz_data_filename_s3,
             'ARTICLE_TEXT_URL': article_filename_s3,
+            'ORIGINAL_URL': original_url,
         }
         # Merge template URLs into HTML file
         html_output = html_template.substitute(context)
@@ -81,11 +83,11 @@ def send_s3(viz_dir, text_dir, metadata_dir, s3_bucket, s3_prefix):
 
     send_assets("visualizations_src/assets", s3_bucket, "visualizations/assets")
 
-    newsfeed_items = generate_newsfeed_items(viz_to_send, metadata_dir)
+    newsfeed_items = generate_newsfeed_items(viz_to_send)
     update_newsfeed(newsfeed_items, s3_bucket, "newsfeed/visData.json")
     return viz_to_send
 
-def collect_files_to_send(viz_dir, text_dir):
+def collect_files_to_send(viz_dir, text_dir, metadata_dir):
     # Collect the list of sha256 of by iterating over the VisualizationData_sha256.csv files
     print("Gathering files to send for visualization")
     viz_to_send = []
@@ -97,6 +99,8 @@ def collect_files_to_send(viz_dir, text_dir):
                 # Output paths will use the first 32 of 64 characters in SHA-256
                 article_shorter = article_sha256[:32]
                 article_filepath = os.path.join(text_dir, article_sha256 + ".txt")
+                metadata_filepath = os.path.join(metadata_dir, article_sha256 + ".metadata.json")
+                metadata = read_metadata(metadata_filepath)
                 if os.path.exists(article_filepath):
                     viz = {
                         'sha_256': article_sha256,
@@ -104,22 +108,19 @@ def collect_files_to_send(viz_dir, text_dir):
                         'data_filepath': os.path.join(dirpath, file),
                         'data_filename': file,
                         'article_filepath': article_filepath,
+                        'metadata_filepath': metadata_filepath,
+                        'metadata': metadata,
                     }
                     viz_to_send.append(viz)
                 else:
                     print(article_filepath, 'not found')
     return viz_to_send
 
-def generate_newsfeed_items(viz_to_send, metadata_dir):
+def generate_newsfeed_items(viz_to_send):
     newsfeed_items = []
     for viz in viz_to_send:
-        metadata = {}
-        metadata_filepath = os.path.join(metadata_dir, viz['sha_256'] + ".metadata.json")
-        if os.path.exists(metadata_filepath):
-            print("Merging metadata from {}".format(metadata_filepath))
-            with open(metadata_filepath, "r") as f:
-                metadata = json.load(f)
-                extra = metadata.get('extra', {})
+        metadata = viz.get('metadata', {})
+        extra = metadata.get('extra', {})
         item = {
             "article_sha256": viz['sha_256'],
             "articleHash": extra.get('articleHash', ''),
@@ -134,6 +135,14 @@ def generate_newsfeed_items(viz_to_send, metadata_dir):
         }
         newsfeed_items.append(item)
     return newsfeed_items
+
+def read_metadata(metadata_filepath):
+    metadata = {}
+    if os.path.exists(metadata_filepath):
+        print("Reading metadata from {}".format(metadata_filepath))
+        with open(metadata_filepath, "r") as f:
+            metadata = json.load(f)
+    return metadata
 
 def update_newsfeed(newsfeed_items, s3_bucket, newsfeed_s3_key):
     # Read the current newsfeed json, add new article(s), write out.
