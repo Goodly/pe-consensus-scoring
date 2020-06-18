@@ -137,10 +137,21 @@ svg.selectAll("path")
     })
     .on('mousemove', function(d) {
         if (visualizationOn) {
-        div
-            .style("opacity", .7)
-            .style("left", (d3.event.pageX)+ "px")
-            .style("top", (d3.event.pageY) + "px")
+            var sunburstBox = $(".sunburst")[0].getBoundingClientRect()
+            var divBox = $(".tooltip")[0].getBoundingClientRect()
+            var midline = (sunburstBox.right + sunburstBox.left) / 2;
+            var width = divBox.right - divBox.left;
+            if (d3.event.pageX < midline) {
+                div
+                    .style("opacity", .7)
+                    .style("left", (d3.event.pageX)+ "px")
+                    .style("top", (d3.event.pageY) + "px")
+            } else {
+                div
+                    .style("opacity", .7)
+                    .style("left", (d3.event.pageX - width)+ "px")
+                    .style("top", (d3.event.pageY) + "px")
+            }
         } else {
             div.transition()
                 .duration(10)
@@ -305,7 +316,7 @@ function drawVis(d, root, me, div) {
 // theresa start
     } if (d.height == 0) {
         //console.log(d);
-        let textToHighlight = document.getElementsByName(d.data.data["Credibility Indicator ID"] + "-" + d.data.data.Start + "-" + d.data.data.End);
+        let textToHighlight = document.getElementsByName(d.data.data["Credibility Indicator ID"] +"-" + d.data.data["Credibility Indicator Name"] + "-" + d.data.data.Start + "-" + d.data.data.End);
         if (d.data.data.Start == -1) {
           console.log("This fallacy does not have a highlight in the article body.");   
         } else {
@@ -327,7 +338,7 @@ function drawVis(d, root, me, div) {
             .style("top", (d3.event.pageY) + "px")
             .style("width", function() {
                 if (d.data.data['Credibility Indicator Name'].length < 18) {
-                    return "90px";
+                    return "100px";
                 } else {
                     return "180px";
                 }

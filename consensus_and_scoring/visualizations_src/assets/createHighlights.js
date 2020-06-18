@@ -6,8 +6,9 @@ function sortJSONentries(json) {
       }
 
     // [uniqueID, color, index, boolean]
-    let uniqueID = json[i]["Credibility Indicator ID"] + "-" + json[i].Start + "-" + json[i].End;
-
+    
+    let uniqueID = json[i]["Credibility Indicator ID"] +'-' + json[i]["Credibility Indicator Name"] + "-" + json[i].Start + "-" + json[i].End;
+    
     let startEntry = [uniqueID, colorFinder(json[i]), parseInt(json[i].Start), true];
     let endEntry = [uniqueID, colorFinder(json[i]), parseInt(json[i].End), false];
 
@@ -57,7 +58,7 @@ function createHighlights(json) {
 function openHighlight(textArray, index, entry, highlightStack, i) {
   let allIDsBelow = "";
     highlightStack.getArray().forEach((entry) => {
-       allIDsBelow = allIDsBelow + entry[0].toString() + " "; // all the unqiue IDs are separated by spaces
+       allIDsBelow = allIDsBelow + entry[0].toString() + "__"; // all the unqiue IDs are separated by spaces
        // console.log(allIDsBelow);
   })
   allIDsBelow = " allIDsBelow='" + allIDsBelow + "'";
@@ -99,13 +100,12 @@ function highlight(x) {
   var color = x.toElement.style.borderBottomColor;      // grab color of border underline in rgb form
   var color = color.match(/\d+/g);                      // split rgb into r, g, b, components
   //console.log(color);
-  var allIds = x.toElement.getAttribute("allIDsBelow").concat(" " + topID).split(" ");
-
-  if (allIds == [""]) {
-    highlightHallmark(topID);
-  } else {
-      highlightManyHallmark(allIds, ROOT);
+  var allIds = x.toElement.getAttribute("allIDsBelow").concat("__" + topID)
+  if (allIds.substring(0,1) == ' ') {
+      allIds = allIds.substring(1);
   }
+  allIds = allIds.split("__");
+  highlightManyHallmark(allIds, ROOT);
   x.toElement.style.setProperty("background-color", "rgba(" + color[0] + "," + color[1] + "," + color[2] + "," + "0.4");
   x.toElement.style.setProperty("background-clip", "content-box");
 
@@ -170,7 +170,7 @@ function resetHallmark() {
 
 
 function highlightManyHallmark(idArray, d) {
-    //console.log(idArray);
+    console.log(idArray);
     var id;
     var pathList = [];
     var catList = [];
@@ -196,8 +196,10 @@ function highlightManyHallmark(idArray, d) {
                         .transition()
                         .style("display", "block")
                         .style("opacity", .5);
-                        if (id.substring(0, 2) == indicatorID) {
-                            // console.log('test');
+                        var nameFromElement = id.substring(3);
+                        nameFromElement = nameFromElement.replace(/[0-9]|[-]/g, '');
+                        //console.log(nameFromElement);
+                        if (indicatorName == nameFromElement) {
                             pathList = pathList.concat(path);
                             var score = scoreSum(indicator);
                             pointsGained += score;
@@ -213,7 +215,6 @@ function highlightManyHallmark(idArray, d) {
     }
 
     indicators = indicators.substring(0, indicators.length - 2);
-    // console.log(indicators);
     var c;
     for (c of catList) {
         d3.select(c)
@@ -223,7 +224,6 @@ function highlightManyHallmark(idArray, d) {
         .duration(200);
     }
     var p;
-    //console.log(pathList);
     for (p of pathList) {
         d3.select(p)
         .transition()
@@ -261,17 +261,21 @@ function highlightManyHallmark(idArray, d) {
 
 
 function highlightHallmark(id) {
+    console.log('check');
     d3.selectAll("path").transition().each(function(d) {
     if (d.height == 2) {
         var category;
         for (category of d.children) {
-            var categoryName = category.data.data['Credibility Indicator Name'];
+            var categoryName = category.data.data['Credibility Indicator Category'];
             if (id.substring(0, 1) == categoryName.substring(0, 1)) {
                 var indicator;
                 for (indicator of category.children) {
-                    var indicatorName = indicator.data.data['Credibility Indicator ID']
+                    var indicatorName = indicator.data.data['Credibility Indicator Name']
                     var indices = indicator.data.data["Start"] + "-"+indicator.data.data["End"];
-                    if (id.substring(0, 2) == indicatorName) {
+                    var nameFromElement = id.substring(3);
+                    nameFromElement = nameFromElement.replace(/[0-9]|[-]/g, '');
+                    if (nameFromElement == indicatorName) {
+                        console.log('pls work');
                         var path = nodeToPath.get(indicator);
                         d3.select(path)
                         .transition()

@@ -163,8 +163,6 @@ div.pseudobox {
   left: -1000px;
   height: 400px;
   width: 400px;
-    font-weight: bold;
-    stroke: #fff;
 }
 
 #chart {
@@ -511,10 +509,13 @@ a:active {
 }
 
 .header-display {
-    transition: background-color 2s;
-    background-color:#e0edef;
+    background-color:#ffffff;
+    position:static;
 }
 
+.header-title-nav-wrapper {
+    text-align: right;
+}
 
 
 .embedded-message {
@@ -876,10 +877,11 @@ This is mobile
 
   .nav-pad {
     padding-top: 44px;
+    background: #ffffff;
   }
 
   .nav-wrap {
-    position: fixed;
+    position: static;
     width: 100%;
     height: 32px;
     padding-top: 0px;
@@ -1760,7 +1762,7 @@ main {
   display: flex;
   font-family: Poppins;
   font-weight: 300;
-  font-size: 26px;
+  font-size: 22px;
   font-style: normal;
   letter-spacing: 0em;
   text-transform: none;
@@ -1777,7 +1779,7 @@ main {
   0 0 0 transparent,
   0 0 0 transparent,
   0 0 0 transparent;
-  height: 230px;
+  height: 190px;
 }
 
 
@@ -1854,7 +1856,7 @@ main {
   @media screen and (min-width: 890px) {
 
 .nav-wrap {
-      position: fixed;
+      position: static;
       width: 100%;
       height: 32px;
       background-color: white;
@@ -1864,6 +1866,7 @@ main {
 
 .nav-light {
       /* grid-area: 1 / 1 / 2 / 5; */
+      position:static;
       padding: 0px;
       background-color: white;
     }
