@@ -157,18 +157,13 @@
                 <script type="text/javascript">
                   var textFileUrl = "$ARTICLE_TEXT_URL";
                   var dataFileUrl = "$DATA_CSV_URL";
-                  textFileUrl = "article.txt";
-                  dataFileUrl = "viz_data.csv";
                   scoreArticle(textFileUrl, dataFileUrl);
                 </script>
                 <div class="sunburst">
-                    <svg id="chart">
-                        <script type="text/javascript">hallmark(dataFileUrl);</script>
-                    </svg>
+                  <svg id="chart">
+                  </svg>
                 </div>
-                <script type="text/javascript">
-                  
-                </script>
+                <script type="text/javascript">hallmark(dataFileUrl);</script>
             </div>
             <!-- Cred score end -->
 
@@ -220,9 +215,9 @@
             <div id = 'embed-frame'>
             </div>
             <script type="text/javascript">
-                link = "$ARTICLE_URL";
+                var originalUrl = "$ORIGINAL_URL";
                 setTimeout(function () {
-                    embed("link");
+                    embed(originalUrl);
                 }, 500);
             </script>
         </div>
