@@ -1562,7 +1562,7 @@ flex-direction: column;
 
 
 .pills {
-    
+    text-align: center;
 }
 
 @media screen and (min-width: 601px) {
@@ -1853,7 +1853,6 @@ main {
   }
 
 }
-
 
 /* --- nav: web --- */
 

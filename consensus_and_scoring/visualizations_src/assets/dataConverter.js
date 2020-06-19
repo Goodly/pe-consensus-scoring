@@ -88,11 +88,13 @@ function drawPills(pills_map) {
     var entry;
     for (entry of pills_map.entries()) {
         var label = entry[0].substring(0, entry[0].length - 2);
-        label += "<br>Score: " + Math.round(parseFloat(entry[1]));
         var categoryInitial = entry[0].substring(entry[0].length - 1, entry[0].length);
+        var score = entry[1];
         var color = colorFinderPills(categoryInitial);
-        var style_string = "style = 'background-color:" +color+"; width:130px; color:#ffffff;height:70px;border-radius: 25px; display: inline-table; margin:3px;padding:5px;vertical-align:bottom;'"
-        var pill_div = "<div " + style_string + "><h5 style='font-size:13px;display: table-cell;vertical-align:middle; text-align:center;'>" + label+"</h5></div>";
+        var style_string = "style = 'background-color:" +color+"; width:130px; color:#ffffff;height:45px;border-radius: 25px; display: inline-table; margin:3px;padding:5px;vertical-align:bottom;'"
+        var class_string = "class='" + entry[0] + "'";
+        var java_string = "onmouseover='pillMouseover(" + Math.round(score) + ");' onmouseleave='pillMouseleave();'";
+        var pill_div = "<div " + class_string + " " + style_string + " " + java_string + "><h5 style='font-size:13px;display: table-cell;vertical-align:middle; text-align:center;'>" + label+"</h5></div>";
         console.log(pill_div);
         div_string += pill_div;
     }
@@ -102,4 +104,27 @@ function drawPills(pills_map) {
 
 setTimeout(function () {
                     drawPills(PILLS_MAP);
-                }, 700);
+                }, 400);
+
+
+function pillMouseover(score) {
+    SVG.selectAll(".center-text").style('display', 'none');
+    SVG.append("text")
+        .attr("class", "center-text")
+        .attr("x", 0)
+        .attr("y", 13)
+        .style("font-size", 40)
+        .style("text-anchor", "middle")
+        .html((score));
+}
+
+function pillMouseleave() {
+    SVG.selectAll(".center-text").style('display', 'none');
+    SVG.append("text")
+        .attr("class", "center-text")
+        .attr("x", 0)
+        .attr("y", 13)
+        .style("font-size", 40)
+        .style("text-anchor", "middle")
+        .html((totalScore));
+}

@@ -85,7 +85,13 @@ d3.csv(dataFileName, function(error, data) {
   var root = convertToHierarchy(data);
   condense(root);
   ROOT = root;
-  totalScore = 100 + scoreSum(root);
+  console.log(PILLS_MAP);
+  var entry;
+  var pillscore = 0;
+  for (entry of PILLS_MAP) {
+      pillscore += Math.floor(parseFloat(entry[1]));
+  }
+  totalScore = 100 + scoreSum(root) + pillscore;
 
     root.sum(function(d) {
     
