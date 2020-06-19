@@ -60,7 +60,7 @@ var visualizationOn = false;
 
 var div = d3.select("body").append("div")
     .attr("class", "tooltip")
-    .style("opacity", 1);
+    .style("opacity", 0);
 
 //This code block takes the csv and creates the visualization.
 d3.csv(dataFileName, function(error, data) {

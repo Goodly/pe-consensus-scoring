@@ -363,7 +363,7 @@ form {
 
 
 
-br {
+br.footer {
     display: block; /* makes it have a width */
     content: ""; /* clears default height */
     margin-top: 13px; /* change this to whatever height you want it */
@@ -1561,6 +1561,10 @@ flex-direction: column;
 }
 
 
+.pills {
+    
+}
+
 @media screen and (min-width: 601px) {
 
   .infographic-whole {
@@ -1762,7 +1766,7 @@ main {
   display: flex;
   font-family: Poppins;
   font-weight: 300;
-  font-size: 22px;
+  font-size: 19px;
   font-style: normal;
   letter-spacing: 0em;
   text-transform: none;
@@ -1779,7 +1783,7 @@ main {
   0 0 0 transparent,
   0 0 0 transparent,
   0 0 0 transparent;
-  height: 190px;
+  height: 100px;
 }
 
 

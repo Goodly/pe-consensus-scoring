@@ -385,7 +385,7 @@ function scoreSum(d) {
 // theresa start
 function scrolltoView(x) {
     if (x.height == 0) {
-        let textToView = document.getElementsByName(x.data.data["Credibility Indicator ID"] + '-' + x.data.data.Start + '-' + x.data.data.End);
+        let textToView = document.getElementsByName(x.data.data["Credibility Indicator ID"] + '-' + x.data.data["Credibility Indicator Name"] + '-' + x.data.data.Start + '-' + x.data.data.End);
         textToView[0].scrollIntoView({behavior: "smooth", block:"center"});
     }
 }
