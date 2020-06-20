@@ -201,6 +201,7 @@ def dataStorer(data_hunt_path, schema_path):
                     "users" : getUsers(highlight, uuid, question_label),
                     "numUsers" : len(newUsers[question_label]),
                     "answer_content": find_answer_contents(task_schema, question_label),
+                    "has_highlight": find_is_highlight(task_schema, question_label),
                     #"answer_text": find_answer_text(highlight, uuid, question_label),
                     "question_text": quest_label_text.loc[question_label, "question_text"],
                     "target_text": target_text, #TODO: currently returns a list of target texts, check!
@@ -454,6 +455,11 @@ def find_answer_contents(schemadata, qlabel):
     pot_answers.insert(0,'zero')
     return pot_answers
 
+def find_is_highlight(schemadata, qlabel):
+    questiondf = schemadata[schemadata['question_label'] == qlabel]
+    hl = questiondf['highlight'].tolist()
+    return hl[0]
+
 def find_answer_text(task_question_answer_labels, task_uuid, question_label):
     task_data = task_question_answer_labels.loc[task_uuid]
     ans = task_data[task_data["question_label"] == question_label].drop_duplicates(subset = ["contributor_uuid", "answer_uuid"])
@@ -538,6 +544,12 @@ def get_answer_content(data, task_id, question_num, answer_num):
     contents = data[task_id]['quesData'][question_num]['answer_content']
     myAnswer = contents[answer_num]
     return myAnswer
+
+def get_has_hl(data, task_id, question_num):
+
+    hl = data[task_id]['quesData'][question_num]['has_highlight']
+
+    return hl
 
 def get_answer_text(data, task_id, question_num, answer_num):
     if answer_num == 'U' or answer_num == 'L' or answer_num == 'M' or answer_num == 'N/A':

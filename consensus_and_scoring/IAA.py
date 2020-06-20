@@ -131,8 +131,10 @@ def calc_scores(highlightfilename, config_path,  texts_path, repCSV=None, schema
         for ques in sorted(questions):  # Iterates through each question in an article
 
             agreements = score(task, ques, uberDict, config_path, text_file, repDF, useRep=useRep, threshold_func=threshold_func)
-            # if it's a list then it was a checklist question
             question_text = get_question_text(uberDict, task, ques)
+            has_hl = get_has_hl(uberDict, task, ques)
+            # if it's a list then it was a checklist question
+
             if type(agreements) is list:
                 #Checklist Question
                 for i in range(len(agreements)):
@@ -142,6 +144,10 @@ def calc_scores(highlightfilename, config_path,  texts_path, repCSV=None, schema
                     selectedText, firstSecondScoreDiff = agreements[i][6], agreements[i][7]
                     question_type, num_choices = agreements[i][8], agreements[i][9]
                     num_users = agreements[i][5]
+                    if int(has_hl) == 0:
+                        units = []
+                        unitizingScore = 'NA'
+                        inclusiveUnitizing = 'NA'
                     totalScore = calcAgreement(codingPercentAgreement, unitizingScore)
                     #print(agreements)
                     answer_content = get_answer_content(uberDict,task, ques, agreements[i][0])
@@ -157,6 +163,7 @@ def calc_scores(highlightfilename, config_path,  texts_path, repCSV=None, schema
                     units = json.dumps(np.array(units).tolist())
                     # units = str(units).replace('\n', '')
                     # units = units.replace(' ', ', ')
+
                     #TODO: when separate topics implemented; replace the 1 with th the topicnum
                     ans_uuid = get_answer_uuid(schema_sha, 1, ques_num, winner, schemaFile)
                     data.append([article_num, article_sha, article_id, article_filename, task_id, tua_uuid, schema_namespace, schema_sha, ques_num, ans_uuid, agreements[i][8], winner,
@@ -182,6 +189,10 @@ def calc_scores(highlightfilename, config_path,  texts_path, repCSV=None, schema
                 #chance_odds = oddsDueToChance(codingPercentAgreement,num_users=num_users, num_choices=num_choices)
                 answer_content = get_answer_content(uberDict, task, ques, agreements[0])
                 #answer_text = get_answer_text(uberDict, task, ques, agreements[0])
+                if int(has_hl) == 0:
+                    units = []
+                    unitizingScore = 'NA'
+                    inclusiveUnitizing = 'NA'
                 totalScore = calcAgreement(codingPercentAgreement, unitizingScore)
                 #ques_num = parse(ques, 'Q')
                 ques_num = ques
@@ -227,6 +238,7 @@ def calc_scores(highlightfilename, config_path,  texts_path, repCSV=None, schema
         print("user_rep_df updated and saved as UserRepScores.csv")
 
     return outDirectory
+
 def adjustForJson(units):
     units = str(units)
     out = '['

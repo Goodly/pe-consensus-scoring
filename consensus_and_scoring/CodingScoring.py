@@ -195,13 +195,14 @@ def shannon_ordinal_metric(original_arr, aggregate_arr):
     score = 1 + np.dot(prob_arr, np.log2(1 - abs(np.arange(total_dist) - x_mean) / total_dist))
     winner = np.where(aggregate_arr == aggregate_arr.max())[0][0]
     # Now exclude the winner
-    aggregate_arr[winner] = 0
-    second = np.where(aggregate_arr == aggregate_arr.max())[0][0]
+
     # TODO: work out a way to compare first and second best options for ordinal data
     # might be best to just not do first v second and just have a stricter threshold matrix that's solely based
     # on the shannon metric
-    secondScore = 0
+    second = -1
+    secondScore = -1
     weights = 1 + np.log2(1 - abs(np.arange(total_dist) - x_mean) / total_dist)
+    winner = np.where(weights == weights.max())[0][0]
     return score, winner, weights, second, secondScore
 
 
@@ -240,7 +241,7 @@ def scaleFromRep(arr, users, repDF, useRep = False):
     return scaled
 
 
-def scaleFromWeights(arr, answers, weights, users, repDF, useRep=False):
+def scaleFromWeights(arr, answers, weights, users, repDF,  useRep=False):
     """Scales the array based on the weights and the user reps"""
     # weights is array of fractions now
     weights = weights
