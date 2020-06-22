@@ -110,8 +110,6 @@ def handleDependencies(schemaPath, iaaPath, out_dir):
                         #Potential for multiple answers from parent to lead to same child question
                         #We don't want to favor one prerequisite's highlight over another
                         for ans in neededAnswers:
-                            #BUG: THE TYPES DON"T ALIGH__HAVE TO MAKE SUBROUTINE TO CHECK IF IAAPARANSWER IS A DIGIT
-                            # BEFORE COMPARING
 
                             for i in range(len(iaaPar)):
                                 if iaaPar['agreed_Answer'].iloc[i].isdigit():
@@ -122,17 +120,7 @@ def handleDependencies(schemaPath, iaaPath, out_dir):
                                         newInds.append(inds)
                                         newAlph.append(iaaPar['alpha_unitizing_score'].iloc[i])
                                         newIncl.append(iaaPar['alpha_unitizing_score_inclusive'].iloc[i])
-                            # iaaPar['agreed_Answer'] = iaaPar['agreed_Answer'].astype(int, errors='ignore')
-                            # iaaparAns = iaaPar[iaaPar['agreed_Answer'] == ans]
-                            # if len(iaaparAns)>0:
-                            #     validParent = True
-                            #     newInds = []
-                            #     print('get the head', iaaparAns.columns)
-                            #     for i in range(len(iaaparAns)):
-                            #         newInds.append(get_indices_hard(iaaparAns['highlighted_indices']))
-                            #     #newInds = parseList(newInds)
-                            #     newAlph = iaaparAns['alpha_unitizing_score'].tolist()
-                            #     newIncl = iaaparAns['alpha_unitizing_score_inclusive'].tolist()
+
                             if validParent:
                                 for i in range(len(newInds)):
                                     indices = np.append(indices, newInds[i])
@@ -153,9 +141,13 @@ def handleDependencies(schemaPath, iaaPath, out_dir):
                     alpha, alphainc = -1,-1
 
                 for row in rows:
+                    row_indices = get_indices_hard(iaaData.at[row, 'highlighted_indices'])
+                    indices = merge_indices(row_indices, indices).tolist()
                     iaaData.at[row, 'highlighted_indices'] = json.dumps(indices)
-                    iaaData.at[row, 'alpha_unitizing_score'] = alpha
-                    iaaData.at[row, 'alpha_unitizing_score_inclusive'] = alphainc
+                    curr_alpha = iaaData.at[row, 'alpha_unitizing_score']
+                    if not str(curr_alpha).replace('.','').isnumeric():
+                        iaaData.at[row, 'alpha_unitizing_score'] = alpha
+                        iaaData.at[row, 'alpha_unitizing_score_inclusive'] = alphainc
 
     print('exporting to csv')
     path, name = get_path(iaaPath)
@@ -166,12 +158,6 @@ def handleDependencies(schemaPath, iaaPath, out_dir):
     print("Table complete")
     return out_dir
 
-def parseList(iterable):
-    out = []
-    for i in range(len(iterable)):
-        addendum = indicesFromString(iterable[i])
-        out.append(addendum)
-    return out
 
 
 def checkNeedsLove(df, qNum):

@@ -448,6 +448,14 @@ def get_indices_hard(string):
             num = 0
 
     return out
+def merge_indices(ind1, ind2):
+    '''
+    combines two lists of indices into a single list
+    '''
+    ind1 = np.array(ind1)
+    ind2 = np.array(ind2)
+    indices = np.append(ind1, ind2)
+    return np.unique(indices)
 
 def find_answer_contents(schemadata, qlabel):
     questiondf = schemadata[schemadata['question_label'] == qlabel]

@@ -219,7 +219,7 @@ if __name__ == '__main__':
     schema_dir = '../data/schemas/'
     # output
     output_dir = '../data/out_iaa/'
-    scoring_dir = '../data/scoring/'
+    scoring_dir = '../data/out_scoring/'
     viz_dir = '../data/out_viz/'
     rep_file = './UserRepScores.csv'
     s3_bucket = 'dev.publiceditor.io'
