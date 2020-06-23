@@ -99,7 +99,12 @@
                 readVisData();
                 setTimeout(function () {
                     generateAndMove();
-                }, 1000);
+                    
+                }, 200);
+                setTimeout(function() {
+                    setScores();
+                    
+                }, 2000);
             }
             doFunctions();
 

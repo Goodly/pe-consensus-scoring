@@ -5,12 +5,22 @@ function readVisData() {
         for (var i = 0; i < Object.keys(data).length; i++) {
             var article = data[i];
             var articleEntry = new ArticleData(article["Title"], article["Author"], article["Date"], article["ID"], article["Article Link"], article["Visualization Link"], article["Plain Text"], article["Highlight Data"]);
-            articleEntry.getCredibilityScore();
+            //articleEntry.setCredibilityScore();
             articleEntry.getPreviewText();
             listofarticles.push(articleEntry);
         }
     });
 }
+
+function setScores() {
+    
+    var articleObject;
+    for (articleObject of listofarticles) {
+        var artSVG = document.querySelector("svg[articleID='" + articleObject.id + "'");
+        articleObject.credibilityScore = parseInt(artSVG.getAttribute("score"));
+    }
+}
+
 
 function generateList() {
     // Collect values from the HTML
@@ -66,6 +76,7 @@ function sortArticles(listofarticles, sortBy, order) {
         }
     } else {
         if (order == "high") {
+            console.log(listofarticles);
             listofarticles.sort((a, b) => (a.credibilityScore < b.credibilityScore) ? 1 : -1)
         } else {
             listofarticles.sort((a, b) => (a.credibilityScore > b.credibilityScore) ? 1 : -1)

@@ -12,12 +12,18 @@ class ArticleData {
         this.previewText = "";
     }
 
+    
+    
+        
+        
+    
+    
     getCredibilityScore() {
         var article = this;
         $.get(article.highlightData).done(function(data) {
-            data = csvJSON(data);
             for (var i = 0; i < Object.keys(data).length - 1; i++) {
                 var highlightEntry = data[i];
+                
                 article.credibilityScore += parseInt(highlightEntry["Points"]);
             }
         });

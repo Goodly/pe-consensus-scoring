@@ -1,5 +1,4 @@
 function moveHallmarks() {
-            console.log('why');
             setTimeout(function() {
                     var item;    
                     for (item of listofarticles) {

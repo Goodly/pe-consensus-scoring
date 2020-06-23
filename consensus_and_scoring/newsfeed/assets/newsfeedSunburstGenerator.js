@@ -70,10 +70,11 @@ d3.csv(dataFileName, function(error, data) {
   
   var root = convertToHierarchy(data);
   condense(root);
-  console.log(root);
+  
   ROOT = root;
   totalScore = 100 + scoreSum(root);
-
+  console.log(id);
+  document.querySelector("svg[articleID='" + id + "'").setAttribute("score", totalScore);
   root.sum(function(d) {
     return Math.abs(parseFloat(d.data.Points));
   });
