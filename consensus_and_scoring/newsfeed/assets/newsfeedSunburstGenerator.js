@@ -70,6 +70,7 @@ d3.csv(dataFileName, function(error, data) {
   
   var root = convertToHierarchy(data);
   condense(root);
+  console.log(root);
   
   ROOT = root;
   totalScore = 100 + scoreSum(root);
@@ -214,8 +215,10 @@ function colorFinderSun(d) {
                return d3.rgb(87, 193, 174);
             } else if (d.data.data['Credibility Indicator Name'] == "Probability") {
                 return d3.rgb(118,188,226);
-            } else {
+            } else if (d.data.data['Credibility Indicator Name'] == "Language") {
                return d3.rgb(75, 95, 178);
+            } else {
+                return d3.rgb(255, 180, 0);
             }
         }  
   }
@@ -355,13 +358,13 @@ function scoreSum(d) {
     } else {
         var sum = 0;
         for (var i = 0; i < d.children.length; i++) {
-            sum += parseFloat(scoreSum(d.children[i]));
+            sum += Math.round(parseFloat(scoreSum(d.children[i])));
         }
         if (d.height == 2) {
             articleScore = parseFloat(sum);
-            return Math.round(articleScore);
+            return articleScore;
         }
-        return Math.round(sum);
+        return sum;
     }
 }
 // theresa start

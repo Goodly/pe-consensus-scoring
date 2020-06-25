@@ -1,5 +1,8 @@
 //Add dummy data so that the data has the correct nodes to form a tree.
 function addDummyData(data) {
+  var line;
+  var score = 0;
+  
   var categories = new Set([]);
   var i = 0;
   //Get all categories that are non-empty.
@@ -37,25 +40,36 @@ function convertToHierarchy(data) {
 }
 
 
+
 /** Takes a heirarchical json file and converts it into a tree with unique branches 
 and unique leaves.
 @param data: a heirarchicical json file outputted by convertToHeirarchy
 */
 function condense(d) {
     if (d.height == 1) {
-        var indicators = new Map();
+        var niceIndicators = new Map();
+        var naughtyIndicators = new Map();
         var indicator;
         for (indicator of d.children) {
-            if (indicators.get(indicator.data.data["Credibility Indicator Name"])) {
-                json = indicators.get(indicator.data.data["Credibility Indicator Name"]).data.data;
+            if (indicator.data.data['End'] == -1 || indicator.data.data['Start'] == -1) {
+                var name = indicator.data.data["Credibility Indicator Name"];
+                if (naughtyIndicators.get(name)) {
+                    json = naughtyIndicators.get(name);
+                    json["Points"] = parseFloat(json["Points"]) + parseFloat(indicator.data.data["Points"]);
+                } else {
+                    naughtyIndicators.set(name, indicator);
+                }
+            } else if (niceIndicators.get(indicator.data.data["Credibility Indicator Name"])) {
+                json = niceIndicators.get(indicator.data.data["Credibility Indicator Name"]).data.data;
                 json["Points"] = parseFloat(json.Points) + parseFloat(indicator.data.data["Points"]);
             } else {
                 //console.log(indicator.data.data["Credibility Indicator Name"]);
-                indicators.set(indicator.data.data["Credibility Indicator Name"], indicator);
+                niceIndicators.set(indicator.data.data["Credibility Indicator Name"], indicator);
             }
         }
         //console.log(indicators);
-        var newChildren = Array.from(indicators.values());
+        var newChildren = Array.from(niceIndicators.values());
+        newChildren = newChildren.concat(Array.from(naughtyIndicators.values()));
         d.children = newChildren;
         d.data.children = newChildren;
         //d.children = newChildren;
