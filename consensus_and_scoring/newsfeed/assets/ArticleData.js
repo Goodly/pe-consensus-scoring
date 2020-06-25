@@ -2,7 +2,7 @@ class ArticleData {
     constructor(title, author, date, ID, articleLink, visLink, plainText, highlightData) {
         this.title = title;
         this.author = author;
-        this.date = date;
+        this.date = date.slice(0, -18);
         this.id = ID;
         this.articleLink = articleLink;
         this.plainText = plainText;
@@ -12,18 +12,12 @@ class ArticleData {
         this.previewText = "";
     }
 
-    
-    
-        
-        
-    
-    
     getCredibilityScore() {
         var article = this;
         $.get(article.highlightData).done(function(data) {
             for (var i = 0; i < Object.keys(data).length - 1; i++) {
                 var highlightEntry = data[i];
-                
+
                 article.credibilityScore += parseInt(highlightEntry["Points"]);
             }
         });

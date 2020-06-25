@@ -13,7 +13,7 @@ function readVisData() {
 }
 
 function setScores() {
-    
+
     var articleObject;
     for (articleObject of listofarticles) {
         var artSVG = document.querySelector("svg[articleID='" + articleObject.id + "'");
@@ -70,9 +70,9 @@ function sortArticles(listofarticles, sortBy, order) {
         }
     } else if (sortBy == "date") {
         if (order == "older") {
-            listofarticles.sort((a, b) => (a.date > b.date) ? 1 : -1)
+            listofarticles.sort((a, b) => (Date.parse(a.date) > Date.parse(b.date)) ? 1 : -1)
         } else {
-            listofarticles.sort((a, b) => (a.date < b.date) ? 1 : -1)
+            listofarticles.sort((a, b) => (Date.parse(a.date) < Date.parse(b.date)) ? 1 : -1)
         }
     } else {
         if (order == "high") {
