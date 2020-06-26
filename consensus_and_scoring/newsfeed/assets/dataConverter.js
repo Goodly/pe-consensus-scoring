@@ -1,12 +1,32 @@
+var HOLISTIC_MAP = new Map();
+
 //Add dummy data so that the data has the correct nodes to form a tree.
 function addDummyData(data) {
+  
+  var newData = [];
+  
   var line;
-  var score = 0;
+  for (line of data) {
+    if (line["Credibility Indicator Category"] == "Holistic") {
+      
+      if (HOLISTIC_MAP.has(line["Credibility Indicator Name"])) {
+        var score = HOLISTIC_MAP.get(line["Credibility Indicator Name"]) + parseFloat(line["Points"]);
+        HOLISTIC_MAP.set(line["Credibility Indicator Name"], score);
+      }
+      HOLISTIC_MAP.set(line["Credibility Indicator Name"], parseFloat(line["Points"]));
+    } else {
+      
+      newData.push(line);
+    }
+  }
+  
+  
+  
   
   var categories = new Set([]);
   var i = 0;
   //Get all categories that are non-empty.
-  data.forEach((highlight) => {
+  newData.forEach((highlight) => {
     if (highlight["Credibility Indicator Category"]) {
       categories.add(highlight["Credibility Indicator Category"]);
       i ++;
@@ -14,17 +34,17 @@ function addDummyData(data) {
   });
   //Add all categories as nodes to the data with parent as CATEGORIES.
   categories.forEach((category) => {
-    data[i] = {"Credibility Indicator Category": "CATEGORIES", "Credibility Indicator Name": category};
+    newData[i] = {"Credibility Indicator Category": "CATEGORIES", "Credibility Indicator Name": category};
     i ++;
   })
       
   
 
   //Add root nodes.
-  data[i] = {"Credibility Indicator Category": undefined, "Credibility Indicator Name": "CATEGORIES"};
+  newData[i] = {"Credibility Indicator Category": undefined, "Credibility Indicator Name": "CATEGORIES"};
         
 
-  return data;
+  return newData;
 }
 
 //Convert data to a hierarchical format.

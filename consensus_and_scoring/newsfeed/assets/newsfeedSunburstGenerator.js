@@ -14,7 +14,7 @@ var chartDiv = document.getElementById("chart");
 
 var width = 200,
     height = 200,
-    radius = (Math.min(width, height) / 2) - 10;
+    radius = (Math.min(width, height) / 2) + 10;
 
 var formatNumber = d3.format(",d");
 
@@ -38,7 +38,7 @@ var nodeToPath = new Map();
 var arc = d3.arc()
     .startAngle(function(d) { return Math.max(0, Math.min(2 * Math.PI, x(d.x0))); })
     .endAngle(function(d) { return Math.max(0, Math.min(2 * Math.PI, x(d.x1))); })
-    .innerRadius(function(d) { return 150 *d.y0; })
+    .innerRadius(function(d) { return 130 *d.y0; })
     .outerRadius(function(d) { return 130 * d.y1; });
 
 
@@ -70,11 +70,16 @@ d3.csv(dataFileName, function(error, data) {
   
   var root = convertToHierarchy(data);
   condense(root);
-  console.log(root);
   
+  
+  var holistic_score = 0;
+  for (let [key, value] of HOLISTIC_MAP) {
+    holistic_score += Math.round(value);
+  }
+ 
   ROOT = root;
-  totalScore = 100 + scoreSum(root);
-  console.log(id);
+  totalScore = 100 + scoreSum(root) + holistic_score;
+  
   document.querySelector("svg[articleID='" + id + "'").setAttribute("score", totalScore);
   root.sum(function(d) {
     return Math.abs(parseFloat(d.data.Points));
@@ -167,6 +172,7 @@ svg.selectAll('path')
         }
     })
     .on('mouseleave', function(d) {
+        score = nodeToPath.get(d).parentElement.parentElement.getAttribute("score");
         d3.select(nodeToPath.get(d))
             .transition()
             .duration(300)
@@ -178,7 +184,6 @@ svg.selectAll('path')
             .delay(200)
             .duration(600)
             .style("opacity", 0);
-    var total = parseFloat(scoreSum(root));
     svg.selectAll(".center-text").style("display", "none");
     svg.append("text")
         .attr("class", "center-text")
@@ -186,7 +191,7 @@ svg.selectAll('path')
         .attr("y", 13)
         .style("font-size", 40)
         .style("text-anchor", "middle")
-        .html((total + 100));
+        .html((score));
     })
     .style("fill", colorFinderSun);
     visualizationOn = false;
