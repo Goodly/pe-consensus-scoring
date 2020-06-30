@@ -83,14 +83,19 @@ d3.csv(dataFileName, function(error, data) {
   data = addDummyData(data);
   
   var root = convertToHierarchy(data);
-  condense(root);
+  var PILLS_MAP = new Map()
+  condense(root, PILLS_MAP);
+  drawPills(PILLS_MAP);
   ROOT = root;
-  console.log(PILLS_MAP);
+  console.log(root);
   var entry;
   var pillscore = 0;
+  console.log("this should be 2nd");
   for (entry of PILLS_MAP) {
+    
       pillscore += Math.round(parseFloat(entry[1]));
   }
+  console.log(PILLS_MAP);
   totalScore = 100 + scoreSum(root) + pillscore;
 
     root.sum(function(d) {
@@ -326,6 +331,7 @@ function drawVis(d, root, me, div) {
         if (d.data.data.Start == -1) {
           console.log("This fallacy does not have a highlight in the article body.");   
         } else {
+            
             highlightSun(textToHighlight[0]);
         }
     }
@@ -379,13 +385,13 @@ function scoreSum(d) {
     } else {
         var sum = 0;
         for (var i = 0; i < d.children.length; i++) {
-            sum += parseFloat(scoreSum(d.children[i]));
+            sum += Math.round(parseFloat(scoreSum(d.children[i])));
         }
         if (d.height == 2) {
             articleScore = parseFloat(sum);
             return Math.round(articleScore);
         }
-        return Math.round(sum);
+        return sum;
     }
 }
 // theresa start

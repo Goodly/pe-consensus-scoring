@@ -1,5 +1,5 @@
 
-var PILLS_MAP = new Map();
+
 
 
 //Add dummy data so that the data has the correct nodes to form a tree.
@@ -44,18 +44,19 @@ function convertToHierarchy(data) {
 and unique leaves.
 @param d: a heirarchicical json file outputted by convertToHeirarchy
 */
-function condense(d) {
+function condense(d, pills_map) {
     if (d.height == 1) {
         var indicators = new Map();
         var indicator;
         for (indicator of d.children) {
             if (indicator.data.data['End'] == -1 || indicator.data.data['Start'] == -1) {
                 var name = indicator.data.data["Credibility Indicator Name"] + '-' + indicator.data.data["Credibility Indicator ID"].substring(0, 1);
-                if (PILLS_MAP.get(name)) {
-                    var points = PILLS_MAP.get(indicator.data.data["Credibility Indicator Name"]);
+                if (pills_map.get(name)) {
+                    var points = pills_map.get(name);
                     points += parseFloat(indicator.data.data["Points"]);
+                    pills_map.set(name, points);
                 } else {
-                    PILLS_MAP.set(name, indicator.data.data['Points']);
+                    pills_map.set(name, parseFloat(indicator.data.data['Points']));
                 }
             } else if (indicators.get(indicator.data.data["Credibility Indicator Name"])) {
                 json = indicators.get(indicator.data.data["Credibility Indicator Name"]).data.data;
@@ -74,7 +75,7 @@ function condense(d) {
     } else {
         var child;
         for (child of d.children) {
-            condense(child);
+            condense(child, pills_map);
         }
     }
 }
@@ -95,16 +96,16 @@ function drawPills(pills_map) {
         var class_string = "class='" + entry[0] + "'";
         var java_string = "onmouseover='pillMouseover(" + Math.round(score) + ");' onmouseleave='pillMouseleave();'";
         var pill_div = "<div " + class_string + " " + style_string + " " + java_string + "><h5 style='font-size:13px;display: table-cell;vertical-align:middle; text-align:center;'>" + label+"</h5></div>";
-        console.log(pill_div);
+        
         div_string += pill_div;
     }
     pills_div.innerHTML = div_string;
     
 }
 
-setTimeout(function () {
-                    drawPills(PILLS_MAP);
-                }, 400);
+
+                    
+               
 
 
 function pillMouseover(score) {
