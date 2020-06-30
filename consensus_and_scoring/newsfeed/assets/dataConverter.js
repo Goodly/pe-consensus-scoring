@@ -1,8 +1,8 @@
-var HOLISTIC_MAP = new Map();
+var HOLISTIC_MAP;
 
 //Add dummy data so that the data has the correct nodes to form a tree.
 function addDummyData(data) {
-  
+  HOLISTIC_MAP = new Map();
   var newData = [];
   
   var line;
