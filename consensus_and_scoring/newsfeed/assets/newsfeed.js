@@ -6,7 +6,7 @@ function readVisData() {
             var article = data[i];
             var articleEntry = new ArticleData(article["Title"], article["Author"], article["Date"], article["ID"], article["Article Link"], article["Visualization Link"], article["Plain Text"], article["Highlight Data"]);
             //articleEntry.setCredibilityScore();
-            articleEntry.getPreviewText();
+            
             listofarticles.push(articleEntry);
         }
     });
@@ -75,8 +75,9 @@ function sortArticles(listofarticles, sortBy, order) {
             listofarticles.sort((a, b) => (Date.parse(a.date) < Date.parse(b.date)) ? 1 : -1)
         }
     } else {
+      console.log(listofarticles);
         if (order == "high") {
-            console.log(listofarticles);
+            
             listofarticles.sort((a, b) => (a.credibilityScore < b.credibilityScore) ? 1 : -1)
         } else {
             listofarticles.sort((a, b) => (a.credibilityScore > b.credibilityScore) ? 1 : -1)
@@ -86,21 +87,34 @@ function sortArticles(listofarticles, sortBy, order) {
 }
 
 function generateAndMove() {
-    setTimeout(function () {
-        generateList();
-
-    }, 1000);
-    setTimeout(function() {
-        moveHallmarks();
+    
+  $.get("#showLimit").done(function(){
+    const generatePromise = new Promise(function() {
+       generateList();
     });
+    
+      moveHallmarks();
+    
+    
+    
+  } ); 
+    
+    
+  
 }
 
 function generateEntry(entry) {
-    var articleEntry = "<div id='" + entry.id + "' class='row'>" +
+    
+    var previewPromise = $.get(entry.plainText).done(function(data) {
+      
+      var previewText = data.toString().substring(0, 200);
+      
+      
+      var articleEntry = "<div id='" + entry.id + "' class='row'>" +
                             "<div class='col-2 date'>" + entry.date + "</div>" +
                             "<div class='col-6'>" +
                                 "<a class='hyperlink' href='" + entry.visLink + "'> <h3>" + entry.title + "</h3></a>" +
-                                "<p class='articleText'>" + entry.previewText + "</p>" +
+                                "<p class='articleText'>" + previewText + "</p>" +
                                 "<p class='author'>" + entry.author + "</p>" +
                             "</div>" +
                             "<div class='cred-score-container col-4'>" +
@@ -110,11 +124,15 @@ function generateEntry(entry) {
                             "</div>" +
                        "</div>" +
                        "<hr>";
-    document.getElementById("articleList").innerHTML += articleEntry;
-    if (document.querySelector("svg[articleID='" + entry.id +"']") != null) {
-        document.querySelector("svg[articleID='" + entry.id +"']").remove();
-    }
-    hallmark(entry.highlightData, entry.id);
+      document.getElementById("articleList").innerHTML += articleEntry;
+      if (document.querySelector("svg[articleID='" + entry.id +"']") != null) {
+          document.querySelector("svg[articleID='" + entry.id +"']").remove();
+      }
+      hallmark(entry.highlightData, entry.id);
+      
+      
+    });
+    
 }
 
 function csvJSON(csv){

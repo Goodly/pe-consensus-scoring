@@ -9,24 +9,5 @@ class ArticleData {
         this.visLink = visLink;
         this.highlightData = highlightData;
         this.credibilityScore = 100;
-        this.previewText = "";
-    }
-
-    getCredibilityScore() {
-        var article = this;
-        $.get(article.highlightData).done(function(data) {
-            for (var i = 0; i < Object.keys(data).length - 1; i++) {
-                var highlightEntry = data[i];
-
-                article.credibilityScore += parseInt(highlightEntry["Points"]);
-            }
-        });
-    }
-
-    getPreviewText() {
-        var article = this;
-        $.get(article.plainText).done(function(data) {
-            article.previewText = data.toString().substring(0, 200);
-        });
     }
 }
