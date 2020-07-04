@@ -466,7 +466,11 @@ def find_answer_contents(schemadata, qlabel):
 def find_is_highlight(schemadata, qlabel):
     questiondf = schemadata[schemadata['question_label'] == qlabel]
     hl = questiondf['highlight'].tolist()
-    return hl[0]
+    ans_uuid = questiondf['answer_uuid'].tolist()
+    out = {}
+    for i in range(len(ans_uuid)):
+        out[ans_uuid[i]] = hl[i]
+    return out
 
 def find_answer_text(task_question_answer_labels, task_uuid, question_label):
     task_data = task_question_answer_labels.loc[task_uuid]
@@ -553,9 +557,10 @@ def get_answer_content(data, task_id, question_num, answer_num):
     myAnswer = contents[answer_num]
     return myAnswer
 
-def get_has_hl(data, task_id, question_num):
+def get_has_hl(data, task_id, question_num, ans_uuid):
 
     hl = data[task_id]['quesData'][question_num]['has_highlight']
+    hl = hl[ans_uuid]
 
     return hl
 

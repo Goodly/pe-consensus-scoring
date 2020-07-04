@@ -212,13 +212,13 @@ if __name__ == '__main__':
     args = load_args()
     # input
     config_path = './config/'
-    input_dir = '../data/datahunts/'
+    input_dir = '../data/debug_hunts/'
     texts_dir = '../data/texts/'
     metadata_dir = '../data/metadata/'
     tua_dir = '../data/tags/'
     schema_dir = '../data/schemas/'
     # output
-    output_dir = '../data/out_iaa/'
+    iaa_output_dir = '../data/debug_out_iaa/'
     scoring_dir = '../data/out_scoring/'
     viz_dir = '../data/out_viz/'
     rep_file = './UserRepScores.csv'
@@ -230,7 +230,7 @@ if __name__ == '__main__':
     if args.schema_dir:
         schema_dir = args.schema_dir
     if args.output_dir:
-        output_dir = args.output_dir
+        iaa_output_dir = args.output_dir
     if args.scoring_dir:
         scoring_dir = args.scoring_dir
     if args.viz_dir:
@@ -249,7 +249,7 @@ if __name__ == '__main__':
         texts_dir,
         config_path,
         schema_dir = schema_dir,
-        iaa_dir = output_dir,
+        iaa_dir = iaa_output_dir,
         scoring_dir = scoring_dir,
         repCSV = rep_file,
         viz_dir = viz_dir,

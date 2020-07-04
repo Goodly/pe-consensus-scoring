@@ -132,7 +132,6 @@ def calc_scores(highlightfilename, config_path,  texts_path, repCSV=None, schema
 
             agreements = score(task, ques, uberDict, config_path, text_file, repDF, useRep=useRep, threshold_func=threshold_func)
             question_text = get_question_text(uberDict, task, ques)
-            has_hl = get_has_hl(uberDict, task, ques)
             # if it's a list then it was a checklist question
 
             if type(agreements) is list:
@@ -144,6 +143,7 @@ def calc_scores(highlightfilename, config_path,  texts_path, repCSV=None, schema
                     selectedText, firstSecondScoreDiff = agreements[i][6], agreements[i][7]
                     question_type, num_choices = agreements[i][8], agreements[i][9]
                     num_users = agreements[i][5]
+                    ans_uuid, has_hl = get_answer_data(schema_sha, 1, ques_num, winner, schemaFile)
                     if int(has_hl) == 0:
                         units = []
                         unitizingScore = 'NA'
@@ -165,7 +165,7 @@ def calc_scores(highlightfilename, config_path,  texts_path, repCSV=None, schema
                     # units = units.replace(' ', ', ')
 
                     #TODO: when separate topics implemented; replace the 1 with th the topicnum
-                    ans_uuid = get_answer_uuid(schema_sha, 1, ques_num, winner, schemaFile)
+
                     data.append([article_num, article_sha, article_id, article_filename, task_id, tua_uuid, schema_namespace, schema_sha, ques_num, ans_uuid, agreements[i][8], winner,
                                  codingPercentAgreement, agreements[i][7], units,
                                  unitizingScore, inclusiveUnitizing, totalScore, num_users, num_choices,selectedText,
@@ -189,20 +189,21 @@ def calc_scores(highlightfilename, config_path,  texts_path, repCSV=None, schema
                 #chance_odds = oddsDueToChance(codingPercentAgreement,num_users=num_users, num_choices=num_choices)
                 answer_content = get_answer_content(uberDict, task, ques, agreements[0])
                 #answer_text = get_answer_text(uberDict, task, ques, agreements[0])
+                ques_num = ques
+                ans_uuid, has_hl = get_answer_data(schema_sha, 1, ques_num, winner, schemaFile)
                 if int(has_hl) == 0:
                     units = []
                     unitizingScore = 'NA'
                     inclusiveUnitizing = 'NA'
                 totalScore = calcAgreement(codingPercentAgreement, unitizingScore)
                 #ques_num = parse(ques, 'Q')
-                ques_num = ques
+
                 #units = json.dumps(units.tolist())
                 #Don't need to convert to json because is always a list not an ndarray
                 #print(type(units))
                 units = json.dumps(np.array(units).tolist())
                 # units = str(units).replace('\n', '')
                 # units = units.replace(' ', ', ')
-                ans_uuid = get_answer_uuid(schema_sha, 1, ques_num, winner, schemaFile)
 
                 data.append([article_num, article_sha, article_id, article_filename, task_id,tua_uuid,schema_namespace, schema_sha,
                              ques_num, ans_uuid, question_type, winner, codingPercentAgreement, agreements[7],
@@ -371,7 +372,7 @@ def run_2step_unitization(data, article, question, repDF):
     return 'NA', indices, score, score, 'NA'
 
 
-def get_answer_uuid(schema_sha, topic, question, answer, schema_file):
+def get_answer_data(schema_sha, topic, question, answer, schema_file):
     if isinstance(answer, str):
         return 0
     schema_data = pd.read_csv(schema_file, encoding='utf-8')
@@ -379,5 +380,5 @@ def get_answer_uuid(schema_sha, topic, question, answer, schema_file):
     row = schema_data[schema_data['answer_label'] == tqa]
     if row.shape[0]<1:
         return 'XXX'
-    return row['answer_uuid'].iloc[0]
+    return row['answer_uuid'].iloc[0], row['highlight'].iloc[0]
 
