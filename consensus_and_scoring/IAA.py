@@ -143,6 +143,7 @@ def calc_scores(highlightfilename, config_path,  texts_path, repCSV=None, schema
                     selectedText, firstSecondScoreDiff = agreements[i][6], agreements[i][7]
                     question_type, num_choices = agreements[i][8], agreements[i][9]
                     num_users = agreements[i][5]
+                    ques_num = ques
                     ans_uuid, has_hl = get_answer_data(schema_sha, 1, ques_num, winner, schemaFile)
                     if int(has_hl) == 0:
                         units = []
@@ -159,7 +160,7 @@ def calc_scores(highlightfilename, config_path,  texts_path, repCSV=None, schema
                     #bin_chance_odds = oddsDueToChance(codingPercentAgreement,num_users=num_users, num_choices=2)
                     #Treat each q as a binary yes/no
                     #chance_odds = bin_chance_odds
-                    ques_num = ques
+
                     units = json.dumps(np.array(units).tolist())
                     # units = str(units).replace('\n', '')
                     # units = units.replace(' ', ', ')
