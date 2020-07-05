@@ -374,12 +374,13 @@ def run_2step_unitization(data, article, question, repDF):
 
 
 def get_answer_data(schema_sha, topic, question, answer, schema_file):
+    #answer is string if LMU
     if isinstance(answer, str):
-        return 0
+        return 0,0
     schema_data = pd.read_csv(schema_file, encoding='utf-8')
     tqa = "T"+str(topic)+".Q"+str(question)+".A"+str(answer)
     row = schema_data[schema_data['answer_label'] == tqa]
     if row.shape[0]<1:
-        return 'XXX'
+        return 'XXX',0
     return row['answer_uuid'].iloc[0], row['highlight'].iloc[0]
 
