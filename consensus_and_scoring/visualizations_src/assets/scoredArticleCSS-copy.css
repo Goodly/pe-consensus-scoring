@@ -1783,8 +1783,10 @@ main {
   0 0 0 transparent,
   0 0 0 transparent,
   0 0 0 transparent;
-  height: 100px;
+  height: 210px;
 }
+
+
 
 
 
@@ -1826,6 +1828,25 @@ main {
     position: absolute;
     left: 5%;
     top: 5%;
+    height: inherit;
+}
+
+.description_power {
+    position: absolute;
+    left: 25%;
+    top: 5%;
+    height: inherit;
+    width: inherit;
+    
+}
+
+.description_sponsor {
+    position: absolute;
+    left: 50%;
+    top:5%;
+    height:inherit;
+    width: inherit;
+    
 }
 
 .links_1 {
