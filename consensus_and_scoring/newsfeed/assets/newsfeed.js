@@ -1,3 +1,13 @@
+window.addEventListener('load', (event) => {
+    $.get("visData.json").done(function() {
+    readVisData();
+    generateAndMove();
+    }).fail(function() {
+        console.log('uh oh the page did not load');
+    });
+    });
+
+
 var listofarticles = [];
 
 function readVisData() {

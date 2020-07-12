@@ -76,10 +76,22 @@ d3.csv(dataFileName, function(error, data) {
   for (let [key, value] of HOLISTIC_MAP) {
     holistic_score += Math.round(value);
   }
- 
+  
   ROOT = root;
   totalScore = 100 + scoreSum(root) + holistic_score;
-  
+  if (id == "2005") {
+      console.log(totalScore==67);
+  } else if (id=="100057") {
+      console.log(totalScore==95);
+  } else if(id=="100058") {
+      console.log(totalScore==98);
+  } else if (id =="100054") {
+      console.log(totalScore==65);
+  } else {
+      console.log(totalScore==80);
+  }
+    
+    
   document.querySelector("svg[articleID='" + id + "'").setAttribute("score", totalScore);
   root.sum(function(d) {
     return Math.abs(parseFloat(d.data.Points));
