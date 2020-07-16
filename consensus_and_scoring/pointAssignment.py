@@ -311,6 +311,7 @@ def collapse_all_tuas(all_tuas, has_arg, arg_spec, has_source, source_spec, repo
     if len(real_tasks)>0:
         collapsed = all_tuas[all_tuas['tua_uuid'] == real_tasks[0]]
         for i in range(1,len(real_tasks)):
+            extra = all_tuas[all_tuas['tua_uuid'] == real_tasks[i]]
             collapsed = collapsed.append(all_tuas[all_tuas['tua_uuid'] == real_tasks[i]])
 
     return collapsed
@@ -370,5 +371,5 @@ def convert_to_tq_format(topic, question):
     """creates a string that is uniform in the "T?.Q?.A? format; without the A"""
     return "T"+str(topic)+".Q"+str(question)
 
-
+#pointSort('../data/out_scoring/', input_dir = None, weights = weights, tua_dir=tua_dir, reporting=reporting
 #pointSort('scoring_covid', 'covid/')

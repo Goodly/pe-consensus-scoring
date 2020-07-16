@@ -257,6 +257,7 @@ if __name__ == '__main__':
         s3_prefix = s3_prefix,
         threshold_func = threshold_function,
         tua_dir = tua_dir,
-        metadata_dir = metadata_dir
+        metadata_dir = metadata_dir,
+        reporting=True
     )
     send_s3(viz_dir, texts_dir, metadata_dir, s3_bucket, s3_prefix=s3_prefix)

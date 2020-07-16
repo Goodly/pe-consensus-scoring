@@ -1,6 +1,7 @@
 import os
 import pandas as pd
 import csv
+import json
 from math import floor
 from dataV3 import get_indices_hard
 from dataV3 import  get_path
@@ -71,6 +72,11 @@ def formatFile(filePath, outdir):
             newrow['start_pos'] = starts[j]
             newrow['end_pos'] = en
             newrow['target_text'] = texts[j].encode('unicode-escape').decode('utf-8')
+            extra = {
+                'agreement_score': row['agreement_score'],
+                'tua_uuid': row['tua_uuid']
+            }
+            newrow['extra'] = json.dumps(extra)
             out = out.append(newrow)
     out['end_pos2'] = out['end_pos'].apply(floor)
     out.astype({'end_pos2':'Int64'})
@@ -82,7 +88,7 @@ def formatFile(filePath, outdir):
     #take it out of pandas so we can make it not be a float.
     for_csv = [['article_filename', 'article_sha256', 'source_task_uuid',
                 'namespace', 'topic_name', 'case_number', 'start_pos', 'end_pos',
-                'target_text', 'answer_uuid', 'answer_text' ]]
+                'target_text', 'answer_uuid', 'answer_text', 'extra']]
     for i in range(len(out['namespace'])):
         article_filename = out['article_filename'].iloc[i]
         article_sha256 = out['article_sha256'].iloc[i]
@@ -95,9 +101,10 @@ def formatFile(filePath, outdir):
         answer_uuid = out['answer_uuid'].iloc[i]
         topic_name = out['topic_name'].iloc[i]
         answer_text = out['answer_text'].iloc[i]
+        extra = out['extra'].iloc[i]
         for_csv.append([article_filename, article_sha256, source_task_uuid,
                         namespace, topic_name, case_number, start_pos, end_pos,
-                        target_text, answer_uuid, answer_text])
+                        target_text, answer_uuid, answer_text, extra])
     with open(dest_path, 'w', encoding='utf-8') as outfile:
         writer = csv.writer(outfile)
         writer.writerows(for_csv)
@@ -107,4 +114,4 @@ if __name__ == '__main__':
     output_tags_dir = '../data/output_tags/'
     if not os.path.exists(output_tags_dir):
         os.makedirs(output_tags_dir)
-    export_datahunt_tags('../data/scoring/', output_tags_dir)
+    export_datahunt_tags('../data/out_iaa/', output_tags_dir)
