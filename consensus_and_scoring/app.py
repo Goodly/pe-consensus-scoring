@@ -22,7 +22,7 @@ from botocore.exceptions import ClientError
 
 from iaa_only import iaa_only
 from TriagerScoring import importData
-from master import calculate_scores_master
+from post_adjudicator import post_adjudicator_master
 from send_to_s3 import send_s3, get_s3_config, s3_safe_path, send_command
 from send_to_s3 import handle_unpublish_article
 
@@ -195,32 +195,36 @@ def handle_publish_article(body, parent_dirname):
     metadata_for_texts = unnest_metadata_key(texts)
     schemas = body.get('Schemas', [])
     datahunts = body.get('DataHunts', [])
-    tags = body.get('Tags', [])
-    negative_tasks = body.get('NegativeTasks', [])
-    adj_tags = body.get('AdjTags', [])
-    adj_negative_tasks = body.get('AdjNegativeTasks', [])
+    focus_tags = body.get('FocusTags', [])
+    #tags = body.get('Tags', [])
+    #negative_tasks = body.get('NegativeTasks', [])
+    adj_tags = body.get('AdjTagsElseIAATags', [])
+    adj_negative_tasks = body.get('AdjNegativeTasksElseIAA', [])
     logger.info("texts count {}".format(len(texts)))
     logger.info("metadata count {}".format(len(metadata_for_texts)))
     logger.info("schemas count {}".format(len(schemas)))
     logger.info("datahunts count {}".format(len(datahunts)))
-    logger.info("tags count {}".format(len(tags)))
-    logger.info("negative_tasks count {}".format(len(negative_tasks)))
+    logger.info("focus_tags count {}".format(len(focus_tags)))
+    #logger.info("tags count {}".format(len(tags)))
+    #logger.info("negative_tasks count {}".format(len(negative_tasks)))
     logger.info("adj_tags count {}".format(len(adj_tags)))
     logger.info("adj_negative_tasks count {}".format(len(adj_negative_tasks)))
     texts_dir = os.path.join(parent_dirname, 'texts')
     metadata_dir = os.path.join(parent_dirname, 'metadata')
     schemas_dir = os.path.join(parent_dirname, 'schemas')
     datahunts_dir = os.path.join(parent_dirname, 'datahunts')
-    tags_dir = os.path.join(parent_dirname, 'tags')
-    negative_tasks_dir = os.path.join(parent_dirname, 'negative_tasks')
+    focus_tags_dir = os.path.join(parent_dirname, 'focus_tags')
+    #tags_dir = os.path.join(parent_dirname, 'tags')
+    #negative_tasks_dir = os.path.join(parent_dirname, 'negative_tasks')
     adj_tags_dir = os.path.join(parent_dirname, 'adj_tags')
     adj_negative_tasks_dir = os.path.join(parent_dirname, 'adj_negative_tasks')
     retrieve_file_list(texts, texts_dir)
     retrieve_file_list(metadata_for_texts, metadata_dir)
     retrieve_file_list(schemas, schemas_dir)
     retrieve_file_list(datahunts, datahunts_dir)
-    retrieve_file_list(tags, tags_dir)
-    retrieve_file_list(negative_tasks, negative_tasks_dir)
+    retrieve_file_list(focus_tags, focus_tags_dir)
+    #retrieve_file_list(tags, tags_dir)
+    #retrieve_file_list(negative_tasks, negative_tasks_dir)
     retrieve_file_list(adj_tags, adj_tags_dir)
     retrieve_file_list(adj_negative_tasks, adj_negative_tasks_dir)
     rename_schema_files(schemas_dir)
@@ -234,20 +238,15 @@ def handle_publish_article(body, parent_dirname):
     output_dir = tempfile.mkdtemp(dir=parent_dirname)
     scoring_dir = tempfile.mkdtemp(dir=parent_dirname)
     viz_dir = tempfile.mkdtemp(dir=parent_dirname)
-    calculate_scores_master(
+    post_adjudicator_master(
+        adj_tags_dir,
+        schemas_dir,
+        output_dir,
         datahunts_dir,
-        texts_dir,
-        config_path,
-        schema_dir = schemas_dir,
-        iaa_dir = output_dir,
-        scoring_dir = scoring_dir,
-        repCSV = rep_file,
-        viz_dir = viz_dir,
-        s3_bucket = viz_s3_bucket,
-        s3_prefix = viz_s3_prefix,
-        threshold_func = threshold_function,
-        tua_dir = tags_dir,
-        metadata_dir = metadata_dir
+        scoring_dir,
+        viz_dir,
+        focus_tags_dir,
+        threshold_function,
     )
     viz_files_sent = send_s3(viz_dir, texts_dir, metadata_dir, viz_s3_bucket, s3_prefix=viz_s3_prefix)
     message = build_published_message(body, viz_s3_bucket, viz_files_sent)
