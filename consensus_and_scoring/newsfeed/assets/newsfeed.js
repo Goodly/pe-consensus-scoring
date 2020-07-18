@@ -1,17 +1,18 @@
 window.addEventListener('load', (event) => {
-    $.get("visData.json").done(function() {
-    readVisData();
-    generateAndMove();
-    }).fail(function() {
-        console.log('uh oh the page did not load');
+    const visPromise = readVisData();
+    visPromise.then(function() {
+        generateAndMove();
+        
     });
-    });
+    
+});
 
 
 var listofarticles = [];
 
 function readVisData() {
-    $.get("visData.json").done(function(data) {
+    return $.get("visData.json").done(function(data) {
+        console.log('first');
         for (var i = 0; i < Object.keys(data).length; i++) {
             var article = data[i];
             var articleEntry = new ArticleData(article["Title"], article["Author"], article["Date"], article["ID"], article["Article Link"], article["Visualization Link"], article["Plain Text"], article["Highlight Data"]);
