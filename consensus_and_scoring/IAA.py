@@ -6,6 +6,7 @@ import json
 from dataV3 import *
 from repScores import *
 import os
+import re
 
 
 def calc_agreement_directory(directory, schema_dir, config_path,  texts_path, repCSV=None,  outDirectory = None,
@@ -228,9 +229,11 @@ def calc_scores(highlightfilename, config_path,  texts_path, repCSV=None, schema
 
     outDirectory = make_directory(outDirectory)
     path, name = get_path(highlightfilename)
-    print("IAA outputs to:", outDirectory + 'S_IAA_' + name)
-    out_path = outDirectory + 'S_IAA_' + name
-    scores = open(outDirectory + 'S_IAA_' + name, 'w', encoding='utf-8')
+    task_name = re.match(r'(.*?)-Task', name).group()[:-5]
+    out_name = task_name + '.IAA-' + task_id + '-Tags.csv'
+    print("IAA outputs to:", outDirectory + out_name)
+
+    scores = open(outDirectory + out_name, 'w', encoding='utf-8')
     with scores:
         writer = csv.writer(scores)
         writer.writerows(data)
@@ -384,3 +387,14 @@ def get_answer_data(schema_sha, topic, question, answer, schema_file):
         return 'XXX',0
     return row['answer_uuid'].iloc[0], row['highlight'].iloc[0]
 
+if __name__ == '__main__':
+    config_path = './config/'
+    input_dir = '../data/datahunts/'
+    texts_dir = '../data/texts/'
+    metadata_dir = '../data/metadata/'
+    tua_dir = '../data/tags/'
+    schema_dir = '../data/schemas/'
+    # output
+    iaa_output_dir = '../data/out_iaa/'
+    calc_agreement_directory(input_dir, schema_dir, config_path, texts_dir, repCSV=None, outDirectory=iaa_output_dir,
+                                 useRep=False, threshold_func='raw_30')

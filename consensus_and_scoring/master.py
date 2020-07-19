@@ -215,7 +215,7 @@ if __name__ == '__main__':
     input_dir = '../data/datahunts/'
     texts_dir = '../data/texts/'
     metadata_dir = '../data/metadata/'
-    tua_dir = '../data/tags/'
+    tua_dir = '../data/focus_tags/'
     schema_dir = '../data/schemas/'
     # output
     iaa_output_dir = '../data/out_iaa/'
