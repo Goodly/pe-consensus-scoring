@@ -111,7 +111,7 @@ def import_tags(old_s_iaa_dir, tags_dir, schema_dir, output_dir):
         task_tags = tags[tags['source_task_uuid'] == source_task_uuid]
         namespace = task_tags['namespace'].iloc[0]
 
-        out_path = output_dir+namespace+'.adjudicated-'+source_task_uuid+'-Tags.csv"
+        out_path = output_dir+namespace+'.adjudicated-'+source_task_uuid+'-Tags.csv'
         print('OUTPUTTING', out_path)
         task_tags.to_csv(out_path)
 
