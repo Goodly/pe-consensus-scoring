@@ -14,7 +14,7 @@ def export_datahunt_tags(path, outdir = None):
     for dirpath, dirnames, files in os.walk(path):
         for file in files:
             print("IAA OUTPUT",file)
-            if file.endswith('.csv') and 'S_IAA' in file and 'Adj' not in file:
+            if file.endswith('.csv') and 'iaa' in file.lower() and 'adj' not in file.lower():
                 file_path = os.path.join(path, file)
                 dep_iaa.append(file_path)
     for f in dep_iaa:

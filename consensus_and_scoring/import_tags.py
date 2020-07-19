@@ -25,13 +25,11 @@ def import_tags(old_s_iaa_dir, tags_dir, schema_dir, output_dir):
     for root, dir, files in os.walk(tags_dir):
         for file in files:
             if file.endswith('.csv') and 'adj' in file.lower():
-                if 'DataHunt' in file:
                     tag_files.append(tags_dir+'/'+file)
     iaa_files = []
     for root, dir, files in os.walk(old_s_iaa_dir):
         for file in files:
             if file.endswith('.csv') and 'iaa' in file.lower():
-                if 'DataHunt' in file:
                     iaa_files.append(old_s_iaa_dir + '/' + file)
 
     schema_files = []
