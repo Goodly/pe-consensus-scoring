@@ -4,7 +4,7 @@ from IAA import calc_agreement_directory
 import argparse
 
 def post_adjudicator_master(tags_dir, schema_dir, new_s_iaa_dir, input_dir, scoring_dir, viz_dir,
-                            tua_dir, text_dir, threshold_func, config_path):
+                            tua_dir, text_dir, config_path, threshold_func):
     iaa_dir = calc_agreement_directory(input_dir, schema_dir, config_path, text_dir, repCSV=None,  outDirectory = '../data/temp_iaa/',
                              useRep = False, threshold_func = 'raw_30')
     import_tags(iaa_dir, tags_dir, schema_dir, new_s_iaa_dir)
@@ -47,7 +47,7 @@ if __name__ == '__main__':
         input_dir = '../data/datahunts/'
         texts_dir = '../data/texts/'
         # metadata_dir = '../data/metadata/'
-        tua_dir = '../data/tags/'
+        tua_dir = '../data/focus_tags/'
         iaa_dir = '../data/raw_iaa/'
         schema_dir = '../data/schemas/'
         adjudication_dir = '../data/output_tags/'
@@ -70,6 +70,6 @@ if __name__ == '__main__':
         if args.tua_dir:
             tua_dir = args.tua_dir
         post_adjudicator_master(adjudication_dir, schema_dir, adjudicated_dir, input_dir, scoring_dir, viz_dir,
-                            tua_dir, texts_dir, threshold_function, config_path)
+                                tua_dir, texts_dir, config_path, threshold_function)
 
 
