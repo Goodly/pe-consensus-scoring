@@ -247,8 +247,8 @@ def handle_publish_article(body, parent_dirname):
         viz_dir,
         focus_tags_dir,
         texts_dir,
-        threshold_function,
         config_path,
+        threshold_function,
     )
     viz_files_sent = send_s3(viz_dir, texts_dir, metadata_dir, viz_s3_bucket, s3_prefix=viz_s3_prefix)
     message = build_published_message(body, viz_s3_bucket, viz_files_sent)
