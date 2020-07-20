@@ -25,8 +25,7 @@ def scoreNuUnitizing(starts,ends,length,numUsers,users, userWeightDict, answers,
 def scoreAlphaUnitizing(starts,ends,length,numUsers,dFunc,users):
     """takes in iterables starts,and ends as well as length of the document
     and the total number of Users who were asked to annotate
-    returns krippendorff unitizing score for the article, this method
-    used mainly for testing and is not used in final algorithm for this"""
+    returns krippendorff unitizing score for the article, """
     matrix = toArray(starts,ends,length,numUsers, users)
     return scoreAlpha(matrix, distanceFunc = dFunc)
 
