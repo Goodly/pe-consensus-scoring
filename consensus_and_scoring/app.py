@@ -236,12 +236,14 @@ def handle_publish_article(body, parent_dirname):
     threshold_function = 'raw_30'
     # outputs
     output_dir = tempfile.mkdtemp(dir=parent_dirname)
+    iaa_temp_dir = tempfile.mkdtemp(dir=parent_dirname)
     scoring_dir = tempfile.mkdtemp(dir=parent_dirname)
     viz_dir = tempfile.mkdtemp(dir=parent_dirname)
     post_adjudicator_master(
         adj_tags_dir,
         schemas_dir,
         output_dir,
+        iaa_temp_dir,
         datahunts_dir,
         scoring_dir,
         viz_dir,
