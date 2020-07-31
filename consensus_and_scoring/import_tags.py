@@ -46,6 +46,8 @@ def import_tags(old_s_iaa_dir, tags_dir, schema_dir, output_dir):
     for i in range(len(tag_files)):
         temp_dfs.append(pd.read_csv(tag_files[i]))
     tags = pd.concat(temp_dfs)
+    #Nan answer_uuid means it likely came from a triager task and we can disregard
+    tags = tags.dropna(subset = ['answer_uuid'])
 
     temp_dfs = []
     for i in range(len(schema_files)):
@@ -128,7 +130,7 @@ def make_namespace_to_schema_dict(tags, iaa, schema_dir):
     return dict
 if __name__ == '__main__':
     old_s_iaa_dir = '../data/out_iaa/'
-    tags_dir = '../data/output_tags/'
+    tags_dir = '../data/adj_tags/'
     schema_dir = '../data/schemas/'
-    output_dir = '../data/adjudicated_iaa/'
+    output_dir = '../data/adj_tags/'
     import_tags(old_s_iaa_dir, tags_dir, schema_dir, output_dir)

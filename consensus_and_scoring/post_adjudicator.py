@@ -3,9 +3,9 @@ from scoring_only import scoring_only
 from IAA import calc_agreement_directory
 import argparse
 
-def post_adjudicator_master(tags_dir, schema_dir, new_s_iaa_dir, input_dir, scoring_dir, viz_dir,
+def post_adjudicator_master(tags_dir, schema_dir, new_s_iaa_dir, iaa_temp_dir, input_dir, scoring_dir, viz_dir,
                             tua_dir, text_dir, config_path, threshold_func):
-    iaa_dir = calc_agreement_directory(input_dir, schema_dir, config_path, text_dir, repCSV=None,  outDirectory = '../data/temp_iaa/',
+    iaa_dir = calc_agreement_directory(input_dir, schema_dir, config_path, text_dir, repCSV=None,  outDirectory = iaa_temp_dir,
                              useRep = False, threshold_func = 'raw_30')
     import_tags(iaa_dir, tags_dir, schema_dir, new_s_iaa_dir)
     scoring_only(input_dir, new_s_iaa_dir, schema_dir, scoring_dir, viz_dir, tua_dir, threshold_func)
@@ -49,6 +49,7 @@ if __name__ == '__main__':
         # metadata_dir = '../data/metadata/'
         tua_dir = '../data/focus_tags/'
         iaa_dir = '../data/raw_iaa/'
+        iaa_temp_dir = '../data/temp_iaa/'
         schema_dir = '../data/schemas/'
         adjudication_dir = '../data/output_tags/'
         adjudicated_dir = '../data/adjudicated_iaa/'
@@ -69,7 +70,7 @@ if __name__ == '__main__':
             threshold_function = args.threshold_function
         if args.tua_dir:
             tua_dir = args.tua_dir
-        post_adjudicator_master(adjudication_dir, schema_dir, adjudicated_dir, input_dir, scoring_dir, viz_dir,
+        post_adjudicator_master(adjudication_dir, schema_dir, adjudicated_dir, iaa_temp_dir, input_dir, scoring_dir, viz_dir,
                                 tua_dir, texts_dir, config_path, threshold_function)
 
 
