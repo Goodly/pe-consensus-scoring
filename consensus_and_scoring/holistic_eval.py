@@ -176,7 +176,7 @@ def get_dep_iaa(directory, schema='sources'):
         for file in files:
             print(file)
             if file.endswith('.csv'):
-                if 'Dep_S_IAA' in file and search_term in file:
+                if 'Dep_' in file and search_term in file:
                     df = pd.read_csv(directory + '/' + file)
     if df is None:
         print("HOLISTIC EVAL, No specialist agreement for :", schema, "task")
