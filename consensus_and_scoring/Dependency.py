@@ -21,7 +21,6 @@ def eval_dependency(directory, iaa_dir, schema_dir, out_dir):
         for file in files:
             print("IAA OUTPUT",file)
             if file.endswith('.csv') and 'Dep' not in file and len(file)>10:
-                if 'IAA' in file:
                     file_path = os.path.join(dirpath, file)
                     print("evaluating dependencies for " + file_path)
                     iaa.append(file_path)
@@ -179,6 +178,8 @@ def checkPassed(qnum, dependencies, iaadata, task, answer):
     iaatask = iaadata[iaadata['source_task_uuid'] == task]
     qdata = iaatask[iaatask['question_Number'] == qnum]
     if not checkIsVal(answer):
+        return False
+    if not checkIsNum(qnum):
         return False
     #print('keys', dependencies.keys())
     if qnum in dependencies.keys():

@@ -59,10 +59,10 @@ if __name__ == '__main__':
     input_dir = '../data/datahunts/'
     texts_dir = '../data/texts/'
     #metadata_dir = '../data/metadata/'
-    tua_dir = '../data/tags/'
+    tua_dir = '../data/focus_tags/'
     schema_dir = '../data/schemas/'
     # output
-    output_dir = '../data/adjudicated_iaa/'
+    output_dir = '../data/out_adjudicated_iaa/'
     scoring_dir = '../data/out_scoring/'
     viz_dir = '../data/out_viz/'
     threshold_function = 'raw_30'

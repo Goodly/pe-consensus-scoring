@@ -1,7 +1,7 @@
 from import_tags import import_tags
 from scoring_only import scoring_only
 from IAA import calc_agreement_directory
-from dataV3 import makeDirectory
+from dataV3 import make_directory
 import argparse
 
 def post_adjudicator_master(tags_dir, schema_dir, new_s_iaa_dir, iaa_temp_dir, input_dir, scoring_dir, viz_dir,

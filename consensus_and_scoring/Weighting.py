@@ -175,4 +175,5 @@ def convertToInt(string):
     except:
         return -1
 
-#launch_Weighting('scoring_covid')
+if __name__ == '__main__':
+        launch_Weighting('../data/out_scoring/')
