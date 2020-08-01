@@ -150,7 +150,7 @@ def handleDependencies(schemaPath, iaaPath, out_dir):
 
     print('exporting to csv')
     path, name = get_path(iaaPath)
-    outputpath  = out_dir+'Dep_'+name
+    outputpath  = os.path.join(out_dir, 'Dep_'+name)
     print("outputting dependency to", outputpath)
     iaaData.to_csv(outputpath,  encoding = 'utf-8')
 
