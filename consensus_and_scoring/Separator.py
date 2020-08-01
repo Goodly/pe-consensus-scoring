@@ -74,7 +74,7 @@ def splitcsv(directory, pointsFile = None, viz_dir = None, textseparator = '//br
                 count +=1
                 #final_out = pd.concat([final_out, addend], axis =0, names = final_cols)
         final_out.append([None, None, None, None,None,None,None, None, None])
-        out_path = os.path.join(viz_dir, '/VisualizationData_' + art_id + '.csv')
+        out_path = os.path.join(viz_dir, 'VisualizationData_' + art_id + '.csv')
         print("exporting visualizations  "+out_path)
 
         scores = open(out_path, 'w', encoding='utf-8')
