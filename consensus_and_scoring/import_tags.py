@@ -24,7 +24,6 @@ def import_tags(old_s_iaa_dir, tags_dir, schema_dir, output_dir):
     tag_files = []
     for root, dir, files in os.walk(tags_dir):
         for file in files:
-            if file.endswith('.csv') and 'adj' in file.lower():
                     tag_files.append(tags_dir+'/'+file)
     iaa_files = []
     for root, dir, files in os.walk(old_s_iaa_dir):
@@ -66,7 +65,7 @@ def import_tags(old_s_iaa_dir, tags_dir, schema_dir, output_dir):
 
     for i in range(len(tags.index)):
         a_uid = tags['answer_uuid'].iloc[i]
-        if a_uid == 0 or a_uid == '0' or a_uid == 'XXX':
+        if a_uid == 0 or a_uid == '0' or a_uid == 'XXX' or a_uid == 0. or a_uid == '0.0':
             answer_number = 'L'
             question_number = 'L'
             namespace = 'L'
@@ -129,8 +128,8 @@ def make_namespace_to_schema_dict(tags, iaa, schema_dir):
         dict[n] = schema_df
     return dict
 if __name__ == '__main__':
-    old_s_iaa_dir = '../data/out_iaa/'
+    old_s_iaa_dir = '../data/out_temp_iaa/'
     tags_dir = '../data/adj_tags/'
     schema_dir = '../data/schemas/'
-    output_dir = '../data/adj_tags/'
+    output_dir = '../data/out_adjudicated_iaa/'
     import_tags(old_s_iaa_dir, tags_dir, schema_dir, output_dir)

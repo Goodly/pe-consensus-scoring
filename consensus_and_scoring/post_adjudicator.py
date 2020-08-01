@@ -1,6 +1,7 @@
 from import_tags import import_tags
 from scoring_only import scoring_only
 from IAA import calc_agreement_directory
+from dataV3 import makeDirectory
 import argparse
 
 def post_adjudicator_master(tags_dir, schema_dir, new_s_iaa_dir, iaa_temp_dir, input_dir, scoring_dir, viz_dir,
@@ -46,15 +47,20 @@ if __name__ == '__main__':
         config_path = './config/'
         input_dir = '../data/datahunts/'
         texts_dir = '../data/texts/'
+        adjudication_dir = '../data/adj_tags/'
         # metadata_dir = '../data/metadata/'
         tua_dir = '../data/focus_tags/'
-        iaa_dir = '../data/raw_iaa/'
-        iaa_temp_dir = '../data/temp_iaa/'
         schema_dir = '../data/schemas/'
-        adjudication_dir = '../data/output_tags/'
-        adjudicated_dir = '../data/adjudicated_iaa/'
-        scoring_dir = '../data/out_scoring/'
-        viz_dir = '../data/out_viz/'
+
+        #output data
+        iaa_temp_dir = make_directory('../data/out_temp_iaa/')
+
+
+
+
+        adjudicated_dir = make_directory('../data/out_adjudicated_iaa/')
+        scoring_dir = make_directory('../data/out_scoring/')
+        viz_dir = make_directory('../data/out_viz/')
         threshold_function = 'raw_30'
         if args.input_dir:
             input_dir = args.input_dir

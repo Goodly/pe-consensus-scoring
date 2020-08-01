@@ -233,7 +233,7 @@ def calc_scores(highlightfilename, config_path,  texts_path, repCSV=None, schema
     out_name = task_name + '.IAA-' + task_id + '-Tags.csv'
     print("IAA outputs to:", outDirectory + out_name)
 
-    scores = open(outDirectory + out_name, 'w', encoding='utf-8')
+    scores = open(os.path.join(outDirectory, out_name), 'w', encoding='utf-8')
     with scores:
         writer = csv.writer(scores)
         writer.writerows(data)

@@ -45,7 +45,7 @@ def eval_dependency(directory, iaa_dir, schema_dir, out_dir):
     schema = temp
     print(schema)
     print(iaa)
-    out_dir = make_directory(out_dir)
+    #out_dir = make_directory(out_dir)
     ins = []
     for i in range(len(iaa)):
         ins.append((schema[i], iaa[i], out_dir))

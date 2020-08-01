@@ -608,6 +608,7 @@ def make_directory(directory):
     except FileExistsError:
         pass
     return directory
+
 def get_type_json(type, ques, config_path):
     with open(config_path+'/typing_dict.txt', 'r') as read_file:
         typing_dict = json.load(read_file)

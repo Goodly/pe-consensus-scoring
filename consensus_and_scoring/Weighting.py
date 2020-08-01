@@ -11,9 +11,8 @@ def launch_Weighting(directory, reporting = False):
         for file in files:
             print(file)
             if file.endswith('.csv'):
-                if 'Dep_' in file:
-                    print('gotaFile', file)
-                    iaaFiles.append(directory+'/'+file)
+                print('gotaFile', file)
+                iaaFiles.append(directory+'/'+file)
     print('files', iaaFiles)
     weight_list = []
     for f in iaaFiles:
