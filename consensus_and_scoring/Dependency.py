@@ -70,7 +70,7 @@ def handleDependencies(schemaPath, iaaPath, out_dir):
         ans = iaaData['agreed_Answer'].iloc[q]
         tsk = iaaData['source_task_uuid'].iloc[q]
         iaaData['prereq_passed'].iloc[q] = checkPassed(qnum, dependencies, iaaData, tsk, ans)
-    iaaData = iaaData.sort_values(["article_sha256",'prereq_passed','question_Number','answer_text'])
+    iaaData = iaaData.sort_values(["article_sha256",'prereq_passed','question_Number'])
 
     iaaData = iaaData[iaaData['prereq_passed'] == True]
 
