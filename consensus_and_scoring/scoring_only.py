@@ -89,6 +89,7 @@ if __name__ == '__main__':
         scoring_dir,
         viz_dir,
         tua_dir,
-        threshold_function
+        threshold_function,
+        reporting = False
     )
 

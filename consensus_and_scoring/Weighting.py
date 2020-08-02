@@ -10,7 +10,7 @@ def launch_Weighting(directory, reporting = False):
     for root, dir, files in os.walk(directory):
         for file in files:
             print(file)
-            if file.endswith('.csv'):
+            if file.endswith('.csv') and 'Dep' in file:
                 print('gotaFile', file)
                 iaaFiles.append(directory+'/'+file)
     print('files', iaaFiles)

@@ -57,6 +57,8 @@ def unpack_dependency_ins(input):
 def handleDependencies(schemaPath, iaaPath, out_dir):
     schemData = pd.read_csv(schemaPath, encoding = 'utf-8')
     iaaData = pd.read_csv(iaaPath,encoding = 'utf-8')
+    #we don't know if it'll get read in as int or str, but forcing str resolves edge cases when failed IAA
+    iaaData['agreed_Answer'] = iaaData['agreed_Answer'].apply(str)
     assert schemData['namespace'].iloc[0] == iaaData['namespace'].iloc[0], "schema IAA mismatch_"+schemData['namespace'].iloc[0]+"\\/"+iaaData['namespace'].iloc[0]
     dependencies = create_dependencies_dict(schemData)
     tasks = np.unique(iaaData['source_task_uuid'].tolist())
@@ -117,14 +119,15 @@ def handleDependencies(schemaPath, iaaPath, out_dir):
                                         inds_str = iaaPar['highlighted_indices'].iloc[i]
                                         inds = get_indices_hard(inds_str)
                                         newInds.append(inds)
-                                        newAlph.append(iaaPar['alpha_unitizing_score'].iloc[i])
-                                        newIncl.append(iaaPar['alpha_unitizing_score_inclusive'].iloc[i])
+                                        #these are deprecated and also bugs so end it
+                                        #newAlph.append(iaaPar['alpha_unitizing_score'].iloc[i])
+                                        #newIncl.append(iaaPar['alpha_unitizing_score_inclusive'].iloc[i])
 
                             if validParent:
                                 for i in range(len(newInds)):
                                     indices = np.append(indices, newInds[i])
-                                alpha = np.append(alpha, (newAlph[0]))
-                                alphainc = np.append(alphainc, (newIncl[0]))
+                                #alpha = np.append(alpha, (newAlph[0]))
+                                #alphainc = np.append(alphainc, (newIncl[0]))
                 #If parent didn't pass, this question should not of been asked
                 #This should be handled by the previous step; the below if statemnt is an artifact of older version
                 #could be useful for debugging if we make changes
@@ -133,20 +136,20 @@ def handleDependencies(schemaPath, iaaPath, out_dir):
                         iaaData.at[row,'agreed_Answer'] = -1
                         iaaData.at[row, 'coding_perc_agreement'] = -1
                 indices = np.unique(indices).tolist()
-                try:
-                    alpha = alpha[0]
-                    alphainc = alphainc[0]
-                except IndexError:
-                    alpha, alphainc = -1,-1
+                # try:
+                #     alpha = alpha[0]
+                #     alphainc = alphainc[0]
+                # except IndexError:
+                #     alpha, alphainc = -1,-1
 
                 for row in rows:
                     row_indices = get_indices_hard(iaaData.at[row, 'highlighted_indices'])
                     indices = merge_indices(row_indices, indices).tolist()
                     iaaData.at[row, 'highlighted_indices'] = json.dumps(indices)
-                    curr_alpha = iaaData.at[row, 'alpha_unitizing_score']
-                    if not str(curr_alpha).replace('.','').isnumeric():
-                        iaaData.at[row, 'alpha_unitizing_score'] = alpha
-                        iaaData.at[row, 'alpha_unitizing_score_inclusive'] = alphainc
+                    # curr_alpha = iaaData.at[row, 'alpha_unitizing_score']
+                    # if not str(curr_alpha).replace('.','').isnumeric():
+                    #     iaaData.at[row, 'alpha_unitizing_score'] = alpha
+                    #     iaaData.at[row, 'alpha_unitizing_score_inclusive'] = alphainc
 
     print('exporting to csv')
     path, name = get_path(iaaPath)
@@ -179,7 +182,7 @@ def checkPassed(qnum, dependencies, iaadata, task, answer):
     qdata = iaatask[iaatask['question_Number'] == qnum]
     if not checkIsVal(answer):
         return False
-    if not checkIsNum(qnum):
+    if not checkIsNum(qnum) or pd.isna(qnum):
         return False
     #print('keys', dependencies.keys())
     if qnum in dependencies.keys():
@@ -191,7 +194,7 @@ def checkPassed(qnum, dependencies, iaadata, task, answer):
             parAns = pardata['agreed_Answer'].tolist()
             valid_answers = dependencies[qnum][parent]
             for v in valid_answers:
-                #cast to string because all answers(even numeric) are read as strings and no conversion done
+                #cast to string because all answers(even numeric) were forced to be strings
                 strv = str(v)
                 #Won't be found if it doesn't pass
                 if strv in parAns:
