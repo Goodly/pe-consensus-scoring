@@ -67,11 +67,12 @@ d3.csv(dataFileName, function(error, data) {
   if (error) throw error;
   delete data["columns"];
   data = addDummyData(data);
+    
   
   var root = convertToHierarchy(data);
+    console.log(root);
   condense(root);
-  
-  
+  console.log(HOLISTIC_MAP);
   var holistic_score = 0;
   for (let [key, value] of HOLISTIC_MAP) {
     holistic_score += Math.round(value);
@@ -79,18 +80,8 @@ d3.csv(dataFileName, function(error, data) {
   
   ROOT = root;
   totalScore = 100 + scoreSum(root) + holistic_score;
-  if (id == "2005") {
-      console.log(totalScore==67);
-  } else if (id=="100057") {
-      console.log(totalScore==95);
-  } else if(id=="100058") {
-      console.log(totalScore==98);
-  } else if (id =="100054") {
-      console.log(totalScore==65);
-  } else {
-      console.log(totalScore==80);
-  }
-    
+  console.log(id + ": " + scoreSum(root) + ", " + holistic_score);
+  console.log(root);    
     
   document.querySelector("svg[articleID='" + id + "'").setAttribute("score", totalScore);
   root.sum(function(d) {
@@ -379,7 +370,7 @@ function scoreSum(d) {
         }
         if (d.height == 2) {
             articleScore = parseFloat(sum);
-            return articleScore;
+            return Math.round(articleScore);
         }
         return sum;
     }

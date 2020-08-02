@@ -7,15 +7,15 @@ function addDummyData(data) {
   
   var line;
   for (line of data) {
-    if (line["Credibility Indicator Category"] == "Holistic") {
-      
+    //console.log(line);
+    if (line["End"] == "-1" || line["Start"] == "-1") {
       if (HOLISTIC_MAP.has(line["Credibility Indicator Name"])) {
         var score = HOLISTIC_MAP.get(line["Credibility Indicator Name"]) + parseFloat(line["Points"]);
         HOLISTIC_MAP.set(line["Credibility Indicator Name"], score);
+      } else {
+        HOLISTIC_MAP.set(line["Credibility Indicator Name"], parseFloat(line["Points"]));
       }
-      HOLISTIC_MAP.set(line["Credibility Indicator Name"], parseFloat(line["Points"]));
     } else {
-      
       newData.push(line);
     }
   }
@@ -58,7 +58,6 @@ function convertToHierarchy(data) {
   //Hierarchy converts data to the same format that the D3 code expects.
   return d3.hierarchy(stratify);
 }
-
 
 
 /** Takes a heirarchical json file and converts it into a tree with unique branches 

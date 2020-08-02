@@ -49,7 +49,7 @@ function condense(d, pills_map) {
         var indicators = new Map();
         var indicator;
         for (indicator of d.children) {
-            if (indicator.data.data['End'] == -1 || indicator.data.data['Start'] == -1) {
+            if (indicator.data.data['End'] == "-1" || indicator.data.data['Start'] == "-1") {
                 var name = indicator.data.data["Credibility Indicator Name"] + '-' + indicator.data.data["Credibility Indicator ID"].substring(0, 1);
                 if (pills_map.get(name)) {
                     var points = pills_map.get(name);

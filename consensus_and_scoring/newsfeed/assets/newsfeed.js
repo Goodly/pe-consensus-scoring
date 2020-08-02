@@ -12,7 +12,7 @@ var listofarticles = [];
 
 function readVisData() {
     return $.get("visData.json").done(function(data) {
-        console.log('first');
+        
         for (var i = 0; i < Object.keys(data).length; i++) {
             var article = data[i];
             var articleEntry = new ArticleData(article["Title"], article["Author"], article["Date"], article["ID"], article["Article Link"], article["Visualization Link"], article["Plain Text"], article["Highlight Data"]);

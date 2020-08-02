@@ -21,14 +21,15 @@ function sortJSONentries(json) {
 }
 
 function scoreArticle(textFileUrl, dataFileUrl) {
-  d3.text(textFileUrl, function(error, text) {
-    if (error) throw error;
-    document.getElementById("textArticle").innerHTML = text.toString();
-    d3.csv(dataFileUrl, function(error, data) {
-      if (error) throw error;
-      createHighlights(data);
-    });
-  });
+      d3.text(textFileUrl, function(text) {
+          document.getElementById("textArticle").innerHTML = text.toString();
+          d3.csv(dataFileUrl, function(error, data) {
+            if (error) throw error;
+            createHighlights(data);
+        });
+      });
+
+      
 }
 
 function createHighlights(json) {

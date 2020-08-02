@@ -81,13 +81,12 @@ d3.csv(dataFileName, function(error, data) {
   if (error) throw error;
   delete data["columns"];
   data = addDummyData(data);
-  
   var root = convertToHierarchy(data);
-  var PILLS_MAP = new Map()
+    console.log(root);
+  var PILLS_MAP = new Map();
   condense(root, PILLS_MAP);
   drawPills(PILLS_MAP);
   ROOT = root;
-  console.log(root);
   var entry;
   var pillscore = 0;
   console.log("this should be 2nd");
@@ -96,8 +95,9 @@ d3.csv(dataFileName, function(error, data) {
       pillscore += Math.round(parseFloat(entry[1]));
   }
   console.log(PILLS_MAP);
+  console.log(scoreSum(root) + ", " + pillscore);
   totalScore = 100 + scoreSum(root) + pillscore;
-
+    console.log(root);
     root.sum(function(d) {
     
     return Math.abs(parseFloat(d.data.Points));
@@ -199,8 +199,10 @@ function colorFinderSun(d) {
                return d3.rgb(87, 193, 174);
             } else if (d.data.data['Credibility Indicator Name'] == "Probability") {
                 return d3.rgb(118, 188, 226);
-            } else {
+            } else if (d.data.data['Credibility Indicator Name'] == "Language") {
                return d3.rgb(75, 95, 178);
+            } else {
+                return d3.rgb(255, 180, 0);
             }
         }   else {
             if (d.data.size > 0) {
@@ -212,8 +214,10 @@ function colorFinderSun(d) {
                 return d3.rgb(87, 193, 174);
             } else if (d.parent.data.data['Credibility Indicator Name'] == "Probability") {
                 return d3.rgb(118, 188, 226);
-            } else {
+            } else if (d.parent.data.data['Credibility Indicator Name'] == "Language") {
                 return d3.rgb(75, 95, 178);
+            } else {
+                return d3.rgb(255, 180, 0);
             }
         }
   }
