@@ -225,7 +225,7 @@ function colorFinderSun(d) {
 
 /* Function that resets the visualization after the mouse has been moved
    away from the sunburst. It resets the text score to the original
-   article score and resets the colors to their original.
+   article score and resets the colors to their original color.
    @param d : the node in the data heirarchy
    @return : none
 */
