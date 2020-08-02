@@ -344,20 +344,23 @@ def score(article, ques, data, config_path, text_file, repDF = None,   useRep = 
 
 
 def calcAgreement(codingScore, unitizingScore):
-    """averages coding and unitizing agreement scores to create a final agreement score to be used elsewhere in the
-    Public Editor algorithm"""
-    if codingScore == 'NA':
-        return unitizingScore
-    elif codingScore == 'L' or codingScore == 'M' or codingScore == 'U':
-        return codingScore
-    elif unitizingScore == 'NA':
-        return codingScore
-    elif unitizingScore == 'L' or unitizingScore == 'M' or unitizingScore == 'U':
-        unitizingScore = 0
-    elif math.isnan(unitizingScore):
-        return codingScore
-
-    return (float(codingScore) + float(unitizingScore)) / 2
+    return codingScore
+    #below method is not being used anymore due to inconsistencies in unitizing score
+    #future updates will incorporate unitizationa greement into the agreement scores of articles
+    # """averages coding and unitizing agreement scores to create a final agreement score to be used elsewhere in the
+    # Public Editor algorithm"""
+    # if codingScore == 'NA':
+    #     return unitizingScore
+    # elif codingScore == 'L' or codingScore == 'M' or codingScore == 'U':
+    #     return codingScore
+    # elif unitizingScore == 'NA':
+    #     return codingScore
+    # elif unitizingScore == 'L' or unitizingScore == 'M' or unitizingScore == 'U':
+    #     unitizingScore = 0
+    # elif math.isnan(unitizingScore):
+    #     return codingScore
+    #
+    # return (float(codingScore) + float(unitizingScore)) / 2
 
 
 def run_2step_unitization(data, article, question, repDF):
