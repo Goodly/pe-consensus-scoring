@@ -158,11 +158,7 @@
                 <script type="text/javascript">
                   var textFileUrl = "$ARTICLE_TEXT_URL";
                   var dataFileUrl = "$DATA_CSV_URL";
-                  textFileUrl = "article.txt";
-                  dataFileUrl =  "viz_data.csv";
-    import("/visualizations/assets/createHighlights.js").then(scoreArticle(textFileUrl, dataFileUrl));
-                  
-                  
+                  scoreArticle(textFileUrl, dataFileUrl);
                 </script>
                 <div class="sunburst">
                   <svg id="chart">
@@ -176,6 +172,7 @@
         <!-- Grid end -->
 
         <div class="small-space"></div>
+
 
         <!-- Footer -->
 
