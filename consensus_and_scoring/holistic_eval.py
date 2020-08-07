@@ -178,7 +178,7 @@ def get_dep_iaa(directory, schema='sources'):
             if file.endswith('.csv'):
                 if 'Dep_' in file and search_term in file:
                     df = pd.read_csv(directory + '/' + file)
-                    if search_term in df['namespace'].iloc[0]:
+                    if df.shape[0] >0 and search_term in df['namespace'].iloc[0]:
                         break
                     else:
                         df = None
