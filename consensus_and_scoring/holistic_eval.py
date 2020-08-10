@@ -142,7 +142,6 @@ def checkArtType(question_number, answer_number, holistic_df):
     ques_df = holistic_df[holistic_df['question_Number'] == question_number]
     ans_df = ques_df[ques_df['agreed_Answer'] == answer_number]
     if len(ans_df):
-        print("holi------------------scds57689988$%^&*^$%found match")
         return True
     return False
 

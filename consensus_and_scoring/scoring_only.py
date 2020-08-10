@@ -90,6 +90,6 @@ if __name__ == '__main__':
         viz_dir,
         tua_dir,
         threshold_function,
-        reporting = False
+        reporting = True
     )
 

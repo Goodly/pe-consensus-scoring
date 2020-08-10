@@ -2,7 +2,6 @@ import pandas as pd
 import numpy as np
 import os
 import csv
-from dataV3 import make_directory
 
 from dataV3 import get_indices_hard
 
@@ -29,10 +28,8 @@ def splitcsv(directory, pointsFile = None, viz_dir = None, textseparator = '//br
         artdf = valid_points[valid_points['article_sha256'] == art]
         if len(artdf)<1:
             artdf = pointsdf[pointsdf['article_sha256'] == art]
-        if reporting:
-            art_id = artdf['article_id'].iloc[0]
-        else:
-            art_id = art
+
+        art_id = art
         schema = np.unique(artdf['Schema'])
         for s in schema:
             sch_df = artdf[artdf['Schema'] == s]
@@ -74,6 +71,7 @@ def splitcsv(directory, pointsFile = None, viz_dir = None, textseparator = '//br
                 count +=1
                 #final_out = pd.concat([final_out, addend], axis =0, names = final_cols)
         final_out.append([None, None, None, None,None,None,None, None, None])
+        print(viz_dir, art_id)
         out_path = os.path.join(viz_dir, 'VisualizationData_' + art_id + '.csv')
         print("exporting visualizations  "+out_path)
 
@@ -94,27 +92,17 @@ def findWeights(directory):
 
 
 def indicesToStartEnd(indices):
-    starts = []
-    ends = []
-    breakpointer = []
-    last = -1
-    arr = np.array(indices)
-    if len(indices)<1:
-        return [-1],[-1], [-1]
-    for i in range(len(indices)):
-        if indices[i]-last>1 and indices[i] not in starts:
-            starts.append(indices[i])
-            ends.append(indices[i-1] + 1)
-            #works because inclusive at start, doesn't include the last point when slicing
-            breakpointer.append(i)
-        last = indices[i]
-    chunks = []
-    breakpointer.append(len(indices)-1)
-    base = 0
-    for i in range(1, len(breakpointer)):
-        chunks.append(indices[base:breakpointer[i]])
-        base = breakpointer[i]
-    #ends.append(indices[len(indices)-1])
-    #removed sorting here, not sure if it broke anything in the visualization
-    return sorted(starts), sorted(ends), chunks
-#splitcsv('scoring_covid')
+    r = get_ranges(indices)
+    starts = [c[0] for c in r]
+    ends =   [c[1] for c in r]
+    chunks = [range(c[0], c[1]) for c in r]
+    return starts, ends, chunks
+
+def get_ranges(nums):
+    #god bless stack overflow https://stackoverflow.com/questions/2361945/detecting-consecutive-integers-in-a-list
+    nums = sorted(set(nums))
+    gaps = [[s, e] for s, e in zip(nums, nums[1:]) if s + 1 < e]
+    edges = iter(nums[:1] + sum(gaps, []) + nums[-1:])
+    return list(zip(edges, edges))
+if __name__ == '__main__':
+    splitcsv('out_scoring')
