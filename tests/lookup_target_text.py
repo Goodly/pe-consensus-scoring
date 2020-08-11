@@ -3,7 +3,7 @@ import csv
 def lookup_target_text(article_sha256):
     viz_data_filename = "../data/out_viz/VisualizationData_{}.csv".format(article_sha256)
     article_filename = "../data/texts/{}.txt".format(article_sha256)
-    with open(viz_data_filename, 'r') as csv_file, open(article_filename, 'r') as text_file:
+    with open(viz_data_filename, 'r') as csv_file, open(article_filename, 'r', encoding='utf-8') as text_file:
         text = text_file.read()
         reader = csv.DictReader(csv_file)
         for row in reader:
