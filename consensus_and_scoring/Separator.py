@@ -96,6 +96,10 @@ def indicesToStartEnd(indices):
     starts = [c[0] for c in r]
     ends =   [c[1] for c in r]
     chunks = [range(c[0], c[1]) for c in r]
+    if len(starts) == 0:
+        starts = [-1]
+        ends = [-1]
+        chunks = 'N/A'
     return starts, ends, chunks
 
 def get_ranges(nums):
