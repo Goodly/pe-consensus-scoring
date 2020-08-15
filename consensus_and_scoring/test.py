@@ -1,6 +1,8 @@
 from Weighting import launch_Weighting
 from pointAssignment import pointSort
 from Separator import indicesToStartEnd
+import os
+import pandas as pd
 # scoring_dir = '../data/out_scoring/'
 # tua_dir ='../data/tags/'
 # reporting = True
@@ -16,3 +18,23 @@ print(o)
 arr = []
 o = indicesToStartEnd(arr)
 print(o)
+
+def join_csvs_in_directory(in_directory, out_directory= None):
+    in_files = []
+    for root, dir, files in os.walk(in_directory):
+        for file in files:
+            in_files.append(in_directory + '/' + file)
+    temp_dfs = []
+    for i in range(len(in_files)):
+        temp_dfs.append(pd.read_csv(in_files[i]))
+    files = pd.concat(temp_dfs)
+    if out_directory == None:
+        out_directory = in_directory
+    out_path = os.path.join(out_directory, 'all_csvs_stacked.csv')
+    print("joining outputting to ", out_path)
+    files.to_csv(out_path)
+
+if __name__ == '__main__':
+    in_directory = '../data/adj_tags/'
+    out_directory = '../data/out_viz/'
+    join_csvs_in_directory(in_directory, out_directory)
