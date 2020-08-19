@@ -22,24 +22,26 @@ function sortJSONentries(json) {
 
 function scoreArticle(textFileUrl, dataFileUrl) {
       d3.text(textFileUrl, function(text) {
+          console.log(text.toString().slice(690, 720));
           document.getElementById("textArticle").innerHTML = text.toString();
           d3.csv(dataFileUrl, function(error, data) {
             if (error) throw error;
-            createHighlights(data);
+            createHighlights(data, text.toString());
         });
       });
 
       
 }
 
-function createHighlights(json) {
-  var textString = document.getElementById('textArticle').innerHTML;
+function createHighlights(json, textString) {
+  //var textString = document.getElementById('textArticle').innerHTML;
   textArray = textString.split("");  // Splitting the string into an array of strings, one item per character
 
   var sortedEntries = sortJSONentries(json); // an array highlight arrays, sorted by their indices
   var highlightStack = new FlexArray();
 
   sortedEntries.forEach((entry) => {  // for each entry, open a span if open or close then reopen all spans if a close
+    //console.log(entry)
     const index = entry[2];
     if (entry[3]) {
       textArray = openHighlight(textArray, index, entry, highlightStack, 0);
@@ -63,7 +65,9 @@ function openHighlight(textArray, index, entry, highlightStack, i) {
        // console.log(allIDsBelow);
   })
   allIDsBelow = " allIDsBelow='" + allIDsBelow + "'";
+  //console.log(textArray.slice(2559, 2584))
   let text = textArray[index-1];
+  console.log(textArray.slice(690, 720));
   let uniqueId = entry[0].toString();
   let color = entry[1];
   let name = " name='" + uniqueId + "'";
