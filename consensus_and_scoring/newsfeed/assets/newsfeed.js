@@ -124,7 +124,7 @@ function generateEntry(entry) {
       var articleEntry = "<div id='" + entry.id + "' class='row'>" +
                             "<div class='col-2 date'>" + entry.date + "</div>" +
                             "<div class='col-6'>" +
-                                "<a class='hyperlink' href='" + entry.visLink + "'> <h3>" + entry.title + "</h3></a>" +
+                                "<a class='hyperlink' href='" + entry.visLink + "' target='_blank'> <h3>" + entry.title + "</h3></a>" +
                                 "<p class='articleText'>" + previewText + "</p>" +
                                 "<p class='author'>" + entry.author + "</p>" +
                             "</div>" +
