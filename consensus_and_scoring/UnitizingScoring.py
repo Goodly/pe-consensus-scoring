@@ -108,8 +108,6 @@ def filterSingular(percentageScoresArray, numUsers,users,starts,ends, threshold_
     #adjust so user count isn't inflated by reps
     #add one to num_reals because the system was too picky when working with small numbers of users
     num_reals = len(np.unique(users))+1
-    #if minPassPercent == 'U':
-    #    return 'U','U','U','U','U'
     for i in range(len(percentageScoresArray)):
         if type(percentageScoresArray[i]) == 'numpy.ndarray':
             print("OOOOO")

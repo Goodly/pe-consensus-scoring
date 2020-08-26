@@ -37,7 +37,6 @@ def eval_triage_scoring(tua, pointsdf, scoring_dir, threshold_func='logis_0', re
         num_args = count_cases(art_tua, 'Arguments')
         num_sources = count_cases(art_tua, 'Quoted Sources')
         num_evidence = count_cases(art_tua, 'Evidence')
-
         # Handle Quoted Sources Schema here:
         num_vague_quals = 0
         num_vague_sources = 0
@@ -45,7 +44,7 @@ def eval_triage_scoring(tua, pointsdf, scoring_dir, threshold_func='logis_0', re
             for task in art_sources['source_task_uuid'].unique():
                 task_df = art_sources[art_sources['source_task_uuid'] == task]
                 task_df['question_Number'] = task_df['question_Number'].apply(int)
-                # handle Q2 (koalifications)
+                # handle Q2 (qualifications)
                 # Can't be done on weightin.py because has to count number of occurrences of the same error.
                 q2_df = task_df[task_df['question_Number'] == 2]
                 if len(q2_df) > 0:
@@ -159,7 +158,6 @@ def get_indices_by_uuid(tua, tua_uuid):
 
 def get_dep_iaa(directory, schema='sources'):
     """
-
     :param directory: scoring directory, holds dep_iaa files
     :param schema: 'sources' or 'holistic' or ...
     :return: dataframe of the dep_s_ia fo the schema

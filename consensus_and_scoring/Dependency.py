@@ -44,7 +44,6 @@ def eval_dependency(directory, iaa_dir, schema_dir, out_dir):
     schema = temp
     print(schema)
     print(iaa)
-    #out_dir = make_directory(out_dir)
     ins = []
     for i in range(len(iaa)):
         ins.append((schema[i], iaa[i], out_dir))
@@ -89,8 +88,6 @@ def handleDependencies(schemaPath, iaaPath, out_dir):
             needsLove = checkNeedsLove(iaaTask, ch)
             if needsLove:
                 indices = np.zeros(0)
-                alpha = np.zeros(0)
-                alphainc = np.zeros(0)
                 #check if this question even got a score
                 iaaQ = iaaTask[(iaaTask['question_Number']) == (ch)]
                 answers = iaaQ['agreed_Answer'].tolist()
@@ -99,14 +96,11 @@ def handleDependencies(schemaPath, iaaPath, out_dir):
                 #refersh out her eso children can pull highlights from multiple parentes, if they exist
                 validParent = False
                 newInds = []
-                newAlph = []
-                newIncl = []
+
                 if len(answers)>0:
                     #questions the child depends on
                     for par in child.keys():
                         iaaPar = iaaTask[iaaTask['question_Number'] == (par)]
-                        #DEBUGGING TIPPP:
-
                         neededAnswers = child[par]
                         #Potential for multiple answers from parent to lead to same child question
                         #We don't want to favor one prerequisite's highlight over another
@@ -119,15 +113,12 @@ def handleDependencies(schemaPath, iaaPath, out_dir):
                                         inds_str = iaaPar['highlighted_indices'].iloc[i]
                                         inds = get_indices_hard(inds_str)
                                         newInds.append(inds)
-                                        #these are deprecated and also bugs so end it
-                                        #newAlph.append(iaaPar['alpha_unitizing_score'].iloc[i])
-                                        #newIncl.append(iaaPar['alpha_unitizing_score_inclusive'].iloc[i])
+
 
                             if validParent:
                                 for i in range(len(newInds)):
                                     indices = np.append(indices, newInds[i])
-                                #alpha = np.append(alpha, (newAlph[0]))
-                                #alphainc = np.append(alphainc, (newIncl[0]))
+
                 #If parent didn't pass, this question should not of been asked
                 #This should be handled by the previous step; the below if statemnt is an artifact of older version
                 #could be useful for debugging if we make changes
@@ -136,20 +127,10 @@ def handleDependencies(schemaPath, iaaPath, out_dir):
                         iaaData.at[row,'agreed_Answer'] = -1
                         iaaData.at[row, 'coding_perc_agreement'] = -1
                 indices = np.unique(indices).tolist()
-                # try:
-                #     alpha = alpha[0]
-                #     alphainc = alphainc[0]
-                # except IndexError:
-                #     alpha, alphainc = -1,-1
-
                 for row in rows:
                     row_indices = get_indices_hard(iaaData.at[row, 'highlighted_indices'])
                     indices = merge_indices(row_indices, indices).tolist()
                     iaaData.at[row, 'highlighted_indices'] = json.dumps(indices)
-                    # curr_alpha = iaaData.at[row, 'alpha_unitizing_score']
-                    # if not str(curr_alpha).replace('.','').isnumeric():
-                    #     iaaData.at[row, 'alpha_unitizing_score'] = alpha
-                    #     iaaData.at[row, 'alpha_unitizing_score_inclusive'] = alphainc
 
     print('exporting to csv')
     path, name = get_path(iaaPath)
@@ -184,9 +165,7 @@ def checkPassed(qnum, dependencies, iaadata, task, answer):
         return False
     if not checkIsNum(qnum) or pd.isna(qnum):
         return False
-    #print('keys', dependencies.keys())
     if qnum in dependencies.keys():
-        #fprint("QNUM", qnum)
         #this loop only triggered if child question depends on a prereq
         for parent in dependencies[qnum].keys():
             #Can't ILOC because checklist questions have many answers
