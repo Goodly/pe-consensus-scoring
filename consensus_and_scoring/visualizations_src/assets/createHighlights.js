@@ -49,7 +49,7 @@ function createHighlights(json, textString) {
     } else {
       textArray = closeHighlights(textArray, index, highlightStack);
       highlightStack.remove(entry);
-      textArray = openHighlights(textArray, index, highlightStack);
+      textArray = openHighlights(textArray, index+1, highlightStack);
     }
   })
 
