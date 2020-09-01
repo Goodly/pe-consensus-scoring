@@ -145,13 +145,14 @@ def handleDependencies(schemaPath, iaaPath, out_dir):
 
 def checkNeedsLove(df, qNum):
     #Checks if the question's parent prompts users for a highlight
+    #true if it does
     qdf = df[df['question_Number'] == qNum]
-    alphas = (qdf['alpha_unitizing_score'])
+    hls = (qdf['highlighted_indices'])
     #If no rows correspond to the child question
     if qdf.empty:
         return False
-    for a in alphas:
-        if not checkIsVal(a):
+    for h in hls:
+        if len(json.dumps(h))>3:
             return True
     return False
 

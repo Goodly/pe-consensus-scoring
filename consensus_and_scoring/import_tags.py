@@ -61,7 +61,6 @@ def import_tags(old_s_iaa_dir, tags_dir, schema_dir, output_dir):
     tags['tua_uuid'] = 'ERICYOUMISSEDASPOT'
     tags['agreement_score'] = 'ERICYOUMISSEDASPOT'
     tags['highlighted_indices'] = 'L'
-    tags['alpha_unitizing_score'] = 'N/A'
 
     for i in range(len(tags.index)):
         a_uid = tags['answer_uuid'].iloc[i]

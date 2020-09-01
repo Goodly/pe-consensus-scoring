@@ -82,9 +82,8 @@ def calc_scores(highlightfilename, config_path,  texts_path, repCSV=None, schema
     data = [["article_num", "article_sha256", "article_id", "article_filename",
              "source_task_uuid", "tua_uuid", "namespace", "schema_sha256",
              "question_Number", "answer_uuid", "question_type", "agreed_Answer",
-             "coding_perc_agreement", "one_two_diff",
-             "highlighted_indices", "alpha_unitizing_score",
-             "alpha_unitizing_score_inclusive", "agreement_score",
+             "coding_perc_agreement",
+             "highlighted_indices", "agreement_score",
              "num_users", "num_answer_choices",
              "target_text", "question_text", "answer_text", "answer_content"]]
 
@@ -141,8 +140,8 @@ def calc_scores(highlightfilename, config_path,  texts_path, repCSV=None, schema
                     #TODO: when separate topics implemented; replace the 1 with th the topicnum
 
                     data.append([article_num, article_sha, article_id, article_filename, task_id, tua_uuid, schema_namespace, schema_sha, ques_num, ans_uuid, agreements[i][8], winner,
-                                 codingPercentAgreement, agreements[i][7], units,
-                                 unitizingScore, inclusiveUnitizing, totalScore, num_users, num_choices,selectedText,
+                                 codingPercentAgreement,  units,
+                                 totalScore, num_users, num_choices,selectedText,
                                 question_text,  answer_content])
 
             else:
@@ -166,8 +165,8 @@ def calc_scores(highlightfilename, config_path,  texts_path, repCSV=None, schema
                 units = json.dumps(np.array(units).tolist())
 
                 data.append([article_num, article_sha, article_id, article_filename, task_id,tua_uuid,schema_namespace, schema_sha,
-                             ques_num, ans_uuid, question_type, winner, codingPercentAgreement, agreements[7],
-                             units, unitizingScore, inclusiveUnitizing,
+                             ques_num, ans_uuid, question_type, winner, codingPercentAgreement,
+                             units,
                              totalScore, num_users, num_choices, selectedText,
                              question_text, answer_content])
 
