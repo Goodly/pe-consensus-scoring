@@ -1,0 +1,27 @@
+{
+  "file_type":{
+      "iaa": {
+          "article_num": 0,
+          "article_sha256": "default",
+          "article_id": "default",
+          "article_filename": "default",
+          "source_task_uuid":"default",
+          "tua_uuid": "default",
+          "namespace": "default",
+          "schema_sha256": "default",
+          "question_Number": 0,
+          "answer_uuid": "default",
+          "question_type": "default",
+          "agreed_Answer": 0,
+          "coding_perc_agreement": 0,
+          "highlighted_indices": 0,
+          "agreement_score": 0,
+          "num_users": 0,
+          "num_answer_choices": 0,
+          "target_text": "default",
+          "question_text": "default",
+          "answer_text": "default",
+          "answer_content":"default"
+      }
+  }
+}
