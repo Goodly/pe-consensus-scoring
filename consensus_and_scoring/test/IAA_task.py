@@ -2,6 +2,7 @@ import json
 import pandas as pd
 
 #this is gonna be a helper class that all the fixtures can use
+#todo make something like this for every other intermediate file
 class IAA_task:
     #todo add other optional params, so can sync up ids across filetypes
     def __init__(self, out_path):
