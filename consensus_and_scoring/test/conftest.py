@@ -1,5 +1,6 @@
-from IAA_task import IAA_task
+from filegen_utils import IAA_task
 import pytest
+import json
 
 
 @pytest.fixture
@@ -12,4 +13,9 @@ def make_task_demo(tmpdir):
     return out_path
 
 #todo Add fixture for mass-making multiple tasks at once
+@pytest.fixture
+def config():
+    with open('test_config.json') as json_file:
+        data = json.load(json_file)
+    return data
 #this can be passed into many other fixtures

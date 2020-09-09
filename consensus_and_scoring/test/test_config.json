@@ -1,4 +1,6 @@
 {
+    "test_dir": "./../../test_data/",
+    "data_dir": "./../../data/",
   "file_type":{
       "iaa": {
           "article_num": 0,
@@ -14,7 +16,7 @@
           "question_type": "default",
           "agreed_Answer": 0,
           "coding_perc_agreement": 0,
-          "highlighted_indices": 0,
+          "highlighted_indices": [],
           "agreement_score": 0,
           "num_users": 0,
           "num_answer_choices": 0,
@@ -22,6 +24,29 @@
           "question_text": "default",
           "answer_text": "default",
           "answer_content":"default"
+      },
+      "adjudicator": {
+          "article_batch_name": "default",
+          "article_number": 0,
+          "article_filename": "default",
+          "article_sha256": 0,
+          "article_text_length": "default",
+          "tua_group_uuid": "default",
+          "tua_group_name": "default",
+          "tua_batch_uuid": "default",
+          "tua_batch_name": "default",
+          "tua_batch_final": "default",
+          "source_task_uuid": "default",
+          "tua_uuid": "default",
+          "namespace": "default",
+          "topic_name": "default",
+          "case_number": 0,
+          "answer_uuid": "default",
+          "extra": 0,
+          "highlight_count": 0,
+          "start_pos": 0,
+          "end_pos": 0,
+          "target_text": "default"
       }
   }
 }
