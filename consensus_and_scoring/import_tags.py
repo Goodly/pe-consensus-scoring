@@ -3,6 +3,7 @@ import pandas as pd
 import json
 from dataV3 import getAnsNumberFromLabel
 from dataV3 import  getQuestionNumberFromLabel
+
 #workflow
 
 #import all s_iaa, concat into a single df
@@ -36,6 +37,7 @@ def import_tags(old_s_iaa_dir, tags_dir, schema_dir, output_dir):
         for file in files:
             if file.endswith('.csv'):
                 schema_files.append(schema_dir + '/' + file)
+    print('schema files: ', schema_dir, schema_files)
     temp_dfs = []
     for i in range(len(iaa_files)):
         temp_dfs.append(pd.read_csv(iaa_files[i]))
@@ -114,7 +116,7 @@ def import_tags(old_s_iaa_dir, tags_dir, schema_dir, output_dir):
         task_tags.to_csv(out_path)
 
 
-    return None
+    return out_path
 
 def make_namespace_to_schema_dict(tags, iaa, schema_dir):
     names = tags['namespace'].unique()
