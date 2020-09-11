@@ -33,7 +33,7 @@ def test_iaa_evi_3q(config):
     count = test_utils.count_matching_rows(read_iaa, {'agreed_Answer': 800})
     assert count == 3
 
-def test_adj_1_iaa_1_adj_disagree(config, tmpdir):
+def test_import_tags_adj_1_iaa_1_disagree(config, tmpdir):
     iaa_path = test_utils.make_test_directory(config, 'imptags_iaa_1_iaa_1_adj')
     adj_path = test_utils.make_test_directory(config, 'imptags_adj_1_iaa_1_adj')
     schema_path = config['data_dir'] + '/schemas'
@@ -48,7 +48,13 @@ def test_adj_1_iaa_1_adj_disagree(config, tmpdir):
     adj.export()
     i_tags = import_tags(iaa_path, adj_path, schema_path, tmpdir)
     print('temp dir is:', tmpdir)
-    i_df  = pd.read_csv(i_tags, encoding='utf-8')
+    #i_tags is directory holding all the import tags
+    for root, dir, files in os.walk(i_tags):
+        print("files found")
+        for file in files:
+            print(file)
+            #should be only 1 file
+            i_df  = pd.read_csv(os.path.join(i_tags, file), encoding='utf-8')
     assert len(i_df) == 1
     assert test_utils.count_matching_rows(i_df, {'agreed_Answer': 2, 'question_Number': 2}) == 1
     assert test_utils.count_matching_rows(i_df, {'agreed_Answer': 1, 'question_Number': 3}) == 0
