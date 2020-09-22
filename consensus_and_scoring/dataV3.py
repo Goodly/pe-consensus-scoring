@@ -620,7 +620,7 @@ def get_type_json(type, ques, config_path):
 #Input: config_path to a schema csv
 #Returns True if any of the last 3 questions in the schema at config_path are ordinal
 #Can set how many questions to check by the number in df.tail(<#>)
-def is_new_schema(config_path):
+def schema_has_dist_function(config_path):
     df = pd.read_csv(config_path)
     df = df.drop_duplicates('question_label')
     df = df.tail(3)

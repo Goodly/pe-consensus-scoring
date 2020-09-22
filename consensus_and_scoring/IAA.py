@@ -112,7 +112,7 @@ def calc_scores(highlightfilename, config_path,  texts_path, repCSV=None, schema
         #has to be sorted for questions depending on each other to be handled correctly
         for ques in sorted(questions):  # Iterates through each question in an article
 
-            agreements = score(task, ques, uberDict, config_path, text_file, repDF, useRep=useRep, threshold_func=threshold_func)
+            agreements = score(task, ques, uberDict, config_path, text_file, schemaFile, repDF, useRep=useRep, threshold_func=threshold_func)
             question_text = get_question_text(uberDict, task, ques)
             # if it's a list then it was a checklist question
 
@@ -202,7 +202,7 @@ def adjustForJson(units):
     out+=']'
     return out
 
-def score(article, ques, data, config_path, text_file, repDF = None,   useRep = False, threshold_func = 'logis_0'):
+def score(article, ques, data, config_path, text_file, schemaFile, repDF = None,   useRep = False, threshold_func = 'logis_0'):
     """calculates the relevant scores for the article
     returns a tuple (question answer most chosen, units passing the threshold,
         the Unitizing Score of the users who highlighted something that passed threshold, the unitizing score
@@ -230,7 +230,10 @@ def score(article, ques, data, config_path, text_file, repDF = None,   useRep = 
     question_type = get_question_type(data, article, ques)
     get_question_numchoices(data, article, ques)
     schema = get_schema_topic(data, article)
-    question_type, num_choices = get_type_json(schema, ques, config_path)
+    if schema_has_dist_function(schemaFile):
+        question_type, num_choices = schema_to_type_and_num(ques, schemaFile)
+    else:
+        question_type, num_choices = get_type_json(schema, ques, config_path)
 
 
 
@@ -305,8 +308,8 @@ def get_answer_data(schema_sha, topic, question, answer, schema_file):
 
 if __name__ == '__main__':
     config_path = './config/'
-    input_dir = '../data/datahunts/'
-    texts_dir = '../data/texts/'
+    input_dir = '../test_data/iaa_dh_schema_finds_ordinal/'
+    texts_dir = '../test_data/texts/'
     metadata_dir = '../data/metadata/'
     tua_dir = '../data/tags/'
     schema_dir = '../data/schemas/'
