@@ -5,7 +5,6 @@ import test_utils
 import os
 
 class dummy_data:
-    #todo add other params so can be more useful
     #requires filetype is defined in higher scope
     def __init__(self,out_path = None, out_folder = None, source_task_id = None, article_num = None, schema=None):
 
@@ -35,7 +34,6 @@ class dummy_data:
         self.base_row = test_utils.config['file_type'][self.filetype]
         self.cols = self.base_row.keys()
         self.df = pd.DataFrame(columns=self.cols)
-        # todo support schemas
 
     def add_row(self, params=None):
         new_row = self.base_row

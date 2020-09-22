@@ -46,7 +46,6 @@ def count_matching_rows(df, params):
 
 def sha256_from_namespace(namespace):
     dict = make_schema_namespace_sha256_map()
-    print(dict)
     return dict[namespace]
 
 schema_sha_256_map = None
@@ -82,3 +81,12 @@ def get_schema_data(schema_sha256, question, answer):
         return 'cantfind', 'cantfind', schema_row['question_text'].iloc[0]
     return schema_row['answer_uuid'].iloc[0], schema_row['answer_content'].iloc[0], schema_row['question_text'].iloc[0]
 
+def make_text(config, article_sha256, size = 1000):
+    out_dir = make_test_directory(config, 'texts')
+    out_path = os.path.join(out_dir, article_sha256+'.txt')
+    text_file = open(out_path, "w",encoding='utf-8')
+    written = 0
+    while written<size:
+        text_file.writelines('10________')
+        written +=10
+    text_file.close()
