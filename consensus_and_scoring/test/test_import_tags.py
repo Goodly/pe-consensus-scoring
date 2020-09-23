@@ -47,14 +47,16 @@ def test_import_tags_adj_1_iaa_1_disagree(config, tmpdir):
     adj.add_row({'topic_name':'01.02.02', 'namespace': schema_namespace})
     adj.export()
     i_tags = import_tags(iaa_path, adj_path, schema_path, tmpdir)
-    print('temp dir is:', tmpdir)
-    #i_tags is directory holding all the import tags
-    for root, dir, files in os.walk(i_tags):
-        print("files found")
-        for file in files:
-            print(file)
-            #should be only 1 file
-            i_df  = pd.read_csv(os.path.join(i_tags, file), encoding='utf-8')
+    print('temp dir is:', tmpdir, i_tags)
+    #i_tags is path to the single file:
+    #this is an example of how you would walk through an entire directory
+    # for root, dir, files in os.walk(i_tags):
+    #     print("files found")
+    #     for file in files:
+    #         print(file)
+    #         #should be only 1 file
+    #         i_df  = pd.read_csv(os.path.join(i_tags, file), encoding='utf-8')
+    i_df = pd.read_csv(i_tags, encoding='utf-8')
     assert len(i_df) == 1
     assert test_utils.count_matching_rows(i_df, {'agreed_Answer': 2, 'question_Number': 2}) == 1
     assert test_utils.count_matching_rows(i_df, {'agreed_Answer': 1, 'question_Number': 3}) == 0
