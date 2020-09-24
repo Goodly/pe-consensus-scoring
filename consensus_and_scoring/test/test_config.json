@@ -1,6 +1,9 @@
 {
     "test_dir": "./../../test_data/",
+    "texts_dir":"texts/",
     "data_dir": "./../../data/",
+    "schema_dir": "./../../data/schemas/",
+    "IAA_config_dir": "./../../consensus_and_scoring/config/",
   "file_type":{
       "iaa": {
           "article_num": 0,
@@ -47,6 +50,39 @@
           "start_pos": 0,
           "end_pos": 0,
           "target_text": "default"
+      },
+      "DataHunt": {
+          "namespace": "Default",
+          "schema_sha256": "Default",
+          "quiz_task_uuid": "Default",
+          "task_url": "Default",
+          "tua_uuid": "Default",
+          "article_batch_name": "Default",
+          "article_number": 0,
+          "article_filename": "Default",
+      	  "article_sha256": "Default",
+          "article_text_length":0,
+          "destination": "Default",
+          "task_redundancy": 0,
+          "taskrun_count": 0,
+          "quiz_taskrun_uuid": "Default",
+          "contributor_uuid": "  Default",
+          "created": "Default",
+          "finish_time": "Default",
+          "elapsed_seconds": 0,
+          "topic_name": "Default",
+          "question_label": "T0.Q0",
+          "question_text": "Default",
+          "answer_label": "T0.Q0.A0",
+          "answer_content": "Default",
+          "answer_uuid": "Default",
+          "submitted_tua_uuid": "Default",
+          "answer_text": "Default",
+          "case_number": 0,
+          "highlight_count": 0,
+          "start_pos": 0,
+          "end_pos": 0,
+          "target_text": "Default"
       }
   }
 }

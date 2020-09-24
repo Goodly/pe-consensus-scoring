@@ -25,8 +25,7 @@ def calc_agreement_directory(directory, schema_dir, config_path,  texts_path, re
         for file in files:
             if file.endswith('.csv') and 'IAA' not in file:
                 print("Checking Agreement for "+directory+'/'+file)
-                if 'DataHunt' in file:
-                    highlights.append(directory+'/'+file)
+                highlights.append(directory+'/'+file)
 
     for root, dir, files in os.walk(schema_dir):
         for file in files:
@@ -71,7 +70,6 @@ def calc_scores(highlightfilename, config_path,  texts_path, repCSV=None, schema
                 fileName = None, thirtycsv = None, outDirectory = None, useRep = False, directory = None,
                 threshold_func = 'logis_0'):
     uberDict = dataStorer(highlightfilename, schemaFile)
-
     if directory.startswith('./'):
         directory = directory[2:]
     if not outDirectory:
@@ -232,8 +230,6 @@ def score(article, ques, data, config_path, text_file, repDF = None,   useRep = 
     schema = get_schema_topic(data, article)
     question_type, num_choices = get_type_json(schema, ques, config_path)
 
-
-
     answers = get_question_answers(data, article, ques)
     users =get_question_userid(data, article, ques)
     numUsers = get_num_users(data, article, ques)
@@ -305,7 +301,8 @@ def get_answer_data(schema_sha, topic, question, answer, schema_file):
 
 if __name__ == '__main__':
     config_path = './config/'
-    input_dir = '../data/datahunts/'
+    input_dir = '../test_data/test_test_iaa_evi_q5/'
+    #input_dir = '../data/dh1'
     texts_dir = '../data/texts/'
     metadata_dir = '../data/metadata/'
     tua_dir = '../data/tags/'

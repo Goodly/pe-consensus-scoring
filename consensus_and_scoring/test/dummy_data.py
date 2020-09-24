@@ -25,7 +25,6 @@ class dummy_data:
             self.article_num = article_num
         self.article_id = test_utils.make_sha256(article_num)
 
-        print('outpath', self.out_path)
         # generate the id every row in this file will have
         if source_task_id == None:
             #this shouldn't be None unless its going to a tempdir
@@ -59,11 +58,16 @@ class dummy_data:
 
     def fill_in_logic(self, row, params):
         return row
+
+    def name_outfile(self, file_name):
+        return file_name
     def set_row(self, column, value):
         self.df[column] = value
 
     def export(self):
-        export_path = os.path.join(self.out_path,self.filetype+'_'+self.source_task_id+'.csv')
+        file_name = self.filetype+'_'+self.source_task_id
+        file_name = self.name_outfile(file_name)
+        export_path = os.path.join(self.out_path,file_name+'.csv')
         print(export_path)
         self.df.to_csv(export_path, encoding='utf-8')
         return export_path

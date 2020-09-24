@@ -1,13 +1,10 @@
-import pandas as pd
-import sys
-import os
+
 import pandas as pd
 
 import test_utils
 from filegen_utils import *
 from import_tags import *
 
-sys.path.append('../../')
 
 def test_demo(make_task_demo):
     print(make_task_demo)
