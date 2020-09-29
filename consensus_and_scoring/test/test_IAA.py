@@ -18,7 +18,7 @@ def test_iaa_constructor(config, tmpdir):
     fin_path = dh.export()
     data_path = config['data_dir']
     schema_path = data_path+'/schemas'
-    texts_path = data_path + '/texts'
+    print(config['texts_dir'])
     iaa_out = calc_agreement_directory(test_path, schema_path, config['config_dir'], config['texts_dir'], outDirectory = tmpdir)
     print(iaa_out)
     for root, dir, files in os.walk(iaa_out):
