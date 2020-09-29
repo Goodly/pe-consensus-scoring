@@ -69,7 +69,8 @@ class datahunt(dummy_data):
         return filename
     def fill_in_logic(self, new_row, params):
         keys = params.keys()
-        if 'answer_label' in keys and 'namespace' in keys:
+        if 'answer_label' in keys and 'namespace' in keys and 'contributor_uuid' in keys:
+
             a_label = params['answer_label']
             o = re.search('Q(.*?)\.A(.*)', a_label)
             question = int(o.group(1))
@@ -84,7 +85,8 @@ class datahunt(dummy_data):
             topic_name = test_utils.get_schema_col_val(schema_sha256, 'topic_name')
             new_row['topic_name'] = topic_name
         else:
-            raise NameError('Params',params,' must include a value for namespace and answer_label')
+            raise NameError('Params',params,' must include a value for namespace, answer_label, and contributor_uuid')
+
         if 'start_pos' in keys and 'end_pos' in keys:
             new_row['target_text'] = test_utils.open_text_file(self.article_id, params['start_pos'], params['end_pos'])
         elif 'startpos' in keys or 'end_pos' in keys:
