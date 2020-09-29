@@ -74,6 +74,9 @@ class datahunt(dummy_data):
             new_row['question_label'] = 'T1.Q'+str(question)
         return new_row
 
+    def set_out_name(self, filetype, source_task_id):
+        return filetype+'_'+source_task_id+'-Task.csv'
+
 if __name__ == '__main__':
     #this is broken cause it's not a path data
     i =  IAA_task('../../test_data')

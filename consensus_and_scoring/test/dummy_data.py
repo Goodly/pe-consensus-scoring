@@ -59,9 +59,11 @@ class dummy_data:
         return row
     def set_row(self, column, value):
         self.df[column] = value
-
+    def set_out_name(self, filetype, source_task_id):
+        return filetype+'_'+source_task_id+'.csv'
     def export(self):
-        export_path = os.path.join(self.out_path,self.filetype+'_'+self.source_task_id+'.csv')
+        out_name = self.set_out_name (self.filetype, self.source_task_id)
+        export_path = os.path.join(self.out_path,out_name)
         print(export_path)
         self.df.to_csv(export_path, encoding='utf-8')
         return export_path
