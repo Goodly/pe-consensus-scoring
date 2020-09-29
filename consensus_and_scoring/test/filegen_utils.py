@@ -61,14 +61,10 @@ class datahunt(dummy_data):
         keys = params.keys()
         if 'answer_label' in keys and 'namespace' in keys:
             topic = params['answer_label']
-            print('topic', topic)
             parser = re.compile('Q(.*?).A(.*)')
             tmp = parser.search(topic)
-            print(tmp)
             question = int(tmp.group(1))
-            print(question)
             answer = int(tmp.group(2))
-            print('answer', answer)
             schema_sha256 = test_utils.sha256_from_namespace(params['namespace'])
             ans_id, ans_text, q_text = test_utils.get_schema_data(schema_sha256, question, answer)
             new_row['schema_sha256'] = schema_sha256
