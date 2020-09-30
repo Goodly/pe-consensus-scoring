@@ -11,7 +11,7 @@ class IAA_task(dummy_data):
         self.filetype = 'iaa'
         super().__init__(*args, **kwargs)
 
-    #todo add functions we'd only want to use on IAA files
+
     def fill_in_logic(self, new_row, params):
         keys = params.keys()
         if 'namespace' in keys and 'question_Number' in keys:
@@ -35,7 +35,6 @@ class adjudicator(dummy_data):
         self.filetype = 'adjudicator'
         super().__init__(*args, **kwargs)
 
-    # todo add functions we'd only want to use on adjudicator files
     def fill_in_logic(self, new_row, params):
         keys = params.keys()
         if 'topic_name' in keys and 'namespace' in keys:
@@ -51,9 +50,7 @@ class adjudicator(dummy_data):
         else:
             raise NameError('Params', params, ' must include a value for namespace and topic_name')
 
-
         return new_row
-
 
 class datahunt(dummy_data):
     #NOTE: datahunt needs 2 rows at least; otherwise it'll crash the data import function.
@@ -61,12 +58,11 @@ class datahunt(dummy_data):
         #capitalize so files match tagworks output
         self.filetype = 'DataHunt'
         super().__init__(*args, **kwargs)
-        #TODO implement different size text files
         test_utils.make_text_data(self.article_id)
 
-    def name_outfile(self, filename):
-        filename = filename+'-Task'
-        return filename
+    def set_out_name(self, filetype, source_task_id):
+        return filetype + '_' + source_task_id + '-Task.csv'
+
     def fill_in_logic(self, new_row, params):
         keys = params.keys()
         if 'answer_label' in keys and 'namespace' in keys and 'contributor_uuid' in keys:
@@ -82,6 +78,7 @@ class datahunt(dummy_data):
             new_row['answer_uuid'] = ans_id
             new_row['answer_text'] = ans_text
             new_row['question_text'] = q_text
+            new_row['question_label'] = 'T1.Q'+str(question)
             topic_name = test_utils.get_schema_col_val(schema_sha256, 'topic_name')
             new_row['topic_name'] = topic_name
         else:
