@@ -3,16 +3,22 @@ import uuid
 import hashlib
 import random
 import json
+import string
 import pandas as pd
 
 def get_config():
     with open('test_config.json') as json_file:
         data = json.load(json_file)
     return data
+#*****************************
+#DEFINING USEFUL GLOBAL VARS
 config = get_config()
+texts_dir = config['test_dir']+config['texts_dir']
+
+
 
 def make_test_directory(config, directory):
-    directory = os.path.join(config["test_dir"], directory)
+    directory = config["test_dir"]+directory
     if directory[-1] != '/':
         directory = directory +'/'
     try:
@@ -66,11 +72,15 @@ def make_schema_namespace_sha256_map():
     schema_sha_256_map = out
     return out
 
-def get_schema_data(schema_sha256, question, answer):
+def get_schema_df(schema_sha256):
     data_path = config['data_dir']
     schema_dir = data_path+ '/schemas'
     schema_file_path = os.path.join(schema_dir, schema_sha256+'.csv')
     schema_df = pd.read_csv(schema_file_path, encoding='utf-8')
+    return schema_df
+def get_schema_data(schema_sha256, question, answer):
+
+    schema_df = get_schema_df(schema_sha256)
     label = 'T1.Q'+str(question)+'.A'+str(answer)
     schema_row = schema_df[schema_df['answer_label'] == label]
     if len(schema_row)!=1:
@@ -81,12 +91,45 @@ def get_schema_data(schema_sha256, question, answer):
         return 'cantfind', 'cantfind', schema_row['question_text'].iloc[0]
     return schema_row['answer_uuid'].iloc[0], schema_row['answer_content'].iloc[0], schema_row['question_text'].iloc[0]
 
-def make_text(config, article_sha256, size = 1000):
-    out_dir = make_test_directory(config, 'texts')
-    out_path = os.path.join(out_dir, article_sha256+'.txt')
-    text_file = open(out_path, "w",encoding='utf-8')
-    written = 0
-    while written<size:
-        text_file.writelines('10________')
-        written +=10
-    text_file.close()
+def get_schema_col_val(schema_sha256, column):
+    '''
+    returns the first value in a column from the schema file
+    '''
+    schema_df = get_schema_df(schema_sha256)
+    return schema_df[column].iloc[0]
+    label = 'T1.Q'+str(question)+'.A'+str(answer)
+    schema_row = schema_df[schema_df['answer_label'] == label]
+    if len(schema_row)!=1:
+        label = 'T1.Q' + str(question)
+        schema_row = schema_df[schema_df['question_label'] == label]
+        if len(schema_row) != 1:
+            return 'cantfind', 'cantfind', 'cantfind'
+        return 'cantfind', 'cantfind', schema_row['question_text'].iloc[0]
+    return schema_row['answer_uuid'].iloc[0], schema_row['answer_content'].iloc[0], schema_row['question_text'].iloc[0]
+
+def make_text_data(sha_256, length=1000, text=None):
+    '''
+    creates a text file of random characters of the given length in the texts folder of the test_data directory
+    '''
+
+    out_dir = make_test_directory(config, config['texts_dir'])
+    out_path = out_dir+sha_256+'.txt'
+    if text==None:
+        text =''
+        for i in range(length):
+            if i % 50 == 49:
+                text+= '\n'
+            else:
+                text += random.choice(string.ascii_letters)
+    out_file = open(out_path, 'w', encoding='utf-8')
+    out_file.write(text)
+    out_file.close()
+    return out_path
+
+def open_text_file(article_sha, start, end):
+    with open(os.path.join(texts_dir, article_sha + ".txt"), 'r', encoding='utf-8') as file:
+        sourceText = file.read()
+    return sourceText[start:end]
+
+if __name__ == '__main__':
+    make_text_data('woppdidoo')

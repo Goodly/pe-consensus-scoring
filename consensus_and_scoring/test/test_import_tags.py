@@ -1,13 +1,11 @@
+
 import pandas as pd
-import sys
 import os
-import pandas as pd
 
 import test_utils
 from filegen_utils import *
 from import_tags import *
 
-sys.path.append('../../')
 
 def test_demo(make_task_demo):
     print(make_task_demo)
@@ -54,6 +52,7 @@ def test_import_tags_adj_1_iaa_1_disagree(config, tmpdir):
             #should be only 1 file for this case, so just run it on the only one
             # if there's more than 1 then you can get fancy
             i_df  = pd.read_csv(os.path.join(i_tags, file), encoding='utf-8')
+
     assert len(i_df) == 1
     assert test_utils.count_matching_rows(i_df, {'agreed_Answer': 2, 'question_Number': 2}) == 1
     assert test_utils.count_matching_rows(i_df, {'agreed_Answer': 1, 'question_Number': 3}) == 0
