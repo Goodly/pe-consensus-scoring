@@ -106,7 +106,7 @@ def calc_scores(highlightfilename, config_path,  texts_path, repCSV=None, schema
     #     repDF = create_user_dataframe(uberDict, csvPath = None)
     # thirtyDf = create_last30_dataframe(uberDict, thirtycsv)
     if useRep:
-        #repDF = create_user_reps(uberDict,repCSV)
+        #TODO: CALL the function that loads whatever data structure rep scoring will require
         print('initialized repScores')
         repDF = None
     else:

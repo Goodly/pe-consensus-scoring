@@ -99,7 +99,7 @@ def weightScaleEverything(answers, weights, users, hlUsers, starts, ends, repDF)
             4], sumTotalScaling, userWeightDict
     return [0], [0], [0], [0], sumTotalScaling, userWeightDict
 
-
+#cgange change
 # TOPTWO metric add the top two score difference as  an input
 def passToUnitizing(answers, hlusers, starts, ends, numUsers, length, \
                     highScore, winner, scaledNumUsers, userWeightDict, sourceText, useRep = False,
