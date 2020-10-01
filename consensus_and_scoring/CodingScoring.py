@@ -6,6 +6,7 @@ from repScores import *
 import numpy as np
 
 
+
 def evaluateCoding(answers, users, starts, ends, numUsers, length, sourceText, hlUsers, hlAns, repDF=None, dfunc=None,
                    num_choices=15, useRep = False, threshold_func = 'logis_0'):
     """ calculate all scores for any coding question
@@ -23,11 +24,6 @@ def evaluateCoding(answers, users, starts, ends, numUsers, length, sourceText, h
         agreement score.  The variable 'iScore' refers to the unitizing agreement score calculated using Krippendorff's
         alpha including users who never highlighted any characters that passed the threshold matrix
     """
-    # This only occurs when the users are prompted for a textual input.
-
-
-    repScaledAnswers, repScaledUsers = repScaleAnsUsers(answers, users, repDF)
-
     repScaledAnswers, repScaledUsers = repScaleAnsUsers(answers, users, repDF,  useRep = useRep)
 
     assert (len(repScaledUsers) == len(repScaledAnswers))
@@ -67,9 +63,9 @@ def evaluateCoding(answers, users, starts, ends, numUsers, length, sourceText, h
 
 
 def repScaleAnsUsers(answers, users, repDF, useRep = False):
-    if repDF is None or not useRep:
+    if not useRep:
         return answers, users
-
+    #TODO: repDF needs a check for not being none
     repScaledAnswers = []
     repScaledUsers = []
 
@@ -81,13 +77,12 @@ def repScaleAnsUsers(answers, users, repDF, useRep = False):
             checked.append((answers[i], users[i]))
             additionAns = np.array(answers[i])
             additionUser = np.array(users[i])
-            rep = ceil(get_user_rep(users[i], repDF))
+            rep = ceil(get_user_rep(users[i], repDF)[0])
 
             additionUser = np.repeat(additionUser, rep)
             additionAns = np.repeat(additionAns, rep)
             repScaledAnswers = np.append(repScaledAnswers, additionAns)
             repScaledUsers = np.append(repScaledUsers, additionUser)
-    userid_to_CSV(repDF)
 
 
     return repScaledAnswers, repScaledUsers
@@ -237,7 +232,6 @@ def scaleFromRep(arr, users, repDF, useRep = False):
             rep = ceil(rep)
             addition = np.repeat(addition, rep)
             scaled = np.append(scaled, addition)
-    userid_to_CSV(repDF)
     return scaled
 
 
@@ -264,8 +258,7 @@ def scaleFromWeights(arr, answers, weights, users, repDF,  useRep=False):
             sumTotalScaling += scaleBy
             addition = np.repeat(addition, scaleBy)
             scaled = np.append(scaled, addition)
-    if useRep:
-        userid_to_CSV(repDF)
+
     return scaled, sumTotalScaling, userWeightDict
 
 
@@ -301,7 +294,6 @@ def makeUWeightDict(answers, weights, users, repDF):
             scaleBy = ceil(weight * rep)
             setUserWeightDict(users[i], answers[i], scaleBy, userWeightDict)
             sumTotalScaling += scaleBy
-    userid_to_CSV(repDF)
     return sumTotalScaling, userWeightDict
 
 
@@ -358,7 +350,6 @@ def scaleManyFromWeights(arr, answers, weights, users, repDF):
                 addition = np.array(arr[i])
                 addition = np.repeat(addition, scaleBy)
                 scaled[i] = np.append(scaled[i], addition)
-    userid_to_CSV(repDF)
     return scaled, sumTotalScaling, userWeightDict
 
 

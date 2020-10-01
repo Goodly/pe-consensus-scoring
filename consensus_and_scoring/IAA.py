@@ -106,8 +106,9 @@ def calc_scores(highlightfilename, config_path,  texts_path, repCSV=None, schema
     #     repDF = create_user_dataframe(uberDict, csvPath = None)
     # thirtyDf = create_last30_dataframe(uberDict, thirtycsv)
     if useRep:
-        repDF = create_user_reps(uberDict,repCSV)
+        #repDF = create_user_reps(uberDict,repCSV)
         print('initialized repScores')
+        repDF = None
     else:
         repDF = None
     for task in uberDict.keys():  # Iterates throuh each article
@@ -400,4 +401,4 @@ if __name__ == '__main__':
     # output
     iaa_output_dir = '../data/out_iaa/'
     calc_agreement_directory(input_dir, schema_dir, config_path, texts_dir, repCSV=None, outDirectory=iaa_output_dir,
-                                 useRep=False, threshold_func='raw_30')
+                                 useRep=True, threshold_func='raw_30')
