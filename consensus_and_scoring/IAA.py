@@ -227,8 +227,8 @@ def score(article, ques, data, config_path, text_file, schemaFile, repDF = None,
         hlUsers = []
         hlAns = []
 
-    question_type = get_question_type(data, article, ques)
-    get_question_numchoices(data, article, ques)
+    #question_type = get_question_type(data, article, ques)
+    #get_question_numchoices(data, article, ques)
     schema = get_schema_topic(data, article)
     if schema_has_dist_function(schemaFile):
         question_type, num_choices = schema_to_type_and_num(ques, schemaFile)
