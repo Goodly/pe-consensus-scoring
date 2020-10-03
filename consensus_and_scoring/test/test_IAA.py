@@ -27,4 +27,4 @@ def test_iaa_constructor(config, tmpdir):
             # if there's more than 1 then you can get fancy
             out_df  = pd.read_csv(os.path.join(iaa_out, file), encoding='utf-8')
     #9 answer choices to a checklist question
-    assert len(out_df) == 9
+    assert len(out_df) == 10
