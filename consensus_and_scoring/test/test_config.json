@@ -1,9 +1,10 @@
 {
     "test_dir": "./../../test_data/",
-    "texts_dir":"texts/",
     "data_dir": "./../../data/",
+    "texts_dir": "/texts/",
     "schema_dir": "./../../data/schemas/",
     "IAA_config_dir": "./../../consensus_and_scoring/config/",
+
   "file_type":{
       "iaa": {
           "article_num": 0,

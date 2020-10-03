@@ -5,7 +5,6 @@ import test_utils
 import os
 
 class dummy_data:
-    #todo add other params so can be more useful
     #requires filetype is defined in higher scope
     def __init__(self,out_path = None, out_folder = None, source_task_id = None, article_num = None, schema=None):
 
@@ -34,7 +33,6 @@ class dummy_data:
         self.base_row = test_utils.config['file_type'][self.filetype]
         self.cols = self.base_row.keys()
         self.df = pd.DataFrame(columns=self.cols)
-        # todo support schemas
 
     def add_row(self, params=None):
         new_row = self.base_row
@@ -59,15 +57,15 @@ class dummy_data:
     def fill_in_logic(self, row, params):
         return row
 
-    def name_outfile(self, file_name):
-        return file_name
+
     def set_row(self, column, value):
         self.df[column] = value
-
+    def set_out_name(self, filetype, source_task_id):
+        return filetype+'_'+source_task_id+'.csv'
     def export(self):
-        file_name = self.filetype+'_'+self.source_task_id
-        file_name = self.name_outfile(file_name)
-        export_path = os.path.join(self.out_path,file_name+'.csv')
+        out_name = self.set_out_name (self.filetype, self.source_task_id)
+        export_path = os.path.join(self.out_path,out_name)
+
         print(export_path)
         self.df.to_csv(export_path, encoding='utf-8')
         return export_path

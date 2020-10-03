@@ -603,8 +603,11 @@ def finder(ser, a):
 
 def make_directory(directory):
     print(directory)
-    if directory[-1] != '/':
-        directory = directory +'/'
+    try:
+        if directory[-1] != '/':
+            directory = directory +'/'
+    except TypeError:
+        pass
     try:
         os.mkdir(directory)
     except FileExistsError:

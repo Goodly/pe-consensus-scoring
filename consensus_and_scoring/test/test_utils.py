@@ -18,7 +18,7 @@ texts_dir = config['test_dir']+config['texts_dir']
 
 
 def make_test_directory(config, directory):
-    directory = os.path.join(config["test_dir"], directory)
+    directory = config["test_dir"]+directory
     if directory[-1] != '/':
         directory = directory +'/'
     try:
@@ -130,3 +130,6 @@ def open_text_file(article_sha, start, end):
     with open(os.path.join(texts_dir, article_sha + ".txt"), 'r', encoding='utf-8') as file:
         sourceText = file.read()
     return sourceText[start:end]
+
+if __name__ == '__main__':
+    make_text_data('woppdidoo')
