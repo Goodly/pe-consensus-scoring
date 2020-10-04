@@ -1,5 +1,5 @@
 
-function display(type_bar, name, scores, background_color) {
+function display(type_bar) {
   var ctx = document.getElementById('myChart');
 
   var myChart = new Chart(ctx, {
@@ -10,7 +10,6 @@ function display(type_bar, name, scores, background_color) {
       }
 
   });
-  console.log(myChart)
   return myChart
 }
 // datasets
@@ -32,7 +31,7 @@ function display(type_bar, name, scores, background_color) {
 //     borderWidth: 1
 // }
 
-function draw(chart, article_name, scores, background_color) {
+function draw(type, article_name, scores, background_color) {
   // create dataset for the score:
   // label: article_name
   // data: [scores]
@@ -55,5 +54,6 @@ function draw(chart, article_name, scores, background_color) {
     ],
     borderWidth: 1
   }
-  console.log(new_dataset)
+  chart = display(type)
+  chart["data"]["datasets"].push(new_dataset)
 }
