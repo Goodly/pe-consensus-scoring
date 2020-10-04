@@ -230,8 +230,9 @@ def score(article, ques, data, config_path, text_file, schemaFile, repDF = None,
     #question_type = get_question_type(data, article, ques)
     #get_question_numchoices(data, article, ques)
     schema = get_schema_topic(data, article)
+    #delete thjis
     if schema_has_dist_function(schemaFile):
-        question_type, num_choices = schema_to_type_and_num(ques, schemaFile)
+        question_type, num_choices = schema_to_type_and_num(ques, schemaFile, config_path)
     else:
         question_type, num_choices = get_type_json(schema, ques, config_path)
 
@@ -308,8 +309,8 @@ def get_answer_data(schema_sha, topic, question, answer, schema_file):
 
 if __name__ == '__main__':
     config_path = './config/'
-    input_dir = '../test_data/iaa_dh_schema_finds_ordinal/'
-    texts_dir = '../test_data/texts/'
+    input_dir = '../data/datahunts/'
+    texts_dir = '../data/texts/'
     metadata_dir = '../data/metadata/'
     tua_dir = '../data/tags/'
     schema_dir = '../data/schemas/'

@@ -629,10 +629,14 @@ def schema_has_dist_function(config_path):
 
 #Input: ques is an integer question number, config_path is a string to a schema csv
 #Output: question_type and num_choices for the given question in the given schema
-def schema_to_type_and_num(ques, config_path):
-    df = pd.read_csv(config_path)
+def schema_to_type_and_num(ques, schema_path, config):
+    df = pd.read_csv(schema_path, encoding='utf-8')
+    override = pd.read_csv(config+'schema_override.csv')
     ques = 'T1.Q' + str(ques)
     qrows = df.loc[df['question_label'] == ques]
+    q_uuid = qrows['question_uuid'].iloc[0]
+    if len(override[override['question_uuid']==q_uuid])>0:
+        qrows = override[override['question_uuid']==q_uuid]
     question_type = qrows['question_type'].iloc[0]
     if question_type == 'CHECKBOX':
         question_type = "checklist"
