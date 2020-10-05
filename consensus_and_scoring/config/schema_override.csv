@@ -1,0 +1,2 @@
+﻿namespace,schema_sha256,question_uuid,question_label,question_type,alpha_distance,answer_count
+OPTIONAL,OPTIONAL,REQUIRED,OPTIONAL,REQUIRED,REQUIRED,REQUIRED
