@@ -1,5 +1,6 @@
 {
     "test_dir": "./../../test_data/",
+    "persistent_test_dir": "./../../test_data_persistent/",
     "data_dir": "./../../data/",
     "texts_dir": "/texts/",
     "schema_dir": "./../../data/schemas/",
