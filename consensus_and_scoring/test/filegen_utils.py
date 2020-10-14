@@ -12,6 +12,8 @@ class IAA_task(dummy_data):
         super().__init__(*args, **kwargs)
 
 
+
+
     def fill_in_logic(self, new_row, params):
         keys = params.keys()
         if 'namespace' in keys and 'question_Number' in keys:
@@ -29,6 +31,13 @@ class IAA_task(dummy_data):
 
     def set_agreement_score(self, value):
         self.set_row('agreement_score', value)
+
+class dep_iaa(IAA_task):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    def set_out_name(self, filetype, source_task_id):
+        return 'Dep_'+filetype + '_' + source_task_id + '-Task.csv'
 
 class adjudicator(dummy_data):
     def __init__(self, *args, **kwargs):

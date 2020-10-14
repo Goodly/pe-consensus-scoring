@@ -3,8 +3,10 @@ import pandas as pd
 import os
 
 
-def launch_Weighting(directory, reporting = False):
+def launch_Weighting(directory, out_directory = None, reporting = False):
     print("WEIGHTING STARTING")
+    if out_directory == None:
+        out_directory=directory
     iaaFiles = []
     for root, dir, files in os.walk(directory):
         for file in files:
@@ -13,7 +15,11 @@ def launch_Weighting(directory, reporting = False):
                 iaaFiles.append(directory+'/'+file)
     weight_list = []
     for f in iaaFiles:
-        weight = weighting_alg(f, './config/weight_key.csv', './config/weight_key_scaling_guide.csv', directory,reporting=reporting)
+        dirname = os.path.dirname(__file__)
+        #can't use os.path.join, probably because windows uses \ as a  separator instead of /
+        weight_key_path = dirname+os.sep+'config'+os.sep+'weight_key.csv'
+        weight_scaling_path = dirname+os.sep+'config'+os.sep+'weight_key_scaling_guide.csv'
+        weight = weighting_alg(f, weight_key_path, weight_scaling_path, out_directory,reporting=reporting)
         weight_list.append(weight)
     weights = pd.concat(weight_list)
     return weights
