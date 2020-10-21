@@ -35,7 +35,7 @@ class dummy_data:
         self.df = pd.DataFrame(columns=self.cols)
 
     def add_row(self, params=None):
-        new_row = self.base_row
+        new_row = self.base_row.copy()
         new_row['source_task_uuid'] = self.source_task_id
         new_row['article_sha256'] = self.article_id
         new_row['article_num'] = self.article_num

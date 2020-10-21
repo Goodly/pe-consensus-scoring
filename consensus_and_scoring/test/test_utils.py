@@ -131,5 +131,7 @@ def open_text_file(article_sha, start, end):
         sourceText = file.read()
     return sourceText[start:end]
 
+def make_highlight_indices(start, end):
+    return json.dumps(list(range(start,end)))
 if __name__ == '__main__':
     make_text_data('woppdidoo')
