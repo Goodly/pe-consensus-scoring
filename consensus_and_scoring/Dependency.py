@@ -54,6 +54,8 @@ def unpack_dependency_ins(input):
     return handleDependencies(input[0], input[1], input[2])
 
 def handleDependencies(schemaPath, iaaPath, out_dir):
+    print(out_dir)
+    print("+++++++")
     schemData = pd.read_csv(schemaPath, encoding = 'utf-8')
     iaaData = pd.read_csv(iaaPath,encoding = 'utf-8')
     #we don't know if it'll get read in as int or str, but forcing str resolves edge cases when failed IAA

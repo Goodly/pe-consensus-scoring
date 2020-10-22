@@ -1,10 +1,4 @@
 ,article_num,article_sha256,article_id,article_filename,source_task_uuid,tua_uuid,namespace,schema_sha256,question_Number,answer_uuid,question_type,agreed_Answer,coding_perc_agreement,highlighted_indices,agreement_score,num_users,num_answer_choices,target_text,question_text,answer_text,answer_content
-<<<<<<< HEAD
-0,8042,77046247e0e400d4372bab93fc3c81c6c58143bc0d0eae4bf984eb2fdf9859c5,default,default,kjncsa87nxao21899102j1j2,default,default,default,8,default,default,800,0,[],0,0,0,text was targeted,default,default,default
-1,8042,77046247e0e400d4372bab93fc3c81c6c58143bc0d0eae4bf984eb2fdf9859c5,default,default,kjncsa87nxao21899102j1j2,default,default,default,5,default,default,800,0,[],0,0,0,text was targeted,default,default,default
-2,8042,77046247e0e400d4372bab93fc3c81c6c58143bc0d0eae4bf984eb2fdf9859c5,default,default,kjncsa87nxao21899102j1j2,default,default,default,5,default,default,800,0,[],0,0,0,text was targeted,default,default,default
-=======
-0,6708,b1b89dc2f71177e50403373bff990d924123b7f8419859ef15eb8c3d13998e72,default,default,kjncsa87nxao21899102j1j2,default,default,default,8,default,default,800,0,[],0,0,0,text was targeted,default,default,default
-1,6708,b1b89dc2f71177e50403373bff990d924123b7f8419859ef15eb8c3d13998e72,default,default,kjncsa87nxao21899102j1j2,default,default,default,5,default,default,800,0,[],0,0,0,text was targeted,default,default,default
-2,6708,b1b89dc2f71177e50403373bff990d924123b7f8419859ef15eb8c3d13998e72,default,default,kjncsa87nxao21899102j1j2,default,default,default,5,default,default,800,0,[],0,0,0,text was targeted,default,default,default
->>>>>>> cf941750bc1512d9d8def6142b64291c6ffecfa3
+0,4698,4e72a746a16076b9a4eb69107fd0cb5db39510145ac0012cc1708cd8da703328,default,default,kjncsa87nxao21899102j1j2,default,Covid_Evidence2020_03_21,45dce5251bd3ea6e908fa33ac9e6a8e17e6830215912ce1626cf4206e159819c,8,cantfind,default,800,0.2,[],0.9,5,0,text was targeted,cantfind,cantfind,default
+1,4698,4e72a746a16076b9a4eb69107fd0cb5db39510145ac0012cc1708cd8da703328,default,default,kjncsa87nxao21899102j1j2,default,Covid_Evidence2020_03_21,45dce5251bd3ea6e908fa33ac9e6a8e17e6830215912ce1626cf4206e159819c,5,cantfind,default,800,0.2,[],0.9,5,0,text was targeted,cantfind,cantfind,default
+2,4698,4e72a746a16076b9a4eb69107fd0cb5db39510145ac0012cc1708cd8da703328,default,default,kjncsa87nxao21899102j1j2,default,Covid_Evidence2020_03_21,45dce5251bd3ea6e908fa33ac9e6a8e17e6830215912ce1626cf4206e159819c,5,cantfind,default,800,0.2,[],0.9,5,0,text was targeted,cantfind,cantfind,default
