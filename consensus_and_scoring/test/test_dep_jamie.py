@@ -64,7 +64,7 @@ def test_bad_parent(config):
     childNumAnswers = {2:9, 3:1, 4:6, 5:5, 6:3, 7:1, 8:5, 10:5, 11:5}
     for parent in parents:
         iaa = IAA_task(out_folder=iaa_files_path, source_task_id='gru' + str(parent))
-        iaa.add_row({"namespace": "Covid_Evidence2020_03_21", "question_Number": parent, "agreed_Answer": 'Fail'})
+        iaa.add_row({"namespace": "Covid_Evidence2020_03_21", "question_Number": parent, "agreed_Answer": 'U'})
         for child in parents[parent]:
             for j in range(1, childNumAnswers[child]+1):
                 iaa.add_row({"namespace": "Covid_Evidence2020_03_21", "question_Number": child, "agreed_Answer": j})
