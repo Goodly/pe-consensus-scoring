@@ -226,9 +226,10 @@ def score(article, ques, data, config_path, text_file, repDF = None,   useRep = 
         hlAns = []
 
     question_type = get_question_type(data, article, ques)
-    get_question_numchoices(data, article, ques)
+
     schema = get_schema_topic(data, article)
     question_type, num_choices = get_type_json(schema, ques, config_path)
+    num_choices = get_question_numchoices(data, article, ques)
 
     answers = get_question_answers(data, article, ques)
     users =get_question_userid(data, article, ques)

@@ -164,7 +164,7 @@ def getFiles(directory):
         directory = directory + '/'
     for root, dir, files in os.walk(directory):
         for file in files:
-            if 'Dep_S_IAA' in file:
+            if 'Dep' in file:
                 if file.endswith('.csv')  and 'ource' in file:
                     sourceFile = directory+file
                 if file.endswith('.csv')   and ('Arg' in file or 'arg' in file):
