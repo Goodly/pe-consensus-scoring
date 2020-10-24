@@ -33,6 +33,7 @@ class dummy_data:
         self.base_row = test_utils.config['file_type'][self.filetype]
         self.cols = self.base_row.keys()
         self.df = pd.DataFrame(columns=self.cols)
+        self.namespace = None
 
     def add_row(self, params=None):
         new_row = self.base_row.copy()
@@ -46,6 +47,7 @@ class dummy_data:
                     raise Exception("Column name entered <" + p + "> isn't a column name in the "+self.filetype+" table")
                 if p == 'namespace':
                     schema_sha256 = test_utils.sha256_from_namespace(params[p])
+                    self.namespace = params[p]
                     new_row['schema_sha256'] = schema_sha256
                 new_row[p] = params[p]
         new_row = self.fill_in_logic(new_row, params)
