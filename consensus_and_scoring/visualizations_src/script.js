@@ -1,13 +1,15 @@
 
-function display(type_bar) {
+function display(type_bar, data) {
   var ctx = document.getElementById('myChart');
-
   var myChart = new Chart(ctx, {
       type: type_bar,
       data: {
           labels: ['Evidence', 'Holistic', 'Language', 'Probability', 'Reasoning'],
           datasets: []
       }
+  for (dataset in data){
+    datasets.push(dataset)
+  }
 
   });
   return myChart
@@ -30,8 +32,14 @@ function display(type_bar) {
 //     ],
 //     borderWidth: 1
 // }
+function create_dataset(data) {
+  for(article in data["article"]){
+    
+  }
+}
 
-function draw(type, article_name, scores, background_color) {
+
+function draw(type, label_name, scores, background_color) {
   // create dataset for the score:
   // label: article_name
   // data: [scores]
@@ -40,7 +48,7 @@ function draw(type, article_name, scores, background_color) {
   // borderWidth: 1
   // chart.get_data.get_datasets.append(new_dataset)
   new_dataset = {
-    label: article_name,
+    label: label_name,
     data: scores,
     backgroundColor: [
       background_color,
@@ -54,6 +62,7 @@ function draw(type, article_name, scores, background_color) {
     ],
     borderWidth: 1
   }
-  chart = display(type)
-  chart["data"]["datasets"].push(new_dataset)
+  // chart = display(type)
+  // chart["data"]["datasets"].push(new_dataset)
+  return new_dataset
 }

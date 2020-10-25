@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>The onclick Event</h1>
+
+<p>The onclick event is used to trigger a function when an element is clicked on.</p>
+
+<p>Click the button to trigger a function that will output "Hello World" in a p element with id="demo".</p>
+
+<button id = 1 onclick="myFunction(this.id)">Option 1</button>
+<button id = 2 onclick="myFunction(this.id)">Option 2</button>
+<button id = 3 onclick="myFunction(this.id)">Option 3</button>
+
+
+<div class="slidecontainer">
+  <input type="range" min="1" max="3" value="2" class="slider" id="myRange">
+</div>
+
+<p id="demo"></p>
+
+<script>
+function myFunction(id) {
+  if(id == 1){
+    console.log("Yay")
+  }
+  else if(id == 2){
+    console.log("Nope")
+  }
+  else{
+    console.log("Great")
+  }
+}
+var slider = document.getElementById("myRange");
+slider.oninput = function() {
+  console.log(this.value);
+}
+</script>
+
+</body>
+</html>
