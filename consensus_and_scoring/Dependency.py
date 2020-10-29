@@ -246,4 +246,4 @@ def find_index(df, targetVals,col):
                 indices.append(i)
     return indices
 
-#eval_dependency('sep_urap', 's_iaa_sep_urap')
+eval_dependency(None, '../test_data/dep_parent/', '../data/schemas/', '../test_data/out_dep_parent/')
