@@ -2,40 +2,111 @@
 <html>
 <body>
 
-<h1>The onclick Event</h1>
 
-<p>The onclick event is used to trigger a function when an element is clicked on.</p>
+<!-- <button id = "1">Option 1</button> -->
+<!-- <button id = "2">Option 2</button>
+<button id = "3">Option 3</button> -->
 
-<p>Click the button to trigger a function that will output "Hello World" in a p element with id="demo".</p>
-
-<button id = 1 onclick="myFunction(this.id)">Option 1</button>
-<button id = 2 onclick="myFunction(this.id)">Option 2</button>
-<button id = 3 onclick="myFunction(this.id)">Option 3</button>
-
-
-<div class="slidecontainer">
-  <input type="range" min="1" max="3" value="2" class="slider" id="myRange">
+<div class="dropdown">
+  <button class="dropbtn">Dropdown</button>
+  <div class="dropdown-content">
+    <button class = "button_one" id = "button_one">Option 1</button>
+    <button class = "button_two" id = "button_two">Option 2</button>
+    <button class = "button_three" id = "button_three">Option 3</button>
+  </div>
 </div>
+<!-- <div class="slidecontainer">
+  <input type="range" min="1" max="3" value="2" class="slider" id="myRange">
+</div> -->
 
 <p id="demo"></p>
 
 <script>
-function myFunction(id) {
-  if(id == 1){
-    console.log("Yay")
-  }
-  else if(id == 2){
-    console.log("Nope")
-  }
-  else{
-    console.log("Great")
-  }
-}
-var slider = document.getElementById("myRange");
-slider.oninput = function() {
-  console.log(this.value);
-}
-</script>
+var button_one = document.getElementById("button_one")
+var button_two = document.getElementById("button_two")
+var button_three = document.getElementById("button_three")
 
+button_one.onclick = function() {
+  this.style.opacity = 1
+  button_two.style.opacity = 0.6
+  button_three.style.opacity = 0.6
+}
+button_two.onclick = function() {
+  this.style.opacity = 1
+  button_one.style.opacity = 0.6
+  button_three.style.opacity = 0.6
+}
+button_three.onclick = function() {
+  this.style.opacity = 1
+  button_one.style.opacity = 0.6
+  button_two.style.opacity = 0.6
+}
+
+// var slider = document.getElementById("myRange");
+// slider.oninput = function() {
+//   console.log(this.value);
+// }
+</script>
+<style>
+.button_one {
+  background-color: #008CBA;
+  color: white;
+  text-align: center;
+  display: inline-block;
+  font-size: 16px;
+  opacity: 1;
+}
+.button_two {
+  background-color: #008CBA;
+  color: white;
+  text-align: center;
+  display: inline-block;
+  font-size: 16px;
+  opacity: 0.6;
+}
+.button_three {
+  background-color: #008CBA;
+  color: white;
+  text-align: center;
+  display: inline-block;
+  font-size: 16px;
+  opacity: 0.6;
+}
+
+.dropbtn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 80px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #ddd;}
+
+.dropdown:hover .dropdown-content {display: block;}
+
+.dropdown:hover .dropbtn {background-color: #3e8e41;}
+</style>
 </body>
 </html>
