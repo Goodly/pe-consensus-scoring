@@ -1,4 +1,4 @@
 ,article_num,article_sha256,article_id,article_filename,source_task_uuid,tua_uuid,namespace,schema_sha256,question_Number,answer_uuid,question_type,agreed_Answer,coding_perc_agreement,highlighted_indices,agreement_score,num_users,num_answer_choices,target_text,question_text,answer_text,answer_content
-0,3693,5fc3d70c6fd1605b75b03f9c5ce81abdc61b0f9dc0f9d6558dd0e61cc6b7f2bd,default,default,kjncsa87nxao21899102j1j2,default,default,default,8,default,default,800,0,[],0,0,0,text was targeted,default,default,default
-1,3693,5fc3d70c6fd1605b75b03f9c5ce81abdc61b0f9dc0f9d6558dd0e61cc6b7f2bd,default,default,kjncsa87nxao21899102j1j2,default,default,default,5,default,default,800,0,[],0,0,0,text was targeted,default,default,default
-2,3693,5fc3d70c6fd1605b75b03f9c5ce81abdc61b0f9dc0f9d6558dd0e61cc6b7f2bd,default,default,kjncsa87nxao21899102j1j2,default,default,default,5,default,default,800,0,[],0,0,0,text was targeted,default,default,default
+0,59,82057e0a8bbdfccb9c16d1fbe124fbbc1af40b845c972a12b077a53ec6ca8fdc,default,default,kjncsa87nxao21899102j1j2,default,default,default,8,default,default,800,0,[],0,0,0,text was targeted,default,default,default
+1,59,82057e0a8bbdfccb9c16d1fbe124fbbc1af40b845c972a12b077a53ec6ca8fdc,default,default,kjncsa87nxao21899102j1j2,default,default,default,5,default,default,800,0,[],0,0,0,text was targeted,default,default,default
+2,59,82057e0a8bbdfccb9c16d1fbe124fbbc1af40b845c972a12b077a53ec6ca8fdc,default,default,kjncsa87nxao21899102j1j2,default,default,default,5,default,default,800,0,[],0,0,0,text was targeted,default,default,default

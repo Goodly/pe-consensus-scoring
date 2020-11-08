@@ -28,7 +28,6 @@ def test_user_highlighting_consensus(config, tmpdir):
     for root, dir, files in os.walk(iaa_out):
         for file in files:
             out_df  = pd.read_csv(os.path.join(iaa_out, file), encoding='utf-8')
-            #May need to check why this is empty
             print(out_df['highlighted_indices'].tolist())
             #Currently, agreement score does not change based on highlight indices.
             agree_score = out_df['agreement_score'].tolist()[1]

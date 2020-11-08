@@ -37,7 +37,8 @@ class dep_iaa(IAA_task):
         super().__init__(*args, **kwargs)
 
     def set_out_name(self, filetype, source_task_id):
-        return 'Dep_'+filetype + '_' + source_task_id + '-Task.csv'
+
+        return 'Dep_'+filetype + '_' + self.namespace+'_'+source_task_id + '-Task.csv'
 
 class adjudicator(dummy_data):
     def __init__(self, *args, **kwargs):
@@ -112,19 +113,18 @@ class weighted(dummy_data):
         if 'schema' in keys:
             self.schema = params['schema']
 
-        if 'namespace' in keys and 'question_Number' in keys and 'agreement_adjusted_points' in keys:
+        if 'namespace' in keys and 'Question_Number' in keys and 'agreement_adjusted_points' in keys and 'Answer_Number':
             answer = 0
-            question = params['question_Number']
+            question = params['Question_Number']
             schema_sha256 = test_utils.sha256_from_namespace(params['namespace'])
-            if 'agreed_Answer' not in keys:
-                answer = params['agreed_Answer']
+            answer = params['Answer_Number']
             ans_id, ans_text, q_text = test_utils.get_schema_data(schema_sha256, question, answer)
             new_row['schema_sha256'] = schema_sha256
             new_row['answer_uuid'] = ans_id
             new_row['answer_text'] = ans_text
             new_row['question_text'] = q_text
         else:
-            raise NameError('Params',params,' must include a value for namespace, answer_label, and contributor_uuid, and agreement_adjusted_points')
+            raise NameError('Params',params,' must include a value for namespace, Question_Number, and Answer_Number, and agreement_adjusted_points')
         new_row['schema'] = self.schema
         return new_row
 
@@ -140,21 +140,6 @@ class tua(dummy_data):
     def fill_in_logic(self, new_row, params):
         keys = params.keys()
 
-
-        if 'namespace' in keys and 'question_Number' in keys and 'agreement_adjusted_points' in keys:
-            answer = 0
-            question = params['question_Number']
-            schema_sha256 = test_utils.sha256_from_namespace(params['namespace'])
-            if 'agreed_Answer' not in keys:
-                answer = params['agreed_Answer']
-            ans_id, ans_text, q_text = test_utils.get_schema_data(schema_sha256, question, answer)
-            new_row['schema_sha256'] = schema_sha256
-            new_row['answer_uuid'] = ans_id
-            new_row['answer_text'] = ans_text
-            new_row['question_text'] = q_text
-        else:
-            raise NameError('Params',params,' must include a value for namespace, answer_label, and contributor_uuid, and agreement_adjusted_points')
-        new_row['schema'] = self.schema
         return new_row
 
     def set_out_name(self, filetype, source_task_id):

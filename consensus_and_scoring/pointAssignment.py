@@ -10,9 +10,10 @@ def pointSort(scoring_directory, input_dir = None, weights = None,
               scale_guide_dir = "./config/point_assignment_scaling_guide.csv", reporting = False, rep_direc = False,
               tua_dir = None):
 
-    dir_path = os.path.dirname(os.path.realpath(input_dir))
-
-    input_path = os.path.join(dir_path, input_dir)
+    print('tua_dir', tua_dir)
+    if input_dir != None:
+        dir_path = os.path.dirname(os.path.realpath(input_dir))
+        input_path = os.path.join(dir_path, input_dir)
     if not tua_dir:
         tua_path = os.path.join(input_path, 'tua')
         tua_location = ''
@@ -98,8 +99,7 @@ def pointSort(scoring_directory, input_dir = None, weights = None,
         weights['points'] = weights['agreement_adjusted_points']
     #BUG: Someehere in there we're getting duplicates of everything: the following line shouldprevent it from hapening but should
     #investigate the root
-
-    weights = weights.drop_duplicates(subset=['source_task_uuid', 'schema_sha256', 'Answer_Number', 'Question_Number'])
+    weights = weights.drop_duplicates(subset=['source_task_uuid', 'Answer_Number', 'Question_Number'])
     if reporting:
         weights.to_csv(scoring_directory + '/SortedPts.csv')
     return tuas, weights, tuas_raw
@@ -145,10 +145,16 @@ def check_scale_match(weight, scale):
     found = False
     abs_point = 0
     point_scale = 1
+    # handle the case when no weight column for it because there is no arg tasks
+    if arg_ans != -1 and arg_col not in weight.keys():
+        return found, abs_point, point_scale
     if arg_ans == -1 or arg_ans == weight[arg_col]:
         src_col = "source_T"+str(math.floor(scale['source_topic']))+'.Q'+str(math.floor(scale['source_question_num']))
         src_ans = int(scale['source_answer_num'])
         #spec_ans = weight[src_col]
+        #handle the case when no weight column for it because there is no source tasks
+        if src_ans != -1 and src_col not in weight.keys():
+            return found, abs_point, point_scale
         if src_ans == -1 or src_ans == int(weight[src_col]):
             found = True
             abs_point = scale['absolute_points']
@@ -201,7 +207,8 @@ def find_tua_match(all_tuas, weights, arg_threshold = .8, source_threshold = .6)
         #make sure the comparisons we find are to the right article
         art_tuas = all_tuas[all_tuas['article_sha256'] == w_art]
         w_h = w['highlighted_indices']
-
+        if isinstance(w_h, str):
+            w_h = json.loads(w_h)
         if not (isinstance(w_h, float)) and (not (isinstance(w_h, str)) or len(w_h)>1):
             weight_unit = get_indices_hard(w['highlighted_indices'])
             if len(weight_unit) > 0:
