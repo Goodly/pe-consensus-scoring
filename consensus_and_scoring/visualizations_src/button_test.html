@@ -11,8 +11,11 @@
   <button class="dropbtn">Dropdown</button>
   <div class="dropdown-content">
     <button class = "button_one" id = "button_one">Option 1</button>
+    <div class="hide">I am shown when someone hovers over the div above.</div>
     <button class = "button_two" id = "button_two">Option 2</button>
+    <div class="hide">I am shown when someone hovers over the div above.</div>
     <button class = "button_three" id = "button_three">Option 3</button>
+    <div class="hide">I am shown when someone hovers over the div above.</div>
   </div>
 </div>
 <!-- <div class="slidecontainer">
@@ -31,6 +34,7 @@ button_one.onclick = function() {
   button_two.style.opacity = 0.6
   button_three.style.opacity = 0.6
 }
+
 button_two.onclick = function() {
   this.style.opacity = 1
   button_one.style.opacity = 0.6
@@ -48,15 +52,33 @@ button_three.onclick = function() {
 // }
 </script>
 <style>
+.hide {
+  display: none;
+}
 .button_one {
+  border-radius: 12px;
+  margin: 5px;
   background-color: #008CBA;
   color: white;
   text-align: center;
   display: inline-block;
   font-size: 16px;
   opacity: 1;
+  font-family: 'Lato', sans-serif;
+  border: none;
 }
+.button_one:hover + .hide {
+  margin: 5px;
+  font-family: 'Lato', sans-serif;
+  display: block;
+  color: #008CBA;
+}
+
 .button_two {
+  border-radius: 12px;
+  margin: 5px;
+  font-family: 'Lato', sans-serif;
+  border: none;
   background-color: #008CBA;
   color: white;
   text-align: center;
@@ -64,21 +86,40 @@ button_three.onclick = function() {
   font-size: 16px;
   opacity: 0.6;
 }
+.button_two:hover + .hide {
+  margin: 5px;
+  font-family: 'Lato', sans-serif;
+  display: block;
+  color: #008CBA;
+}
+
 .button_three {
+  border-radius: 12px;
+  margin: 5px;
+  border: none;
+  font-family: 'Lato', sans-serif;
   background-color: #008CBA;
   color: white;
   text-align: center;
   display: inline-block;
   font-size: 16px;
   opacity: 0.6;
+}
+.button_three:hover + .hide {
+  margin: 5px;
+  font-family: 'Lato', sans-serif;
+  display: block;
+  color: #008CBA;
 }
 
 .dropbtn {
-  background-color: #4CAF50;
+  border-radius: 100px;
+  background-color: #4d61b3;
   color: white;
   padding: 16px;
   font-size: 16px;
   border: none;
+  font-family: 'Lato', sans-serif;
 }
 
 .dropdown {
@@ -87,9 +128,9 @@ button_three.onclick = function() {
 }
 
 .dropdown-content {
+  border-radius: 12px;
   display: none;
   position: absolute;
-  background-color: #f1f1f1;
   min-width: 80px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
@@ -106,7 +147,7 @@ button_three.onclick = function() {
 
 .dropdown:hover .dropdown-content {display: block;}
 
-.dropdown:hover .dropbtn {background-color: #3e8e41;}
+.dropdown:hover .dropbtn {background-color: #4d61b3;}
 </style>
 </body>
 </html>
