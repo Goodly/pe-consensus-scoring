@@ -116,7 +116,7 @@ def import_tags(old_s_iaa_dir, tags_dir, schema_dir, output_dir):
         task_tags.to_csv(out_path)
 
 
-    return out_path
+    return output_dir
 
 def make_namespace_to_schema_dict(tags, iaa, schema_dir):
     names = tags['namespace'].unique()

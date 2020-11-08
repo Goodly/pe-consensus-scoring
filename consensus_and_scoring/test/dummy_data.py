@@ -5,7 +5,6 @@ import test_utils
 import os
 
 class dummy_data:
-    #todo add other params so can be more useful
     #requires filetype is defined in higher scope
     def __init__(self,out_path = None, out_folder = None, source_task_id = None, article_num = None, schema=None):
 
@@ -25,7 +24,6 @@ class dummy_data:
             self.article_num = article_num
         self.article_id = test_utils.make_sha256(article_num)
 
-        print('outpath', self.out_path)
         # generate the id every row in this file will have
         if source_task_id == None:
             #this shouldn't be None unless its going to a tempdir
@@ -35,10 +33,10 @@ class dummy_data:
         self.base_row = test_utils.config['file_type'][self.filetype]
         self.cols = self.base_row.keys()
         self.df = pd.DataFrame(columns=self.cols)
-        # todo support schemas
+        self.namespace = None
 
     def add_row(self, params=None):
-        new_row = self.base_row
+        new_row = self.base_row.copy()
         new_row['source_task_uuid'] = self.source_task_id
         new_row['article_sha256'] = self.article_id
         new_row['article_num'] = self.article_num
@@ -49,6 +47,7 @@ class dummy_data:
                     raise Exception("Column name entered <" + p + "> isn't a column name in the "+self.filetype+" table")
                 if p == 'namespace':
                     schema_sha256 = test_utils.sha256_from_namespace(params[p])
+                    self.namespace = params[p]
                     new_row['schema_sha256'] = schema_sha256
                 new_row[p] = params[p]
         new_row = self.fill_in_logic(new_row, params)
@@ -59,11 +58,16 @@ class dummy_data:
 
     def fill_in_logic(self, row, params):
         return row
+
+
     def set_row(self, column, value):
         self.df[column] = value
-
+    def set_out_name(self, filetype, source_task_id):
+        return filetype+'_'+source_task_id+'.csv'
     def export(self):
-        export_path = os.path.join(self.out_path,self.filetype+'_'+self.source_task_id+'.csv')
+        out_name = self.set_out_name (self.filetype, self.source_task_id)
+        export_path = os.path.join(self.out_path,out_name)
+
         print(export_path)
         self.df.to_csv(export_path, encoding='utf-8')
         return export_path
