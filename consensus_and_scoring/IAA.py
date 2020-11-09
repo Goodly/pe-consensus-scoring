@@ -304,13 +304,13 @@ def get_answer_data(schema_sha, topic, question, answer, schema_file):
 
 if __name__ == '__main__':
     config_path = './config/'
-    input_dir = '../test_data/test_test_iaa_evi_q5/'
+    input_dir = '../test_data/test_diff_schemas/'
     #input_dir = '../data/dh1'
-    texts_dir = '../data/texts/'
+    texts_dir = '../test_data/texts/'
     metadata_dir = '../data/metadata/'
     tua_dir = '../data/tags/'
     schema_dir = '../data/schemas/'
     # output
-    iaa_output_dir = '../data/out_iaa/'
+    iaa_output_dir = make_directory('../test_data/out_test_diff_schemas/')
     calc_agreement_directory(input_dir, schema_dir, config_path, texts_dir, repCSV=None, outDirectory=iaa_output_dir,
                                  useRep=False, threshold_func='raw_30')

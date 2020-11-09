@@ -20,7 +20,6 @@ def calculate_scores_master(directory, texts_path, config_path,
                             push_aws = True, tua_dir = None, metadata_dir = None,
                             s3_bucket = None, s3_prefix = '',viz_dir = None, threshold_func = 'logis_0'):
     """
-
     :param directory: the directory that holds all files from the tagworks datahunt export
     :param schema_dir: directory to the file holding all the TUAs that created the datahunt tasks
     :param iaa_dir: the directory to output the raw IAA data to; if no input default is s_iaa_<directory>
