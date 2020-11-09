@@ -38,7 +38,7 @@ def test_user_highlighting_consensus(config, tmpdir):
 #N users on schema v1 and N users on schema v2--ensure output rows identical
 def test_diff_schemas(config, tmpdir):
     test_path = test_utils.make_test_directory(config, 'test_diff_schemas')
-
+    out_path = test_utils.make_test_directory(config, 'out_test_diff_schemas')
     #Covid_Evidence2020_03_21_copy is a copy with Q13 set to Ordinal, which should be detected as a new schema
     for x in [('jamietest_old', 'Covid_Evidence2020_03_21'), ('jamietest_new', 'Covid_Evidence2020_03_21_copy')]:
         dh = datahunt(out_folder=test_path, source_task_id = x[0])
@@ -52,9 +52,11 @@ def test_diff_schemas(config, tmpdir):
         data_path = config['data_dir']
         schema_path = data_path+'/schemas'
 
-    iaa_out = calc_agreement_directory(test_path, schema_path, config['IAA_config_dir'], test_utils.texts_dir, outDirectory = tmpdir)
+    iaa_out = calc_agreement_directory(test_path, schema_path, config['IAA_config_dir'], test_utils.texts_dir, outDirectory = out_path)
     for root, dir, files in os.walk(iaa_out):
         out_df_old  = pd.read_csv(os.path.join(iaa_out, files[0]), encoding='utf-8')
         out_df_new  = pd.read_csv(os.path.join(iaa_out, files[1]), encoding='utf-8')
+    out_df_new = out_df_new.drop(['schema_sha256', 'namespace'], axis=1)
+    out_df_old = out_df_old.drop(['schema_sha256', 'namespace'], axis=1)
 
     assert out_df_old.equals(out_df_new)
