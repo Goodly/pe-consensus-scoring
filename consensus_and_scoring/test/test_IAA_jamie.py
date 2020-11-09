@@ -21,6 +21,7 @@ def test_user_highlighting_consensus(config, tmpdir):
         fin_path = dh.export()
         data_path = config['data_dir']
         schema_path = data_path+'/schemas'
+        schema_path = config['persistent_test_dir'] +'/schemas'
 
     iaa_out = calc_agreement_directory(test_path, schema_path, config['IAA_config_dir'], test_utils.texts_dir, outDirectory = tmpdir)
     i = 1
@@ -50,7 +51,7 @@ def test_diff_schemas(config, tmpdir):
         dh.add_row({'answer_label': 'T1.Q14.A10', 'namespace': x[1], 'contributor_uuid':'F'})
         fin_path = dh.export()
         data_path = config['data_dir']
-        schema_path = data_path+'/schemas'
+        schema_path = config['persistent_test_dir']+'/schemas'
 
     iaa_out = calc_agreement_directory(test_path, schema_path, config['IAA_config_dir'], test_utils.texts_dir, outDirectory = out_path)
     for root, dir, files in os.walk(iaa_out):
