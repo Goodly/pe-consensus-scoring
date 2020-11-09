@@ -7,8 +7,6 @@ from filegen_utils import *
 from Dependency import *
 import conftest
 
-from consensus_and_scoring.test.filegen_utils import IAA_task
-from consensus_and_scoring.Dependency import eval_dependency
 
 """
 When a child question has a highlight that passes IAA and it's parent normally would have a highlight,
@@ -25,7 +23,7 @@ def test_iaa_child_retains_highlight_if_parent_fails(config):
                  'question_label': 'T1.Q1',
                  'answer_next_questions': 'T1.Q2',
                  'coding_perc_agreement': 1,
-                 'highlighted_indices: []})
+                 'highlighted_indices': []})
     # Child question
     iaa.add_row({'agreed_Answer': 3,
                  'question_Number': 2,
