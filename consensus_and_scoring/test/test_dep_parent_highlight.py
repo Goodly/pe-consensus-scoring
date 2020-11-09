@@ -15,7 +15,12 @@ def test_dep_parent(config):
     all_schema=[ [{"agreed_Answer": 1, "question_Number": 1, "namespace": 'Covid_Probability','highlighted_indices': test_utils.make_highlight_indices(10,30)},{"agreed_Answer": 3, "question_Number": 2, "namespace": 'Covid_Probability'},2],
                  [{"agreed_Answer": 2, "question_Number": 1, "namespace": 'Covid_Languagev1.1','highlighted_indices': test_utils.make_highlight_indices(10,30)},{"agreed_Answer": 3, "question_Number": 3, "namespace": 'Covid_Languagev1.1'},3],
                  [{"agreed_Answer": 4, "question_Number": 15, "namespace": 'Covid_Holisticv1.2','highlighted_indices': test_utils.make_highlight_indices(10, 30)},{"agreed_Answer": 1, "question_Number": 16, "namespace": 'Covid_Holisticv1.2'},16],
-                 [{"agreed_Answer": 1, "question_Number": 2, "namespace": 'Covid_Reasoning','highlighted_indices': test_utils.make_highlight_indices(10, 30)},{"agreed_Answer": 1,
+                 [{"agreed_Answer": 1, "question_Number": 1, "namespace": 'Covid_Evidence2020_03_21',
+                   'highlighted_indices': test_utils.make_highlight_indices(10, 30)},
+                  {"agreed_Answer": 1, "question_Number": 2, "namespace": 'Covid_Evidence2020_03_21',
+                   'highlighted_indices': test_utils.make_highlight_indices(10, 30)},
+                  {"agreed_Answer": 3, "question_Number": 4, "namespace": 'Covid_Evidence2020_03_21'}, 4],
+                 [{"agreed_Answer": 1, "question_Number": 1, "namespace": 'Covid_Reasoning', 'highlighted_indices': test_utils.make_highlight_indices(80, 120)},{"agreed_Answer": 1, "question_Number": 2, "namespace": 'Covid_Reasoning','highlighted_indices': test_utils.make_highlight_indices(10, 30)},{"agreed_Answer": 1,
                                                                                       "question_Number": 7,
                                                                                       "namespace": 'Covid_Reasoning'}, 7]
                  ]
@@ -26,8 +31,9 @@ def test_dep_parent(config):
     for i in all_schema:
         print(i)
         iaa = IAA_task(out_folder=iaa_files_path, source_task_id="auhfdaiughfs")
-        iaa.add_row(i[0])
-        iaa.add_row(i[1])
+        for row in i:
+            if isinstance(row, dict):
+                iaa.add_row(row)
         fin_path = iaa.export()
         data_path = config['data_dir']
         schema_path = data_path + '/schemas'
@@ -40,12 +46,12 @@ def test_dep_parent(config):
                 out_df  = pd.read_csv(os.path.join(outpath, file), encoding='utf-8')
         #9 answer choices to a checklist question
         #This basically works for my first test, child should have parent's highlights if itself doesn't have any but its parent does, thx eric~.
-        assert len(out_df) == 2
-        q_three = out_df[out_df['question_Number']==i[2]]
-        hl = q_three['highlighted_indices'].iloc[0]
-        assert len(hl) >18
-        assert '10' in hl
-        assert '29' in hl
+                #assert len(out_df) == 2
+                q_three = out_df[out_df['question_Number']==i[-1]]
+                hl = q_three['highlighted_indices'].iloc[0]
+                assert len(hl) >18
+                assert '10' in hl
+                assert '29' in hl
 
 
 def test_dep_parent1(config):
