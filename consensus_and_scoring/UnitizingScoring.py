@@ -1,4 +1,4 @@
-import krippendorff
+#import krippendorff
 import numpy as np
 from ThresholdMatrix import evalThresholdMatrix
 
@@ -26,17 +26,18 @@ def scoreAlphaUnitizing(starts,ends,length,numUsers,dFunc,users):
     """takes in iterables starts,and ends as well as length of the document
     and the total number of Users who were asked to annotate
     returns krippendorff unitizing score for the article, """
+    return 0
     matrix = toArray(starts,ends,length,numUsers, users)
-    return scoreAlpha(matrix, distanceFunc = dFunc)
+    #return scoreAlpha(matrix, distanceFunc = dFunc)
 
 def scoreAlpha(answerMatrix, distanceFunc):
     """provides the krippendorff scores
     of the data passed in, distanceFunc should be
     'nominal', 'ordinal', 'interval', 'ratio' or a callable
     """
-
-    return krippendorff.alpha(value_counts = answerMatrix, \
-        level_of_measurement = distanceFunc)
+    return 0
+    #return krippendorff.alpha(value_counts = answerMatrix, \
+    #    level_of_measurement = distanceFunc)
 
 def scorePercentageUnitizing(answerMatrix,length,numUsers):
     """takes in iterables starts,and ends as well as length of the document

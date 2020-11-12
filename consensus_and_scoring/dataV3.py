@@ -622,6 +622,35 @@ def get_type_json(type, ques, config_path):
     out = typing_dict[type][str(ques)]
     return out[0], out[1]
 
+#Input: config_path to a schema csv
+#Returns True if any of the last 3 questions in the schema at config_path are ordinal
+#Can set how many questions to check by the number in df.tail(<#>)
+def schema_has_dist_function(config_path):
+    df = pd.read_csv(config_path)
+    df = df.drop_duplicates('question_label')
+    df = df.tail(3)
+    ordinal_check = df.loc[df['alpha_distance'] == 'ordinal']
+    return not ordinal_check.empty
+
+#Input: ques is an integer question number, config_path is a string to a schema csv
+#Output: question_type and num_choices for the given question in the given schema
+def schema_to_type_and_num(ques, schema_path, config):
+    df = pd.read_csv(schema_path, encoding='utf-8')
+    override = pd.read_csv(config+'schema_override.csv')
+    ques = 'T1.Q' + str(ques)
+    qrows = df.loc[df['question_label'] == ques]
+    q_uuid = qrows['question_uuid'].iloc[0]
+    if len(override[override['question_uuid']==q_uuid])>0:
+        qrows = override[override['question_uuid']==q_uuid]
+    question_type = qrows['question_type'].iloc[0]
+    if question_type == 'CHECKBOX':
+        question_type = "checklist"
+    else:
+        question_type = qrows['alpha_distance'].iloc[0]
+    answer_count = qrows['answer_count'].iloc[0]
+    return question_type, answer_count
+
+
 def get_type_hard(type, ques):
     #ques = parse(ques, 'Q')
     #print('type', type, ques)
@@ -892,6 +921,3 @@ def get_path(fileName):
 def printColumnUniqueVals(data):
     for col in data.columns:
         print("{:30} {:>8}".format("Column: " + col, len(data[col].unique())))
-
-
-

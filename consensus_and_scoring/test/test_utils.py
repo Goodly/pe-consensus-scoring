@@ -69,14 +69,27 @@ def make_schema_namespace_sha256_map():
             sha_256 = df['schema_sha256'].iloc[0]
             namespace = df['namespace'].iloc[0]
             out[namespace] = sha_256
+    test_schema_dir = config['persistent_test_dir']+'/schemas'
+    for root, dir, files in os.walk(test_schema_dir):
+        for file in files:
+            df = pd.read_csv(os.path.join(test_schema_dir, file),encoding='utf-8')
+            sha_256 = df['schema_sha256'].iloc[0]
+            namespace = df['namespace'].iloc[0]
+            out[namespace] = sha_256
     schema_sha_256_map = out
     return out
 
 def get_schema_df(schema_sha256):
     data_path = config['data_dir']
-    schema_dir = data_path+ '/schemas'
-    schema_file_path = os.path.join(schema_dir, schema_sha256+'.csv')
-    schema_df = pd.read_csv(schema_file_path, encoding='utf-8')
+
+    try:
+        schema_dir = data_path + '/schemas'
+        schema_file_path = os.path.join(schema_dir, schema_sha256 + '.csv')
+        schema_df = pd.read_csv(schema_file_path, encoding='utf-8')
+    except FileNotFoundError:
+        schema_dir = config['persistent_test_dir']+'/schemas'
+        schema_file_path = os.path.join(schema_dir, schema_sha256 + '.csv')
+        schema_df = pd.read_csv(schema_file_path, encoding='utf-8')
     return schema_df
 def get_schema_data(schema_sha256, question, answer):
 

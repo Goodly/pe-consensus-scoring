@@ -110,7 +110,7 @@ def calc_scores(highlightfilename, config_path,  texts_path, repCSV=None, schema
         #has to be sorted for questions depending on each other to be handled correctly
         for ques in sorted(questions):  # Iterates through each question in an article
 
-            agreements = score(task, ques, uberDict, config_path, text_file, repDF, useRep=useRep, threshold_func=threshold_func)
+            agreements = score(task, ques, uberDict, config_path, text_file, schemaFile, repDF, useRep=useRep, threshold_func=threshold_func)
             question_text = get_question_text(uberDict, task, ques)
             # if it's a list then it was a checklist question
 
@@ -200,7 +200,7 @@ def adjustForJson(units):
     out+=']'
     return out
 
-def score(article, ques, data, config_path, text_file, repDF = None,   useRep = False, threshold_func = 'logis_0'):
+def score(article, ques, data, config_path, text_file, schemaFile, repDF = None,   useRep = False, threshold_func = 'logis_0'):
     """calculates the relevant scores for the article
     returns a tuple (question answer most chosen, units passing the threshold,
         the Unitizing Score of the users who highlighted something that passed threshold, the unitizing score
@@ -225,11 +225,13 @@ def score(article, ques, data, config_path, text_file, repDF = None,   useRep = 
         hlUsers = []
         hlAns = []
 
-    question_type = get_question_type(data, article, ques)
 
     schema = get_schema_topic(data, article)
-    question_type, num_choices = get_type_json(schema, ques, config_path)
-    num_choices = get_question_numchoices(data, article, ques)
+    if schema_has_dist_function(schemaFile):
+        question_type, num_choices = schema_to_type_and_num(ques, schemaFile, config_path)
+    else:
+        question_type, num_choices = get_type_json(schema, ques, config_path)
+
 
     answers = get_question_answers(data, article, ques)
     users =get_question_userid(data, article, ques)
@@ -302,13 +304,13 @@ def get_answer_data(schema_sha, topic, question, answer, schema_file):
 
 if __name__ == '__main__':
     config_path = './config/'
-    input_dir = '../test_data/test_test_iaa_evi_q5/'
+    input_dir = '../test_data/test_diff_schemas/'
     #input_dir = '../data/dh1'
-    texts_dir = '../data/texts/'
+    texts_dir = '../test_data/texts/'
     metadata_dir = '../data/metadata/'
     tua_dir = '../data/tags/'
     schema_dir = '../data/schemas/'
     # output
-    iaa_output_dir = '../data/out_iaa/'
+    iaa_output_dir = make_directory('../test_data/out_test_diff_schemas/')
     calc_agreement_directory(input_dir, schema_dir, config_path, texts_dir, repCSV=None, outDirectory=iaa_output_dir,
                                  useRep=False, threshold_func='raw_30')
