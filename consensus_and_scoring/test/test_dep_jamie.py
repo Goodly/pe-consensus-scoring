@@ -60,7 +60,7 @@ def test_bad_parent(config):
     iaa_files_path = test_utils.make_test_directory(config, 'dep_bad_dad')
     out_path = test_utils.make_test_directory(config, 'dep_bad_dad_out')
 
-    parents = {1:[2], 2:[3,4,5,7,8], 5:[6], 9:[10,11]}
+    parents = {1:[2], 2:[3,4,5], 5:[6], 9:[10,11]}
     childNumAnswers = {2:9, 3:1, 4:6, 5:5, 6:3, 7:1, 8:5, 10:5, 11:5}
     for parent in parents:
         iaa = IAA_task(out_folder=iaa_files_path, source_task_id='gru' + str(parent))
