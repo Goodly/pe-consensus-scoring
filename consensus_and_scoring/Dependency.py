@@ -4,6 +4,7 @@ import numpy as np
 import os
 import json
 from dataV3 import *
+from AgreementScoring import *
 
 def eval_dependency(directory, iaa_dir, schema_dir, out_dir):
     print("DEPENDENCY STARTING")
@@ -131,6 +132,8 @@ def handleDependencies(schemaPath, iaaPath, out_dir):
                     row_indices = get_indices_hard(iaaData.at[row, 'highlighted_indices'])
                     indices = merge_indices(row_indices, indices).tolist()
                     iaaData.at[row, 'highlighted_indices'] = json.dumps(indices)
+
+    iaaData = AgreementScore(iaaData, schemaPath)
 
     print('exporting to csv')
     path, name = get_path(iaaPath)
