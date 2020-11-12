@@ -39,25 +39,33 @@ def test_user_highlighting_consensus(config, tmpdir):
 #N users on schema v1 and N users on schema v2--ensure output rows identical
 def test_diff_schemas(config, tmpdir):
     test_path = test_utils.make_test_directory(config, 'test_diff_schemas')
-    out_path = test_utils.make_test_directory(config, 'out_test_diff_schemas')
+    out_path = test_utils.make_test_directory(config, 'test_diff_schemas_out')
     #Covid_Evidence2020_03_21_copy is a copy with Q13 set to Ordinal, which should be detected as a new schema
     for x in [('jamietest_old', 'Covid_Evidence2020_03_21'), ('jamietest_new', 'Covid_Evidence2020_03_21_copy')]:
         dh = datahunt(out_folder=test_path, source_task_id = x[0])
         dh.add_row({'answer_label': 'T1.Q1.A1', 'namespace': x[1], 'contributor_uuid':'A'})
-        dh.add_row({'answer_label': 'T1.Q1.A3', 'namespace': x[1], 'contributor_uuid':'B'})
-        dh.add_row({'answer_label': 'T1.Q3.A1', 'namespace': x[1], 'contributor_uuid':'C'})
-        dh.add_row({'answer_label': 'T1.Q14.A1', 'namespace': x[1], 'contributor_uuid':'D'})
-        dh.add_row({'answer_label': 'T1.Q14.A10', 'namespace': x[1], 'contributor_uuid':'E'})
-        dh.add_row({'answer_label': 'T1.Q14.A10', 'namespace': x[1], 'contributor_uuid':'F'})
+        dh.add_row({'answer_label': 'T1.Q1.A2', 'namespace': x[1], 'contributor_uuid':'A'})
+        dh.add_row({'answer_label': 'T1.Q1.A2', 'namespace': x[1], 'contributor_uuid':'B'})
+        dh.add_row({'answer_label': 'T1.Q1.A3', 'namespace': x[1], 'contributor_uuid':'A'})
+        dh.add_row({'answer_label': 'T1.Q2.A1', 'namespace': x[1], 'contributor_uuid':'A'})
+        dh.add_row({'answer_label': 'T1.Q2.A2', 'namespace': x[1], 'contributor_uuid':'A'})
+        dh.add_row({'answer_label': 'T1.Q2.A8', 'namespace': x[1], 'contributor_uuid':'A'})
+        dh.add_row({'answer_label': 'T1.Q2.A7', 'namespace': x[1], 'contributor_uuid':'B'})
+        dh.add_row({'answer_label': 'T1.Q2.A8', 'namespace': x[1], 'contributor_uuid':'B'})
+        dh.add_row({'answer_label': 'T1.Q3.A1', 'namespace': x[1], 'contributor_uuid':'A'})
         fin_path = dh.export()
         data_path = config['data_dir']
         schema_path = config['persistent_test_dir']+'/schemas'
 
     iaa_out = calc_agreement_directory(test_path, schema_path, config['IAA_config_dir'], test_utils.texts_dir, outDirectory = out_path)
     for root, dir, files in os.walk(iaa_out):
-        out_df_old  = pd.read_csv(os.path.join(iaa_out, files[0]), encoding='utf-8')
-        out_df_new  = pd.read_csv(os.path.join(iaa_out, files[1]), encoding='utf-8')
-    out_df_new = out_df_new.drop(['schema_sha256', 'namespace'], axis=1)
-    out_df_old = out_df_old.drop(['schema_sha256', 'namespace'], axis=1)
+        out_df_old  = pd.read_csv(os.path.join(iaa_out, 'DataHunt_jamietest_old.IAA-Default-Tags.csv'), encoding='utf-8')
+        out_df_new  = pd.read_csv(os.path.join(iaa_out, 'DataHunt_jamietest_new.IAA-Default-Tags.csv'), encoding='utf-8')
 
-    assert out_df_old.equals(out_df_new)
+    assert out_df_old.equals(out_df_new) == False
+
+    schema_columns = ['article_sha256', 'article_id', 'schema_sha256', 'namespace']
+    out_df_old = out_df_old.drop(schema_columns, axis=1)
+    out_df_new = out_df_new.drop(schema_columns, axis=1)
+
+    assert out_df_old.equals(out_df_new) == True
