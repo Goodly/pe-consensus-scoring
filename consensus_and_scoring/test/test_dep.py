@@ -27,6 +27,7 @@ def test_dep_sample(config):
             #should be only 1 file for this case, so just run it on the only one
             # if there's more than 1 then you can get fancy
             out_df  = pd.read_csv(os.path.join(out_path, file), encoding='utf-8')
+
     #9 answer choices to a checklist question
     assert len(out_df) == 2
     q_three = out_df[out_df['question_Number']==2]
@@ -34,3 +35,4 @@ def test_dep_sample(config):
     assert len(hl) >18
     assert '10' in hl
     assert '29' in hl
+
