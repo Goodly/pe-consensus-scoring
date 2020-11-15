@@ -53,12 +53,13 @@ button_three.onclick = function() {
 </script>
 <style>
 .hide {
-  display: none;
+  opacity: 0;
+  max-height: 0;
 }
 .button_one {
   border-radius: 12px;
   margin: 5px;
-  background-color: #008CBA;
+  background-color: #ffb400;
   color: white;
   text-align: center;
   display: inline-block;
@@ -66,12 +67,17 @@ button_three.onclick = function() {
   opacity: 1;
   font-family: 'Lato', sans-serif;
   border: none;
+  width: 94%;
+
 }
 .button_one:hover + .hide {
+  transition: opacity 2s, max-height 1s;
+  opacity: 1;
+  max-height: 500px;
   margin: 5px;
-  font-family: 'Lato', sans-serif;
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
   display: block;
-  color: #008CBA;
+  color: #323648;
 }
 
 .button_two {
@@ -79,18 +85,22 @@ button_three.onclick = function() {
   margin: 5px;
   font-family: 'Lato', sans-serif;
   border: none;
-  background-color: #008CBA;
+  background-color: #76bce2;
   color: white;
   text-align: center;
   display: inline-block;
   font-size: 16px;
   opacity: 0.6;
+  width: 94%;
 }
 .button_two:hover + .hide {
+  transition: opacity 2s, max-height 1s;
+  opacity: 1;
+  max-height: 500px;
   margin: 5px;
-  font-family: 'Lato', sans-serif;
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
   display: block;
-  color: #008CBA;
+  color: #323648;
 }
 
 .button_three {
@@ -98,18 +108,23 @@ button_three.onclick = function() {
   margin: 5px;
   border: none;
   font-family: 'Lato', sans-serif;
-  background-color: #008CBA;
+  background-color: #57c1ae;
   color: white;
   text-align: center;
   display: inline-block;
   font-size: 16px;
   opacity: 0.6;
+  width: 94%;
+
 }
 .button_three:hover + .hide {
+  transition: opacity 2s, max-height 1s;
+  opacity: 1;
+  max-height: 500px;
   margin: 5px;
-  font-family: 'Lato', sans-serif;
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
   display: block;
-  color: #008CBA;
+  color: #323648;
 }
 
 .dropbtn {
@@ -117,9 +132,10 @@ button_three.onclick = function() {
   background-color: #4d61b3;
   color: white;
   padding: 16px;
-  font-size: 16px;
+  font-size: 18px;
   border: none;
-  font-family: 'Lato', sans-serif;
+  font-family: 'Raleway';
+  width: 160px;
 }
 
 .dropdown {
