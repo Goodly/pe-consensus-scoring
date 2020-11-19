@@ -1,4 +1,5 @@
 from CodingScoring import *
+from AgreementScoring import highlightAgreementScore
 #from repScores import *
 
 def scoreChecklist(answers,numUsers, num_choices):
@@ -50,8 +51,11 @@ def evaluateChecklist(answers, users, starts, ends, numUsers, length, repDF,sour
                                                         weightScaledNumUsers, userWeightDict, sourceText, useRep=useRep,
                                                         threshold_func = threshold_func)
         firstSecondDiff = 1 - codingScore
+
+        print("STARTS:",starts,"ENDS:",ends)
+        hlAgreeFactor = highlightAgreementScore(starts, ends)
+        #out.append(hlAgreeFactor)
         out.append([winner,units,uScore,iScore, codingScore, numUsers, selectedText, firstSecondDiff, 'checklist', num_choices])
         #do_rep_calculation_nominal(users, answers, out[0], units, starts, ends, length, repDF,last30, checkListScale=(1/num_choices))
 
     return out
-
