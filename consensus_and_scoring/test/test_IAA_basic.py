@@ -19,10 +19,11 @@ def test_iaa_constructor(config, tmpdir):
     # dh.add_row({'answer_label': 'T1.Q1.A2', 'namespace': 'Covid_Evidence2020_03_21', 'contributor_uuid':'C', 'start_pos':1, 'end_pos':4})
     # dh.add_row({'answer_label': 'T1.Q2.A2', 'namespace': 'Covid_Evidence2020_03_21', 'contributor_uuid':'D', 'start_pos':1, 'end_pos':4})
 
-    dh.add_row({'answer_label': 'T1.Q1.A1', 'namespace': 'Covid_Evidence2020_03_21', 'contributor_uuid':'A', 'highlight_count':3, 'start_pos':1, 'end_pos':4})
-    dh.add_row({'answer_label': 'T1.Q1.A1', 'namespace': 'Covid_Evidence2020_03_21', 'contributor_uuid':'B', 'highlight_count':3, 'start_pos':1, 'end_pos':4})
-    dh.add_row({'answer_label': 'T1.Q1.A2', 'namespace': 'Covid_Evidence2020_03_21', 'contributor_uuid':'C', 'highlight_count':3, 'start_pos':1, 'end_pos':4})
-    dh.add_row({'answer_label': 'T1.Q2.A2', 'namespace': 'Covid_Evidence2020_03_21', 'contributor_uuid':'D', 'highlight_count':3, 'start_pos':1, 'end_pos':4})
+    dh.add_row({'answer_label': 'T1.Q1.A1', 'namespace': 'Covid_Evidence2020_03_21', 'contributor_uuid':'A', 'highlight_count':3, 'start_pos':1, 'end_pos':10, 'article_text_length': 100})
+    dh.add_row({'answer_label': 'T1.Q1.A1', 'namespace': 'Covid_Evidence2020_03_21', 'contributor_uuid':'B', 'highlight_count':3, 'start_pos':1, 'end_pos':10, 'article_text_length': 100})
+    dh.add_row({'answer_label': 'T1.Q1.A2', 'namespace': 'Covid_Evidence2020_03_21', 'contributor_uuid':'C', 'highlight_count':3, 'start_pos':1, 'end_pos':10, 'article_text_length': 100})
+    dh.add_row({'answer_label': 'T1.Q1.A2', 'namespace': 'Covid_Evidence2020_03_21', 'contributor_uuid':'D', 'highlight_count':3, 'start_pos':1, 'end_pos':10, 'article_text_length': 100})
+    dh.add_row({'answer_label': 'T1.Q2.A2', 'namespace': 'Covid_Evidence2020_03_21', 'contributor_uuid':'D', 'highlight_count':3, 'start_pos':1, 'end_pos':10, 'article_text_length': 100})
 
     fin_path = dh.export()
     data_path = config['data_dir']
@@ -35,3 +36,4 @@ def test_iaa_constructor(config, tmpdir):
             #should be only 1 file for this case, so just run it on the only one
             # if there's more than 1 then you can get fancy
             out_df  = pd.read_csv(os.path.join(iaa_out, file), encoding='utf-8')
+            print(out_df[['question_Number', 'agreed_Answer', 'agreement_score']])

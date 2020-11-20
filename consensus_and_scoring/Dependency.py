@@ -15,7 +15,7 @@ def eval_dependency(directory, iaa_dir, schema_dir, out_dir):
             # minimal check here; everything in the schema directory should be a schema csv
             if file.endswith('.csv'):
                 file_path = os.path.join(dirpath, file)
-                print("found schema " + file_path)
+                #print("found schema " + file_path)
                 schema.append(file_path)
     print("looking for IAA", iaa_dir)
     for dirpath, dirnames, files in os.walk(iaa_dir):

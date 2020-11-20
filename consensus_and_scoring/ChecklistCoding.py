@@ -2,7 +2,7 @@ from CodingScoring import *
 from AgreementScoring import highlightAgreementScore
 #from repScores import *
 
-def scoreChecklist(answers,numUsers, num_choices):
+def scoreChecklist(answers,numUsers, num_choices, starts, ends):
     out = []
     #print('answers', answers, num_choices)
     length = num_choices+1
@@ -11,9 +11,26 @@ def scoreChecklist(answers,numUsers, num_choices):
     scores = np.zeros(length)
     for a in answers:
         scores[a] = scores[a]+1
+
+    starts_i = {}
+    ends_i = {}
+    for i in range(len(answers)):
+        a = answers[i]
+        if a not in starts_i:
+            starts_i[a] = [starts[i]]
+            ends_i[a] = [ends[i]]
+        else:
+            starts_i[a] += [starts[i]]
+            ends_i[a] += [ends[i]]
+    print(starts_i, ends_i)
+
     for i in range(len(scores)):
         #print('scores', scores, numUsers)
-        out.append(scores[i]/numUsers)
+        hlAgreeFactor = 1
+        if i in starts_i:
+            hlAgreeFactor = highlightAgreementScore(starts_i[i], ends_i[i])
+        out.append(scores[i]/numUsers * hlAgreeFactor)
+
     return out
 
 def evaluateChecklist(answers, users, starts, ends, numUsers, length, repDF,sourceText, hlUsers, hlAns,
@@ -22,7 +39,7 @@ def evaluateChecklist(answers, users, starts, ends, numUsers, length, repDF,sour
     repScaledAnswers, repScaledUsers = repScaleAnsUsers(answers, users, repDF, useRep=useRep)
     #assert len(starts) == len(users), 'starts, users mismatched'
     #TODO: scale numUsers when repScaled gets scaled up
-    percArray = scoreChecklist(repScaledAnswers, numUsers, num_choices)
+    percArray = scoreChecklist(repScaledAnswers, numUsers, num_choices, starts, ends)
     out = []
     for i in range(1,len(percArray)):
         codingScore = percArray[i]
@@ -51,10 +68,6 @@ def evaluateChecklist(answers, users, starts, ends, numUsers, length, repDF,sour
                                                         weightScaledNumUsers, userWeightDict, sourceText, useRep=useRep,
                                                         threshold_func = threshold_func)
         firstSecondDiff = 1 - codingScore
-
-        print("STARTS:",starts,"ENDS:",ends)
-        hlAgreeFactor = highlightAgreementScore(starts, ends)
-        #out.append(hlAgreeFactor)
         out.append([winner,units,uScore,iScore, codingScore, numUsers, selectedText, firstSecondDiff, 'checklist', num_choices])
         #do_rep_calculation_nominal(users, answers, out[0], units, starts, ends, length, repDF,last30, checkListScale=(1/num_choices))
 
