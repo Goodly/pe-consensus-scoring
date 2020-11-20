@@ -1,7 +1,7 @@
 from filegen_utils import IAA_task
 import pytest
 import json
-
+import os
 
 @pytest.fixture
 def make_task_demo(tmpdir):
@@ -21,4 +21,10 @@ def config():
 #this can be passed into many other fixtures
 
 @pytest.fixture
-def test_dir():
+def test_dir(config):
+    directory = config['test_dir']
+    try:
+        os.mkdir(directory)
+    except FileExistsError:
+        pass
+    return directory
