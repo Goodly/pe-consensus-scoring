@@ -19,3 +19,6 @@ def config():
         data = json.load(json_file)
     return data
 #this can be passed into many other fixtures
+
+@pytest.fixture
+def test_dir():
