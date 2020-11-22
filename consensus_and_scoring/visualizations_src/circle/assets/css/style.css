@@ -1,0 +1,112 @@
+
+/* Loader four: Spin */
+.loader.four .rings {
+	position: relative;
+	width: 200px;
+	height: 200px;
+}
+
+.loader.four .ring {
+	width: 100%;
+	height: 100%;
+	border-radius: 50%;
+
+	top: 50%; left: 50%;
+	overflow: hidden;
+}
+
+.loader.four .ring .mask {
+	display: flex;
+	justify-content: center;
+	width: 93%;
+	height: 93%;
+	border-radius: 50%;
+	position: absolute;
+	top: 50%; left: 50%;
+	transform: translate(-50%, -50%);
+	/* color of circle itself */
+	background: #E5F1F7;
+
+	font-family: "Lato", sans-serif;
+}
+.loader.four .ring .mask:hover {
+	background: #d1dce2;
+}
+
+.loader.four .ring .arc-container {
+	width: 80%;
+	height: 100%;
+	position: absolute;
+	left: 10%;
+	overflow: hidden;
+	transform-origin: 50% 50%;
+	/*
+	animation: spin 3s;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+	*/
+}
+
+.loader.four .ring.one .arc-container {
+	border-radius: 150px;
+}
+
+.loader.four .ring .arc {
+	width: 100%;
+	height: 50%;
+	position: absolute;
+	/* Color of the wheel position */
+	/* Consider 3 colors, for pos_1, pos_2 and pos_3*/
+	
+	background: #10D4C6;
+	/*
+	animation: colorChange 3s infinite;
+	animation-timing-function: linear;
+	*/
+}
+
+/* hovering over ring with the outer circle */
+
+/*
+.ring.one:hover {
+	background-color: #E5F1F7;
+}
+*/
+
+/*If hover over the ring, change the toolbox's css */
+.rings:hover > .tooltip {
+
+	animation: 1s fadeIn;
+	animation-fill-mode: forwards;
+
+}
+
+
+
+.tool-title {
+	color: black;
+}
+
+
+.tooltip {
+	height: 500px;
+	/* width should should or be a little smaller than the width of the .loader.four .rings */
+	width: 200px;
+	opacity: 0;
+	background: black;
+}
+
+.tool-desc {
+	color: white;
+	font-family: "Lato", sans-serif;
+}
+
+
+@keyframes fadeIn {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
