@@ -261,12 +261,9 @@ def score(article, ques, data, config_path, text_file, schemaFile, repDF = None,
         #e.g. starts_i = {1: [5, 5]} means Answer 1 for this question has two users start highlights on index 5
         for i in range(len(answers)):
             a = answers[i]
-            try:
-                if a not in starts_i:
-                    starts_i[a] = [starts[i]]
-                    ends_i[a] = [ends[i]]
-            except:
-                print("ERROR", a, i)
+            if a not in starts_i:
+                starts_i[a] = [starts[i]]
+                ends_i[a] = [ends[i]]
             else:
                 starts_i[a] += [starts[i]]
                 ends_i[a] += [ends[i]]
