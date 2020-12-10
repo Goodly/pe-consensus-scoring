@@ -252,6 +252,43 @@ def score(article, ques, data, config_path, text_file, schemaFile, repDF = None,
     elif question_type == 'checklist':
         out = evaluateChecklist(answers, users, starts, ends, numUsers, length, repDF, sourceText, hlUsers, hlAns,
                                 num_choices = num_choices, useRep=useRep, threshold_func = threshold_func)
+
+    #Only change agreement score by highlights if highlights exist
+    if (isinstance(starts, list) and len(answers) == len(starts) and len(starts) == len(ends)):
+        starts_i = {}
+        ends_i = {}
+        #For this question, map all answers to their starting and ending highlights
+        #e.g. starts_i = {1: [5, 5]} means Answer 1 for this question has two users start highlights on index 5
+        for i in range(len(answers)):
+            a = answers[i]
+            try:
+                if a not in starts_i:
+                    starts_i[a] = [starts[i]]
+                    ends_i[a] = [ends[i]]
+            except:
+                print("ERROR", a, i)
+            else:
+                starts_i[a] += [starts[i]]
+                ends_i[a] += [ends[i]]
+        print("Question", ques, "{Answer:Highlight_Starts}:", starts_i, "{Answer:Highlight_Ends}:", ends_i)
+        #Change each answer's agreement score based on the answer's highlighting agreement
+        if question_type == 'checklist':
+            for stuff in out:
+                ans_num = stuff[0]
+                old_ag_score = stuff[4]
+                if ans_num in starts_i:
+                    hlAgreeFactor = highlightAgreementScore(starts_i[ans_num], ends_i[ans_num])
+                    print("Agreement Score transformed from", old_ag_score, "to", old_ag_score * hlAgreeFactor,"\n")
+                    stuff[4] = old_ag_score * hlAgreeFactor
+        else:
+            ans_num = out[0]
+            old_ag_score = out[4]
+            if ans_num in starts_i:
+                hlAgreeFactor = highlightAgreementScore(starts_i[ans_num], ends_i[ans_num])
+                print("Agreement Score transformed from", old_ag_score, "to", old_ag_score * hlAgreeFactor,"\n")
+                temp_out = list(out)
+                temp_out[4] = old_ag_score * hlAgreeFactor
+                out = tuple(temp_out)
     return out
 
 

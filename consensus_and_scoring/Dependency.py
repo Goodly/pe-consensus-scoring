@@ -133,7 +133,7 @@ def handleDependencies(schemaPath, iaaPath, out_dir):
                     indices = merge_indices(row_indices, indices).tolist()
                     iaaData.at[row, 'highlighted_indices'] = json.dumps(indices)
 
-    iaaData = AgreementScore(iaaData, schemaPath)
+    iaaData = parentAgreementScore(iaaData, schemaPath)
 
     print('exporting to csv')
     path, name = get_path(iaaPath)
