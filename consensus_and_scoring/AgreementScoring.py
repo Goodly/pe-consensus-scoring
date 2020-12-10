@@ -32,14 +32,14 @@ def highlightAgreementScore(starts, ends, weight=1, use=True):
         #print("Highlights for Annotator " + str(i+1) + ": ", highlights)
         coders.append(highlights)
 
-    #Formats the codes properly as (coder,item,label) tuples
+    #Formats the codes properly as (coder,item,label) tuples (required by avg_Ao)
     formatted_codes = []
     for annotator_num in range(len(coders)):
         coder = coders[annotator_num]
         formatted_codes += [[annotator_num+1, ind, coder[ind]] for ind in range(len(coder))]
     ratingtask = agreement.AnnotationTask(data=formatted_codes)
 
-    #Return the average agreement score of all highlights
+    #Return the weighted average agreement score of all highlights
     avgAg = ratingtask.avg_Ao()
     weighted_avgAg = 1 - ((1 - avgAg) * weight)
     print('Average Pairwise Agreement: ' + str(avgAg) + ', Weighted: ' + str(weighted_avgAg))
@@ -54,14 +54,21 @@ def parentAgreementScore(iaaData, schemaPath, weight=1, use=True):
     print("PARENT AGREEMENT SCORING TIME!!!")
     print("OLD AGREEMENT SCORES:")
     print(iaaData[['question_Number', 'agreed_Answer', 'agreement_score']])
+
+    #Get a dictionary of children and parents
     schemData = pd.read_csv(schemaPath, encoding = 'utf-8')
     dependencies = create_dependencies_dict(schemData)
     iaaQuestions = iaaData['question_Number'].tolist()
+
+    #For each child, if present in the iaaData, calculate a new agreement score
     for child in dependencies.keys():
         if child not in iaaQuestions:
             continue
         parents = dependencies[child].keys()
+
         #TODO: clean this bit up?
+        #Children can have multiple parent questions that each can have multiple parent answers
+        #For each parent question, assign each parent answer score to parentScores, then append the mean score to temp
         temp = []
         for parent in parents:
             answers = dependencies[child][parent]
