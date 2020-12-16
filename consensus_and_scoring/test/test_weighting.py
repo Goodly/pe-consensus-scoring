@@ -6,10 +6,10 @@ import test_utils
 from filegen_utils import *
 from Weighting import *
 
-
+weight_path = '../config/weight_key.csv'
 def test_weighting_sample(config):
-    out_path = test_utils.make_test_directory(config, 'weighting_iaa_sample_test')
-    weight_out_folder = test_utils.make_test_directory(config, 'out_weighting_iaa_sample_test')
+    out_path = test_utils.make_test_directory(config, 'weighting_sample_test')
+    weight_out_folder = test_utils.make_test_directory(config, 'out_weighting_sample_test')
 
     iaa = dep_iaa(out_folder=out_path, source_task_id='weightsampletests')
     #-.5 points--from the weight key in config folder and the agreement_score
@@ -34,11 +34,10 @@ def test_weighting_sample(config):
 
 def test_language_weighting(config):
     #Import the csv containing the weights for each question
-    weight_df = pd.read_csv('../config/weight_key.csv')
+    weight_df = pd.read_csv(weight_path)
 
     #Set up paths for test data to be stored at
-    out_path = test_utils.make_test_directory(config, 'language_calculation_test')
-    weight_out_folder = test_utils.make_test_directory(config, 'language_calculation_test_weighting')
+    out_path = test_utils.make_test_directory(config, 'weighting_language_calculation_test')
     iaa = dep_iaa(out_folder=out_path, source_task_id='languageweights')
 
     #Generate an IAA with random agreement scores for each question and answer in the schema
@@ -51,7 +50,7 @@ def test_language_weighting(config):
 
     #Export the data as a dataframe
     fin_path = iaa.export()
-    weighting_out = launch_Weighting(out_path, weight_out_folder)
+    weighting_out = launch_Weighting(out_path)
 
     #Check that weights (point_recs) * agreement_scores = adjusted_scores
     assert weight_df.shape[0] == weighting_out.shape[0]
@@ -66,10 +65,9 @@ def test_language_weighting(config):
     print()
 
 def test_reasoning_weighting(config):
-    weight_df = pd.read_csv('../config/weight_key.csv')
+    weight_df = pd.read_csv(weight_path)
 
-    out_path = test_utils.make_test_directory(config, 'reasoning_calculation_test')
-    weight_out_folder = test_utils.make_test_directory(config, 'reasoning_calculation_test_weighting')
+    out_path = test_utils.make_test_directory(config, 'weighting_reasoning_calculation_test')
     iaa = dep_iaa(out_folder=out_path, source_task_id='reasoningweights')
 
     weight_df = weight_df[weight_df['Schema'] == 'Reasoning']
@@ -80,7 +78,7 @@ def test_reasoning_weighting(config):
         iaa.add_row({"namespace":"Covid_Reasoning", "agreed_Answer": answer_num, "question_Number": question_num, "agreement_score": agree_score})
 
     fin_path = iaa.export()
-    weighting_out = launch_Weighting(out_path, weight_out_folder)
+    weighting_out = launch_Weighting(out_path)
 
     assert weight_df.shape[0] == weighting_out.shape[0]
     point_recs = weight_df['Point_Recommendation'].to_numpy()
@@ -94,10 +92,9 @@ def test_reasoning_weighting(config):
     print()
 
 def test_evidence_weighting(config):
-    weight_df = pd.read_csv('../config/weight_key.csv')
+    weight_df = pd.read_csv(weight_path)
 
-    out_path = test_utils.make_test_directory(config, 'evidence_calculation_test')
-    weight_out_folder = test_utils.make_test_directory(config, 'evidence_calculation_test_weighting')
+    out_path = test_utils.make_test_directory(config, 'weighting_evidence_calculation_test')
     iaa = dep_iaa(out_folder=out_path, source_task_id='evidenceweights')
 
     weight_df = weight_df[weight_df['Schema'] == 'Evidence']
@@ -108,7 +105,7 @@ def test_evidence_weighting(config):
         iaa.add_row({"namespace":"Covid_Evidence2020_03_21", "agreed_Answer": answer_num, "question_Number": question_num, "agreement_score": agree_score})
 
     fin_path = iaa.export()
-    weighting_out = launch_Weighting(out_path, weight_out_folder)
+    weighting_out = launch_Weighting(out_path)
 
     assert weight_df.shape[0] == weighting_out.shape[0]
     point_recs = weight_df['Point_Recommendation'].to_numpy()
@@ -122,10 +119,9 @@ def test_evidence_weighting(config):
     print()
 
 def test_probability_weighting(config):
-    weight_df = pd.read_csv('../config/weight_key.csv')
+    weight_df = pd.read_csv(weight_path)
 
-    out_path = test_utils.make_test_directory(config, 'probability_calculation_test')
-    weight_out_folder = test_utils.make_test_directory(config, 'probability_calculation_test_weighting')
+    out_path = test_utils.make_test_directory(config, 'weighting_probability_calculation_test')
     iaa = dep_iaa(out_folder=out_path, source_task_id='probabilityweights')
 
     weight_df = weight_df[weight_df['Schema'] == 'Probability']
@@ -136,7 +132,7 @@ def test_probability_weighting(config):
         iaa.add_row({"namespace":"Covid_Probability", "agreed_Answer": answer_num, "question_Number": question_num, "agreement_score": agree_score})
 
     fin_path = iaa.export()
-    weighting_out = launch_Weighting(out_path, weight_out_folder)
+    weighting_out = launch_Weighting(out_path)
 
     assert weight_df.shape[0] == weighting_out.shape[0]
     point_recs = weight_df['Point_Recommendation'].to_numpy()
@@ -154,12 +150,11 @@ def test_probability_weighting(config):
 
 def test_random_language(config):
     #Import the csv containing the weights for each question
-    weight_df = pd.read_csv('../config/weight_key.csv')
+    weight_df = pd.read_csv(weight_path)
     weight_df = weight_df[weight_df['Schema'] == 'Language']
 
     #Set up paths for test data to be stored at
-    out_path = test_utils.make_test_directory(config, 'language_random_test')
-    weight_out_folder = test_utils.make_test_directory(config, 'language_random_test_weighting')
+    out_path = test_utils.make_test_directory(config, 'weighting_language_random_test')
 
     #Create IAA file with 3 random rows with agreement scores of 1
     iaa = dep_iaa(out_folder=out_path, source_task_id='3random')
@@ -171,7 +166,7 @@ def test_random_language(config):
 
     #Export the data as a dataframe and check if all 3 rows have the correct adjusted weight
     fin_path = iaa.export()
-    weighting_out = launch_Weighting(out_path, weight_out_folder)
+    weighting_out = launch_Weighting(out_path)
     assert weighting_out.shape[0] == 3
     for index, row in weighting_out.iterrows():
         question_num = row['Question_Number']
@@ -182,10 +177,9 @@ def test_random_language(config):
         print("language random row",index+1,"checks out")
 
 def test_random_reasoning(config):
-    weight_df = pd.read_csv('../config/weight_key.csv')
+    weight_df = pd.read_csv(weight_path)
     weight_df = weight_df[weight_df['Schema'] == 'Reasoning']
-    out_path = test_utils.make_test_directory(config, 'reasoning_random_test')
-    weight_out_folder = test_utils.make_test_directory(config, 'reasoning_random_test_weighting')
+    out_path = test_utils.make_test_directory(config, 'weighting_reasoning_random_test')
     iaa = dep_iaa(out_folder=out_path, source_task_id='3random')
     sample_df = weight_df.sample(3)
     for index, row in sample_df.iterrows():
@@ -193,7 +187,7 @@ def test_random_reasoning(config):
         answer_num = row['Answer_Number']
         iaa.add_row({"namespace":"Covid_Reasoning", "agreed_Answer": answer_num, "question_Number": question_num, "agreement_score": 1})
     fin_path = iaa.export()
-    weighting_out = launch_Weighting(out_path, weight_out_folder)
+    weighting_out = launch_Weighting(out_path)
     assert weighting_out.shape[0] == 3
     for index, row in weighting_out.iterrows():
         question_num = row['Question_Number']
@@ -204,10 +198,9 @@ def test_random_reasoning(config):
         print("reasoning random row",index+1,"checks out")
 
 def test_random_evidence(config):
-    weight_df = pd.read_csv('../config/weight_key.csv')
+    weight_df = pd.read_csv(weight_path)
     weight_df = weight_df[weight_df['Schema'] == 'Evidence']
-    out_path = test_utils.make_test_directory(config, 'evidence_random_test')
-    weight_out_folder = test_utils.make_test_directory(config, 'evidence_random_test_weighting')
+    out_path = test_utils.make_test_directory(config, 'weighting_evidence_random_test')
     iaa = dep_iaa(out_folder=out_path, source_task_id='3random')
     sample_df = weight_df.sample(3)
     for index, row in sample_df.iterrows():
@@ -215,7 +208,7 @@ def test_random_evidence(config):
         answer_num = row['Answer_Number']
         iaa.add_row({"namespace":"Covid_Evidence2020_03_21", "agreed_Answer": answer_num, "question_Number": question_num, "agreement_score": 1})
     fin_path = iaa.export()
-    weighting_out = launch_Weighting(out_path, weight_out_folder)
+    weighting_out = launch_Weighting(out_path)
     assert weighting_out.shape[0] == 3
     for index, row in weighting_out.iterrows():
         question_num = row['Question_Number']
@@ -226,10 +219,9 @@ def test_random_evidence(config):
         print("evidence random row",index+1,"checks out")
 
 def test_random_probability(config):
-    weight_df = pd.read_csv('../config/weight_key.csv')
+    weight_df = pd.read_csv(weight_path)
     weight_df = weight_df[weight_df['Schema'] == 'Probability']
-    out_path = test_utils.make_test_directory(config, 'probability_random_test')
-    weight_out_folder = test_utils.make_test_directory(config, 'probability_random_test_weighting')
+    out_path = test_utils.make_test_directory(config, 'weighting_probability_random_test')
     iaa = dep_iaa(out_folder=out_path, source_task_id='3random')
     sample_df = weight_df.sample(3)
     for index, row in sample_df.iterrows():
@@ -237,7 +229,7 @@ def test_random_probability(config):
         answer_num = row['Answer_Number']
         iaa.add_row({"namespace":"Covid_Probability", "agreed_Answer": answer_num, "question_Number": question_num, "agreement_score": 1})
     fin_path = iaa.export()
-    weighting_out = launch_Weighting(out_path, weight_out_folder)
+    weighting_out = launch_Weighting(out_path)
     assert weighting_out.shape[0] == 3
     for index, row in weighting_out.iterrows():
         question_num = row['Question_Number']
@@ -246,3 +238,45 @@ def test_random_probability(config):
         correct_weight = weight_df[(weight_df['Question_Number'] == question_num) & (weight_df['Answer_Number'] == answer_num)]['Point_Recommendation'].iloc[0]
         assert adjusted_points == correct_weight, "Q" + str(question_num) + "A" + str(answer_num) + " points: " + str(adjusted_points) + ", weight_df: " + str(correct_weight)
         print("probability random row",index+1,"checks out")
+
+def test_op_ed_when_op_ed(config):
+    out_path = test_utils.make_test_directory(config, 'weighting_test_op_ed_when_op_ed')
+
+    holi_iaa = dep_iaa(out_folder=out_path, source_task_id='holisticIAA')
+    # -.5 points--from the weight key in config folder and the agreement_score
+    holi_iaa.add_row(
+        {"namespace": "Covid_Holisticv1.2", "agreed_Answer": 3, "question_Number": 1, "agreement_score": 1})
+    # -2 points from ./config/weight_key and agreement score
+
+    holi_iaa.export()
+    reas_iaa = dep_iaa(out_folder=out_path, source_task_id = 'reasoningIAA')
+    reas_iaa.add_row(
+        {"namespace": "Covid_Reasoning", "agreed_Answer": 1, "question_Number": 2, "agreement_score": .5})
+    reas_iaa.export()
+    # weighting will output the actual pandas dataframe instead of the directory
+    # if you look into the Weighting.py file, you can see the paths to
+    weighting_out = launch_Weighting(out_path)
+    points = weighting_out['agreement_adjusted_points']
+    tot = points.sum()
+    assert tot == -250
+
+def test_op_ed_not_op_ed(config):
+    out_path = test_utils.make_test_directory(config, 'weighting_test_op_ed_not_op_ed')
+
+    holi_iaa = dep_iaa(out_folder=out_path, source_task_id='holisticIAA')
+    # -.5 points--from the weight key in config folder and the agreement_score
+    holi_iaa.add_row(
+        {"namespace": "Covid_Holisticv1.2", "agreed_Answer": 3, "question_Number": 5, "agreement_score": 1})
+    # -2 points from ./config/weight_key and agreement score
+
+    holi_iaa.export()
+    reas_iaa = dep_iaa(out_folder=out_path, source_task_id = 'reasoningIAA')
+    reas_iaa.add_row(
+        {"namespace": "Covid_Reasoning", "agreed_Answer": 1, "question_Number": 2, "agreement_score": .5})
+    reas_iaa.export()
+    # weighting will output the actual pandas dataframe instead of the directory
+    # if you look into the Weighting.py file, you can see the paths to
+    weighting_out = launch_Weighting(out_path)
+    points = weighting_out['agreement_adjusted_points']
+    tot = points.sum()
+    assert tot == -2.5

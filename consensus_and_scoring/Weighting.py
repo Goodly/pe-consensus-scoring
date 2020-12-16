@@ -14,17 +14,28 @@ def launch_Weighting(directory, out_directory = None, reporting = False):
                 print('gotaFile', file)
                 iaaFiles.append(directory+'/'+file)
     weight_list = []
+    #get holistic so different weight keys can be used for different types of articles
+    weight_col = 'Point_Recommendation'
+    for f in iaaFiles:
+        if 'olistic' in f:
+            holistic = pd.read_csv(f, encoding='utf-8')
+            q1 = holistic[holistic['question_Number'] == 1]
+            if len(q1) > 0 and int(q1.iloc[0]['agreed_Answer']) == 3:
+                weight_col = 'Op-Ed'
+            break
     for f in iaaFiles:
         dirname = os.path.dirname(__file__)
         #can't use os.path.join, probably because windows uses \ as a  separator instead of /
         weight_key_path = dirname+os.sep+'config'+os.sep+'weight_key.csv'
         weight_scaling_path = dirname+os.sep+'config'+os.sep+'weight_key_scaling_guide.csv'
-        weight = weighting_alg(f, weight_key_path, weight_scaling_path, out_directory,reporting=reporting)
+        weight = weighting_alg(f, weight_key_path, weight_scaling_path, out_directory,reporting=reporting,
+                               weight_col = weight_col)
         weight_list.append(weight)
     weights = pd.concat(weight_list)
     return weights
 
-def weighting_alg(IAA_csv_file, credibility_weights_csv_file, weight_scale_csv, directory = './', reporting = False):
+def weighting_alg(IAA_csv_file, credibility_weights_csv_file, weight_scale_csv, directory = './', reporting = False,
+                  weight_col = 'Point_Recommendation'):
 
     IAA_csv = pd.read_csv(IAA_csv_file)
     #IndexError when the csv is empty
@@ -36,9 +47,8 @@ def weighting_alg(IAA_csv_file, credibility_weights_csv_file, weight_scale_csv, 
         else:
             print(len(IAA_csv))
             print(IAA_csv)
-            raise Exception('EricIsAnIdiotError')
+            raise Exception('Index Error')
 
-    print('schemnam',IAA_csv_schema_name)
     if "uage" in IAA_csv_schema_name:
         IAA_csv_schema_type = "Language"
     elif "Reason" in IAA_csv_schema_name:
@@ -49,10 +59,11 @@ def weighting_alg(IAA_csv_file, credibility_weights_csv_file, weight_scale_csv, 
         IAA_csv_schema_type = "Probability"
     elif 'olistic' in IAA_csv_schema_name:
         IAA_csv_schema_type = "Holistic"
+    elif 'ource' in IAA_csv_schema_name:
+        IAA_csv_schema_type = "Source"
     else:
         print("unweighted IAA", IAA_csv_file, "aborting")
         return
-    print("WEIGHINGWITHSCHEMA", IAA_csv_schema_type, IAA_csv_file)
 
     IAA_csv = IAA_csv.rename(columns={ "question_Number": "Question_Number", 'agreed_Answer': 'Answer_Number'})
     IAA_csv['Schema'] = IAA_csv_schema_type
@@ -71,8 +82,7 @@ def weighting_alg(IAA_csv_file, credibility_weights_csv_file, weight_scale_csv, 
                                                     IAA_csv_schema_type)
 
     new_csv = pd.merge(scaled_cred_weights, IAA_csv, on =["Schema", "Question_Number", 'Answer_Number'])
-
-    points = new_csv["Point_Recommendation"] * new_csv["agreement_score"]
+    points = new_csv[weight_col] * new_csv["agreement_score"]
     new_csv = new_csv.assign(agreement_adjusted_points = points)
     for_visualization = for_visualization.append(new_csv)
 
