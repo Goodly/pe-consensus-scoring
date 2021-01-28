@@ -66,7 +66,7 @@ def weighting_alg(IAA_csv_file, credibility_weights_csv_file, weight_scale_csv, 
         return
 
     IAA_csv = IAA_csv.rename(columns={ "question_Number": "Question_Number", 'agreed_Answer': 'Answer_Number'})
-    IAA_csv['Schema'] = IAA_csv_schema_type
+    #IAA_csv['Schema'] = IAA_csv_schema_type
     credibility_weights_csv = pd.read_csv(credibility_weights_csv_file)
     weight_scale_table = pd.read_csv(weight_scale_csv)
 
@@ -81,7 +81,7 @@ def weighting_alg(IAA_csv_file, credibility_weights_csv_file, weight_scale_csv, 
         scaled_cred_weights = scale_weights_csv(credibility_weights_csv, weight_scale_table, task_IAA,
                                                     IAA_csv_schema_type)
 
-    new_csv = pd.merge(scaled_cred_weights, IAA_csv, on =["Schema", "Question_Number", 'Answer_Number'])
+    new_csv = pd.merge(scaled_cred_weights, IAA_csv, on =["namespace", "Question_Number", 'Answer_Number'])
     points = new_csv[weight_col] * new_csv["agreement_score"]
     new_csv = new_csv.assign(agreement_adjusted_points = points)
     for_visualization = for_visualization.append(new_csv)
@@ -142,4 +142,4 @@ def convertToInt(string):
         return -1
 
 if __name__ == '__main__':
-        launch_Weighting('../data/out_scoring/')
+        launch_Weighting('../test_data/out_scoring/')
