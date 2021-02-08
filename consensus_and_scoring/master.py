@@ -9,7 +9,7 @@ from Separator import splitcsv
 from IAA_report import make_iaa_human_readable
 from dataV3 import make_directory
 from time import time
-from send_to_s3 import send_s3
+#from send_to_s3 import send_s3
 from holistic_eval import eval_triage_scoring
 from art_to_id_key import make_key
 
@@ -17,11 +17,11 @@ def calculate_scores_master(directory, texts_path, config_path,
                             schema_dir = None, iaa_dir = None, scoring_dir = None, repCSV = None,
                             just_s_iaa = False, just_dep_iaa = False, use_rep = False, reporting  = False,
                             single_task = False, highlights_file = None, schema_file = None, answers_file = None,
-                            push_aws = True, tua_dir = None, metadata_dir = None,
-                            s3_bucket = None, s3_prefix = '',viz_dir = None, threshold_func = 'logis_0'):
+                            push_aws = True, tua_dir = None,
+                            s3_bucket = None, s3_prefix = '',viz_dir = None, threshold_func = 'raw_30'):
     """
     :param directory: the directory that holds all files from the tagworks datahunt export
-    :param schema_dir: directory to the file holding all the TUAs that created the datahunt tasks
+    :param schema_dir: directory to the file holding all the schemas that created the datahunt tasks
     :param iaa_dir: the directory to output the raw IAA data to; if no input default is s_iaa_<directory>
     :param scoring_dir: directory to output data from every other stage of the scoring algorithm to; if no
         input default is scoring_<directory>
@@ -256,7 +256,6 @@ if __name__ == '__main__':
         s3_prefix = s3_prefix,
         threshold_func = threshold_function,
         tua_dir = tua_dir,
-        metadata_dir = metadata_dir,
         reporting=True
     )
-    send_s3(viz_dir, texts_dir, metadata_dir, s3_bucket, s3_prefix=s3_prefix)
+    #send_s3(viz_dir, texts_dir, metadata_dir, s3_bucket, s3_prefix=s3_prefix)

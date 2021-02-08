@@ -6,7 +6,8 @@ import os
 
 class dummy_data:
     #requires filetype is defined in higher scope
-    def __init__(self,out_path = None, out_folder = None, source_task_id = None, article_num = None, schema=None):
+    def __init__(self,out_path = None, out_folder = None, source_task_id = None, article_num = None,
+                 article_text_length = None,schema=None):
 
         #for case where tempdir is passed in, outpath will be a path object, not a string
         if out_path!=None:
@@ -22,6 +23,10 @@ class dummy_data:
             self.article_num = test_utils.make_number()
         else:
             self.article_num = article_num
+        if article_text_length == None:
+            self.article_text_length = 1000
+        else:
+            self.article_text_length = article_text_length
         self.article_id = test_utils.make_sha256(article_num)
 
         # generate the id every row in this file will have
@@ -40,6 +45,7 @@ class dummy_data:
         new_row['source_task_uuid'] = self.source_task_id
         new_row['article_sha256'] = self.article_id
         new_row['article_num'] = self.article_num
+        new_row['article_text_length'] = self.article_text_length
         keys = params.keys()
         if params != None:
             for p in keys:
@@ -64,6 +70,9 @@ class dummy_data:
         self.df[column] = value
     def set_out_name(self, filetype, source_task_id):
         return filetype+'_'+source_task_id+'.csv'
+
+    def sort(self):
+        return
     def export(self):
         out_name = self.set_out_name (self.filetype, self.source_task_id)
         export_path = os.path.join(self.out_path,out_name)

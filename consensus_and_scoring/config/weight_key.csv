@@ -1,4 +1,170 @@
 namespace,Question_Number,Answer_Number,Label,Point_Recommendation,Op-Ed
+new language schema namespace,2,1,Metaphor unhelpful,-4,-4
+new language schema namespace,2,2,Metaphor unhelpful,-3,-3
+new language schema namespace,2,3,Metaphor unhelpful,-2,-2
+new language schema namespace,2,4,Metaphor unhelpful,-1,-1
+new language schema namespace,2,5,Metaphor unhelpful,0,0
+new language schema namespace,3,1,Exaggeration,-5,-5
+new language schema namespace,3,2,Exaggeration,-3.75,-3.75
+new language schema namespace,3,3,Exaggeration,-2.5,-2.5
+new language schema namespace,3,4,Exaggeration,-1.25,-1.25
+new language schema namespace,3,5,Exaggeration,0,0
+new language schema namespace,5,1,Inappropriately emotional,-6,-6
+new language schema namespace,5,2,Inappropriately emotional,-4.5,-4.5
+new language schema namespace,5,3,Inappropriately emotional,-3,-3
+new language schema namespace,5,4,Inappropriately emotional,-1.5,-1.5
+new language schema namespace,5,5,Inappropriately emotional,-0.5,-0.5
+new language schema namespace,8,1,Shock,0,0
+new language schema namespace,8,2,Shock,-1,-1
+new language schema namespace,8,3,Shock,-2,-2
+new language schema namespace,8,4,Shock,-3,-3
+new language schema namespace,9,1,Inappropriate slang,1,1
+new language schema namespace,9,2,Inappropriate slang,-0.75,-0.75
+new language schema namespace,9,3,Inappropriate slang,-0.5,-0.5
+new language schema namespace,9,4,Inappropriate slang,-0.25,-0.25
+new language schema namespace,9,5,Inappropriate slang,0,0
+new language schema namespace,10,1,Denigration,-1,-1
+new language schema namespace,10,2,Denigration,-0.75,-0.75
+new language schema namespace,10,3,Denigration,-0.5,-0.5
+new language schema namespace,10,4,Denigration,-0.25,-0.25
+new language schema namespace,10,5,Denigration,0,0
+new language schema namespace,11,1,Writing errors,-5,-5
+new language schema namespace,11,2,Writing errors,-3.75,-3.75
+new language schema namespace,11,3,Writing errors,-2.5,-2.5
+new language schema namespace,11,4,Writing errors,-1.25,-1.25
+new language schema namespace,11,5,Writing errors,0,0
+new language schema namespace,13,1,Other problematic tone,-5,-5
+new language schema namespace,13,2,Other problematic tone,-3.75,-3.75
+new language schema namespace,13,3,Other problematic tone,-2.5,-2.5
+new language schema namespace,13,4,Other problematic tone,-1.25,-1.25
+new language schema namespace,13,5,Other problematic tone,0,0
+new language schema namespace,12,1,Well-balanced,0,0
+new language schema namespace,12,2,Well-balanced,1,1
+new language schema namespace,12,3,Well-balanced,1.5,1.5
+new language schema namespace,12,4,Well-balanced,2,2
+new reasoning schema namespace,2,1,Availability Heuristic,-5,-500
+new reasoning schema namespace,2,2,Stereotyping,-4,-4
+new reasoning schema namespace,2,3,Hindsight Bias,-4,-4
+new reasoning schema namespace,2,4,Gambler's Fallacy,-4,-4
+new reasoning schema namespace,2,5,Other misleading reasoning,-3,-3
+new reasoning schema namespace,2,6,,0,0
+new reasoning schema namespace,3,1,Just World Fallacy,-5,-5
+new reasoning schema namespace,3,2,Good Old Days Fallacy,-4,-4
+new reasoning schema namespace,3,3,Naturalistic Fallacy,-5,-5
+new reasoning schema namespace,3,4,Sunk Cost Fallacy,-5,-5
+new reasoning schema namespace,3,5,Identifiable Victim Effect,-4,-4
+new reasoning schema namespace,3,6,Other appeals to biases,-3,-3
+new reasoning schema namespace,4,1,Identifiable Victim Effect,2,2
+new reasoning schema namespace,4,2,Identifiable Victim Effect,1,1
+new reasoning schema namespace,4,3,Identifiable Victim Effect,0,0
+new reasoning schema namespace,5,1,Identifiable Victim Effect,2,2
+new reasoning schema namespace,5,2,Identifiable Victim Effect,1,1
+new reasoning schema namespace,5,3,Identifiable Victim Effect,0,0
+new reasoning schema namespace,6,1,Begging the Question,-4,-4
+new reasoning schema namespace,6,2,False Dilemma,-5,-5
+new reasoning schema namespace,6,3,Straw Man Argument,-4,-4
+new reasoning schema namespace,6,4,Red Herring,-5,-5
+new reasoning schema namespace,6,5,Equivocation,-5,-5
+new reasoning schema namespace,6,6,Slippery Slope Argument,-4,-4
+new reasoning schema namespace,6,7,Appeal to Ignorance,-5,-5
+new reasoning schema namespace,6,8,Before therefore because,-4,-4
+new reasoning schema namespace,6,9,False Equivalence,-4,-4
+new reasoning schema namespace,6,10,Other logical fallacies,-3,-3
+new reasoning schema namespace,6,11,,0,0
+new reasoning schema namespace,7,1,Misleading argument,-5,-5
+new reasoning schema namespace,7,2,Misleading argument,-4,-4
+new reasoning schema namespace,7,3,Misleading argument,-3,-3
+new reasoning schema namespace,7,4,Misleading argument,-2,-2
+new reasoning schema namespace,7,5,Misleading argument,-1,-1
+new reasoning schema namespace,7,6,Misleading argument,0,0
+new evidence schema name,2,1,Quality of evidence,0,0
+new evidence schema name,2,2,Quality of evidence,0,0
+new evidence schema name,2,3,Quality of evidence,0,0
+new evidence schema name,2,4,Quality of evidence,0,0
+new evidence schema name,2,5,Quality of evidence,0,0
+new evidence schema name,2,6,Quality of evidence,0,0
+new evidence schema name,2,7,Quality of evidence,0,0
+new evidence schema name,2,8,Quality of evidence,0,0
+new evidence schema name,2,9,Quality of evidence,0,0
+new evidence schema name,4,1,Sample representativeness,0,0
+new evidence schema name,4,2,Sample representativeness,-0.5,-0.5
+new evidence schema name,4,3,Sample representativeness,-1,-1
+new evidence schema name,4,4,Sample representativeness,-2,-2
+new evidence schema name,4,5,Sample representativeness,-4,-4
+new evidence schema name,4,6,Sample representativeness,-2,-2
+new evidence schema name,5,1,Control condition,0,0
+new evidence schema name,5,2,Control condition,-0.5,-0.5
+new evidence schema name,5,3,Control condition,-1,-1
+new evidence schema name,5,4,Control condition,-2,-2
+new evidence schema name,5,5,Control condition,-3,-3
+new evidence schema name,6,1,Randomized Assignment,0,0
+new evidence schema name,6,2,Randomized Assignment,-2,-2
+new evidence schema name,6,3,Randomized Assignment,-1,-1
+new evidence schema name,8,1,Alternative explanation,-4,-4
+new evidence schema name,8,2,Alternative explanation,-3,-3
+new evidence schema name,8,3,Alternative explanation,-2,-2
+new evidence schema name,8,4,Alternative explanation,-1,-1
+new evidence schema name,8,5,Alternative explanation,0,0
+new evidence schema name,10,1,Statistical uncertainty,-3,-3
+new evidence schema name,10,2,Statistical uncertainty,-2,-2
+new evidence schema name,10,3,Statistical uncertainty,-1,-1
+new evidence schema name,10,4,Statistical uncertainty,-0.5,-0.5
+new evidence schema name,10,5,Statistical uncertainty,0,0
+new evidence schema name,11,1,Systematic uncertainty,-3,-3
+new evidence schema name,11,2,Systematic uncertainty,-2,-2
+new evidence schema name,11,3,Systematic uncertainty,-1,-1
+new evidence schema name,11,4,Systematic uncertainty,-0.5,-0.5
+new evidence schema name,11,5,Systematic uncertainty,0,0
+new evidence schema name,12,1,Open to evidence,2,2
+new evidence schema name,12,2,Open to evidence,1,1
+new evidence schema name,12,3,Open to evidence,0,0
+new evidence schema name,12,4,Open to evidence,0,0
+new probability schema name,2,1,Inappropriate confidence,0,0
+new probability schema name,2,2,Inappropriate confidence,-0.5,-0.5
+new probability schema name,2,3,Inappropriate confidence,-1,-1
+new probability schema name,2,4,Inappropriate confidence,-2,-2
+new probability schema name,2,5,Inappropriate confidence,-3,-3
+new probability schema name,4,2,,-2,-2
+new probability schema name,4,1,,-1,-1
+new probability schema name,4,0,,0,0
+new probability schema name,5,1,Acknowledges uncertainty,1,1
+new probability schema name,5,2,Acknowledges uncertainty,0.5,0.5
+new probability schema name,5,3,Doesn’t acknowledge uncertainty,-2,-2
+new probability schema name,7,1,Numeric context,0,0
+new probability schema name,7,2,Numeric context,-2,-2
+new probability schema name,7,3,Numeric context,-1,-1
+new probability schema name,7,4,Numeric context,0,0
+new probability schema name,7,5,Numeric context,0,0
+new probability schema name,8,1,Systematic Variation,-3,-3
+new probability schema name,8,2,Systematic Variation,-2,-2
+new probability schema name,8,3,Systematic Variation,-1,-1
+new probability schema name,8,4,Systematic Variation,0,0
+new probability schema name,8,5,Systematic Variation,1,1
+new probability schema name,9,1,Statistical Variation,-3,-3
+new probability schema name,9,2,Statistical Variation,-2,-2
+new probability schema name,9,3,Statistical Variation,-1,-1
+new probability schema name,9,4,Statistical Variation,0,0
+new probability schema name,9,5,Statistical Variation,1,1
+new probability schema name,10,1,False precision,-2,-2
+new probability schema name,10,2,False precision,-1,-1
+new probability schema name,10,3,False precision,0,0
+new probability schema name,12,1,Open to evidence,1,1
+new probability schema name,12,2,Open to evidence,1,1
+new probability schema name,12,3,Open to evidence,1,1
+new probability schema name,12,4,Open to evidence,1,1
+new probability schema name,12,5,Open to evidence,0,0
+new holistic schema name,11,2,Misleading Title,-2,-2
+new holistic schema name,11,3,Misleading Title,-4,-4
+new holistic schema name,11,4,ClickBait title,-8,-8
+new holistic schema name,11,5,ClickBait title,-15,-15
+new holistic schema name,8,1,Very Biased,-10,-10
+new holistic schema name,8,2,Very Biased,-5,-5
+new holistic schema name,8,3,Biased,-2,-2
+new holistic schema name,8,4,Minor Bias,-1,-1
+new source namespace,2,1,Qualified Source,2,2
+new source namespace,2,2,Qualified Source,1,1
+new source namespace,2,7,Unqualified Source,-1,-1
+new source namespace,2,8,Unqualified Source,-2,-2
 Covid_Languagev1.1,2,1,Metaphor unhelpful,-4,-4
 Covid_Languagev1.1,2,2,Metaphor unhelpful,-3,-3
 Covid_Languagev1.1,2,3,Metaphor unhelpful,-2,-2
@@ -165,3 +331,37 @@ Covid2_Sources_2002_09_20,2,1,Qualified Source,2,2
 Covid2_Sources_2002_09_20,2,2,Qualified Source,1,1
 Covid2_Sources_2002_09_20,2,7,Unqualified Source,-1,-1
 Covid2_Sources_2002_09_20,2,8,Unqualified Source,-2,-2
+Covid_Probability,2,1,Inappropriate confidence,0,0
+Covid_Probability,2,2,Inappropriate confidence,-0.5,-0.5
+Covid_Probability,2,3,Inappropriate confidence,-1,-1
+Covid_Probability,2,4,Inappropriate confidence,-2,-2
+Covid_Probability,2,5,Inappropriate confidence,-3,-3
+Covid_Probability,4,2,,-2,-2
+Covid_Probability,4,1,,-1,-1
+Covid_Probability,4,0,,0,0
+Covid_Probability,5,1,Acknowledges uncertainty,1,1
+Covid_Probability,5,2,Acknowledges uncertainty,0.5,0.5
+Covid_Probability,5,3,Doesn’t acknowledge uncertainty,-2,-2
+Covid_Probability,7,1,Numeric context,0,0
+Covid_Probability,7,2,Numeric context,-2,-2
+Covid_Probability,7,3,Numeric context,-1,-1
+Covid_Probability,7,4,Numeric context,0,0
+Covid_Probability,7,5,Numeric context,0,0
+Covid_Probability,8,1,Systematic Variation,-3,-3
+Covid_Probability,8,2,Systematic Variation,-2,-2
+Covid_Probability,8,3,Systematic Variation,-1,-1
+Covid_Probability,8,4,Systematic Variation,0,0
+Covid_Probability,8,5,Systematic Variation,1,1
+Covid_Probability,9,1,Statistical Variation,-3,-3
+Covid_Probability,9,2,Statistical Variation,-2,-2
+Covid_Probability,9,3,Statistical Variation,-1,-1
+Covid_Probability,9,4,Statistical Variation,0,0
+Covid_Probability,9,5,Statistical Variation,1,1
+Covid_Probability,10,1,False precision,-2,-2
+Covid_Probability,10,2,False precision,-1,-1
+Covid_Probability,10,3,False precision,0,0
+Covid_Probability,12,1,Open to evidence,1,1
+Covid_Probability,12,2,Open to evidence,1,1
+Covid_Probability,12,3,Open to evidence,1,1
+Covid_Probability,12,4,Open to evidence,1,1
+Covid_Probability,12,5,Open to evidence,0,0

@@ -1,11 +1,6 @@
-import sys
-import os
-import pandas as pd
-
 import test_utils
 from filegen_utils import *
 from pointAssignment import *
-import conftest
 
 
 def test_point_assignment_3x(config):
@@ -25,10 +20,7 @@ def test_point_assignment_3x(config):
     #-.5 points--from the weight key in config folder and the agreement_score
     arg_dep.add_row({"namespace":"Covid2_ArgumentRelevance_2020_09_20", "agreed_Answer": 1, "question_Number": 1,
                      "agreement_score":1, "tua_uuid": 'onlyone'})
-    print(weight_df)
-    new_tua.export()
-    arg_dep.export()
-    print(scoring_path, None, '\n',weight_df.columns,'\n', tua_path, True)
+
 
     tuas, weights, tua_raw = pointSort(scoring_path, input_dir=None, weights=weight_df,
                                        scale_guide_dir = config['IAA_config_dir']+'/point_assignment_scaling_guide.csv',

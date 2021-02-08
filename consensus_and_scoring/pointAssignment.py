@@ -37,8 +37,12 @@ def pointSort(scoring_directory, input_dir = None, weights = None,
             except UnboundLocalError:
                 tuas = pd.read_csv(tua_location)
     #Load everything so that it's a pandas dataframe
+
     tuas_raw = tuas
-    scale_guide = pd.read_csv(scale_guide_dir)
+    dirname = os.path.dirname(__file__)
+    # can't use os.path.join, probably because windows uses \ as a  separator instead of /
+    scale_guide_path = dirname + os.sep + 'config' + os.sep + 'point_assignment_scaling_guide.csv'
+    scale_guide = pd.read_csv(scale_guide_path)
     if len(tua_location)<3:
         raise FileNotFoundError("TUA file not found")
     files = getFiles(scoring_directory)

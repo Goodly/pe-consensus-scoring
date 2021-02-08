@@ -66,7 +66,7 @@ def weighting_alg(IAA_csv_file, credibility_weights_csv_file, weight_scale_csv, 
         return
 
     IAA_csv = IAA_csv.rename(columns={ "question_Number": "Question_Number", 'agreed_Answer': 'Answer_Number'})
-    #IAA_csv['Schema'] = IAA_csv_schema_type
+    IAA_csv['Schema'] = IAA_csv_schema_type
     credibility_weights_csv = pd.read_csv(credibility_weights_csv_file)
     weight_scale_table = pd.read_csv(weight_scale_csv)
 
@@ -85,13 +85,10 @@ def weighting_alg(IAA_csv_file, credibility_weights_csv_file, weight_scale_csv, 
     points = new_csv[weight_col] * new_csv["agreement_score"]
     new_csv = new_csv.assign(agreement_adjusted_points = points)
     for_visualization = for_visualization.append(new_csv)
-
-    for_visualization['schema'] = pd.Series(IAA_csv_schema_type for i in range(len(for_visualization['article_sha256'])+1))
-    for_visualization = for_visualization.loc[:, ~for_visualization.columns.duplicated()]
     if reporting:
-        out_file = directory+"/Point_recs_"+IAA_csv_schema_type+".csv"
+        out_file = directory+"/Point_recs_"+IAA_csv_schema_name+".csv"
         print(out_file)
-        for_visualization.to_csv(out_file, encoding = 'utf-8')
+        for_visualization.to_csv(out_file, encoding = 'utf-8', index = False)
     return for_visualization
 
 def weighted_q6(num):
@@ -142,4 +139,4 @@ def convertToInt(string):
         return -1
 
 if __name__ == '__main__':
-        launch_Weighting('../test_data/out_scoring/')
+        launch_Weighting('../test_data/out_mn_scoring')

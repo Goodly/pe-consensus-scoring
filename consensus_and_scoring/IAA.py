@@ -83,7 +83,7 @@ def calc_scores(highlightfilename, config_path,  texts_path, repCSV=None, schema
              "coding_perc_agreement",
              "highlighted_indices", "agreement_score",
              "num_users", "num_answer_choices",
-             "target_text", "question_text", "answer_text", "answer_content"]]
+             "target_text", "question_text", "answer_text",  "article_text_length"]]
 
 
     if useRep:
@@ -104,6 +104,9 @@ def calc_scores(highlightfilename, config_path,  texts_path, repCSV=None, schema
         #get the textfile
         text_file = os.path.join(texts_path, article_sha + ".txt")
         if not(os.path.exists(text_file)):
+            for root, dir, files in os.walk(texts_path):
+                for file in files:
+                    print(file)
             raise  Exception("Couldn't find text_file for article {}".format(text_file))
 
         #print("checking agreement for "+schema_namespace+" task "+task_id)
@@ -114,6 +117,7 @@ def calc_scores(highlightfilename, config_path,  texts_path, repCSV=None, schema
             question_text = get_question_text(uberDict, task, ques)
             # if it's a list then it was a checklist question
 
+
             if type(agreements) is list:
                 #Checklist Question
                 for i in range(len(agreements)):
@@ -123,6 +127,7 @@ def calc_scores(highlightfilename, config_path,  texts_path, repCSV=None, schema
                     selectedText, firstSecondScoreDiff = agreements[i][6], agreements[i][7]
                     question_type, num_choices = agreements[i][8], agreements[i][9]
                     num_users = agreements[i][5]
+                    length = agreements[i][10]
                     ques_num = ques
                     ans_uuid, has_hl = get_answer_data(schema_sha, 1, ques_num, winner, schemaFile)
                     if int(has_hl) == 0:
@@ -140,7 +145,7 @@ def calc_scores(highlightfilename, config_path,  texts_path, repCSV=None, schema
                     data.append([article_num, article_sha, article_id, article_filename, task_id, tua_uuid, schema_namespace, schema_sha, ques_num, ans_uuid, agreements[i][8], winner,
                                  codingPercentAgreement,  units,
                                  totalScore, num_users, num_choices,selectedText,
-                                question_text,  answer_content])
+                                question_text,  answer_content, length])
 
             else:
                 winner, units = agreements[0], agreements[1]
@@ -148,7 +153,7 @@ def calc_scores(highlightfilename, config_path,  texts_path, repCSV=None, schema
                 selectedText, firstSecondScoreDiff = agreements[6], agreements[7]
                 question_type, num_choices = agreements[8], agreements[9]
                 codingPercentAgreement, unitizingScore = agreements[4], agreements[2]
-
+                length = agreements[10]
                 num_users = agreements[5]
 
                 answer_content = get_answer_content(uberDict, task, ques, agreements[0])
@@ -166,7 +171,7 @@ def calc_scores(highlightfilename, config_path,  texts_path, repCSV=None, schema
                              ques_num, ans_uuid, question_type, winner, codingPercentAgreement,
                              units,
                              totalScore, num_users, num_choices, selectedText,
-                             question_text, answer_content])
+                             question_text, answer_content, length])
 
     outDirectory = make_directory(outDirectory)
     path, name = get_path(highlightfilename)
@@ -244,11 +249,11 @@ def score(article, ques, data, config_path, text_file, schemaFile, repDF = None,
         out = evaluateCoding(answers, users, starts, ends, numUsers, length,  sourceText, hlUsers, hlAns, repDF = repDF,
                              dfunc='ordinal', num_choices=num_choices, useRep=useRep, threshold_func=threshold_func)
 
-        out = out+(question_type, num_choices)
+        out = out+(question_type, num_choices, length)
     elif question_type == 'nominal':
         out = evaluateCoding(answers, users, starts, ends, numUsers, length,  sourceText,hlUsers, hlAns, repDF = repDF,
                              num_choices=num_choices, useRep=useRep, threshold_func=threshold_func)
-        out = out+(question_type, num_choices)
+        out = out+(question_type, num_choices, length)
     elif question_type == 'checklist':
         out = evaluateChecklist(answers, users, starts, ends, numUsers, length, repDF, sourceText, hlUsers, hlAns,
                                 num_choices = num_choices, useRep=useRep, threshold_func = threshold_func)

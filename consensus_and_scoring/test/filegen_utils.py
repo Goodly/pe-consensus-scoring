@@ -98,8 +98,12 @@ class datahunt(dummy_data):
             new_row['target_text'] = test_utils.open_text_file(self.article_id, params['start_pos'], params['end_pos'])
         elif 'startpos' in keys or 'end_pos' in keys:
             raise NameError('Params must have both a start_pos and an end_pos, or neither')
-
+        if 'quiz_task_uuid' not in keys:
+            new_row['quiz_task_uuid'] = self.source_task_id
         return new_row
+
+    def sort(self):
+        self.df = self.df.sort_values(by=['question_label'])
 
 class weighted(dummy_data):
     def __init__(self, *args, **kwargs):
@@ -144,6 +148,36 @@ class tua(dummy_data):
 
     def set_out_name(self, filetype, source_task_id):
         return filetype + '_' + source_task_id + '-Task.csv'
+
+class point_assignment(dummy_data):
+    def __init__(self, *args, **kwargs):
+        self.filetype = 'point_assignment'
+        super().__init__(*args, **kwargs)
+        self.schema = "default_schema"
+
+    def fill_in_logic(self, new_row, params):
+        keys = params.keys()
+        #Schema can be: Language, Reasoning, Evidence, Probability, Holistic, Sources
+
+
+        if 'namespace' in keys and 'Question_Number' in keys and 'points' in keys and 'Answer_Number':
+            question = params['Question_Number']
+            schema_sha256 = test_utils.sha256_from_namespace(params['namespace'])
+            answer = params['Answer_Number']
+            ans_id, ans_text, q_text = test_utils.get_schema_data(schema_sha256, question, answer)
+            new_row['schema_sha256'] = schema_sha256
+            new_row['answer_uuid'] = ans_id
+            new_row['answer_text'] = ans_text
+            new_row['question_text'] = q_text
+        if 'article_text_length' not in keys:
+            new_row['article_text_length'] = 1000
+        else:
+            raise NameError('Params',params,' must include a value for namespace, Question_Number, and Answer_Number, and agreement_adjusted_points')
+        new_row['schema'] = self.schema
+        return new_row
+
+    def set_out_name(self, filetype, source_task_id):
+        return 'SortedPts.csv'
 
 if __name__ == '__main__':
     #this is broken cause it's not a path data
