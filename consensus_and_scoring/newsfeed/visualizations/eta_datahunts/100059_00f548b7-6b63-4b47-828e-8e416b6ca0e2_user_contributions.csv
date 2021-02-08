@@ -1,0 +1,60 @@
+,Credibility Indicator Category,Question Number,Answer Number,Point Recommendation,Credibility Indicator Name,Start,End
+79,Evidence,2.0,4.0,0.0,Quality of evidence,3197,3307
+79,Evidence,2.0,4.0,0.0,Quality of evidence,3318,3528
+82,Evidence,2.0,7.0,0.0,Quality of evidence,3129,3195
+82,Evidence,2.0,7.0,0.0,Quality of evidence,3583,3702
+102,Evidence,8.0,4.0,-1.0,Alternative explanation,0,0
+107,Evidence,10.0,4.0,-0.5,Statistical uncertainty,0,0
+111,Evidence,11.0,3.0,-1.0,Systematic uncertainty,0,0
+116,Evidence,12.0,3.0,0.0,Open to evidence,0,0
+63,Reasoning,6.0,3.0,-4.0,Straw Man Argument,6257,6407
+72,Reasoning,7.0,3.0,-3.0,Misleading argument,0,0
+79,Evidence,2.0,4.0,0.0,Quality of evidence,3764,4041
+80,Evidence,2.0,5.0,0.0,Quality of evidence,4511,5011
+80,Evidence,2.0,5.0,0.0,Quality of evidence,4043,4345
+82,Evidence,2.0,7.0,0.0,Quality of evidence,4407,4509
+87,Evidence,4.0,3.0,-1.0,Sample representativeness,0,0
+94,Evidence,5.0,4.0,-2.0,Control condition,0,0
+102,Evidence,8.0,4.0,-1.0,Alternative explanation,0,0
+107,Evidence,10.0,4.0,-0.5,Statistical uncertainty,0,0
+111,Evidence,11.0,3.0,-1.0,Systematic uncertainty,0,0
+117,Evidence,12.0,4.0,0.0,Open to evidence,0,0
+119,Probability,2.0,2.0,-0.5,Inappropriate confidence,0,0
+128,Probability,5.0,3.0,-2.0,Doesn‰Ûªt acknowledge uncertainty,0,0
+130,Probability,7.0,2.0,-2.0,Numeric context,4819,4829
+130,Probability,7.0,2.0,-2.0,Numeric context,4881,4891
+130,Probability,7.0,2.0,-2.0,Numeric context,4962,4972
+146,Probability,10.0,3.0,0.0,False precision,0,0
+2,Language,2.0,3.0,-2.0,Metaphor unhelpful,0,0
+23,Language,9.0,5.0,0.0,Inappropriate slang,0,0
+27,Language,10.0,4.0,-0.25,Denigration,0,0
+42,Language,12.0,4.0,2.0,Well-balanced,6668,6714
+80,Evidence,2.0,5.0,0.0,Quality of evidence,5954,5975
+78,Evidence,2.0,3.0,0.0,Quality of evidence,5954,5975
+79,Evidence,2.0,4.0,0.0,Quality of evidence,5859,6096
+79,Evidence,2.0,4.0,0.0,Quality of evidence,6545,6654
+82,Evidence,2.0,7.0,0.0,Quality of evidence,6545,6665
+82,Evidence,2.0,7.0,0.0,Quality of evidence,6469,6543
+90,Evidence,4.0,6.0,-2.0,Sample representativeness,0,0
+95,Evidence,5.0,5.0,-3.0,Control condition,0,0
+102,Evidence,8.0,4.0,-1.0,Alternative explanation,0,0
+117,Evidence,12.0,4.0,0.0,Open to evidence,0,0
+76,Evidence,2.0,1.0,0.0,Quality of evidence,1939,2236
+79,Evidence,2.0,4.0,0.0,Quality of evidence,2238,2534
+90,Evidence,4.0,6.0,-2.0,Sample representativeness,0,0
+101,Evidence,8.0,3.0,-2.0,Alternative explanation,0,0
+105,Evidence,10.0,2.0,-2.0,Statistical uncertainty,0,0
+110,Evidence,11.0,2.0,-2.0,Systematic uncertainty,0,0
+117,Evidence,12.0,4.0,0.0,Open to evidence,0,0
+78,Evidence,2.0,3.0,0.0,Quality of evidence,1165,1560
+80,Evidence,2.0,5.0,0.0,Quality of evidence,1165,1937
+83,Evidence,2.0,8.0,0.0,Quality of evidence,1114,1143
+79,Evidence,2.0,4.0,0.0,Quality of evidence,1401,1560
+79,Evidence,2.0,4.0,0.0,Quality of evidence,1679,1937
+90,Evidence,4.0,6.0,-2.0,Sample representativeness,0,0
+92,Evidence,5.0,2.0,-0.5,Control condition,1882,1937
+98,Evidence,6.0,3.0,-1.0,Randomized Assignment,0,0
+102,Evidence,8.0,4.0,-1.0,Alternative explanation,0,0
+106,Evidence,10.0,3.0,-1.0,Statistical uncertainty,0,0
+111,Evidence,11.0,3.0,-1.0,Systematic uncertainty,0,0
+114,Evidence,12.0,1.0,2.0,Open to evidence,1023,1106
