@@ -23,7 +23,7 @@ def getTextFromIndices(indices,  sourceText):
     for i in range(len(starts)):
        start = starts[i]
        end = ends[i]
-       out += sourceText[start: end+1]
+       out += sourceText[start: end]
 
        out+= "//break//"
     assert out.count("//break//") == len(starts)

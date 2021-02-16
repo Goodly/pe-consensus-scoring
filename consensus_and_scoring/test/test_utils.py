@@ -104,6 +104,14 @@ def get_schema_data(schema_sha256, question, answer):
         return 'cantfind', 'cantfind', schema_row['question_text'].iloc[0]
     return schema_row['answer_uuid'].iloc[0], schema_row['answer_content'].iloc[0], schema_row['question_text'].iloc[0]
 
+def schema_has_hl(schema_sha256, answer_label):
+    schema_df = get_schema_df(schema_sha256)
+    schema_row = schema_df[schema_df['answer_label'] == answer_label]
+    if len(schema_row) != 0:
+        if schema_row['highlight'].iloc[0] == 0:
+            return False
+    return True
+
 def get_schema_col_val(schema_sha256, column):
     '''
     returns the first value in a column from the schema file
@@ -120,7 +128,7 @@ def get_schema_col_val(schema_sha256, column):
         return 'cantfind', 'cantfind', schema_row['question_text'].iloc[0]
     return schema_row['answer_uuid'].iloc[0], schema_row['answer_content'].iloc[0], schema_row['question_text'].iloc[0]
 
-def make_text_data(sha_256, length=1000, text=None):
+def make_text_data(sha_256, length=3000, text=None):
     '''
     creates a text file of random characters of the given length in the texts folder of the test_data directory
     '''
@@ -147,4 +155,4 @@ def open_text_file(article_sha, start, end):
 def make_highlight_indices(start, end):
     return json.dumps(list(range(start,end)))
 if __name__ == '__main__':
-    make_text_data('woppdidoo')
+    print(get_schema_data('a6eca3a8c143a31e7b37337f744912e6d33c5b2f49cd29570daee3cfdb9a017c', '1',1))

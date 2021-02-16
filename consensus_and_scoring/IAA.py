@@ -123,7 +123,6 @@ def calc_scores(highlightfilename, config_path,  texts_path, repCSV=None, schema
                 for i in range(len(agreements)):
                     codingPercentAgreement, unitizingScore = agreements[i][4], agreements[i][2]
                     winner, units = agreements[i][0], agreements[i][1]
-                    inclusiveUnitizing = agreements[i][3]
                     selectedText, firstSecondScoreDiff = agreements[i][6], agreements[i][7]
                     question_type, num_choices = agreements[i][8], agreements[i][9]
                     num_users = agreements[i][5]

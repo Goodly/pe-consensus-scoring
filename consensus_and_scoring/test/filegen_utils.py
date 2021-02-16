@@ -81,7 +81,8 @@ class datahunt(dummy_data):
             o = re.search('Q(.*?)\.A(.*)', a_label)
             question = int(o.group(1))
             answer = int(o.group(2))
-            new_row['question_label'] = 'T1.Q'+str(question)
+            q_label = 'T1.Q'+str(question)
+            new_row['question_label'] = q_label
             schema_sha256 = test_utils.sha256_from_namespace(params['namespace'])
             ans_id, ans_text, q_text = test_utils.get_schema_data(schema_sha256, question, answer)
             new_row['schema_sha256'] = schema_sha256
@@ -95,7 +96,20 @@ class datahunt(dummy_data):
             raise NameError('Params',params,' must include a value for namespace, answer_label, and contributor_uuid')
 
         if 'start_pos' in keys and 'end_pos' in keys:
-            new_row['target_text'] = test_utils.open_text_file(self.article_id, params['start_pos'], params['end_pos'])
+            if not test_utils.schema_has_hl(schema_sha256, a_label):
+                print("Schema doesn't support highlight for question/answer", a_label)
+            else:
+                new_row['target_text'] = test_utils.open_text_file(self.article_id, params['start_pos'], params['end_pos'])
+                a_df = self.df[self.df['answer_label'] == a_label]
+
+                if len(a_df) >0:
+                    max_hl = a_df['highlight_count'].max()
+                else:
+                    max_hl = 0
+                max_hl += 1
+                mask = self.df['answer_label'] == a_label
+                new_row['highlight_count'] = max_hl
+                self.df['highlight_count'][mask] = max_hl
         elif 'startpos' in keys or 'end_pos' in keys:
             raise NameError('Params must have both a start_pos and an end_pos, or neither')
         if 'quiz_task_uuid' not in keys:
@@ -181,6 +195,15 @@ class point_assignment(dummy_data):
 
 if __name__ == '__main__':
     #this is broken cause it's not a path data
-    i =  IAA_task('../../test_data')
-    i.add_row({'agreed_Answer':79, 'target_text': 'text was targeted'})
-    i.export()
+    with open('test_config.json') as json_file:
+        config = json.load(json_file)
+    dh_path = test_utils.make_test_directory(config, 'mn_dh_')
+    dh = datahunt(out_folder=dh_path, source_task_id='dh13', article_num='520', article_text_length=2900)
+    for i in range(9):
+        for j in range(7):
+            dh.add_row({'answer_label': 'T1.Q1.A' + str(j), 'namespace': 'Covid_Languagev1.1',
+                        'contributor_uuid': 'User' + str(i), 'start_pos': 10 * j, 'end_pos': 12 * j})
+    for i in range(9):
+        for j in range(7):
+            dh.add_row({'answer_label': 'T1.Q1.A' + str(j), 'namespace': 'Covid_Languagev1.1',
+                        'contributor_uuid': 'User' + str(i), 'start_pos': 15 * j, 'end_pos': 17 * j})
