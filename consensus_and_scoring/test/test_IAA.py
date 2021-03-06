@@ -28,6 +28,35 @@ def test_iaa_constructor(config, tmpdir):
     #9 answer choices to a checklist question
     assert len(out_df) == 9
 
+def test_iaa_hl(config):
+    dh_files_path = test_utils.make_test_directory(config, 'iaa_hl_everythingpass')
+    out_path = test_utils.make_test_directory(config, 'out_iaa_hl_everythingpass')
+    dh = datahunt(out_folder=dh_files_path, source_task_id='highlight_all_pass')
+
+    dh.add_row({'answer_label': 'T1.Q2.A1', 'namespace': 'Covid_Evidence2020_03_21',
+                    'contributor_uuid': 'Daniel' + str(i),'start_pos':5, 'end_pos':20})
+    dh.add_row({'answer_label': 'T1.Q2.A3', 'namespace': 'Covid_Evidence2020_03_21',
+                    'contributor_uuid': 'Daniel' + str(i),'start_pos':5, 'end_pos':24})
+    dh.add_row({'answer_label': 'T1.Q2.A5', 'namespace': 'Covid_Evidence2020_03_21',
+                    'contributor_uuid': 'Daniel' + str(i),'start_pos':5, 'end_pos':26})
+    fin_path = dh.export()
+
+    data_path = config['data_dir']
+    schema_path = data_path + '/schemas'
+
+    iaa_out = calc_agreement_directory(dh_files_path, schema_path, config['IAA_config_dir'], test_utils.texts_dir,
+                                       outDirectory=out_path)
+    for root, dir, files in os.walk(iaa_out):
+        for file in files:
+            # should be only 1 file for this case, so just run it on the only one
+            # if there's more than 1 then you can get fancy
+            out_df = pd.read_csv(os.path.join(iaa_out, file), encoding='utf-8')
+    our_q = out_df[out_df['question_Number'] == 2]
+    our_a = out_df[out_df['question_Number'] == 2]
+
+    q2_hl = our_q['highlighted_indices'].iloc[1]
+    assert all([str(i) in q2_hl for i in range(70, 101)])
+
 
 def test_iaa_checklist(config, tmpdir):
     test_path = test_utils.make_test_directory(config, 'test_iaa_checklist_multi_pass')
