@@ -154,15 +154,6 @@ def dataStorer(data_hunt_path, schema_path):
         usersGrouped = highlight.loc[uuid].groupby("question_label")
         contributors = usersGrouped["contributor_uuid"].apply(list)
 
-        #
-        # hasHighlightedTasks = False
-        # if uuid in highlighted_data['quiz_task_uuid']:
-        #     rel_hl_data = highlighted_data[highlighted_data['quiz_task_uuid'] == uuid]
-        #     hl_users_data = rel_hl_data.groupby("question_label")["contributor_uuid"].apply(list)
-        #     hl_ans_labels_data = rel_hl_data.groupby("question_label")["answer_label"].apply(list)
-        #     hasHighlightedTasks = True
-
-            # target_text = usersGrouped["target_text"].apply(list) # Don't know for sure
         answer_content = highlight.loc[uuid].groupby("question_label")["answer_content"].apply(list)
         newUsers = highlight.loc[uuid].groupby("question_label")["contributor_uuid"].unique().apply(list)
         rel_hl_data = highlighted_data[highlighted_data['quiz_task_uuid'] == uuid]
@@ -186,11 +177,6 @@ def dataStorer(data_hunt_path, schema_path):
                 target_text = question_hl_data["target_text"].tolist()
                 starts =   question_hl_data['start_pos'].apply(floor).tolist()
                 ends = question_hl_data['end_pos'].apply(floor).tolist()
-
-                # print("Highlight Users are: ", hightlightUsers)
-                # print("Highlight Answers are: ", hl_ans_labels)
-                # print("Highlight target texts are: ", target_text)
-
 
             question_num = getQuestionNumberFromLabel(question_label)
 
@@ -220,7 +206,7 @@ def getStartsEndsLists(starts_ends, uuid):
     Gets the starts and ends DataFrame by uuid.
     Outputs a pair of DataFrames. Each entry is a LIST of start or end positions
     """
-    print(starts_ends, uuid)
+    #print(starts_ends, uuid)
     grouped = starts_ends.loc[uuid].groupby("question_label")
 
     return grouped['start_pos'].apply(list), grouped['end_pos'].apply(list)
