@@ -4,7 +4,7 @@ import pandas as pd
 
 import test_utils
 from filegen_utils import *
-from IAA import *
+from IAA_new import *
 
 sys.path.append('../../')
 
