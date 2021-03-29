@@ -1,12 +1,12 @@
-import csv
 import pandas as pd
-from ChecklistCoding import *
-from ExtraInfo import *
-import json
-from dataV3 import *
-from repScores import *
+import numpy as np
 import os
 import re
+import json
+import csv
+from ChecklistCoding import *
+from repScores import *
+from dataV3 import *
 
 def calc_agreement_directory(directory, schema_dir, config_path, texts_path, repCSV=None, outDirectory = None, useRep = False, threshold_func = 'raw_30'):
     """
@@ -73,29 +73,32 @@ def calc_scores(highlightfilename, config_path, texts_path, repCSV=None, schemaF
         outDirectory: path to directory containing the output IAA csv file
     """
     #Create structures for user monitoring
-    uberDict = dataStorer(highlightfilename, schemaFile)
+    uberDict = None
     repDF = None
-    if useRep: repDF = create_user_reps(uberDict, repCSV)
+    if useRep:
+        uberDict = dataStorer(highlightfilename, schemaFile)
+        repDF = create_user_reps(uberDict, repCSV)
 
     #Read in the datahunt file
-    datahunt = pd.read_csv(highlightfilename, encoding = 'utf-8')
+    datahuntDF = pd.read_csv(highlightfilename, encoding = 'utf-8')
+    schemaDF = pd.read_csv(schemaFile, encoding = 'utf-8')
 
     #Create the output dataframe and its column names (appending to list is faster than to Pandas dataframe)
     data = [["article_num", "article_sha256", "article_id", "article_filename", "source_task_uuid", "tua_uuid", "namespace", "schema_sha256", "question_Number", "answer_uuid", "question_type", "agreed_Answer", "coding_perc_agreement", "highlighted_indices", "agreement_score", "num_users", "num_answer_choices", "target_text", "question_text", "answer_text", "article_text_length"]]
 
     #Iterate through each article in the datahunt
-    tasks = datahunt['quiz_task_uuid'].unique()
+    tasks = datahuntDF['quiz_task_uuid'].unique()
     for task in tasks:
-        datahunt_task = datahunt[datahunt['quiz_task_uuid'] == task]
-        questions = datahunt_task['question_label'].apply(getQuestionNumberFromLabel).unique()
-        article_num = datahunt_task['article_number'].iloc[0]
-        article_sha =  datahunt_task['article_sha256'].iloc[0]
+        taskDF = datahuntDF[datahuntDF['quiz_task_uuid'] == task]
+        questions = taskDF['question_label'].apply(getQuestionNumberFromLabel).unique()
+        article_num = taskDF['article_number'].iloc[0]
+        article_sha =  taskDF['article_sha256'].iloc[0]
         article_id = threshold_func + article_sha
-        article_filename = datahunt_task['article_filename'].iloc[0]
+        article_filename = taskDF['article_filename'].iloc[0]
         source_task_uuid = task
-        tua_uuid = datahunt_task['tua_uuid'].iloc[0]
-        namespace = datahunt_task['namespace'].iloc[0]
-        schema_sha = datahunt_task['schema_sha256'].iloc[0]
+        tua_uuid = taskDF['tua_uuid'].iloc[0]
+        namespace = taskDF['namespace'].iloc[0]
+        schema_sha = taskDF['schema_sha256'].iloc[0]
         text_file = os.path.join(texts_path, article_sha + ".txt")
 
         if not(os.path.exists(text_file)):
@@ -103,13 +106,14 @@ def calc_scores(highlightfilename, config_path, texts_path, repCSV=None, schemaF
 
         # Iterate through each question in an article and score
         for ques_num in sorted(questions):
-            datahunt_question = datahunt_task[datahunt_task['question_label'] == "T1.Q%d"%ques_num]
-            question_text = datahunt_question['question_text'].iloc[0]
-            agreements = score(task, ques_num, datahunt_question, uberDict, config_path, text_file, schemaFile, repDF, useRep=useRep, threshold_func=threshold_func)
+            questionDF = taskDF[taskDF['question_label'] == "T1.Q%d"%ques_num]
+            question_text = questionDF['question_text'].iloc[0]
+            agreements = score(task, ques_num, questionDF, config_path, text_file, schemaFile, schemaDF, repDF, useRep=useRep, threshold_func=threshold_func)
 
             #Iterate through agreements and add to output data
             if type(agreements) is not list: #agreements will only be a list for checkput questions
                 agreements = [agreements]
+            #The output of score is a tuple with all these elements
             for i in range(len(agreements)):
                 agreed_answer = agreements[i][0]
                 highlighted_indices = agreements[i][1]
@@ -121,14 +125,15 @@ def calc_scores(highlightfilename, config_path, texts_path, repCSV=None, schemaF
                 num_choices = agreements[i][9]
                 length = agreements[i][10]
 
-                ans_uuid, has_hl = get_answer_data(1, ques_num, agreed_answer, schemaFile)
+                ans_uuid, has_hl = get_answer_data(1, ques_num, agreed_answer, schemaDF)
                 if int(has_hl) == 0:
                     highlighted_indices = []
-                answer_text = get_answer_content(uberDict, task, ques_num, agreed_answer)
+                answer_text = get_answer_content(schemaDF, task, ques_num, agreed_answer)
 
                 totalScore = codingPercentAgreement #For now total score is just agreement score
                 highlighted_indices = json.dumps(np.array(highlighted_indices).tolist())
 
+                #Add the row of data to the output IAA file
                 data.append([article_num, article_sha, article_id, article_filename, source_task_uuid, tua_uuid, namespace, schema_sha, ques_num, ans_uuid, question_type, agreed_answer, codingPercentAgreement, highlighted_indices, totalScore, num_users, num_choices, target_text, question_text, answer_text, length])
 
     #Create structures for output data
@@ -138,7 +143,7 @@ def calc_scores(highlightfilename, config_path, texts_path, repCSV=None, schemaF
     out_name = task_name + '.IAA-' + source_task_uuid + '-Tags.csv'
     print("IAA outputs to:", outDirectory + out_name)
 
-    #Write the output IAA file
+    #Write the output IAA file (would using Pandas here be faster?)
     with open(os.path.join(outDirectory, out_name), 'w', encoding='utf-8') as scores:
         writer = csv.writer(scores)
         writer.writerows(data)
@@ -149,37 +154,37 @@ def calc_scores(highlightfilename, config_path, texts_path, repCSV=None, schemaF
 
     return outDirectory
 
-def score(article, ques, quesDF, data, config_path, text_file, schemaFile, repDF = None, useRep = False, threshold_func = 'logis_0'):
+def score(article, ques, questionDF, config_path, text_file, schemaFile, schemaDF, repDF = None, useRep = False, threshold_func = 'logis_0'):
     """
     Calculates the relevant scores of the specific question of an article.
 
     Args:
         article: uuid of the article
         ques: question number
-        quesDF: dataframe for question of article
+        questionDF: dataframe for question of article
         config_path: path to directory with config files
         text_file: path to text file
-        schemaFile: path to schema file
+        schemaFile: path to schema
+        schemaDF: dataframe for schema
         repDF: dataframe for reputation scores
         useRep: boolean for using reputation scores
         threshold_func: function for determining if a question passes IAA
 
     Returns:
-        out: a mess of variables
+        out: a list containing a lot of variables
     """
+    #Read start and end indexes of highlights
+    starts = questionDF['start_pos'].tolist()
+    ends = questionDF['end_pos'].tolist()
+    length = questionDF['article_text_length'].iloc[0]
 
-    starts = get_question_start(data,article, ques)
-    print(starts)
-    ends = get_question_end(data, article, ques)
-    length = get_text_length(data, article, ques)
-    if len(ends)>0 and max(ends)>0:
-        hlUsers = get_question_hlUsers(data, article,ques)
-        hlAns = get_question_hlAns(data, article, ques)
-
+    #Read highlight users and answers
+    if len(ends) > 0 and max(ends) > 0:
+        hlUsers = questionDF["contributor_uuid"].tolist()
+        hlAns = questionDF["answer_label"].apply(getAnsNumberFromLabel).tolist()
         #Now load the source_text
         if text_file == None:
             raise Exception("Couldn't find text_file for article", article)
-
         with open(text_file, 'r', encoding='utf-8') as file:
             sourceText = file.read()
     else:
@@ -187,15 +192,18 @@ def score(article, ques, quesDF, data, config_path, text_file, schemaFile, repDF
         hlUsers = []
         hlAns = []
 
-    schema = get_schema_topic(data, article)
+    #Read schema data
+    schema_topic = schemaDF["topic_name"].iloc[0]
     if schema_has_dist_function(schemaFile):
         question_type, num_choices = schema_to_type_and_num(ques, schemaFile, config_path)
     else:
-        question_type, num_choices = get_type_json(schema, ques, config_path)
+        question_type, num_choices = get_type_json(schema_topic, ques, config_path)
 
-    answers = get_question_answers(data, article, ques)
-    users =get_question_userid(data, article, ques)
-    numUsers = get_num_users(data, article, ques)
+    #Read answers, users, and the numbero f users
+    questionDF_nodupes = questionDF.drop_duplicates(subset = ["contributor_uuid", "answer_uuid"])
+    answers = questionDF_nodupes["answer_label"].apply(getAnsNumberFromLabel).tolist()
+    users = questionDF_nodupes["contributor_uuid"].tolist()
+    numUsers = len(questionDF["contributor_uuid"].unique())
 
     assert (len(answers) == len(users))
     if num_choices == 1:
@@ -210,29 +218,25 @@ def score(article, ques, quesDF, data, config_path, text_file, schemaFile, repDF
         out = evaluateChecklist(answers, users, starts, ends, numUsers, length, repDF, sourceText, hlUsers, hlAns, num_choices = num_choices, useRep=useRep, threshold_func = threshold_func)
     return out
 
-def get_answer_data(topic, question, answer, schema_file):
-    """
-    Returns data about a question/answer pair from a specific schema.
-
-    Args:
-        topic: always 1 for now
-        question: the question number
-        answer: the agreed answer number
-        schema_file: the file path of the schema
-
-    Returns:
-        ans_uuid: unique schema identifier for the answer/question pair
-        has_hl: boolean for if the answer involves highlights
-    """
-    #answer is string if LMU
+def get_answer_data(topic, question, answer, schemaDF):
     if isinstance(answer, str):
         return 0,0
-    schema_data = pd.read_csv(schema_file, encoding='utf-8')
     tqa = "T"+str(topic)+".Q"+str(question)+".A"+str(answer)
-    row = schema_data[schema_data['answer_label'] == tqa]
+    row = schemaDF[schemaDF['answer_label'] == tqa]
     if row.shape[0]<1:
         return 'XXX',0
     return row['answer_uuid'].iloc[0], row['highlight'].iloc[0]
+
+def get_answer_content(schemaDF, task_id, question_num, answer_num):
+    if answer_num == 'U' or answer_num == 'L' or answer_num == 'M' or answer_num == 'N/A':
+        return answer_num
+    questionDF = schemaDF[schemaDF['question_label'] == question_num]
+    pot_answers = questionDF['answer_content'].tolist()
+    pot_answers.insert(0,'zero')
+    return pot_answers
+
+def getAnsNumberFromLabel(label):
+    return int(re.search(r'(?<=.A)\d+', label).group(0))
 
 def getQuestionNumberFromLabel(label):
     return int(re.search(r'(?<=.Q)\d+', label).group(0))
