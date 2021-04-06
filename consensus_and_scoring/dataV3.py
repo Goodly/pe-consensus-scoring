@@ -590,7 +590,7 @@ def get_article_dependencies(data,task_id):
 def get_namespace(data, article, question_num):
     return data[article][question_num][1][7][0].iloc[0]
 
-def get_schema_topic(data, task_id):
+def f(data, task_id):
     return data[task_id]['taskData']["schema_topic"]
 
 def finder(ser, a):

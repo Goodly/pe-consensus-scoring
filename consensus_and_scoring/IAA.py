@@ -230,7 +230,7 @@ def score(article, ques, data, config_path, text_file, schemaFile, repDF = None,
         hlAns = []
 
 
-    schema = get_schema_topic(data, article)
+    schema = get_schema(data, article)
     if schema_has_dist_function(schemaFile):
         question_type, num_choices = schema_to_type_and_num(ques, schemaFile, config_path)
     else:

@@ -128,6 +128,7 @@ def make_namespace_to_schema_dict(tags, iaa, schema_dir):
         schema_df = pd.read_csv(schema_dir+schema_uuid+".csv")
         dict[n] = schema_df
     return dict
+
 if __name__ == '__main__':
     old_s_iaa_dir = '../data/out_temp_iaa/'
     tags_dir = '../data/adj_tags/'
