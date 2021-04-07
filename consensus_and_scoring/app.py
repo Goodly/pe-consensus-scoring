@@ -55,6 +55,7 @@ def lambda_handler(event, context):
                 logger.info("Message '{}:{}' from pipeline '{}'"
                             .format(message_action, message_version, pipeline_name))
                 with tempfile.TemporaryDirectory() as parent_dirname:
+                    response = None
                     if message_action == "request_consensus" and message_version == "1":
                         response = handle_request_consensus(body, parent_dirname)
                     if message_action == "publish_article" and message_version == "1":
@@ -95,11 +96,11 @@ def handle_request_consensus(body, parent_dirname):
 
 def handle_highlighter_consensus(body, parent_dirname):
     highlighters = body.get('Highlighters', [])
-    highlighters_dir = os.path.join(parent_dirname, 'highlighters')
+    highlighters_dir = make_dir(parent_dirname, 'highlighters')
     retrieve_file_list(highlighters, highlighters_dir)
     logger.info("highlighters count {}".format(len(highlighters)))
     logger.info("---FILES RETRIEVED SUCCESSFULLY in request_highlighter_consensus handler---")
-    output_dir = tempfile.mkdtemp(dir=parent_dirname)
+    output_dir = make_dir(parent_dirname, "HLTR_consensus_output_")
     for filename in os.listdir(highlighters_dir):
         if filename.endswith(".csv"):
             input_file = os.path.join(highlighters_dir, filename)
@@ -112,9 +113,9 @@ def handle_datahunt_consensus(body, parent_dirname):
     texts = use_article_sha256_filenames(texts)
     schemas = body.get('Schemas', [])
     datahunts = body.get('DataHunts', [])
-    texts_dir = os.path.join(parent_dirname, 'texts')
-    schemas_dir = os.path.join(parent_dirname, 'schemas')
-    datahunts_dir = os.path.join(parent_dirname, 'datahunts')
+    texts_dir = make_dir(parent_dirname, 'texts')
+    schemas_dir = make_dir(parent_dirname, 'schemas')
+    datahunts_dir = make_dir(parent_dirname, 'datahunts')
     retrieve_file_list(texts, texts_dir)
     retrieve_file_list(schemas, schemas_dir)
     retrieve_file_list(datahunts, datahunts_dir)
@@ -124,9 +125,9 @@ def handle_datahunt_consensus(body, parent_dirname):
     logger.info("---FILES RETRIEVED SUCCESSFULLY in request_datahunt_consensus handler---")
     config_path = './config/'
     rep_file = './UserRepScores.csv'
-    output_dir = tempfile.mkdtemp(dir=parent_dirname)
-    scoring_dir = tempfile.mkdtemp(dir=parent_dirname)
-    adjud_dir = tempfile.mkdtemp(dir=parent_dirname)
+    output_dir = make_dir(parent_dirname, "datahunt_consensus_output_")
+    scoring_dir = make_dir(parent_dirname, "scoring_output_")
+    adjud_dir = make_dir(parent_dirname, "adjud_")
     result_dir = iaa_only(
         datahunts_dir,
         texts_dir,
@@ -209,15 +210,15 @@ def handle_publish_article(body, parent_dirname):
     #logger.info("negative_tasks count {}".format(len(negative_tasks)))
     logger.info("adj_tags count {}".format(len(adj_tags)))
     logger.info("adj_negative_tasks count {}".format(len(adj_negative_tasks)))
-    texts_dir = os.path.join(parent_dirname, 'texts')
-    metadata_dir = os.path.join(parent_dirname, 'metadata')
-    schemas_dir = os.path.join(parent_dirname, 'schemas')
-    datahunts_dir = os.path.join(parent_dirname, 'datahunts')
-    focus_tags_dir = os.path.join(parent_dirname, 'focus_tags')
+    texts_dir = make_dir(parent_dirname, 'texts')
+    metadata_dir = make_dir(parent_dirname, 'metadata')
+    schemas_dir = make_dir(parent_dirname, 'schemas')
+    datahunts_dir = make_dir(parent_dirname, 'datahunts')
+    focus_tags_dir = make_dir(parent_dirname, 'focus_tags')
     #tags_dir = os.path.join(parent_dirname, 'tags')
     #negative_tasks_dir = os.path.join(parent_dirname, 'negative_tasks')
-    adj_tags_dir = os.path.join(parent_dirname, 'adj_tags')
-    adj_negative_tasks_dir = os.path.join(parent_dirname, 'adj_negative_tasks')
+    adj_tags_dir = make_dir(parent_dirname, 'adj_tags')
+    adj_negative_tasks_dir = make_dir(parent_dirname, 'adj_negative_tasks')
     retrieve_file_list(texts, texts_dir)
     retrieve_file_list(metadata_for_texts, metadata_dir)
     retrieve_file_list(schemas, schemas_dir)
@@ -235,10 +236,10 @@ def handle_publish_article(body, parent_dirname):
     rep_file = './UserRepScores.csv'
     threshold_function = 'raw_30'
     # outputs
-    output_dir = tempfile.mkdtemp(dir=parent_dirname)
-    iaa_temp_dir = tempfile.mkdtemp(dir=parent_dirname)
-    scoring_dir = tempfile.mkdtemp(dir=parent_dirname)
-    viz_dir = tempfile.mkdtemp(dir=parent_dirname)
+    output_dir = make_dir(parent_dirname, "publish_output_")
+    iaa_temp_dir = make_dir(parent_dirname, "iaa_temp_")
+    scoring_dir = make_dir(parent_dirname, "scoring_")
+    viz_dir = make_dir(parent_dirname, "viz_")
     post_adjudicator_master(
         adj_tags_dir,
         schemas_dir,
@@ -366,22 +367,8 @@ def rename_schema_files(schemas_dir):
             else:
                 logger.warn("Failed to find SHA-256 for '{}'".format(filepath))
 
-# To use, send a message with TagWorks pipeline.sqs_notify.notify_all
-# and then call this to receive. Must use a queue that is NOT attached to
-# a lambda that will consume the event first.
-# Or to bypass queue testing, save the JSON from
-# pipeline.sqs_notify.build_notify_all_message and pass that to handle_notify_all.
-def test_receive_notify_all(input_SQS_url):
-    # SQS URL like 'https://sqs.us-west-2.amazonaws.com/012345678901/public-editor-covid'
-    queue = sqs.Queue(input_SQS_url)
-    # Long poll. Recommend queue be configured to longest poll time of 20 seconds.
-    messages = queue.receive_messages()
-    for message in messages:
-        body = json.loads(message.body)
-        if body.get('Action', '') == "notify_all" and body.get('Version','') == "1":
-            handle_notify_all(body)
-        message.delete()
-
-
-if __name__ == '__main__':
-    pass
+def make_dir(parent_dirname, join_path):
+    dest_dirname = os.path.join(parent_dirname, join_path)
+    if not os.path.exists(dest_dirname):
+        os.makedirs(dest_dirname)
+    return dest_dirname
