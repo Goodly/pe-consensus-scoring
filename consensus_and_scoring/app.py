@@ -100,7 +100,7 @@ def handle_highlighter_consensus(body, parent_dirname):
     retrieve_file_list(highlighters, highlighters_dir)
     logger.info("highlighters count {}".format(len(highlighters)))
     logger.info("---FILES RETRIEVED SUCCESSFULLY in request_highlighter_consensus handler---")
-    output_dir = make_dir(parent_dirname, "HLTR_consensus_output_")
+    output_dir = make_dir(parent_dirname, "output_HLTR_consensus")
     for filename in os.listdir(highlighters_dir):
         if filename.endswith(".csv"):
             input_file = os.path.join(highlighters_dir, filename)
@@ -125,9 +125,9 @@ def handle_datahunt_consensus(body, parent_dirname):
     logger.info("---FILES RETRIEVED SUCCESSFULLY in request_datahunt_consensus handler---")
     config_path = './config/'
     rep_file = './UserRepScores.csv'
-    output_dir = make_dir(parent_dirname, "datahunt_consensus_output_")
-    scoring_dir = make_dir(parent_dirname, "scoring_output_")
-    adjud_dir = make_dir(parent_dirname, "adjud_")
+    output_dir = make_dir(parent_dirname, "output_datahunt_consensus")
+    scoring_dir = make_dir(parent_dirname, "output_scoring")
+    adjud_dir = make_dir(parent_dirname, "output_adjud")
     result_dir = iaa_only(
         datahunts_dir,
         texts_dir,
@@ -236,10 +236,10 @@ def handle_publish_article(body, parent_dirname):
     rep_file = './UserRepScores.csv'
     threshold_function = 'raw_30'
     # outputs
-    output_dir = make_dir(parent_dirname, "publish_output_")
-    iaa_temp_dir = make_dir(parent_dirname, "iaa_temp_")
-    scoring_dir = make_dir(parent_dirname, "scoring_")
-    viz_dir = make_dir(parent_dirname, "viz_")
+    output_dir = make_dir(parent_dirname, "output_publish")
+    iaa_temp_dir = make_dir(parent_dirname, "output_iaa_temp")
+    scoring_dir = make_dir(parent_dirname, "output_scoring")
+    viz_dir = make_dir(parent_dirname, "output_viz")
     post_adjudicator_master(
         adj_tags_dir,
         schemas_dir,
