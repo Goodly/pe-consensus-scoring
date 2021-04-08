@@ -93,20 +93,22 @@ def handle_request_consensus(body, parent_dirname):
     message = build_consensus_message(body, s3_locations)
     return message
 
-def fetch_tags_files(body, parent_dirname, dir_dict):
+def fetch_tags_files(body, parent_dirname, dir_dict, fetch_remote_data=True):
     tags = body.get('Tags', [])
     negative_tasks = body.get('NegativeTasks', [])
     dir_dict.update({
         'tags_dir': os.path.join(parent_dirname, 'tags'),
         'negative_tasks_dir': os.path.join(parent_dirname, 'negative_tasks'),
     })
-    retrieve_file_list(tags, dir_dict['tags_dir'])
-    retrieve_file_list(negative_tasks, dir_dict['negative_tasks_dir'])
+    if fetch_remote_data:
+        retrieve_file_list(tags, dir_dict['tags_dir'])
+        retrieve_file_list(negative_tasks, dir_dict['negative_tasks_dir'])
 
-def fetch_highlighter_files(body, parent_dirname):
+def fetch_highlighter_files(body, parent_dirname, fetch_remote_data=True):
     highlighters = body.get('Highlighters', [])
     highlighters_dir = make_dir(parent_dirname, 'highlighters')
-    retrieve_file_list(highlighters, highlighters_dir)
+    if fetch_remote_data:
+        retrieve_file_list(highlighters, highlighters_dir)
     logger.info("highlighters count {}".format(len(highlighters)))
     logger.info("---FILES RETRIEVED SUCCESSFULLY in request_highlighter_consensus handler---")
     consensus_dir = make_dir(parent_dirname, "output_HLTR_consensus")
@@ -124,7 +126,7 @@ def generate_highlighter_consensus(dir_dict):
             output_file = os.path.join(consensus_dir, "S_IAA_" + filename)
             importData(input_file, output_file)
 
-def fetch_datahunt_files(body, parent_dirname):
+def fetch_datahunt_files(body, parent_dirname, fetch_remote_data=True):
     texts = body.get('Texts', [])
     texts = use_article_sha256_filenames(texts)
     schemas = body.get('Schemas', [])
@@ -138,10 +140,11 @@ def fetch_datahunt_files(body, parent_dirname):
         'scoring_dir': make_dir(parent_dirname, "output_scoring"),
         'adjud_dir': make_dir(parent_dirname, "output_adjud"),
     }
-    retrieve_file_list(texts, dir_dict['texts_dir'])
-    retrieve_file_list(schemas, dir_dict['schemas_dir'])
-    retrieve_file_list(datahunts, dir_dict['datahunts_dir'])
-    rename_schema_files(dir_dict['schemas_dir'])
+    if fetch_remote_data:
+        retrieve_file_list(texts, dir_dict['texts_dir'])
+        retrieve_file_list(schemas, dir_dict['schemas_dir'])
+        retrieve_file_list(datahunts, dir_dict['datahunts_dir'])
+        rename_schema_files(dir_dict['schemas_dir'])
     logger.info("schemas count {}".format(len(schemas)))
     logger.info("datahunts count {}".format(len(datahunts)))
     logger.info("---FILES RETRIEVED SUCCESSFULLY in request_datahunt_consensus handler---")
