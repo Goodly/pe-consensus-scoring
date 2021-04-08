@@ -73,17 +73,16 @@ def handle_request_consensus(body, parent_dirname):
     project_uuid = body.get('project_uuid', '')
     task_type = body.get('task_type', '')
 
-    tags = body.get('Tags', [])
-    negative_tasks = body.get('NegativeTasks', [])
-    tags_dir = os.path.join(parent_dirname, 'tags')
-    negative_tasks_dir = os.path.join(parent_dirname, 'negative_tasks')
-    retrieve_file_list(tags, tags_dir)
-    retrieve_file_list(negative_tasks, negative_tasks_dir)
-
     if task_type == "HLTR":
-        consensus_dir = handle_highlighter_consensus(body, parent_dirname)
+        dir_dict = fetch_highlighter_files(body, parent_dirname)
+        fetch_tags_files(body, parent_dirname, dir_dict)
+        generate_highlighter_consensus(dir_dict)
+        consensus_dir = dir_dict['consensus_dir']
     elif task_type == "QUIZ":
-        consensus_dir = handle_datahunt_consensus(body, parent_dirname)
+        dir_dict = fetch_datahunt_files(body, parent_dirname)
+        fetch_tags_files(body, parent_dirname, dir_dict)
+        generate_datahunt_consensus(dir_dict)
+        consensus_dir = dir_dict['adjud_dir']
     else:
         raise Exception(u"request_consensus: Project '{}' has unknown task_type '{}'."
                         .format(project_name, task_type))
@@ -94,51 +93,73 @@ def handle_request_consensus(body, parent_dirname):
     message = build_consensus_message(body, s3_locations)
     return message
 
-def handle_highlighter_consensus(body, parent_dirname):
+def fetch_tags_files(body, parent_dirname, dir_dict):
+    tags = body.get('Tags', [])
+    negative_tasks = body.get('NegativeTasks', [])
+    dir_dict.update({
+        'tags_dir': os.path.join(parent_dirname, 'tags'),
+        'negative_tasks_dir': os.path.join(parent_dirname, 'negative_tasks'),
+    })
+    retrieve_file_list(tags, dir_dict['tags_dir'])
+    retrieve_file_list(negative_tasks, dir_dict['negative_tasks_dir'])
+
+def fetch_highlighter_files(body, parent_dirname):
     highlighters = body.get('Highlighters', [])
     highlighters_dir = make_dir(parent_dirname, 'highlighters')
     retrieve_file_list(highlighters, highlighters_dir)
     logger.info("highlighters count {}".format(len(highlighters)))
     logger.info("---FILES RETRIEVED SUCCESSFULLY in request_highlighter_consensus handler---")
-    output_dir = make_dir(parent_dirname, "output_HLTR_consensus")
+    consensus_dir = make_dir(parent_dirname, "output_HLTR_consensus")
+    return {
+        'highlighters_dir': highlighters_dir,
+        'consensus_dir': consensus_dir,
+    }
+
+def generate_highlighter_consensus(dir_dict):
+    highlighters_dir = dir_dict['highlighters_dir']
+    consensus_dir = dir_dict['consensus_dir']
     for filename in os.listdir(highlighters_dir):
         if filename.endswith(".csv"):
             input_file = os.path.join(highlighters_dir, filename)
-            output_file = os.path.join(output_dir, "S_IAA_" + filename)
+            output_file = os.path.join(consensus_dir, "S_IAA_" + filename)
             importData(input_file, output_file)
-    return output_dir
 
-def handle_datahunt_consensus(body, parent_dirname):
+def fetch_datahunt_files(body, parent_dirname):
     texts = body.get('Texts', [])
     texts = use_article_sha256_filenames(texts)
     schemas = body.get('Schemas', [])
     datahunts = body.get('DataHunts', [])
-    texts_dir = make_dir(parent_dirname, 'texts')
-    schemas_dir = make_dir(parent_dirname, 'schemas')
-    datahunts_dir = make_dir(parent_dirname, 'datahunts')
-    retrieve_file_list(texts, texts_dir)
-    retrieve_file_list(schemas, schemas_dir)
-    retrieve_file_list(datahunts, datahunts_dir)
-    rename_schema_files(schemas_dir)
+    dir_dict = {
+        'texts_dir': make_dir(parent_dirname, 'texts'),
+        'schemas_dir': make_dir(parent_dirname, 'schemas'),
+        'datahunts_dir': make_dir(parent_dirname, 'datahunts'),
+        'config_path': './config/',
+        'consensus_dir': make_dir(parent_dirname, "output_datahunt_consensus"),
+        'scoring_dir': make_dir(parent_dirname, "output_scoring"),
+        'adjud_dir': make_dir(parent_dirname, "output_adjud"),
+    }
+    retrieve_file_list(texts, dir_dict['texts_dir'])
+    retrieve_file_list(schemas, dir_dict['schemas_dir'])
+    retrieve_file_list(datahunts, dir_dict['datahunts_dir'])
+    rename_schema_files(dir_dict['schemas_dir'])
     logger.info("schemas count {}".format(len(schemas)))
     logger.info("datahunts count {}".format(len(datahunts)))
     logger.info("---FILES RETRIEVED SUCCESSFULLY in request_datahunt_consensus handler---")
-    config_path = './config/'
-    rep_file = './UserRepScores.csv'
-    output_dir = make_dir(parent_dirname, "output_datahunt_consensus")
-    scoring_dir = make_dir(parent_dirname, "output_scoring")
-    adjud_dir = make_dir(parent_dirname, "output_adjud")
+    return dir_dict
+
+def generate_datahunt_consensus(dir_dict):
     result_dir = iaa_only(
-        datahunts_dir,
-        texts_dir,
-        config_path,
+        dir_dict['datahunts_dir'],
+        dir_dict['texts_dir'],
+        dir_dict['config_path'],
         use_rep = False,
         repCSV = None,
-        iaa_dir = output_dir,
-        schema_dir = schemas_dir,
-        adjud_dir = adjud_dir,
+        iaa_dir = dir_dict['consensus_dir'],
+        schema_dir = dir_dict['schemas_dir'],
+        adjud_dir = dir_dict['adjud_dir'],
         threshold_func = 'raw_30'
     )
+    assert(result_dir == dir_dict['adjud_dir'])
     return result_dir
 
 def send_consensus_files(consensus_dir, consensus_s3_bucket, consensus_s3_prefix):
