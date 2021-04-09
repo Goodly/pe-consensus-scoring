@@ -628,7 +628,7 @@ def get_type_json(type, ques, config_path):
 def schema_has_dist_function(config_path):
     df = pd.read_csv(config_path)
     df = df.drop_duplicates('question_label')
-    df = df.tail(3)
+
     ordinal_check = df.loc[df['alpha_distance'] == 'ordinal']
     return not ordinal_check.empty
 

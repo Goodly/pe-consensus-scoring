@@ -114,6 +114,8 @@ def calc_scores(highlightfilename, config_path,  texts_path, repCSV=None, schema
         for ques in sorted(questions):  # Iterates through each question in an article
 
             agreements = score(task, ques, uberDict, config_path, text_file, schemaFile, repDF, useRep=useRep, threshold_func=threshold_func)
+            if agreements == None:
+                continue
             question_text = get_question_text(uberDict, task, ques)
             # if it's a list then it was a checklist question
 
@@ -256,6 +258,8 @@ def score(article, ques, data, config_path, text_file, schemaFile, repDF = None,
     elif question_type == 'checklist':
         out = evaluateChecklist(answers, users, starts, ends, numUsers, length, repDF, sourceText, hlUsers, hlAns,
                                 num_choices = num_choices, useRep=useRep, threshold_func = threshold_func)
+    elif question_type == 'none':
+        out = None
     return out
 
 
@@ -308,7 +312,7 @@ def get_answer_data(schema_sha, topic, question, answer, schema_file):
 
 if __name__ == '__main__':
     config_path = './config/'
-    input_dir = '../test_data/test_diff_schemas/'
+    input_dir = '../test_data/test_iaa_checklist_zero_pass/'
     #input_dir = '../data/dh1'
     texts_dir = '../test_data/texts/'
     metadata_dir = '../data/metadata/'
