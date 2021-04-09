@@ -109,8 +109,7 @@ def fetch_highlighter_files(body, parent_dirname, fetch_remote_data=True):
     highlighters_dir = make_dir(parent_dirname, 'highlighters')
     if fetch_remote_data:
         retrieve_file_list(highlighters, highlighters_dir)
-    logger.info("highlighters count {}".format(len(highlighters)))
-    logger.info("---FILES RETRIEVED SUCCESSFULLY in request_highlighter_consensus handler---")
+        logger.info("---FILES RETRIEVED SUCCESSFULLY in request_highlighter_consensus handler---")
     consensus_dir = make_dir(parent_dirname, "output_HLTR_consensus")
     return {
         'highlighters_dir': highlighters_dir,
@@ -145,9 +144,7 @@ def fetch_datahunt_files(body, parent_dirname, fetch_remote_data=True):
         retrieve_file_list(schemas, dir_dict['schemas_dir'])
         retrieve_file_list(datahunts, dir_dict['datahunts_dir'])
         rename_schema_files(dir_dict['schemas_dir'])
-    logger.info("schemas count {}".format(len(schemas)))
-    logger.info("datahunts count {}".format(len(datahunts)))
-    logger.info("---FILES RETRIEVED SUCCESSFULLY in request_datahunt_consensus handler---")
+        logger.info("---FILES RETRIEVED SUCCESSFULLY in request_datahunt_consensus handler---")
     return dir_dict
 
 def generate_datahunt_consensus(dir_dict):
