@@ -213,7 +213,7 @@ def send_pipeline_message(response_sqs_url, message):
                     .format(log_message))
     return response
 
-def handle_publish_article(body, parent_dirname):
+def handle_publish_article(body, parent_dirname, fetch_remote_data=True):
     logger.info("------BEGIN publish_article handler-------")
     texts = body.get('Texts', [])
     texts = use_article_sha256_filenames(texts)
@@ -243,17 +243,18 @@ def handle_publish_article(body, parent_dirname):
     #negative_tasks_dir = os.path.join(parent_dirname, 'negative_tasks')
     adj_tags_dir = make_dir(parent_dirname, 'adj_tags')
     adj_negative_tasks_dir = make_dir(parent_dirname, 'adj_negative_tasks')
-    retrieve_file_list(texts, texts_dir)
-    retrieve_file_list(metadata_for_texts, metadata_dir)
-    retrieve_file_list(schemas, schemas_dir)
-    retrieve_file_list(datahunts, datahunts_dir)
-    retrieve_file_list(focus_tags, focus_tags_dir)
-    #retrieve_file_list(tags, tags_dir)
-    #retrieve_file_list(negative_tasks, negative_tasks_dir)
-    retrieve_file_list(adj_tags, adj_tags_dir)
-    retrieve_file_list(adj_negative_tasks, adj_negative_tasks_dir)
-    rename_schema_files(schemas_dir)
-    logger.info("------FILES RETRIEVED SUCCESSFULLY in publish_article handler-------")
+    if fetch_remote_data:
+        retrieve_file_list(texts, texts_dir)
+        retrieve_file_list(metadata_for_texts, metadata_dir)
+        retrieve_file_list(schemas, schemas_dir)
+        retrieve_file_list(datahunts, datahunts_dir)
+        retrieve_file_list(focus_tags, focus_tags_dir)
+        #retrieve_file_list(tags, tags_dir)
+        #retrieve_file_list(negative_tasks, negative_tasks_dir)
+        retrieve_file_list(adj_tags, adj_tags_dir)
+        retrieve_file_list(adj_negative_tasks, adj_negative_tasks_dir)
+        rename_schema_files(schemas_dir)
+        logger.info("------FILES RETRIEVED SUCCESSFULLY in publish_article handler-------")
 
     # additional input config data
     config_path = './config/'
