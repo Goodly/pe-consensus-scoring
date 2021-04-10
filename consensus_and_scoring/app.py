@@ -55,6 +55,7 @@ def lambda_handler(event, context):
                 logger.info("Message '{}:{}' from pipeline '{}'"
                             .format(message_action, message_version, pipeline_name))
                 with tempfile.TemporaryDirectory() as parent_dirname:
+                    response = None
                     if message_action == "request_consensus" and message_version == "1":
                         response = handle_request_consensus(body, parent_dirname)
                     if message_action == "publish_article" and message_version == "1":
@@ -72,17 +73,16 @@ def handle_request_consensus(body, parent_dirname):
     project_uuid = body.get('project_uuid', '')
     task_type = body.get('task_type', '')
 
-    tags = body.get('Tags', [])
-    negative_tasks = body.get('NegativeTasks', [])
-    tags_dir = os.path.join(parent_dirname, 'tags')
-    negative_tasks_dir = os.path.join(parent_dirname, 'negative_tasks')
-    retrieve_file_list(tags, tags_dir)
-    retrieve_file_list(negative_tasks, negative_tasks_dir)
-
     if task_type == "HLTR":
-        consensus_dir = handle_highlighter_consensus(body, parent_dirname)
+        dir_dict = fetch_highlighter_files(body, parent_dirname)
+        fetch_tags_files(body, parent_dirname, dir_dict)
+        generate_highlighter_consensus(dir_dict)
+        consensus_dir = dir_dict['consensus_dir']
     elif task_type == "QUIZ":
-        consensus_dir = handle_datahunt_consensus(body, parent_dirname)
+        dir_dict = fetch_datahunt_files(body, parent_dirname)
+        fetch_tags_files(body, parent_dirname, dir_dict)
+        generate_datahunt_consensus(dir_dict)
+        consensus_dir = dir_dict['adjud_dir']
     else:
         raise Exception(u"request_consensus: Project '{}' has unknown task_type '{}'."
                         .format(project_name, task_type))
@@ -93,51 +93,73 @@ def handle_request_consensus(body, parent_dirname):
     message = build_consensus_message(body, s3_locations)
     return message
 
-def handle_highlighter_consensus(body, parent_dirname):
+def fetch_tags_files(body, parent_dirname, dir_dict, fetch_remote_data=True):
+    tags = body.get('Tags', [])
+    negative_tasks = body.get('NegativeTasks', [])
+    dir_dict.update({
+        'tags_dir': os.path.join(parent_dirname, 'tags'),
+        'negative_tasks_dir': os.path.join(parent_dirname, 'negative_tasks'),
+    })
+    if fetch_remote_data:
+        retrieve_file_list(tags, dir_dict['tags_dir'])
+        retrieve_file_list(negative_tasks, dir_dict['negative_tasks_dir'])
+
+def fetch_highlighter_files(body, parent_dirname, fetch_remote_data=True):
     highlighters = body.get('Highlighters', [])
-    highlighters_dir = os.path.join(parent_dirname, 'highlighters')
-    retrieve_file_list(highlighters, highlighters_dir)
-    logger.info("highlighters count {}".format(len(highlighters)))
-    logger.info("---FILES RETRIEVED SUCCESSFULLY in request_highlighter_consensus handler---")
-    output_dir = tempfile.mkdtemp(dir=parent_dirname)
+    highlighters_dir = make_dir(parent_dirname, 'highlighters')
+    if fetch_remote_data:
+        retrieve_file_list(highlighters, highlighters_dir)
+        logger.info("---FILES RETRIEVED SUCCESSFULLY in request_highlighter_consensus handler---")
+    consensus_dir = make_dir(parent_dirname, "output_HLTR_consensus")
+    return {
+        'highlighters_dir': highlighters_dir,
+        'consensus_dir': consensus_dir,
+    }
+
+def generate_highlighter_consensus(dir_dict):
+    highlighters_dir = dir_dict['highlighters_dir']
+    consensus_dir = dir_dict['consensus_dir']
     for filename in os.listdir(highlighters_dir):
         if filename.endswith(".csv"):
             input_file = os.path.join(highlighters_dir, filename)
-            output_file = os.path.join(output_dir, "S_IAA_" + filename)
+            output_file = os.path.join(consensus_dir, "S_IAA_" + filename)
             importData(input_file, output_file)
-    return output_dir
 
-def handle_datahunt_consensus(body, parent_dirname):
+def fetch_datahunt_files(body, parent_dirname, fetch_remote_data=True):
     texts = body.get('Texts', [])
     texts = use_article_sha256_filenames(texts)
     schemas = body.get('Schemas', [])
     datahunts = body.get('DataHunts', [])
-    texts_dir = os.path.join(parent_dirname, 'texts')
-    schemas_dir = os.path.join(parent_dirname, 'schemas')
-    datahunts_dir = os.path.join(parent_dirname, 'datahunts')
-    retrieve_file_list(texts, texts_dir)
-    retrieve_file_list(schemas, schemas_dir)
-    retrieve_file_list(datahunts, datahunts_dir)
-    rename_schema_files(schemas_dir)
-    logger.info("schemas count {}".format(len(schemas)))
-    logger.info("datahunts count {}".format(len(datahunts)))
-    logger.info("---FILES RETRIEVED SUCCESSFULLY in request_datahunt_consensus handler---")
-    config_path = './config/'
-    rep_file = './UserRepScores.csv'
-    output_dir = tempfile.mkdtemp(dir=parent_dirname)
-    scoring_dir = tempfile.mkdtemp(dir=parent_dirname)
-    adjud_dir = tempfile.mkdtemp(dir=parent_dirname)
+    dir_dict = {
+        'texts_dir': make_dir(parent_dirname, 'texts'),
+        'schemas_dir': make_dir(parent_dirname, 'schemas'),
+        'datahunts_dir': make_dir(parent_dirname, 'datahunts'),
+        'config_path': './config/',
+        'consensus_dir': make_dir(parent_dirname, "output_datahunt_consensus"),
+        'scoring_dir': make_dir(parent_dirname, "output_scoring"),
+        'adjud_dir': make_dir(parent_dirname, "output_adjud"),
+    }
+    if fetch_remote_data:
+        retrieve_file_list(texts, dir_dict['texts_dir'])
+        retrieve_file_list(schemas, dir_dict['schemas_dir'])
+        retrieve_file_list(datahunts, dir_dict['datahunts_dir'])
+        rename_schema_files(dir_dict['schemas_dir'])
+        logger.info("---FILES RETRIEVED SUCCESSFULLY in request_datahunt_consensus handler---")
+    return dir_dict
+
+def generate_datahunt_consensus(dir_dict):
     result_dir = iaa_only(
-        datahunts_dir,
-        texts_dir,
-        config_path,
+        dir_dict['datahunts_dir'],
+        dir_dict['texts_dir'],
+        dir_dict['config_path'],
         use_rep = False,
         repCSV = None,
-        iaa_dir = output_dir,
-        schema_dir = schemas_dir,
-        adjud_dir = adjud_dir,
+        iaa_dir = dir_dict['consensus_dir'],
+        schema_dir = dir_dict['schemas_dir'],
+        adjud_dir = dir_dict['adjud_dir'],
         threshold_func = 'raw_30'
     )
+    assert(result_dir == dir_dict['adjud_dir'])
     return result_dir
 
 def send_consensus_files(consensus_dir, consensus_s3_bucket, consensus_s3_prefix):
@@ -188,7 +210,7 @@ def send_pipeline_message(response_sqs_url, message):
                     .format(log_message))
     return response
 
-def handle_publish_article(body, parent_dirname):
+def handle_publish_article(body, parent_dirname, fetch_remote_data=True):
     logger.info("------BEGIN publish_article handler-------")
     texts = body.get('Texts', [])
     texts = use_article_sha256_filenames(texts)
@@ -209,36 +231,37 @@ def handle_publish_article(body, parent_dirname):
     #logger.info("negative_tasks count {}".format(len(negative_tasks)))
     logger.info("adj_tags count {}".format(len(adj_tags)))
     logger.info("adj_negative_tasks count {}".format(len(adj_negative_tasks)))
-    texts_dir = os.path.join(parent_dirname, 'texts')
-    metadata_dir = os.path.join(parent_dirname, 'metadata')
-    schemas_dir = os.path.join(parent_dirname, 'schemas')
-    datahunts_dir = os.path.join(parent_dirname, 'datahunts')
-    focus_tags_dir = os.path.join(parent_dirname, 'focus_tags')
+    texts_dir = make_dir(parent_dirname, 'texts')
+    metadata_dir = make_dir(parent_dirname, 'metadata')
+    schemas_dir = make_dir(parent_dirname, 'schemas')
+    datahunts_dir = make_dir(parent_dirname, 'datahunts')
+    focus_tags_dir = make_dir(parent_dirname, 'focus_tags')
     #tags_dir = os.path.join(parent_dirname, 'tags')
     #negative_tasks_dir = os.path.join(parent_dirname, 'negative_tasks')
-    adj_tags_dir = os.path.join(parent_dirname, 'adj_tags')
-    adj_negative_tasks_dir = os.path.join(parent_dirname, 'adj_negative_tasks')
-    retrieve_file_list(texts, texts_dir)
-    retrieve_file_list(metadata_for_texts, metadata_dir)
-    retrieve_file_list(schemas, schemas_dir)
-    retrieve_file_list(datahunts, datahunts_dir)
-    retrieve_file_list(focus_tags, focus_tags_dir)
-    #retrieve_file_list(tags, tags_dir)
-    #retrieve_file_list(negative_tasks, negative_tasks_dir)
-    retrieve_file_list(adj_tags, adj_tags_dir)
-    retrieve_file_list(adj_negative_tasks, adj_negative_tasks_dir)
-    rename_schema_files(schemas_dir)
-    logger.info("------FILES RETRIEVED SUCCESSFULLY in publish_article handler-------")
+    adj_tags_dir = make_dir(parent_dirname, 'adj_tags')
+    adj_negative_tasks_dir = make_dir(parent_dirname, 'adj_negative_tasks')
+    if fetch_remote_data:
+        retrieve_file_list(texts, texts_dir)
+        retrieve_file_list(metadata_for_texts, metadata_dir)
+        retrieve_file_list(schemas, schemas_dir)
+        retrieve_file_list(datahunts, datahunts_dir)
+        retrieve_file_list(focus_tags, focus_tags_dir)
+        #retrieve_file_list(tags, tags_dir)
+        #retrieve_file_list(negative_tasks, negative_tasks_dir)
+        retrieve_file_list(adj_tags, adj_tags_dir)
+        retrieve_file_list(adj_negative_tasks, adj_negative_tasks_dir)
+        rename_schema_files(schemas_dir)
+        logger.info("------FILES RETRIEVED SUCCESSFULLY in publish_article handler-------")
 
     # additional input config data
     config_path = './config/'
     rep_file = './UserRepScores.csv'
     threshold_function = 'raw_30'
     # outputs
-    output_dir = tempfile.mkdtemp(dir=parent_dirname)
-    iaa_temp_dir = tempfile.mkdtemp(dir=parent_dirname)
-    scoring_dir = tempfile.mkdtemp(dir=parent_dirname)
-    viz_dir = tempfile.mkdtemp(dir=parent_dirname)
+    output_dir = make_dir(parent_dirname, "output_publish")
+    iaa_temp_dir = make_dir(parent_dirname, "output_iaa_temp")
+    scoring_dir = make_dir(parent_dirname, "output_scoring")
+    viz_dir = make_dir(parent_dirname, "output_viz")
     post_adjudicator_master(
         adj_tags_dir,
         schemas_dir,
@@ -366,22 +389,8 @@ def rename_schema_files(schemas_dir):
             else:
                 logger.warn("Failed to find SHA-256 for '{}'".format(filepath))
 
-# To use, send a message with TagWorks pipeline.sqs_notify.notify_all
-# and then call this to receive. Must use a queue that is NOT attached to
-# a lambda that will consume the event first.
-# Or to bypass queue testing, save the JSON from
-# pipeline.sqs_notify.build_notify_all_message and pass that to handle_notify_all.
-def test_receive_notify_all(input_SQS_url):
-    # SQS URL like 'https://sqs.us-west-2.amazonaws.com/012345678901/public-editor-covid'
-    queue = sqs.Queue(input_SQS_url)
-    # Long poll. Recommend queue be configured to longest poll time of 20 seconds.
-    messages = queue.receive_messages()
-    for message in messages:
-        body = json.loads(message.body)
-        if body.get('Action', '') == "notify_all" and body.get('Version','') == "1":
-            handle_notify_all(body)
-        message.delete()
-
-
-if __name__ == '__main__':
-    pass
+def make_dir(parent_dirname, join_path):
+    dest_dirname = os.path.join(parent_dirname, join_path)
+    if not os.path.exists(dest_dirname):
+        os.makedirs(dest_dirname)
+    return dest_dirname

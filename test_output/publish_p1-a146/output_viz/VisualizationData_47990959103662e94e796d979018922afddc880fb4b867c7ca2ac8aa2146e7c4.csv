@@ -1,0 +1,28 @@
+Article ID,Credibility Indicator ID,Credibility Indicator Category,Credibility Indicator Name,Points,Indices of Label in Article,Start,End,target_text
+47990959103662e94e796d979018922afddc880fb4b867c7ca2ac8aa2146e7c4,H0,Holistic,Vague Sourcing,-2.0,"range(3623, 3723)",3623,3723,nan
+47990959103662e94e796d979018922afddc880fb4b867c7ca2ac8aa2146e7c4,H1,Holistic,Vague Sourcing,-2.0,"range(1515, 1538)",1515,1538,nan
+47990959103662e94e796d979018922afddc880fb4b867c7ca2ac8aa2146e7c4,H2,Holistic,Vague Sourcing,-2.0,"range(113, 130)",113,130,nan
+47990959103662e94e796d979018922afddc880fb4b867c7ca2ac8aa2146e7c4,H3,Holistic,Vague Sourcing,-2.0,"range(136, 161)",136,161,nan
+47990959103662e94e796d979018922afddc880fb4b867c7ca2ac8aa2146e7c4,H4,Holistic,Vague Sourcing,-10.0,[],-1,-1,nan
+47990959103662e94e796d979018922afddc880fb4b867c7ca2ac8aa2146e7c4,L0,Language,Exaggeration,-2.0,"range(1565, 1600)",1565,1600,nan
+47990959103662e94e796d979018922afddc880fb4b867c7ca2ac8aa2146e7c4,P0,Probability,Inappropriate confidence,-0.4,"range(1326, 1347)",1326,1347,nan
+47990959103662e94e796d979018922afddc880fb4b867c7ca2ac8aa2146e7c4,P1,Probability,Acknowledges uncertainty,0.8,"range(1326, 1343)",1326,1343,likely candidates
+47990959103662e94e796d979018922afddc880fb4b867c7ca2ac8aa2146e7c4,P2,Probability,Open to evidence,0.6666666666666666,"range(1092, 1131)",1092,1131,depends
+47990959103662e94e796d979018922afddc880fb4b867c7ca2ac8aa2146e7c4,P2,Probability,Open to evidence,0,"range(1136, 1265)",1136,1265,depends
+47990959103662e94e796d979018922afddc880fb4b867c7ca2ac8aa2146e7c4,P2,Probability,Open to evidence,0,"range(1326, 1343)",1326,1343,depends
+47990959103662e94e796d979018922afddc880fb4b867c7ca2ac8aa2146e7c4,P2,Probability,Open to evidence,0,"range(1348, 1375)",1348,1375,depends
+47990959103662e94e796d979018922afddc880fb4b867c7ca2ac8aa2146e7c4,P2,Probability,Open to evidence,0,"range(1377, 1562)",1377,1562,depends
+47990959103662e94e796d979018922afddc880fb4b867c7ca2ac8aa2146e7c4,P3,Probability,Inappropriate confidence,-0.4,"range(1646, 1654)",1646,1654,nan
+47990959103662e94e796d979018922afddc880fb4b867c7ca2ac8aa2146e7c4,P3,Probability,Inappropriate confidence,0,"range(1850, 1863)",1850,1863,nan
+47990959103662e94e796d979018922afddc880fb4b867c7ca2ac8aa2146e7c4,P3,Probability,Inappropriate confidence,0,"range(1930, 2105)",1930,2105,nan
+47990959103662e94e796d979018922afddc880fb4b867c7ca2ac8aa2146e7c4,P4,Probability,Doesn’t acknowledge uncertainty,-1.6,"range(1646, 1654)",1646,1654,probably
+47990959103662e94e796d979018922afddc880fb4b867c7ca2ac8aa2146e7c4,P5,Probability,Inappropriate confidence,-1.6,"range(1565, 1600)",1565,1600,nan
+47990959103662e94e796d979018922afddc880fb4b867c7ca2ac8aa2146e7c4,P5,Probability,Inappropriate confidence,0,"range(1701, 1747)",1701,1747,nan
+47990959103662e94e796d979018922afddc880fb4b867c7ca2ac8aa2146e7c4,P5,Probability,Inappropriate confidence,0,"range(2054, 2129)",2054,2129,nan
+47990959103662e94e796d979018922afddc880fb4b867c7ca2ac8aa2146e7c4,P5,Probability,Inappropriate confidence,0,"range(2488, 2632)",2488,2632,nan
+47990959103662e94e796d979018922afddc880fb4b867c7ca2ac8aa2146e7c4,P5,Probability,Inappropriate confidence,0,"range(2662, 2744)",2662,2744,nan
+47990959103662e94e796d979018922afddc880fb4b867c7ca2ac8aa2146e7c4,P6,Probability,Doesn’t acknowledge uncertainty,-1.6,"range(1646, 1659)",1646,1659,probably will
+47990959103662e94e796d979018922afddc880fb4b867c7ca2ac8aa2146e7c4,P7,Probability,Doesn’t acknowledge uncertainty,-1.6,N,-1,-1,nan
+47990959103662e94e796d979018922afddc880fb4b867c7ca2ac8aa2146e7c4,P8,Probability,Inappropriate confidence,-0.8390359525563189,"range(2765, 2826)",2765,2826,nan
+47990959103662e94e796d979018922afddc880fb4b867c7ca2ac8aa2146e7c4,P9,Probability,Doesn’t acknowledge uncertainty,-1.6617593315300485,N,-1,-1,nan
+,,,,,,,,

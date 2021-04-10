@@ -1,0 +1,44 @@
+{
+  "response_sqs_url": "https://sqs.us-west-2.amazonaws.com/055801912759/development-tagworks",
+  "project_name": "Schmidt_Sourcesv4_Qualification-MTurk",
+  "pipeline_uuid": "9c1bdf6b-0626-407a-aab3-a0d4820ecdcd",
+  "Action": "request_consensus",
+  "Version": "1",
+  "pipeline_name": "Schmidt-GEC",
+  "Highlighters": [],
+  "log_message": "request_consensus for project 'Schmidt_Sourcesv4_Qualification-MTurk' task_type 'QUIZ'",
+  "AdjTags": [],
+  "task_type": "QUIZ",
+  "user_id": 1,
+  "Tags": [],
+  "project_uuid": "45d44ba3-d3c0-4b97-8d7b-18b050ac361a",
+  "DataHunts": [
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "development/ProjectExports/Schmidt_Sourcesv4_Qualification-MTurk/DataHuntTask/Schmidt_Sourcesv4_Qualification-MTurk-Task-2856-DataHunt.csv.gz",
+      "filename": "Schmidt_Sourcesv4_Qualification-MTurk/DataHuntTask/Schmidt_Sourcesv4_Qualification-MTurk-Task-2856-DataHunt.csv.gz"
+    }
+  ],
+  "Texts": [
+    {
+      "metadata_location": {
+        "bucket_name": "tagworks.thusly.co",
+        "key": "development/Articles/f70ee47ae7c5fd63e6ba8bedc1b47b4a3b88a9e666d33a63e922bd3209717aa5/metadata.json.gz",
+        "filename": "f70ee47ae7c5fd63e6ba8bedc1b47b4a3b88a9e666d33a63e922bd3209717aa5/metadata.json.gz"
+      },
+      "bucket_name": "tagworks.thusly.co",
+      "article_sha256": "f70ee47ae7c5fd63e6ba8bedc1b47b4a3b88a9e666d33a63e922bd3209717aa5",
+      "key": "development/Articles/f70ee47ae7c5fd63e6ba8bedc1b47b4a3b88a9e666d33a63e922bd3209717aa5/text.txt.gz",
+      "filename": "f70ee47ae7c5fd63e6ba8bedc1b47b4a3b88a9e666d33a63e922bd3209717aa5/text.txt.gz"
+    }
+  ],
+  "NegativeTasks": [],
+  "AdjNegativeTasks": [],
+  "Schemas": [
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "development/ProjectExports/Schmidt_Sourcesv4_Qualification-MTurk/Schema/Sources2021_02_23-Schema.csv.gz",
+      "filename": "Schmidt_Sourcesv4_Qualification-MTurk/Schema/Sources2021_02_23-Schema.csv.gz"
+    }
+  ]
+}
