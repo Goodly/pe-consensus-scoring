@@ -20,9 +20,6 @@ import unicodecsv
 import boto3
 from botocore.exceptions import ClientError
 
-from iaa_only import iaa_only
-from TriagerScoring import importData
-from post_adjudicator import post_adjudicator_master
 from send_to_s3 import send_s3, get_s3_config, s3_safe_path, send_command
 from send_to_s3 import handle_unpublish_article
 
@@ -34,6 +31,12 @@ S3_CONSENSUS_OUTPUT = os.getenv('S3_CONSENSUS_OUTPUT', 's3://dev.publiceditor.io
 consensus_s3_bucket, consensus_s3_prefix = get_s3_config(S3_CONSENSUS_OUTPUT)
 S3_VISUALIZATION_OUTPUT = os.getenv('S3_VISUALIZATION_OUTPUT', 's3://dev.publiceditor.io/visualizations')
 viz_s3_bucket, viz_s3_prefix = get_s3_config(S3_VISUALIZATION_OUTPUT)
+
+from process_dirs import (
+    configure_directories,
+    generate_highlighter_consensus,
+    generate_datahunt_consensus,
+)
 
 def lambda_handler(event, context):
     """
@@ -72,15 +75,14 @@ def handle_request_consensus(body, parent_dirname):
     project_name = body.get('project_name', '')
     project_uuid = body.get('project_uuid', '')
     task_type = body.get('task_type', '')
-
+    dir_dict = configure_directories(task_type, parent_dirname)
+    fetch_tags_files(body, dir_dict)
     if task_type == "HLTR":
-        dir_dict = fetch_highlighter_files(body, parent_dirname)
-        fetch_tags_files(body, parent_dirname, dir_dict)
+        fetch_highlighter_files(body, dir_dict)
         generate_highlighter_consensus(dir_dict)
         consensus_dir = dir_dict['consensus_dir']
     elif task_type == "QUIZ":
-        dir_dict = fetch_datahunt_files(body, parent_dirname)
-        fetch_tags_files(body, parent_dirname, dir_dict)
+        fetch_datahunt_files(body, dir_dict)
         generate_datahunt_consensus(dir_dict)
         consensus_dir = dir_dict['adjud_dir']
     else:
@@ -93,74 +95,27 @@ def handle_request_consensus(body, parent_dirname):
     message = build_consensus_message(body, s3_locations)
     return message
 
-def fetch_tags_files(body, parent_dirname, dir_dict, fetch_remote_data=True):
+def fetch_tags_files(body, dir_dict):
     tags = body.get('Tags', [])
     negative_tasks = body.get('NegativeTasks', [])
-    dir_dict.update({
-        'tags_dir': os.path.join(parent_dirname, 'tags'),
-        'negative_tasks_dir': os.path.join(parent_dirname, 'negative_tasks'),
-    })
-    if fetch_remote_data:
-        retrieve_file_list(tags, dir_dict['tags_dir'])
-        retrieve_file_list(negative_tasks, dir_dict['negative_tasks_dir'])
+    retrieve_file_list(tags, dir_dict['tags_dir'])
+    retrieve_file_list(negative_tasks, dir_dict['negative_tasks_dir'])
 
-def fetch_highlighter_files(body, parent_dirname, fetch_remote_data=True):
+def fetch_highlighter_files(body, dir_dict):
     highlighters = body.get('Highlighters', [])
-    highlighters_dir = make_dir(parent_dirname, 'highlighters')
-    if fetch_remote_data:
-        retrieve_file_list(highlighters, highlighters_dir)
-        logger.info("---FILES RETRIEVED SUCCESSFULLY in request_highlighter_consensus handler---")
-    consensus_dir = make_dir(parent_dirname, "output_HLTR_consensus")
-    return {
-        'highlighters_dir': highlighters_dir,
-        'consensus_dir': consensus_dir,
-    }
+    retrieve_file_list(highlighters, dir_dict['highlighters_dir'])
+    logger.info("---FILES RETRIEVED SUCCESSFULLY in request_highlighter_consensus handler---")
 
-def generate_highlighter_consensus(dir_dict):
-    highlighters_dir = dir_dict['highlighters_dir']
-    consensus_dir = dir_dict['consensus_dir']
-    for filename in os.listdir(highlighters_dir):
-        if filename.endswith(".csv"):
-            input_file = os.path.join(highlighters_dir, filename)
-            output_file = os.path.join(consensus_dir, "S_IAA_" + filename)
-            importData(input_file, output_file)
-
-def fetch_datahunt_files(body, parent_dirname, fetch_remote_data=True):
+def fetch_datahunt_files(body, dir_dict):
     texts = body.get('Texts', [])
     texts = use_article_sha256_filenames(texts)
     schemas = body.get('Schemas', [])
     datahunts = body.get('DataHunts', [])
-    dir_dict = {
-        'texts_dir': make_dir(parent_dirname, 'texts'),
-        'schemas_dir': make_dir(parent_dirname, 'schemas'),
-        'datahunts_dir': make_dir(parent_dirname, 'datahunts'),
-        'config_path': './config/',
-        'consensus_dir': make_dir(parent_dirname, "output_datahunt_consensus"),
-        'scoring_dir': make_dir(parent_dirname, "output_scoring"),
-        'adjud_dir': make_dir(parent_dirname, "output_adjud"),
-    }
-    if fetch_remote_data:
-        retrieve_file_list(texts, dir_dict['texts_dir'])
-        retrieve_file_list(schemas, dir_dict['schemas_dir'])
-        retrieve_file_list(datahunts, dir_dict['datahunts_dir'])
-        rename_schema_files(dir_dict['schemas_dir'])
-        logger.info("---FILES RETRIEVED SUCCESSFULLY in request_datahunt_consensus handler---")
-    return dir_dict
-
-def generate_datahunt_consensus(dir_dict):
-    result_dir = iaa_only(
-        dir_dict['datahunts_dir'],
-        dir_dict['texts_dir'],
-        dir_dict['config_path'],
-        use_rep = False,
-        repCSV = None,
-        iaa_dir = dir_dict['consensus_dir'],
-        schema_dir = dir_dict['schemas_dir'],
-        adjud_dir = dir_dict['adjud_dir'],
-        threshold_func = 'raw_30'
-    )
-    assert(result_dir == dir_dict['adjud_dir'])
-    return result_dir
+    retrieve_file_list(texts, dir_dict['texts_dir'])
+    retrieve_file_list(schemas, dir_dict['schemas_dir'])
+    retrieve_file_list(datahunts, dir_dict['datahunts_dir'])
+    rename_schema_files(dir_dict['schemas_dir'])
+    logger.info("---FILES RETRIEVED SUCCESSFULLY in request_datahunt_consensus handler---")
 
 def send_consensus_files(consensus_dir, consensus_s3_bucket, consensus_s3_prefix):
     s3_locations = []
@@ -388,9 +343,3 @@ def rename_schema_files(schemas_dir):
                 os.rename(filepath, new_path)
             else:
                 logger.warn("Failed to find SHA-256 for '{}'".format(filepath))
-
-def make_dir(parent_dirname, join_path):
-    dest_dirname = os.path.join(parent_dirname, join_path)
-    if not os.path.exists(dest_dirname):
-        os.makedirs(dest_dirname)
-    return dest_dirname
