@@ -14,7 +14,7 @@ else:
 logger = logging.getLogger(__name__)
 
 from process_dirs import (
-    configure_directories,
+    configure_consensus_directories,
     generate_highlighter_consensus,
     generate_datahunt_consensus,
 )
@@ -47,7 +47,7 @@ def run_iaa_only(fetch_tags_files, fetch_highlighter_files, fetch_datahunt_files
                 project_name = body.get('project_name', '')
                 project_uuid = body.get('project_uuid', '')
                 task_type = body.get('task_type', '')
-                dir_dict = configure_directories(task_type, parent_dirname)
+                dir_dict = configure_consensus_directories(task_type, parent_dirname)
                 fetch_tags_files(body, dir_dict)
                 if task_type == "HLTR":
                     fetch_highlighter_files(body, dir_dict)

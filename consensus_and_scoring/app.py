@@ -33,9 +33,11 @@ S3_VISUALIZATION_OUTPUT = os.getenv('S3_VISUALIZATION_OUTPUT', 's3://dev.publice
 viz_s3_bucket, viz_s3_prefix = get_s3_config(S3_VISUALIZATION_OUTPUT)
 
 from process_dirs import (
-    configure_directories,
+    configure_consensus_directories,
     generate_highlighter_consensus,
     generate_datahunt_consensus,
+    configure_publish_directories,
+    generate_article_to_publish,
 )
 
 def lambda_handler(event, context):
@@ -75,7 +77,7 @@ def handle_request_consensus(body, parent_dirname):
     project_name = body.get('project_name', '')
     project_uuid = body.get('project_uuid', '')
     task_type = body.get('task_type', '')
-    dir_dict = configure_directories(task_type, parent_dirname)
+    dir_dict = configure_consensus_directories(task_type, parent_dirname)
     fetch_tags_files(body, dir_dict)
     if task_type == "HLTR":
         fetch_highlighter_files(body, dir_dict)
@@ -165,16 +167,31 @@ def send_pipeline_message(response_sqs_url, message):
                     .format(log_message))
     return response
 
-def handle_publish_article(body, parent_dirname, fetch_remote_data=True):
+def handle_publish_article(body, parent_dirname):
     logger.info("------BEGIN publish_article handler-------")
+    dir_dict = configure_publish_directories(parent_dirname)
+    fetch_publish_files(body, dir_dict)
+    generate_article_to_publish(dir_dict)
+    viz_files_sent = send_s3(
+        dir_dict['viz_dir'],
+        dir_dict['texts_dir'],
+        dir_dict['metadata_dir'],
+        viz_s3_bucket,
+        s3_prefix=viz_s3_prefix
+    )
+    message = build_published_message(body, viz_s3_bucket, viz_files_sent)
+    logger.info("------END publish_article handler-------")
+    return message
+
+def fetch_publish_files(body, dir_dict):
     texts = body.get('Texts', [])
     texts = use_article_sha256_filenames(texts)
     metadata_for_texts = unnest_metadata_key(texts)
     schemas = body.get('Schemas', [])
     datahunts = body.get('DataHunts', [])
     focus_tags = body.get('FocusTags', [])
-    #tags = body.get('Tags', [])
-    #negative_tasks = body.get('NegativeTasks', [])
+    tags = body.get('Tags', [])
+    negative_tasks = body.get('NegativeTasks', [])
     adj_tags = body.get('AdjTagsElseIAATags', [])
     adj_negative_tasks = body.get('AdjNegativeTasksElseIAA', [])
     logger.info("texts count {}".format(len(texts)))
@@ -182,58 +199,21 @@ def handle_publish_article(body, parent_dirname, fetch_remote_data=True):
     logger.info("schemas count {}".format(len(schemas)))
     logger.info("datahunts count {}".format(len(datahunts)))
     logger.info("focus_tags count {}".format(len(focus_tags)))
-    #logger.info("tags count {}".format(len(tags)))
-    #logger.info("negative_tasks count {}".format(len(negative_tasks)))
+    logger.info("tags count {}".format(len(tags)))
+    logger.info("negative_tasks count {}".format(len(negative_tasks)))
     logger.info("adj_tags count {}".format(len(adj_tags)))
     logger.info("adj_negative_tasks count {}".format(len(adj_negative_tasks)))
-    texts_dir = make_dir(parent_dirname, 'texts')
-    metadata_dir = make_dir(parent_dirname, 'metadata')
-    schemas_dir = make_dir(parent_dirname, 'schemas')
-    datahunts_dir = make_dir(parent_dirname, 'datahunts')
-    focus_tags_dir = make_dir(parent_dirname, 'focus_tags')
-    #tags_dir = os.path.join(parent_dirname, 'tags')
-    #negative_tasks_dir = os.path.join(parent_dirname, 'negative_tasks')
-    adj_tags_dir = make_dir(parent_dirname, 'adj_tags')
-    adj_negative_tasks_dir = make_dir(parent_dirname, 'adj_negative_tasks')
-    if fetch_remote_data:
-        retrieve_file_list(texts, texts_dir)
-        retrieve_file_list(metadata_for_texts, metadata_dir)
-        retrieve_file_list(schemas, schemas_dir)
-        retrieve_file_list(datahunts, datahunts_dir)
-        retrieve_file_list(focus_tags, focus_tags_dir)
-        #retrieve_file_list(tags, tags_dir)
-        #retrieve_file_list(negative_tasks, negative_tasks_dir)
-        retrieve_file_list(adj_tags, adj_tags_dir)
-        retrieve_file_list(adj_negative_tasks, adj_negative_tasks_dir)
-        rename_schema_files(schemas_dir)
-        logger.info("------FILES RETRIEVED SUCCESSFULLY in publish_article handler-------")
-
-    # additional input config data
-    config_path = './config/'
-    rep_file = './UserRepScores.csv'
-    threshold_function = 'raw_30'
-    # outputs
-    output_dir = make_dir(parent_dirname, "output_publish")
-    iaa_temp_dir = make_dir(parent_dirname, "output_iaa_temp")
-    scoring_dir = make_dir(parent_dirname, "output_scoring")
-    viz_dir = make_dir(parent_dirname, "output_viz")
-    post_adjudicator_master(
-        adj_tags_dir,
-        schemas_dir,
-        output_dir,
-        iaa_temp_dir,
-        datahunts_dir,
-        scoring_dir,
-        viz_dir,
-        focus_tags_dir,
-        texts_dir,
-        config_path,
-        threshold_function,
-    )
-    viz_files_sent = send_s3(viz_dir, texts_dir, metadata_dir, viz_s3_bucket, s3_prefix=viz_s3_prefix)
-    message = build_published_message(body, viz_s3_bucket, viz_files_sent)
-    logger.info("------END publish_article handler-------")
-    return message
+    retrieve_file_list(texts, dir_dict['texts_dir'])
+    retrieve_file_list(metadata_for_texts, dir_dict['metadata_dir'])
+    retrieve_file_list(schemas, dir_dict['schemas_dir'])
+    retrieve_file_list(datahunts, dir_dict['datahunts_dir'])
+    retrieve_file_list(focus_tags, dir_dict['focus_tags_dir'])
+    retrieve_file_list(tags, dir_dict['tags_dir'])
+    retrieve_file_list(negative_tasks, dir_dict['negative_tasks_dir'])
+    retrieve_file_list(adj_tags, dir_dict['adj_tags_dir'])
+    retrieve_file_list(adj_negative_tasks, dir_dict['adj_negative_tasks_dir'])
+    rename_schema_files(dir_dict['schemas_dir'])
+    logger.info("------FILES RETRIEVED SUCCESSFULLY in publish_article handler-------")
 
 def build_published_message(body, viz_s3_bucket, viz_files_sent):
     viz_urls = [

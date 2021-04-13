@@ -18,7 +18,7 @@ from post_adjudicator import post_adjudicator_master
 # This code does not invoke any AWS APIs such as S3 or SQS so that it can be
 # imported by the test code without requiring AWS credentials.
 
-def configure_directories(task_type, parent_dirname):
+def configure_consensus_directories(task_type, parent_dirname):
     dir_dict = {}
     dir_dict['tags_dir'] = make_dir(parent_dirname, 'tags')
     dir_dict['negative_tasks_dir'] = make_dir(parent_dirname, 'negative_tasks')
@@ -58,6 +58,40 @@ def generate_datahunt_consensus(dir_dict):
     )
     assert(result_dir == dir_dict['adjud_dir'])
     return result_dir
+
+def configure_publish_directories(parent_dirname):
+    dir_dict = {}
+    dir_dict['config_path'] = './config/'
+    dir_dict['tags_dir'] = make_dir(parent_dirname, 'tags')
+    dir_dict['negative_tasks_dir'] = make_dir(parent_dirname, 'negative_tasks')
+    dir_dict['texts_dir'] = make_dir(parent_dirname, 'texts')
+    dir_dict['metadata_dir'] = make_dir(parent_dirname, 'metadata')
+    dir_dict['schemas_dir'] = make_dir(parent_dirname, 'schemas')
+    dir_dict['datahunts_dir'] = make_dir(parent_dirname, 'datahunts')
+    dir_dict['focus_tags_dir'] = make_dir(parent_dirname, 'focus_tags')
+    dir_dict['adj_tags_dir'] = make_dir(parent_dirname, 'adj_tags')
+    dir_dict['adj_negative_tasks_dir'] = make_dir(parent_dirname, 'adj_negative_tasks')
+    dir_dict['output_dir'] = make_dir(parent_dirname, "output_publish")
+    dir_dict['iaa_temp_dir'] = make_dir(parent_dirname, "output_iaa_temp")
+    dir_dict['scoring_dir'] = make_dir(parent_dirname, "output_scoring")
+    dir_dict['viz_dir'] = make_dir(parent_dirname, "output_viz")
+    return dir_dict
+
+def generate_article_to_publish(dir_dict):
+    threshold_function = 'raw_30'
+    post_adjudicator_master(
+        dir_dict['adj_tags_dir'],
+        dir_dict['schemas_dir'],
+        dir_dict['output_dir'],
+        dir_dict['iaa_temp_dir'],
+        dir_dict['datahunts_dir'],
+        dir_dict['scoring_dir'],
+        dir_dict['viz_dir'],
+        dir_dict['focus_tags_dir'],
+        dir_dict['texts_dir'],
+        dir_dict['config_path'],
+        threshold_function,
+    )
 
 def make_dir(parent_dirname, join_path):
     dest_dirname = os.path.join(parent_dirname, join_path)
