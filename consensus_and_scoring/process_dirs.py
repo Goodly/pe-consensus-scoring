@@ -1,5 +1,6 @@
 import os
 import json
+import fnmatch
 
 import logging
 if len(logging.getLogger().handlers) > 0:
@@ -25,6 +26,7 @@ def configure_consensus_directories(task_type, parent_dirname):
     if task_type == "HLTR":
         dir_dict['highlighters_dir'] = make_dir(parent_dirname, 'highlighters')
         dir_dict['consensus_dir']= make_dir(parent_dirname, "output_HLTR_consensus")
+        clean_output_csvs(dir_dict['consensus_dir'])
     elif task_type == "QUIZ":
         dir_dict['config_path'] = './config/'
         dir_dict['texts_dir'] = make_dir(parent_dirname, 'texts')
@@ -33,6 +35,9 @@ def configure_consensus_directories(task_type, parent_dirname):
         dir_dict['consensus_dir'] = make_dir(parent_dirname, "output_datahunt_consensus")
         dir_dict['scoring_dir'] = make_dir(parent_dirname, "output_scoring")
         dir_dict['adjud_dir'] = make_dir(parent_dirname, "output_adjud")
+        clean_output_csvs(dir_dict['consensus_dir'])
+        clean_output_csvs(dir_dict['scoring_dir'])
+        clean_output_csvs(dir_dict['adjud_dir'])
     return dir_dict
 
 def generate_highlighter_consensus(dir_dict):
@@ -75,6 +80,10 @@ def configure_publish_directories(parent_dirname):
     dir_dict['iaa_temp_dir'] = make_dir(parent_dirname, "output_iaa_temp")
     dir_dict['scoring_dir'] = make_dir(parent_dirname, "output_scoring")
     dir_dict['viz_dir'] = make_dir(parent_dirname, "output_viz")
+    clean_output_csvs(dir_dict['output_dir'])
+    clean_output_csvs(dir_dict['iaa_temp_dir'])
+    clean_output_csvs(dir_dict['scoring_dir'])
+    clean_output_csvs(dir_dict['viz_dir'])
     return dir_dict
 
 def generate_article_to_publish(dir_dict):
@@ -98,3 +107,14 @@ def make_dir(parent_dirname, join_path):
     if not os.path.exists(dest_dirname):
         os.makedirs(dest_dirname)
     return dest_dirname
+
+# A more conservative routine than shutil.rmtree that can lay waste
+# to a nested directory tree. We're just expecting to clean out some
+# CSVs in a single directory, so let's limit narrowly to that action.
+def clean_output_csvs(dest_dirname):
+    files = os.listdir(dest_dirname)
+    csvs = fnmatch.filter(files, '*.csv')
+    for filename in csvs:
+        file_path = os.path.join(dest_dirname, filename)
+        logger.info("Cleaning {}".format(file_path))
+        os.remove(file_path)
