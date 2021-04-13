@@ -1,8 +1,8 @@
 Article ID,Credibility Indicator ID,Credibility Indicator Category,Credibility Indicator Name,Points,Indices of Label in Article,Start,End,target_text
 be0b18a87d4370fa579180ef26dcb7080598f27f9ec76181f2cfd851f320da06,H0,Holistic,Vague Sourcing,-2.0,"range(1805, 1984)",1805,1984,nan
 be0b18a87d4370fa579180ef26dcb7080598f27f9ec76181f2cfd851f320da06,P0,Probability,Acknowledges uncertainty,1.0,"range(2204, 2390)",2204,2390,but notes that it can\u2019t explain how risky contaminated surfaces are. \u201cDoes that account for 0.01% of transmissions or 15% of transmissions?\u201d Weber says. \u201cWe don't know how frequent it is
-be0b18a87d4370fa579180ef26dcb7080598f27f9ec76181f2cfd851f320da06,P1,Probability,Numeric context,-1.0,"range(2274, 2342)",2274,2342,0.01
+be0b18a87d4370fa579180ef26dcb7080598f27f9ec76181f2cfd851f320da06,P1,Probability,Numeric context,-1.6,"range(2274, 2342)",2274,2342,0.01
 be0b18a87d4370fa579180ef26dcb7080598f27f9ec76181f2cfd851f320da06,P1,Probability,Numeric context,0,"range(2344, 2345)",2344,2345,0.01
-be0b18a87d4370fa579180ef26dcb7080598f27f9ec76181f2cfd851f320da06,P2,Probability,Open to evidence,0.4,"range(2219, 2271)",2219,2271,Does that account for 0.01% of transmissions or 15% of transmissions?\u201d Weber says. \u201cWe don't know how frequent it is.\u201d He also cautions that the lab conditions might not precisely recapitulate what happens in the real world
+be0b18a87d4370fa579180ef26dcb7080598f27f9ec76181f2cfd851f320da06,P2,Probability,Open to evidence,0.8,"range(2219, 2271)",2219,2271,Does that account for 0.01% of transmissions or 15% of transmissions?\u201d Weber says. \u201cWe don't know how frequent it is.\u201d He also cautions that the lab conditions might not precisely recapitulate what happens in the real world
 be0b18a87d4370fa579180ef26dcb7080598f27f9ec76181f2cfd851f320da06,P2,Probability,Open to evidence,0,"range(2274, 2497)",2274,2497,Does that account for 0.01% of transmissions or 15% of transmissions?\u201d Weber says. \u201cWe don't know how frequent it is.\u201d He also cautions that the lab conditions might not precisely recapitulate what happens in the real world
 ,,,,,,,,

@@ -7,7 +7,7 @@ Article ID,Credibility Indicator ID,Credibility Indicator Category,Credibility I
 47990959103662e94e796d979018922afddc880fb4b867c7ca2ac8aa2146e7c4,L0,Language,Exaggeration,-2.0,"range(1565, 1600)",1565,1600,nan
 47990959103662e94e796d979018922afddc880fb4b867c7ca2ac8aa2146e7c4,P0,Probability,Inappropriate confidence,-0.4,"range(1326, 1347)",1326,1347,nan
 47990959103662e94e796d979018922afddc880fb4b867c7ca2ac8aa2146e7c4,P1,Probability,Acknowledges uncertainty,0.8,"range(1326, 1343)",1326,1343,likely candidates
-47990959103662e94e796d979018922afddc880fb4b867c7ca2ac8aa2146e7c4,P2,Probability,Open to evidence,0.6666666666666666,"range(1092, 1131)",1092,1131,depends
+47990959103662e94e796d979018922afddc880fb4b867c7ca2ac8aa2146e7c4,P2,Probability,Open to evidence,0.8648259251435817,"range(1092, 1131)",1092,1131,depends
 47990959103662e94e796d979018922afddc880fb4b867c7ca2ac8aa2146e7c4,P2,Probability,Open to evidence,0,"range(1136, 1265)",1136,1265,depends
 47990959103662e94e796d979018922afddc880fb4b867c7ca2ac8aa2146e7c4,P2,Probability,Open to evidence,0,"range(1326, 1343)",1326,1343,depends
 47990959103662e94e796d979018922afddc880fb4b867c7ca2ac8aa2146e7c4,P2,Probability,Open to evidence,0,"range(1348, 1375)",1348,1375,depends
