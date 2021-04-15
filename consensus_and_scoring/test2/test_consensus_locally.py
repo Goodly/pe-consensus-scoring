@@ -1,6 +1,6 @@
 import os
 import json
-import fnmatch
+from pathlib import Path
 import pytest
 
 import logging
@@ -30,20 +30,19 @@ def test_iaa_without_S3_fetch():
     run_iaa_only(fetch_tags_files, fetch_highlighter_files, fetch_datahunt_files)
 
 def run_iaa_only(fetch_tags_files, fetch_highlighter_files, fetch_datahunt_files):
-    output_path = "../test_output/"
-    messages_path = "../test_data_persistent/request_consensus/"
-    test_messages = os.listdir(messages_path)
-    test_messages = sorted(fnmatch.filter(test_messages, '*.json'))
-    for filename in test_messages:
-        file_path = os.path.join(messages_path, filename)
-        parent_dirname = "../tests/output_"
-        parent_dirname = os.path.join(output_path, filename.lstrip("request_consensus_").rstrip(".json"))
+    output_path = Path("../test_output/")
+    messages_path = Path("../test_data_persistent/request_consensus/")
+    test_messages = sorted(list(Path(messages_path).glob('*.json')))
+    for file_path in test_messages:
+        parent_dirname = Path("../tests/output_")
+        basename = file_path.name.lstrip("request_consensus_").rstrip(".json")
+        parent_dirname = output_path.joinpath(basename)
         if not os.path.exists(parent_dirname):
             os.makedirs(parent_dirname)
         with open(file_path, "r") as f:
             body = json.load(f)
             if body:
-                logger.info("---BEGIN request_consensus {}".format(filename))
+                logger.info("---BEGIN request_consensus {}".format(file_path.name))
                 project_name = body.get('project_name', '')
                 project_uuid = body.get('project_uuid', '')
                 task_type = body.get('task_type', '')
@@ -60,4 +59,4 @@ def run_iaa_only(fetch_tags_files, fetch_highlighter_files, fetch_datahunt_files
                 else:
                     raise Exception(u"request_consensus: Project '{}' has unknown task_type '{}'."
                                     .format(project_name, task_type))
-                logger.info("---END request_consensus {}".format(filename))
+                logger.info("---END request_consensus {}".format(file_path.name))
