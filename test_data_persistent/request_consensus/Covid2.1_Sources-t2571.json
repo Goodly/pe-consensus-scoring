@@ -1,0 +1,46 @@
+{
+  "response_sqs_url": "https://sqs.us-west-2.amazonaws.com/507444306670/pe-tagworks-dev-listener",
+  "project_name": "Covid2.1_Sources",
+  "pipeline_uuid": "6e6f1874-173b-48d8-a372-421f9dd4edf4",
+  "Action": "request_consensus",
+  "Version": "1",
+  "pipeline_name": "Covid_v2",
+  "Highlighters": [],
+  "log_message": "request_consensus for project 'Covid2.1_Sources' task_type 'QUIZ'",
+  "AdjTags": [],
+  "task_type": "QUIZ",
+  "user_id": 1,
+  "source_task_uuid": "11a4e749-8689-4b1d-aead-4922b9a2ac0d",
+  "project_uuid": "ded0d6af-742f-4589-9058-5b98cffee464",
+  "Tags": [],
+  "DataHunts": [
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "development/ProjectExports/Covid2.1_Sources/DataHuntTask/Covid2.1_Sources-Task-2571-DataHunt.csv.gz",
+      "filename": "Covid2.1_Sources/DataHuntTask/Covid2.1_Sources-Task-2571-DataHunt.csv.gz"
+    }
+  ],
+  "Texts": [
+    {
+      "metadata_location": {
+        "bucket_name": "tagworks.thusly.co",
+        "key": "development/Articles/fe316f79b88e5f946d7ab6f8a91bc29a3af2d37ce0b551d13c832f12da59331a/metadata.json.gz",
+        "filename": "fe316f79b88e5f946d7ab6f8a91bc29a3af2d37ce0b551d13c832f12da59331a/metadata.json.gz"
+      },
+      "bucket_name": "tagworks.thusly.co",
+      "article_sha256": "fe316f79b88e5f946d7ab6f8a91bc29a3af2d37ce0b551d13c832f12da59331a",
+      "key": "development/Articles/fe316f79b88e5f946d7ab6f8a91bc29a3af2d37ce0b551d13c832f12da59331a/text.txt.gz",
+      "filename": "fe316f79b88e5f946d7ab6f8a91bc29a3af2d37ce0b551d13c832f12da59331a/text.txt.gz"
+    }
+  ],
+  "tua_batch_uuid": "dbb705e7-a37e-4e42-9513-1a7cc8e245cc",
+  "NegativeTasks": [],
+  "AdjNegativeTasks": [],
+  "Schemas": [
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "development/ProjectExports/Covid2.1_Sources/Schema/Covid2_Sources_2002_09_20-Schema.csv.gz",
+      "filename": "Covid2.1_Sources/Schema/Covid2_Sources_2002_09_20-Schema.csv.gz"
+    }
+  ]
+}
