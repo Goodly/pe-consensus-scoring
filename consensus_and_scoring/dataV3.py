@@ -907,14 +907,7 @@ def get_type_hard(type, ques):
 
 #for purpose of naming outputFile
 def get_path(fileName):
-    name = ''
-    path = ''
-    for c in fileName:
-        name = name +c
-        if c == '/':
-            path = path + name
-            name = ''
-    return path, name
+    return os.path.dirname(fileName), os.path.basename(fileName)
 
 ###################### Helper Functions to Visualize a Dataframe #######################
 
