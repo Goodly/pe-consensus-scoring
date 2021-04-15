@@ -1,0 +1,39 @@
+{
+  "response_sqs_url": "https://sqs.us-west-2.amazonaws.com/507444306670/pe-tagworks-dev-listener",
+  "project_name": "Covid2_FormTriage",
+  "pipeline_uuid": "6e6f1874-173b-48d8-a372-421f9dd4edf4",
+  "Action": "request_consensus",
+  "Version": "1",
+  "pipeline_name": "Covid_v2",
+  "Highlighters": [
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "development/ProjectExports/Covid2_FormTriage/HighlighterTask/Covid2_FormTriage-Task-1497-Highlighter.csv.gz",
+      "filename": "Covid2_FormTriage/HighlighterTask/Covid2_FormTriage-Task-1497-Highlighter.csv.gz"
+    }
+  ],
+  "log_message": "request_consensus for project 'Covid2_FormTriage' task_type 'HLTR'",
+  "AdjTags": [],
+  "task_type": "HLTR",
+  "user_id": 1,
+  "source_task_uuid": "89f28a91-6b76-4cac-8350-39a55c85977d",
+  "project_uuid": "0171fbc4-4773-451d-8aee-7966bd0f2e13",
+  "Tags": [],
+  "DataHunts": [],
+  "Texts": [
+    {
+      "metadata_location": {
+        "bucket_name": "tagworks.thusly.co",
+        "key": "development/Articles/a59f11260ca58ffd6f6d4d74318979b16a30143cf281f66879cb7866aa0ee071/metadata.json.gz",
+        "filename": "a59f11260ca58ffd6f6d4d74318979b16a30143cf281f66879cb7866aa0ee071/metadata.json.gz"
+      },
+      "bucket_name": "tagworks.thusly.co",
+      "article_sha256": "a59f11260ca58ffd6f6d4d74318979b16a30143cf281f66879cb7866aa0ee071",
+      "key": "development/Articles/a59f11260ca58ffd6f6d4d74318979b16a30143cf281f66879cb7866aa0ee071/text.txt.gz",
+      "filename": "a59f11260ca58ffd6f6d4d74318979b16a30143cf281f66879cb7866aa0ee071/text.txt.gz"
+    }
+  ],
+  "NegativeTasks": [],
+  "AdjNegativeTasks": [],
+  "Schemas": []
+}
