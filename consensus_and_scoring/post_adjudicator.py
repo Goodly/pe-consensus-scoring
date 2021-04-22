@@ -45,9 +45,9 @@ if __name__ == '__main__':
         args = load_args()
         # input
         config_path = './config/'
-        input_dir = '../data/datahunts/'
+        input_dir = '../data/dh_evi/'
         texts_dir = '../data/texts/'
-        adjudication_dir = '../data/adj_tags/'
+        adjudication_dir = '../data/adj_evi/'
         # metadata_dir = '../data/metadata/'
         tua_dir = '../data/focus_tags/'
         schema_dir = '../data/schemas/'

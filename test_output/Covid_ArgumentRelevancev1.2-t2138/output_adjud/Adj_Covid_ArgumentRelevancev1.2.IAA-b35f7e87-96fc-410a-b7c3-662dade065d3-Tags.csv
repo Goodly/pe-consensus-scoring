@@ -1,0 +1,2 @@
+article_filename,article_sha256,source_task_uuid,namespace,topic_name,case_number,start_pos,end_pos,target_text,answer_uuid,answer_text,extra
+CoronavirusCanHerdImmunityReally.txt,09a894f06d1157dd7a22a198c6ef78c2b9f4116266d2b0a177d7bb129a51f6e8,b35f7e87-96fc-410a-b7c3-662dade065d3,Covid_ArgumentRelevance_2020_03_20v2,3240412b,0,0,0,,3240412b-d4e2-4884-b238-7598b0e15789,It is one of a few arguments the author wants the audience to appreciate,"{""agreement_score"": 0.6702868027309729, ""tua_uuid"": ""ea2c2718-6f8c-4176-8a9a-125c3ed69e9b""}"

@@ -362,3 +362,4 @@ def get_user_rep(id, repDF, useRep=False):
                     influence = .8
 
     return influence, repDF
+

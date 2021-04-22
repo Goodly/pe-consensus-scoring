@@ -1,0 +1,25 @@
+namespace,Question_Number,Answer_Number,Label,Point_Recommendation,Op-Ed,article_num,article_sha256,article_id,article_filename,source_task_uuid,tua_uuid,schema_sha256,answer_uuid,question_type,coding_perc_agreement,highlighted_indices,agreement_score,num_users,num_answer_choices,target_text,question_text,answer_text,article_text_length,prereq_passed,Schema,agreement_adjusted_points
+Covid_Languagev1.1,2.0,2.0,Metaphor unhelpful,-3.0,-3.0,0,0b35b06a22779418f775a804f36485f7bc978071d1709ad263a68f4f18117b11,raw_300b35b06a22779418f775a804f36485f7bc978071d1709ad263a68f4f18117b11,Default,dh13,Default,a6eca3a8c143a31e7b37337f744912e6d33c5b2f49cd29570daee3cfdb9a017c,03dd24ed-c336-4e8a-88e2-87bbc5e43334,ordinal,0.4847558005911552,"[10.0, 11.0, 19.0, 20.0, 21.0, 22.0, 23.0, 24.0, 25.0, 26.0, 27.0, 28.0, 29.0]",0.4847558005911552,5,5,,"question_label
+T1.Q2    The use of metaphorical language (e.g., metaph...
+T1.Q2                                             cantfind
+Name: question_text, dtype: object",CONSIDERABLY excessive/inappropriate,2900,True,Language,-1.4542674017734656
+Covid_Languagev1.1,3.0,2.0,Exaggeration,-3.75,-3.75,0,0b35b06a22779418f775a804f36485f7bc978071d1709ad263a68f4f18117b11,raw_300b35b06a22779418f775a804f36485f7bc978071d1709ad263a68f4f18117b11,Default,dh13,Default,a6eca3a8c143a31e7b37337f744912e6d33c5b2f49cd29570daee3cfdb9a017c,974a3ced-959f-439f-ab88-abe65741870c,ordinal,0.4847558005911552,"[20.0, 21.0, 22.0, 23.0, 38.0, 39.0, 40.0, 41.0, 42.0, 43.0, 44.0, 45.0, 46.0, 47.0, 48.0, 49.0]",0.4847558005911552,5,5,,"question_label
+T1.Q3    How much does the exaggeration misrepresent re...
+T1.Q3                                             cantfind
+Name: question_text, dtype: object",Considerable misrepresentation,2900,True,Language,-1.817834252216832
+Covid_Languagev1.1,5.0,2.0,Inappropriately emotional,-4.5,-4.5,0,0b35b06a22779418f775a804f36485f7bc978071d1709ad263a68f4f18117b11,raw_300b35b06a22779418f775a804f36485f7bc978071d1709ad263a68f4f18117b11,Default,dh13,Default,a6eca3a8c143a31e7b37337f744912e6d33c5b2f49cd29570daee3cfdb9a017c,63529c39-b740-4922-a242-5329dd99c618,ordinal,0.4847558005911552,"[40.0, 41.0, 42.0, 43.0, 44.0, 45.0, 46.0, 47.0, 76.0, 77.0, 78.0, 79.0, 80.0, 81.0, 82.0, 83.0, 84.0, 85.0, 86.0, 87.0, 88.0, 89.0]",0.4847558005911552,5,5,,"question_label
+T1.Q5    How strong is the emotional tone?
+T1.Q5                             cantfind
+Name: question_text, dtype: object",Somewhat strong,2900,True,Language,-2.1814011026601983
+Covid_Languagev1.1,9.0,2.0,Inappropriate slang,-0.75,-0.75,0,0b35b06a22779418f775a804f36485f7bc978071d1709ad263a68f4f18117b11,raw_300b35b06a22779418f775a804f36485f7bc978071d1709ad263a68f4f18117b11,Default,dh13,Default,a6eca3a8c143a31e7b37337f744912e6d33c5b2f49cd29570daee3cfdb9a017c,99974b62-894e-441d-ba75-92212fceb53e,ordinal,0.4847558005911552,"[60.0, 61.0, 62.0, 63.0, 64.0, 65.0, 66.0, 67.0, 68.0, 69.0, 70.0, 71.0, 114.0, 115.0, 116.0, 117.0, 118.0, 119.0, 120.0, 121.0, 122.0, 123.0, 124.0, 125.0, 126.0, 127.0, 128.0, 129.0]",0.4847558005911552,5,5,,"question_label
+T1.Q9    How appropriate is the slang?
+T1.Q9                         cantfind
+Name: question_text, dtype: object",Somewhat inappropriate,2900,True,Language,-0.3635668504433664
+Covid_Languagev1.1,10.0,2.0,Denigration,-0.75,-0.75,0,0b35b06a22779418f775a804f36485f7bc978071d1709ad263a68f4f18117b11,raw_300b35b06a22779418f775a804f36485f7bc978071d1709ad263a68f4f18117b11,Default,dh13,Default,a6eca3a8c143a31e7b37337f744912e6d33c5b2f49cd29570daee3cfdb9a017c,0a2559c8-0521-4930-84a8-f0afcd01f71f,ordinal,0.4845843769128588,"[60.0, 61.0, 62.0, 63.0, 64.0, 65.0, 66.0, 67.0, 68.0, 69.0, 70.0, 71.0, 114.0, 115.0, 116.0, 117.0, 118.0, 119.0, 120.0, 121.0, 122.0, 123.0, 124.0, 125.0, 126.0, 127.0, 128.0, 129.0]",0.4845843769128588,5,4,,"question_label
+T1.Q10    Is the slang used to denigrate a group or pers...
+T1.Q10                                             cantfind
+Name: question_text, dtype: object","Yes, somewhat",2900,True,Language,-0.3634382826846441
+Covid_Languagev1.1,12.0,2.0,Well-balanced,1.0,1.0,0,0b35b06a22779418f775a804f36485f7bc978071d1709ad263a68f4f18117b11,raw_300b35b06a22779418f775a804f36485f7bc978071d1709ad263a68f4f18117b11,Default,dh13,Default,a6eca3a8c143a31e7b37337f744912e6d33c5b2f49cd29570daee3cfdb9a017c,22b1fe9e-bf91-41dc-a40c-b7fbe649d6f9,ordinal,0.4845843769128588,[],0.4845843769128588,5,4,,"question_label
+T1.Q12    Does the passage contain a particularly neutra...
+T1.Q12                                             cantfind
+Name: question_text, dtype: object",Good job!,2900,True,Language,0.4845843769128588

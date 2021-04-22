@@ -25,15 +25,12 @@ def calc_agreement_directory(directory, schema_dir, config_path,  texts_path, re
         for file in files:
             if file.endswith('.csv') and 'IAA' not in file:
                 print("Checking Agreement for "+directory+'/'+file)
-                if 'DataHunt' in file:
-                    #print('highlight')
-                    highlights.append(directory+'/'+file)
+                highlights.append(directory+'/'+file)
 
     for root, dir, files in os.walk(schema_dir):
         for file in files:
             #no safety check here; everything in the schema directory shoul dbe a schema csv
             schema.append(schema_dir+'/'+file)
-
     #pick out the schemas actually being used
     temp = []
     i = 0
@@ -43,8 +40,6 @@ def calc_agreement_directory(directory, schema_dir, config_path,  texts_path, re
         if len(hdf.index) == 0:
             #remove h from highlights
             highlights.remove(h)
-            # raise Exception(u"{} dataframe has zero rows. Can't match to schema."
-            #                 .format(h))
         else:
             schem_sha = hdf['schema_sha256'].iloc[0]
             matched_schema = False
@@ -63,8 +58,6 @@ def calc_agreement_directory(directory, schema_dir, config_path,  texts_path, re
         calc_scores(highlights[i], config_path,  texts_path, repCSV = repCSV,
                           schemaFile=schema[i], outDirectory=outDirectory, useRep=useRep,
                     directory=directory, threshold_func = threshold_func)
-    #                 #will be an error for every file that isn't the right file, there's a more graceful solution, but
-    #                 #we'll save that dream for another day
     return outDirectory
 
 def unpack_iaa(input):
@@ -76,11 +69,7 @@ def unpack_iaa(input):
 def calc_scores(highlightfilename, config_path,  texts_path, repCSV=None, schemaFile = None,
                 fileName = None, thirtycsv = None, outDirectory = None, useRep = False, directory = None,
                 threshold_func = 'logis_0'):
-    print("CALC SCORES:", highlightfilename)
     uberDict = dataStorer(highlightfilename, schemaFile)
-    #print("old ", uberDict)
-    #uberDict = data_storer(highlightfilename, answersFile, schemaFile)
-
     if directory.startswith('./'):
         directory = directory[2:]
     if not outDirectory:
@@ -88,31 +77,21 @@ def calc_scores(highlightfilename, config_path,  texts_path, repCSV=None, schema
         print(outDirectory)
         if outDirectory[0] == '.':
             outDirectory == outDirectory[1:]
-    #print("donegettingdata")
     data = [["article_num", "article_sha256", "article_id", "article_filename",
              "source_task_uuid", "tua_uuid", "namespace", "schema_sha256",
              "question_Number", "answer_uuid", "question_type", "agreed_Answer",
-             "coding_perc_agreement", "one_two_diff",
-             "highlighted_indices", "alpha_unitizing_score",
-             "alpha_unitizing_score_inclusive", "agreement_score",
+             "coding_perc_agreement",
+             "highlighted_indices", "agreement_score",
              "num_users", "num_answer_choices",
-             "target_text", "question_text", "answer_text", "answer_content"]]
+             "target_text", "question_text", "answer_text",  "article_text_length"]]
 
-    #initialize rep
-    # print('starting rep')
-    # try:
-    #     repDF = pd.read_csv(repCSV)
-    # except:
-    #     repDF = create_user_dataframe(uberDict, csvPath = None)
-    # thirtyDf = create_last30_dataframe(uberDict, thirtycsv)
+
     if useRep:
         repDF = create_user_reps(uberDict,repCSV)
         print('initialized repScores')
     else:
         repDF = None
     for task in uberDict.keys():  # Iterates throuh each article
-        #task_id = get_article_num(uberDict, task)
-
         task_id = task
         article_num = get_article_num(uberDict,task_id)
         article_sha = get_article_sha(uberDict, task_id)
@@ -125,25 +104,31 @@ def calc_scores(highlightfilename, config_path,  texts_path, repCSV=None, schema
         #get the textfile
         text_file = os.path.join(texts_path, article_sha + ".txt")
         if not(os.path.exists(text_file)):
+            for root, dir, files in os.walk(texts_path):
+                for file in files:
+                    print(file)
             raise  Exception("Couldn't find text_file for article {}".format(text_file))
 
         #print("checking agreement for "+schema_namespace+" task "+task_id)
         #has to be sorted for questions depending on each other to be handled correctly
         for ques in sorted(questions):  # Iterates through each question in an article
 
-            agreements = score(task, ques, uberDict, config_path, text_file, repDF, useRep=useRep, threshold_func=threshold_func)
+            agreements = score(task, ques, uberDict, config_path, text_file, schemaFile, repDF, useRep=useRep, threshold_func=threshold_func)
+            if agreements == None:
+                continue
             question_text = get_question_text(uberDict, task, ques)
             # if it's a list then it was a checklist question
+
 
             if type(agreements) is list:
                 #Checklist Question
                 for i in range(len(agreements)):
                     codingPercentAgreement, unitizingScore = agreements[i][4], agreements[i][2]
                     winner, units = agreements[i][0], agreements[i][1]
-                    inclusiveUnitizing = agreements[i][3]
                     selectedText, firstSecondScoreDiff = agreements[i][6], agreements[i][7]
                     question_type, num_choices = agreements[i][8], agreements[i][9]
                     num_users = agreements[i][5]
+                    length = agreements[i][10]
                     ques_num = ques
                     ans_uuid, has_hl = get_answer_data(schema_sha, 1, ques_num, winner, schemaFile)
                     if int(has_hl) == 0:
@@ -151,46 +136,28 @@ def calc_scores(highlightfilename, config_path,  texts_path, repCSV=None, schema
                         unitizingScore = 'NA'
                         inclusiveUnitizing = 'NA'
                     totalScore = calcAgreement(codingPercentAgreement, unitizingScore)
-                    #print(agreements)
                     answer_content = get_answer_content(uberDict,task, ques, agreements[i][0])
-                    #answer_text = get_answer_text(uberDict, task, ques, agreements[i][0])
-                    # parent_data, units, unitizingScore, inclusiveUnitizing = evalDependency(uberDict, task, parentData,
-                    #                                                                         ques, winner, units,
-                    #                                                                         unitizingScore, inclusiveUnitizing)
-                    # bin chance odds and chance odds are deprecated and aren't being output; code to calculate them being elf there in cas eit's useful in the future
-                    #bin_chance_odds = oddsDueToChance(codingPercentAgreement,num_users=num_users, num_choices=2)
-                    #Treat each q as a binary yes/no
-                    #chance_odds = bin_chance_odds
+
 
                     units = json.dumps(np.array(units).tolist())
-                    # units = str(units).replace('\n', '')
-                    # units = units.replace(' ', ', ')
 
                     #TODO: when separate topics implemented; replace the 1 with th the topicnum
 
                     data.append([article_num, article_sha, article_id, article_filename, task_id, tua_uuid, schema_namespace, schema_sha, ques_num, ans_uuid, agreements[i][8], winner,
-                                 codingPercentAgreement, agreements[i][7], units,
-                                 unitizingScore, inclusiveUnitizing, totalScore, num_users, num_choices,selectedText,
-                                question_text,  answer_content])
+                                 codingPercentAgreement,  units,
+                                 totalScore, num_users, num_choices,selectedText,
+                                question_text,  answer_content, length])
 
             else:
-                #winner, units, uScore, iScore, highScore, numUsers, selectedText, firstSecondScoreDiff
                 winner, units = agreements[0], agreements[1]
                 inclusiveUnitizing, numUsers = agreements[3], agreements[5]
                 selectedText, firstSecondScoreDiff = agreements[6], agreements[7]
                 question_type, num_choices = agreements[8], agreements[9]
                 codingPercentAgreement, unitizingScore = agreements[4], agreements[2]
-
+                length = agreements[10]
                 num_users = agreements[5]
-                # parent_data, units, unitizingScore, inclusiveUnitizing = evalDependency(uberDict, task, parentData,
-                #                                                                         ques, winner, units,
-                #                                                                         unitizingScore,
-                #                                                                         inclusiveUnitizing)
-                # bin chance odds and chance odds are deprecated and aren't being output; code to calculate them being elf there in cas eit's useful in the future
-                #bin_chance_odds = oddsDueToChance(codingPercentAgreement,num_users=num_users, num_choices=2)
-                #chance_odds = oddsDueToChance(codingPercentAgreement,num_users=num_users, num_choices=num_choices)
+
                 answer_content = get_answer_content(uberDict, task, ques, agreements[0])
-                #answer_text = get_answer_text(uberDict, task, ques, agreements[0])
                 ques_num = ques
                 ans_uuid, has_hl = get_answer_data(schema_sha, 1, ques_num, winner, schemaFile)
                 if int(has_hl) == 0:
@@ -198,34 +165,14 @@ def calc_scores(highlightfilename, config_path,  texts_path, repCSV=None, schema
                     unitizingScore = 'NA'
                     inclusiveUnitizing = 'NA'
                 totalScore = calcAgreement(codingPercentAgreement, unitizingScore)
-                #ques_num = parse(ques, 'Q')
 
-                #units = json.dumps(units.tolist())
-                #Don't need to convert to json because is always a list not an ndarray
-                #print(type(units))
                 units = json.dumps(np.array(units).tolist())
-                # units = str(units).replace('\n', '')
-                # units = units.replace(' ', ', ')
 
                 data.append([article_num, article_sha, article_id, article_filename, task_id,tua_uuid,schema_namespace, schema_sha,
-                             ques_num, ans_uuid, question_type, winner, codingPercentAgreement, agreements[7],
-                             units, unitizingScore, inclusiveUnitizing,
+                             ques_num, ans_uuid, question_type, winner, codingPercentAgreement,
+                             units,
                              totalScore, num_users, num_choices, selectedText,
-                             question_text, answer_content])
-
-
-    # push out of womb, into world
-    #print('exporting rep_scores')
-    # print(repDF)
-#    repDF.to_csv('RepScores/Repscore10.csv', mode='a', header=False)
- #   userid_to_CSV(repDF)
-    # if outDirectory[-1] != '/':
-    #     outDirectory = outDirectory +'/'
-    #
-    # try:
-    #     scores = open(outDirectory+'S_IAA_'+name, 'w', encoding = 'utf-8')
-    # except FileNotFoundError:
-    #     os.mkdir(outDirectory)
+                             question_text, answer_content, length])
 
     outDirectory = make_directory(outDirectory)
     path, name = get_path(highlightfilename)
@@ -259,7 +206,7 @@ def adjustForJson(units):
     out+=']'
     return out
 
-def score(article, ques, data, config_path, text_file, repDF = None,   useRep = False, threshold_func = 'logis_0'):
+def score(article, ques, data, config_path, text_file, schemaFile, repDF = None,   useRep = False, threshold_func = 'logis_0'):
     """calculates the relevant scores for the article
     returns a tuple (question answer most chosen, units passing the threshold,
         the Unitizing Score of the users who highlighted something that passed threshold, the unitizing score
@@ -284,62 +231,35 @@ def score(article, ques, data, config_path, text_file, repDF = None,   useRep = 
         hlUsers = []
         hlAns = []
 
-    question_type = get_question_type(data, article, ques)
-    get_question_numchoices(data, article, ques)
-    schema = get_schema_topic(data, article)
-    question_type, num_choices = get_type_json(schema, ques, config_path)
+
+    schema = get_schema(data, article)
+    if schema_has_dist_function(schemaFile):
+        question_type, num_choices = schema_to_type_and_num(ques, schemaFile, config_path)
+    else:
+        question_type, num_choices = get_type_json(schema, ques, config_path)
 
 
-        #print("QUESTION TYPE IS", question_type)
-    #This block for scoring only a single article, iuseful for debugging
-    # print()
-    # if article!= '171SSSArticle.txt':
-    #     #print(question_type)
-    #     if question_type == 'checklist':
-    #         return [
-    #             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    #             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-    #
-    #         ]
-    #     return(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0)
     answers = get_question_answers(data, article, ques)
     users =get_question_userid(data, article, ques)
-    #print('art', article,ques)
     numUsers = get_num_users(data, article, ques)
-    #print('nu', numUsers, users)
-    # print("Length of Answers:", len(answers), "\tLength of Users:", len(users))
-    # print("Answers", answers)
-    # print("Users", users)
+
     assert (len(answers) == len(users))
-    #print('qtype', question_type)
     if num_choices == 1:
         return 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
     if question_type == 'ordinal':
-        #assert(len(answers) == len(users))
         out = evaluateCoding(answers, users, starts, ends, numUsers, length,  sourceText, hlUsers, hlAns, repDF = repDF,
                              dfunc='ordinal', num_choices=num_choices, useRep=useRep, threshold_func=threshold_func)
 
-        #print("ORDINAL", out[1], starts, ends)
-        #do_rep_calculation_ordinal(users, answers, out[0], num_choices, out[1], hlUsers, starts, ends, length, repDF, thirtyDf)
-        out = out+(question_type, num_choices)
+        out = out+(question_type, num_choices, length)
     elif question_type == 'nominal':
-        #print('nominal', users)
         out = evaluateCoding(answers, users, starts, ends, numUsers, length,  sourceText,hlUsers, hlAns, repDF = repDF,
                              num_choices=num_choices, useRep=useRep, threshold_func=threshold_func)
-        #do_rep_calculation_nominal(users, answers, out[0], out[1], starts, ends, length, repDF)
-        #print("NOMINAL", out[1], starts, ends)
-        out = out+(question_type, num_choices)
+        out = out+(question_type, num_choices, length)
     elif question_type == 'checklist':
         out = evaluateChecklist(answers, users, starts, ends, numUsers, length, repDF, sourceText, hlUsers, hlAns,
                                 num_choices = num_choices, useRep=useRep, threshold_func = threshold_func)
+    elif question_type == 'none':
+        out = None
     return out
 
 
@@ -392,12 +312,13 @@ def get_answer_data(schema_sha, topic, question, answer, schema_file):
 
 if __name__ == '__main__':
     config_path = './config/'
-    input_dir = '../data/datahunts/'
-    texts_dir = '../data/texts/'
+    input_dir = '../test_data/test_iaa_checklist_zero_pass/'
+    #input_dir = '../data/dh1'
+    texts_dir = '../test_data/texts/'
     metadata_dir = '../data/metadata/'
     tua_dir = '../data/tags/'
     schema_dir = '../data/schemas/'
     # output
-    iaa_output_dir = '../data/out_iaa/'
+    iaa_output_dir = make_directory('../test_data/out_test_diff_schemas/')
     calc_agreement_directory(input_dir, schema_dir, config_path, texts_dir, repCSV=None, outDirectory=iaa_output_dir,
                                  useRep=False, threshold_func='raw_30')
