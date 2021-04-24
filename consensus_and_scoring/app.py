@@ -76,6 +76,8 @@ def handle_request_consensus(body, parent_dirname):
     logger.info("---BEGIN request_consensus handler---")
     project_name = body.get('project_name', '')
     project_uuid = body.get('project_uuid', '')
+    source_task_uuid = body.get('source_task_uuid', '')
+    tua_batch_uuid = body.get('tua_batch_uuid', '')
     task_type = body.get('task_type', '')
     dir_dict = configure_consensus_directories(task_type, parent_dirname)
     fetch_tags_files(body, dir_dict)
@@ -95,6 +97,8 @@ def handle_request_consensus(body, parent_dirname):
     project_s3_prefix = os.path.join(consensus_s3_prefix, project_path)
     s3_locations = send_consensus_files(consensus_dir, consensus_s3_bucket, project_s3_prefix)
     message = build_consensus_message(body, s3_locations)
+    message['source_task_uuid'] = source_task_uuid
+    message['tua_batch_uuid'] = tua_batch_uuid
     return message
 
 def fetch_tags_files(body, dir_dict):
