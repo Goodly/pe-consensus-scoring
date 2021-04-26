@@ -6,17 +6,27 @@ import json
 import string
 import pandas as pd
 
+#functions to help setup testing 
 def get_config():
     with open('test_config.json') as json_file:
         data = json.load(json_file)
     return data
+
+def make_overall_test_dir(config):
+    directory = config['test_dir']
+    try:
+        os.mkdir(directory)
+    except FileExistsError:
+        pass
+    return directory
 #*****************************
-#DEFINING USEFUL GLOBAL VARS
+#Useful global vars
 config = get_config()
 texts_dir = config['test_dir']+config['texts_dir']
+make_overall_test_dir(config)
 
-
-
+#------------
+#Functions to make test-writing easier
 def make_test_directory(config, directory):
     directory = config["test_dir"]+directory
     if directory[-1] != '/':
