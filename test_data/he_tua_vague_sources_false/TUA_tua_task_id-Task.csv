@@ -1,4 +1,0 @@
-,article_batch_name,article_number,article_filename,article_sha256,article_text_length,tua_group_uuid,tua_group_name,tua_batch_uuid,tua_batch_name,tua_batch_final,source_task_uuid,tua_uuid,namespace,topic_name,case_number,answer_uuid,extra,highlight_count,start_pos,end_pos,target_text,article_num
-0,Default,Default,Default,0b35b06a22779418f775a804f36485f7bc978071d1709ad263a68f4f18117b11,2900,Default,Default,Default,Default,Default,tua_task_id,tua1,Default,Quoted Sources,Default,Default,Default,Default,10,30,Default,520
-1,Default,Default,Default,0b35b06a22779418f775a804f36485f7bc978071d1709ad263a68f4f18117b11,2900,Default,Default,Default,Default,Default,tua_task_id,tua2,Default,Quoted Sources,Default,Default,Default,Default,50,120,Default,520
-2,Default,Default,Default,0b35b06a22779418f775a804f36485f7bc978071d1709ad263a68f4f18117b11,2900,Default,Default,Default,Default,Default,tua_task_id,tua3,Default,Quoted Sources,Default,Default,Default,Default,900,1020,Default,520
