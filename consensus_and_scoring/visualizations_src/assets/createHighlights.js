@@ -1,3 +1,8 @@
+var FORM_FILE_URL;
+var USER_FILE_URL;
+var TEXT_FILE_URL;
+var DATA_FILE_URL;
+
 function sortJSONentries(json) {
   var sortArray = []; // an array of arrays
   for (i = 0; i < json.length; i++) {
@@ -6,9 +11,9 @@ function sortJSONentries(json) {
       }
 
     // [uniqueID, color, index, boolean]
-    
+
     let uniqueID = json[i]["Credibility Indicator ID"] +'-' + json[i]["Credibility Indicator Name"] + "-" + json[i].Start + "-" + json[i].End;
-    
+
     let startEntry = [uniqueID, colorFinder(json[i]), parseInt(json[i].Start), true];
     let endEntry = [uniqueID, colorFinder(json[i]), parseInt(json[i].End), false];
 
@@ -16,22 +21,147 @@ function sortJSONentries(json) {
     sortArray.push(endEntry);
   }
   sortArray = sortArray.sort(highlightSort); // sorting all entries by their indices
-  //console.log(sortArray);
+
   return sortArray;
 }
 
-function scoreArticle(textFileUrl, dataFileUrl) {
+function scoreArticle(textFileUrl, dataFileUrl, formFileUrl, userFileUrl) {
+      TEXT_FILE_URL = textFileUrl;
+      DATA_FILE_URL = dataFileUrl;
       d3.text(textFileUrl, function(text) {
-          console.log(text.toString().slice(690, 720));
           document.getElementById("textArticle").innerHTML = text.toString();
           d3.csv(dataFileUrl, function(error, data) {
             if (error) throw error;
+
+            moveFactCheckLabels(formFileUrl, data);
+
             createHighlights(data, text.toString());
+
+            hallmark(data);
         });
+          FORM_FILE_URL = formFileUrl;
+          USER_FILE_URL = userFileUrl;
+
       });
 
-      
+
 }
+
+
+// Mutates data
+
+
+function moveFactCheckLabels(formFileUrl, visDataArray) {
+  d3.csv(formFileUrl, function(error, data) {
+    for (rowIndex in data) {
+      if (data[rowIndex]["Credibility Indicator Category"] == "Needs Fact-Check") {
+        // data[rowIndex]
+        var row = data[rowIndex];
+
+        delete row[""]
+        delete row["Case Number"]
+
+        row["Points"] = "0";
+        row["Credibility Indicator ID"] = "E0";
+        row["Credibility Indicator Name"] = data[rowIndex]["Credibility Indicator Category"];
+        row["Credibility Indicator Category"] = "Evidence";
+        row["target_text"] = " nan"
+
+        Object.defineProperty(row, 'Article ID',
+            Object.getOwnPropertyDescriptor(row, 'Article sha256'));
+        delete row['Article sha256'];
+
+
+
+        visDataArray.push(row)
+      }
+    }
+    console.log(visDataArray);
+    // console.log(data)
+
+  });
+}
+
+function sortFormEntries(json) {
+  var sortArray = []; // an array of arrays
+  for (i = 0; i < json.length; i++) {
+
+      if (parseInt(json[i].Start) == -1 || parseInt(json[i].End) == -1 || json[i].Start == "") {
+
+        continue; // ignore entries where indices are -1 or null
+      }
+    // [uniqueID, color, index, boolean]
+
+    let uniqueID = json[i]["Credibility Indicator Category"] +'_' + json[i].Start + "_" + json[i].End + "_form";
+
+    let startEntry = [uniqueID, colorFinderForm(json[i]), parseInt(json[i].Start), true];
+    let endEntry = [uniqueID, colorFinderForm(json[i]), parseInt(json[i].End), false];
+
+    sortArray.push(startEntry);
+    sortArray.push(endEntry);
+  }
+  sortArray = sortArray.sort(highlightSort); // sorting all entries by their indices
+  return sortArray;
+}
+
+
+function sortUserEntries(json) {
+  var sortArray = [];
+  for (i = 0; i < json.length; i++) {
+      if (parseInt(json[i].Start) == -1 || parseInt(json[i].End) == -1 || (json[i].Start == 0 && json[i].End == 0)) {
+        continue; // ignore entries where indices are -1 or null
+      }
+    // [uniqueID, color, index, boolean]
+
+//    let uniqueID = json[i]["question_text"] +'-'+json[i]["answer_text"] +"-"+ json[i].start_pos + "-" + json[i].end_pos + "-user";
+    let uniqueID = json[i]["Credibility Indicator Category"] + "_" +
+                    json[i]['Credibility Indicator Name'] + "_" +
+                    json[i]["Point Recommendation"] + "_" + json[i]["Start"] +
+                    "_" + json[i]["End"]
+    color = colorFinderCategory(json[i]["Credibility Indicator Category"])
+    let startEntry = [uniqueID, color, parseInt(json[i].Start), true];
+    let endEntry = [uniqueID, color, parseInt(json[i].End), false];
+
+    sortArray.push(startEntry);
+    sortArray.push(endEntry);
+  }
+  sortArray = sortArray.sort(highlightSort); // sorting all entries by their indices
+
+  return sortArray;
+}
+
+function createFormHighlights(json, textString, form) {
+  textArray = textString.split("");  // Splitting the string into an array of strings, one item per character
+  var sortedEntries;
+  if (form) {
+    sortedEntries = sortFormEntries(json); // an array highlight arrays, sorted by their indices
+  } else {
+      sortedEntries = sortUserEntries(json);
+  }
+  var highlightStack = new FlexArray();
+
+  sortedEntries.forEach((entry) => {  // for each entry, open a span if open or close then reopen all spans if a close
+    const index = entry[2];
+
+    if (entry[3]) {
+      textArray = openHighlight(textArray, index, entry, highlightStack, 0);
+      highlightStack.push(entry);
+    } else {
+      textArray = closeHighlights(textArray, index, highlightStack);
+      highlightStack.remove(entry);
+      textArray = openHighlights(textArray, index+1, highlightStack);
+    }
+  })
+
+  finalHTML = textArray.join('');
+  document.getElementById('textArticle').innerHTML = finalHTML;
+  $(".highlight").hover(formHighlight, formNormal);
+}
+
+
+
+
+
 
 function createHighlights(json, textString) {
   //var textString = document.getElementById('textArticle').innerHTML;
@@ -41,8 +171,9 @@ function createHighlights(json, textString) {
   var highlightStack = new FlexArray();
 
   sortedEntries.forEach((entry) => {  // for each entry, open a span if open or close then reopen all spans if a close
-    //console.log(entry)
+
     const index = entry[2];
+
     if (entry[3]) {
       textArray = openHighlight(textArray, index, entry, highlightStack, 0);
       highlightStack.push(entry);
@@ -62,17 +193,14 @@ function openHighlight(textArray, index, entry, highlightStack, i) {
   let allIDsBelow = "";
     highlightStack.getArray().forEach((entry) => {
        allIDsBelow = allIDsBelow + entry[0].toString() + "__"; // all the unqiue IDs are separated by spaces
-       // console.log(allIDsBelow);
   })
   allIDsBelow = " allIDsBelow='" + allIDsBelow + "'";
-  //console.log(textArray.slice(2559, 2584))
   let text = textArray[index-1];
-  console.log(textArray.slice(690, 720));
   let uniqueId = entry[0].toString();
   let color = entry[1];
   let name = " name='" + uniqueId + "'";
   let style = " style= 'border-bottom:1px solid " + color + "'";
-  let highlight = "<span class='highlight'" + name + allIDsBelow + style + ">";
+  let highlight = "<span class='highlight' start='"+index+"'" + name + allIDsBelow + style + ">";
   textArray[index-1] = text + highlight;
   return textArray;
 }
@@ -80,6 +208,7 @@ function openHighlight(textArray, index, entry, highlightStack, i) {
 function openHighlights(textArray, index, highlightStack) {
   let text = textArray[index];
   for (var i = 0; i < highlightStack.getSize(); i++) {
+
     textArray = openHighlight(textArray, index, highlightStack.get(i), highlightStack, i);
   }
   // highlightStack.getArray().forEach((entry) => {
@@ -94,17 +223,62 @@ function closeHighlights(textArray, index, highlightStack) {
   for (var i = 0; i < highlightStack.getSize(); i++) {
     closeSpans += "</span>";
   }
+
   textArray[index] = text + closeSpans;
   return textArray;
 }
 
+
+function formHighlight(x) {
+  var topID = x.toElement.getAttribute("name");
+  var colorRGB = x.toElement.style.borderBottomColor;
+  var color = colorRGB.match(/\d+/g);                      // split rgb into r, g, b, components
+  DIV.transition().duration(50)
+            .style("opacity", .9);
+  var divContent;
+  var form = topID.split("_")[topID.split("_").length - 1] == "form"
+
+  if (form) {
+    divContent = topID.split("_")[0];
+
+  } else {
+      divContent = topID.split("_")[1];
+      //We gotta make that score shit....
+      score = parseInt(topID.split("_")[2]);
+      sunburst = $(".userScore");
+      sunburst.text("Your score for this highlight: "+ score);
+      sunburst.css("border-color", colorRGB);
+      sunburst.css("width", "23ch");
+  }
+
+
+  DIV.style("position", "fixed");
+  var width;
+  DIV.style("width", function() {
+      if (divContent.length < 30) {
+          width = (divContent.length * 10);
+          return width.toString() +"px";
+      } else {
+          width = divContent.length + 5
+          return width.toString() +"px";
+      }
+  });
+
+  var box_x = $(".p-article")[0].getBoundingClientRect().x - width - 40;
+  var box_y = event.clientY;
+  DIV.style("height", "auto");
+  DIV.style("left", box_x + "px")
+            .style("top", box_y + "px")
+            .html(divContent);
+  x.toElement.style.setProperty("background-color", "rgba(" + color[0] + "," + color[1] + "," + color[2] + "," + "0.4");
+  x.toElement.style.setProperty("background-clip", "content-box");
+}
+
+
 function highlight(x) {
-  // console.log(x.toElement);
-  //console.log(x.toElement.style);
   var topID = x.toElement.getAttribute("name");
   var color = x.toElement.style.borderBottomColor;      // grab color of border underline in rgb form
   var color = color.match(/\d+/g);                      // split rgb into r, g, b, components
-  //console.log(color);
   var allIds = x.toElement.getAttribute("allIDsBelow").concat("__" + topID)
   if (allIds.substring(0,1) == ' ') {
       allIds = allIds.substring(1);
@@ -117,10 +291,26 @@ function highlight(x) {
 
 }
 
+
+function formNormal(x) {
+    DIV.transition()
+        .duration(600)
+        .style("opacity",0);
+    DIV.style("position", "absolute");
+    var allSpans = document.getElementsByTagName('span');
+    for (var i = 0; i < allSpans.length; i++) {
+      allSpans[i].style.setProperty("background-color", "transparent");
+    }
+    sunburst = $(".userScore");
+    sunburst.text("Your score for this highlight:");
+    sunburst.css("border-color", "#FFFFFF")
+
+}
+
 // A function which returns all our background colors back to normal.
 // Needs fix to optimize, currently loops through all spans.
 function normal(x) {
-  //console.log(x.toElement);
+
     //resetVis(ROOT);
     resetHallmark(ROOT);
     PSEUDOBOX.transition()
@@ -158,7 +348,7 @@ function resetHallmark() {
                  if (d.height == 1) {
                 } else {
                     return 0;
-                }   
+                }
             } else {
                 console.log("nothing to see here");
             }
@@ -175,7 +365,6 @@ function resetHallmark() {
 
 
 function highlightManyHallmark(idArray, d) {
-    console.log(idArray);
     var id;
     var pathList = [];
     var catList = [];
@@ -203,7 +392,7 @@ function highlightManyHallmark(idArray, d) {
                         .style("opacity", .5);
                         var nameFromElement = id.substring(3);
                         nameFromElement = nameFromElement.replace(/[0-9]|[-]/g, '');
-                        //console.log(nameFromElement);
+
                         if (indicatorName == nameFromElement) {
                             pathList = pathList.concat(path);
                             var score = scoreSum(indicator);
@@ -266,7 +455,7 @@ function highlightManyHallmark(idArray, d) {
 
 
 function highlightHallmark(id) {
-    console.log('check');
+
     d3.selectAll("path").transition().each(function(d) {
     if (d.height == 2) {
         var category;
@@ -280,7 +469,7 @@ function highlightHallmark(id) {
                     var nameFromElement = id.substring(3);
                     nameFromElement = nameFromElement.replace(/[0-9]|[-]/g, '');
                     if (nameFromElement == indicatorName) {
-                        console.log('pls work');
+
                         var path = nodeToPath.get(indicator);
                         d3.select(path)
                         .transition()
@@ -328,7 +517,7 @@ function highlightHallmark(id) {
                 }
 
             } else {
-                //console.log(categoryName);
+
                 var path = nodeToPath.get(category);
                 d3.select(path)
                 .transition()
@@ -337,7 +526,7 @@ function highlightHallmark(id) {
 
             }
 
-            //console.log(category.data.data['Credibility Indicator Name']);
+
         }
     }
 })

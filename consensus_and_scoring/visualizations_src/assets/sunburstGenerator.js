@@ -8,11 +8,6 @@ A rough roadmap of the contents:
 
 **/
 
-
-
-
-
-//var dataFileName = "VisualizationData_1712.csv";
 var chartDiv = document.getElementById("chart");
 
 var width = 400,
@@ -31,7 +26,7 @@ var color = d3.scaleOrdinal(d3.schemeCategory10);
 
 var partition = d3.partition();
 
-
+var classic = true;
 
 /* A map that relates a node in the data heirarchy to the
 SVGPathElement in the visualization.
@@ -51,136 +46,202 @@ var PSEUDOBOX;
 
 var ROOT;
 var SVG;
+var visualizationOn;
 
-function hallmark(dataFileName) {
-
-
-var svg = d3.select("#chart").append("svg")
-    .attr("width", width)
-    .attr("height", height)
-    .append('g')
-    .attr("transform", "translate(" + (width / 2) + "," + (height / 2) + ")");
-SVG = svg;
+function hallmark(data) {
 
 
-var visualizationOn = false;
+  var svg = d3.select("#chart").append("svg")
+      .attr("width", width)
+      .attr("height", height)
+      .append('g')
+      .attr("transform", "translate(" + (width / 2) + "," + (height / 2) + ")");
+  SVG = svg;
 
-var div = d3.select("body").append("div")
-    .attr("class", "tooltip")
-    .style("opacity", 0);
 
-var pseudobox = d3.select("body").append("div")
-    .attr("class", "pseudobox")
-    .style("opacity", 1);
-    
-DIV = div;
+  visualizationOn = false;
 
-PSEUDOBOX = pseudobox;
-//This code block takes the csv and creates the visualization.
-d3.csv(dataFileName, function(error, data) {
-  if (error) throw error;
-  delete data["columns"];
-  data = addDummyData(data);
-  var root = convertToHierarchy(data);
-    console.log(root);
-  var PILLS_MAP = new Map();
-  condense(root, PILLS_MAP);
-  drawPills(PILLS_MAP);
-  ROOT = root;
-  var entry;
-  var pillscore = 0;
-  console.log("this should be 2nd");
-  for (entry of PILLS_MAP) {
-    
-      pillscore += Math.round(parseFloat(entry[1]));
-  }
-  console.log(PILLS_MAP);
-  console.log(scoreSum(root) + ", " + pillscore);
-  totalScore = 100 + scoreSum(root) + pillscore;
-    console.log(root);
+  var div = d3.select("body").append("div")
+      .attr("class", "tooltip")
+      .style("opacity", 0)
+      .style("text-align", "center")
+      .style("margin", "auto");
+
+  var pseudobox = d3.select("body").append("div")
+      .attr("class", "pseudobox")
+      .style("opacity", 1);
+
+  DIV = div;
+
+  PSEUDOBOX = pseudobox;
+  //This code block takes the csv and creates the visualization.
+  // d3.csv(dataFileName, function(error, data) {
+    // if (error) throw error;
+    delete data["columns"];
+    data = addDummyData(data);
+    var root = convertToHierarchy(data);
+    var PILLS_MAP = new Map();
+    condense(root, PILLS_MAP);
+    drawPills(PILLS_MAP);
+    // var sunburst_div = document.getElementsByClassName('sunburst')[0]
+    // var newheight = sunburst_div.clientHeight + document.getElementById('chart').clientHeight;
+    // sunburst_div.style.height = newheight.toString() + "px";
+    ROOT = root;
+    var entry;
+    var pillscore = 0;
+    for (entry of PILLS_MAP) {
+
+        pillscore += Math.round(parseFloat(entry[1]));
+    }
+    totalScore = 100 + scoreSum(root) + pillscore;
     root.sum(function(d) {
-    
-    return Math.abs(parseFloat(d.data.Points));
-  });
 
-//Fill in the colors
-svg.selectAll("g")
-    .data(partition(root).descendants())
-    .enter().append("path")
+      return Math.abs(parseFloat(d.data.Points));
+    });
+
+  //Fill in the colors
+    svg.selectAll("g")
+      .data(partition(root).descendants())
+      .enter().append("path")
       .attr("d", arc)
       .style("fill", function(d) {
         nodeToPath.set(d, this)
         return color(d.data.data["Credibility Indicator Category"]);
-      }) 
+      });
 
-//Setting the center circle to the score
-svg.selectAll(".center-text")
-        .style("display", "none")
+  //Setting the center circle to the score
+    svg.selectAll(".center-text")
+      .style("display", "none");
     svg.append("text")
-        .attr("class", "center-text")
-        .attr("x", 0)
-        .attr("y", 13)
-        .style("font-size", 40)
-        .style("text-anchor", "middle")
-        .html((totalScore))
+      .attr("class", "center-text")
+      .attr("x", 0)
+      .attr("y", 13)
+      .style("font-size", 40)
+      .style("text-anchor", "middle")
+      .html((totalScore));
 
 
-//Setting the outer and inside rings to be transparent.
-d3.selectAll("path").transition().each(function(d) {
-    if (d) {
-        if (!d.children) {
-            this.style.display = "none";
-        } else if (d.height == 2) {
-            this.style.opacity = 0;
-        }
-    } else {
-        console.log("error catching");
-    }
-});
+  //Setting the outer and inside rings to be transparent.
+    d3.selectAll("path").transition().each(function(d) {
+      if (d) {
+          if (!d.children) {
+              this.style.display = "none";
+          } else if (d.height == 2) {
+              this.style.opacity = 0;
+          }
+      }
+    });
 
-//Mouse animations.
-svg.selectAll("path")
-    .on('mouseover', function(d) {
-        if (d.height == 1) {
-        }
-        drawVis(d, root, this, div);
-        visualizationOn = true;
-    })
-    .on('mousemove', function(d) {
-        if (visualizationOn) {
-            var sunburstBox = $(".sunburst")[0].getBoundingClientRect()
-            var divBox = $(".tooltip")[0].getBoundingClientRect()
-            var midline = (sunburstBox.right + sunburstBox.left) / 2;
-            var width = divBox.right - divBox.left;
-            if (d3.event.pageX < midline) {
-                div
-                    .style("opacity", .7)
-                    .style("left", (d3.event.pageX)+ "px")
-                    .style("top", (d3.event.pageY) + "px")
+  //Mouse animations.
+    svg.selectAll("path")
+       .on('mouseover', function(d) {
+            drawVis(d, root, this, div);
+            visualizationOn = true;
+      })
+      .on('mousemove', function(d) {
+          if (visualizationOn) {
+              var sunburstBox = $(".sunburst")[0].getBoundingClientRect();
+              var divBox = $(".tooltip")[0].getBoundingClientRect();
+              var midline = (sunburstBox.right + sunburstBox.left) / 2;
+              var width = divBox.right - divBox.left;
+              if (d3.event.pageX < midline) {
+                  div
+                      .style("opacity", .7)
+                      .style("left", (d3.event.pageX)+ "px")
+                      .style("top", (d3.event.pageY) + "px");
+              } else {
+                  div
+                      .style("opacity", .7)
+                      .style("left", (d3.event.pageX - width)+ "px")
+                      .style("top", (d3.event.pageY) + "px");
+              }
+          } else {
+              div.transition()
+                  .duration(10)
+                  .style("opacity", 0);
+          }
+      })
+      .on('mouseleave', function(d) {
+          resetVis(d);
+      }).on('click', function(d) {
+        scrolltoView(d)
+      })
+      .on('click', function(d) {
+          scrolltoView(d);
+      })
+      .style("fill", colorFinderSun);
+
+
+  //Setting the outer and inside rings to be transparent.
+  d3.selectAll("path").transition().each(function(d) {
+      if (d) {
+          if (!d.children) {
+              this.style.display = "none";
+          } else if (d.height == 2) {
+              this.style.opacity = 0;
+          }
+      } else {
+          //console.log("error catching");
+      }
+  });
+
+  //Mouse animations.
+  svg.selectAll("path")
+      .on('mouseover', function(d) {
+          if (d.height == 0) {
+            console.log(d.data.data)
+            var start_index = d.data.data.Start;
+            var end_index = d.data.data.End;
+            if (start_index == -1 || end_index == -1) {
+              document.body.style.cursor = "default";
             } else {
-                div
-                    .style("opacity", .7)
-                    .style("left", (d3.event.pageX - width)+ "px")
-                    .style("top", (d3.event.pageY) + "px")
+              document.body.style.cursor = "pointer";
             }
-        } else {
-            div.transition()
-                .duration(10)
-                .style("opacity", 0);
-        }
-    })
-    .on('mouseleave', function(d) {
-        resetVis(d);
-    }).on('click', function(d) {
-      scrolltoView(d)
-    })
-    .on('click', function(d) {
-        scrolltoView(d);
-    })
-    .style("fill", colorFinderSun);
-    
-}); 
-d3.select(self.frameElement).style("height", height + "px");
+          } else {
+            document.body.style.cursor = "default";
+          }
+          if (classic) {
+            drawVis(d, root, this, div);
+            visualizationOn = true;
+          }
+      })
+      .on('mousemove', function(d) {
+        console.log(visualizationOn);
+          if (visualizationOn) {
+              var sunburstBox = $(".sunburst")[0].getBoundingClientRect()
+              var divBox = $(".tooltip")[0].getBoundingClientRect()
+              var midline = (sunburstBox.right + sunburstBox.left) / 2;
+              var width = divBox.right - divBox.left;
+              if (d3.event.pageX < midline) {
+                  div
+                      .style("opacity", .7)
+                      .style("left", (d3.event.pageX)+ "px")
+                      .style("top", (d3.event.pageY) + "px")
+              } else {
+                  div
+                      .style("opacity", .7)
+                      .style("left", (d3.event.pageX - width)+ "px")
+                      .style("top", (d3.event.pageY) + "px")
+              }
+          } else {
+              div.transition()
+                  .duration(10)
+                  .style("opacity", 0);
+          }
+      })
+      .on('mouseleave', function(d) {
+          resetVis(d);
+          document.body.style.cursor = "default";
+      }).on('click', function(d) {
+        scrolltoView(d)
+      })
+      .on('click', function(d) {
+          scrolltoView(d);
+      })
+      .style("fill", colorFinderSun);
+
+  // });
+  d3.select(self.frameElement).style("height", height + "px");
 
 }
 
@@ -225,7 +286,7 @@ function colorFinderSun(d) {
 
 /* Function that resets the visualization after the mouse has been moved
    away from the sunburst. It resets the text score to the original
-   article score and resets the colors to their original color.
+   article score and resets the colors to their original.
    @param d : the node in the data heirarchy
    @return : none
 */
@@ -245,7 +306,6 @@ function resetVis(d) {
                         return 0;
                     }
             } else {
-                console.log("printing becuz error");
             }
         })
     d3.selectAll("path")
@@ -253,14 +313,13 @@ function resetVis(d) {
         .delay(1000)
         .attr('stroke-width',2)
         .style("display", function(d) {
-        if (d) {
-            if (d.children) {
-            } else {
-                return "none";
-            }
-        } else {
-            console.log("printing becuz other error");
-        }
+          if (d) {
+              if (d.children) {
+              } else {
+                  return "none";
+              }
+          } else {
+          }
         })
     DIV.transition()
             .delay(200)
@@ -320,55 +379,72 @@ function drawVis(d, root, me, div) {
         .style("opacity", 1)
 
     if (d.height == 0) {
-      // let textToHighlight = document.getElementById(d["Credibility Indicator Name"] + "-" + d.Start + "-" + d.End);
-      // console.log(textToHighlight);
-      // highlight(textToHighlight);
         d3.select(nodeToPath.get(d.parent))
             .transition()
             .duration(300)
             .attr('stroke-width', 5)
             .style("opacity", 1)
-// theresa start
     } if (d.height == 0) {
-        //console.log(d);
         let textToHighlight = document.getElementsByName(d.data.data["Credibility Indicator ID"] +"-" + d.data.data["Credibility Indicator Name"] + "-" + d.data.data.Start + "-" + d.data.data.End);
         if (d.data.data.Start == -1) {
-          console.log("This fallacy does not have a highlight in the article body.");   
+          console.log("This fallacy does not have a highlight in the article body.");
         } else {
-            
+
             highlightSun(textToHighlight[0]);
         }
-    }
-    //theresa end
-    else if (d.height == 2) {
+    } else if (d.height == 2) {
         d3.select(me).style('display', 'none');
     } else if (d.height == 1) {
         d3.select(nodeToPath.get(d.parent)).style('display', 'none');
     }
-    //console.log(d.data.data['Credibility Indicator Name']);
+    var tooltip_text =  d.data.data['Credibility Indicator Name'];
+    var words = tooltip_text.split(" ");
+    var longest = words.sort(
+      function (a, b) {
+        return b.length - a.length;
+      }
+    )[0];
+    var words_len = tooltip_text.length;
+    var start_index = d.data.data.Start;
+    var end_index = d.data.data.End;
+    var category = d.data.data["Credibility Indicator Category"]
+    if (start_index == -1 || end_index == -1) {
+      if (category == "Holistic") {
+        tooltip_text = tooltip_text + "<br><i>(Throughout article)</i></span>";
+        words_len += "(Throughout article)".length;
+      } else {
+        tooltip_text = tooltip_text + "<br><i>(No highlight in text)</i></span>";
+        words_len += "(No highlight in text)".length;
+      }
+    }else {
+      tooltip_text += "</span>"
+    }
     div.transition()
-            .duration(200)
-            .style("opacity", .9);
-        div.html(d.data.data['Credibility Indicator Name'])
-            .style("left", (d3.event.pageX) + "px")
-            .style("top", (d3.event.pageY) + "px")
-            .style("width", function() {
-                if (d.data.data['Credibility Indicator Name'].length < 18) {
-                    return "100px";
-                } else {
-                    return "180px";
-                }
-            })
+      .duration(200)
+      .style("opacity", .9);
+    div.html("<span style='display: inline-block; vertical-align:middle; line-height:normal;'>" + tooltip_text)
+      .style("left", (d3.event.pageX) + "px")
+      .style("top", (d3.event.pageY) + "px")
+      .style("width", function() {
+        if (words_len / 4 > longest.length) {
+          return (2 * longest.length).toString() + "ch";
+        }
+        return longest.length.toString()+"ch";
+      }).style("height", function() {
+        return ((words_len / longest.length) + 2).toString() + "ch";
+      }).style("line-height", function() {
+        return ((words_len / longest.length) + 1.5).toString() + "ch";
+      });
 
     var pointsGained = scoreSum(d);
     SVG.selectAll(".center-text").style('display', 'none');
     SVG.append("text")
-        .attr("class", "center-text")
-        .attr("x", 0)
-        .attr("y", 13)
-        .style("font-size", 40)
-        .style("text-anchor", "middle")
-        .html((pointsGained));
+      .attr("class", "center-text")
+      .attr("x", 0)
+      .attr("y", 13)
+      .style("font-size", 40)
+      .style("text-anchor", "middle")
+      .html((pointsGained));
 }
 
 
@@ -405,19 +481,17 @@ function scrolltoView(x) {
         textToView[0].scrollIntoView({behavior: "smooth", block:"center"});
     }
 }
+
+
 function highlightSun(x) {
-  // console.log(x.toElement);
-  //console.log(x.toElement.style);
   var color = x.style.borderBottomColor;      // grab color of border underline in rgb form
   var color = color.match(/\d+/g);                      // split rgb into r, g, b, components
-  //console.log(color);
 
   x.style.setProperty("background-color", "rgba(" + color[0] + "," + color[1] + "," + color[2] + "," + "0.25");
   x.style.setProperty("background-clip", "content-box");
 }
 
 function normalSun() {
-    //console.log(x.toElement);
     var allSpans = document.getElementsByTagName('span');
     for (var i = 0; i < allSpans.length; i++) {
       allSpans[i].style.setProperty("background-color", "transparent");
