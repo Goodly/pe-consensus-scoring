@@ -17,4 +17,4 @@ from test2.test_publish_article_locally import run_publish_article
 from app import fetch_publish_files
 
 def test_publish_local_only():
-    run_publish_article(run_publish_article)
+    run_publish_article(fetch_publish_files)
