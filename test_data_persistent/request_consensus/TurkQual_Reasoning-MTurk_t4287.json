@@ -1,0 +1,43 @@
+{
+  "Highlighters": [],
+  "task_type": "QUIZ",
+  "user_id": 1,
+  "source_task_uuid": "03b0b0d7-f563-4531-9bda-dd640853c5e1",
+  "Tags": [],
+  "project_name": "Turk_Qual_Reasoning-MTurk",
+  "project_uuid": "77f6735f-dd4a-473a-bb71-82b354d1aca1",
+  "AdjTags": [],
+  "Texts": [
+    {
+      "metadata_location": {
+        "bucket_name": "tagworks.thusly.co",
+        "key": "publiceditor/Articles/c7015dda961a70779fa2e42d8a822224b64bc676a513f5949012c8b4f7436296/metadata.json.gz",
+        "filename": "c7015dda961a70779fa2e42d8a822224b64bc676a513f5949012c8b4f7436296/metadata.json.gz"
+      },
+      "bucket_name": "tagworks.thusly.co",
+      "article_sha256": "c7015dda961a70779fa2e42d8a822224b64bc676a513f5949012c8b4f7436296",
+      "key": "publiceditor/Articles/c7015dda961a70779fa2e42d8a822224b64bc676a513f5949012c8b4f7436296/text.txt.gz",
+      "filename": "c7015dda961a70779fa2e42d8a822224b64bc676a513f5949012c8b4f7436296/text.txt.gz"
+    }
+  ],
+  "NegativeTasks": [],
+  "Version": "1",
+  "tua_batch_uuid": "7633fa4c-4a52-481d-9981-98f31750f615",
+  "Action": "request_consensus",
+  "log_message": "Request consensus project 'Turk_Qual_Reasoning-MTurk' task_type 'QUIZ' source_task_uuid 03b0b0d7-f563-4531-9bda-dd640853c5e1 tua_batch_uuid 7633fa4c-4a52-481d-9981-98f31750f615",
+  "DataHunts": [
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "publiceditor/ProjectExports/Turk_Qual_Reasoning-MTurk/DataHuntTask/Turk_Qual_Reasoning-MTurk-Task-4287-DataHunt.csv.gz",
+      "filename": "Turk_Qual_Reasoning-MTurk/DataHuntTask/Turk_Qual_Reasoning-MTurk-Task-4287-DataHunt.csv.gz"
+    }
+  ],
+  "AdjNegativeTasks": [],
+  "Schemas": [
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "publiceditor/ProjectExports/Turk_Qual_Reasoning-MTurk/Schema/Reasoning2021_02_01-Schema.csv.gz",
+      "filename": "Turk_Qual_Reasoning-MTurk/Schema/Reasoning2021_02_01-Schema.csv.gz"
+    }
+  ]
+}
