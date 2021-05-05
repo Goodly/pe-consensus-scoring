@@ -1,0 +1,158 @@
+{
+  "AdjNegativeTasksElseIAA": [],
+  "Highlighters": [],
+  "user_id": 1,
+  "Tags": [
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "development/ProjectExports/Schmidt_EasyTriagev5_ESTF/TaskTags/Schmidt_EasyTriagev5.IAA-6a570fe3-1ace-42d1-9e87-cc9cfceb5c88-Tags.csv.gz",
+      "filename": "Schmidt_EasyTriagev5_ESTF/TaskTags/Schmidt_EasyTriagev5.IAA-6a570fe3-1ace-42d1-9e87-cc9cfceb5c88-Tags.csv.gz"
+    },
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "development/ProjectExports/TurkQual_Language-MTurk/TaskTags/TurkQual_Language-MTurk.IAA-5ca2d688-4b61-4b86-a553-abcd4df7b5f7-Tags.csv.gz",
+      "filename": "TurkQual_Language-MTurk/TaskTags/TurkQual_Language-MTurk.IAA-5ca2d688-4b61-4b86-a553-abcd4df7b5f7-Tags.csv.gz"
+    },
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "development/ProjectExports/TurkQual_Language-MTurk/TaskTags/TurkQual_Language-MTurk.IAA-db17b420-7c29-4873-ad32-2d3bf40bbd0b-Tags.csv.gz",
+      "filename": "TurkQual_Language-MTurk/TaskTags/TurkQual_Language-MTurk.IAA-db17b420-7c29-4873-ad32-2d3bf40bbd0b-Tags.csv.gz"
+    }
+  ],
+  "NegativeTasks": [],
+  "pipeline_uuid": "9c1bdf6b-0626-407a-aab3-a0d4820ecdcd",
+  "article_sha256": "1ea77d4bd16475b74243e0a909985a8bb8df305fb6beae159c493af606727e2c",
+  "DataHunts": [
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "development/ProjectExports/Schmidt_Sourcesv4-from_IAA-MTurk/DataHuntTask/Schmidt_Sourcesv4-from_IAA-MTurk-Task-3021-DataHunt.csv.gz",
+      "filename": "Schmidt_Sourcesv4-from_IAA-MTurk/DataHuntTask/Schmidt_Sourcesv4-from_IAA-MTurk-Task-3021-DataHunt.csv.gz"
+    },
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "development/ProjectExports/Schmidt_Sourcesv4-from_IAA-MTurk/DataHuntTask/Schmidt_Sourcesv4-from_IAA-MTurk-Task-3022-DataHunt.csv.gz",
+      "filename": "Schmidt_Sourcesv4-from_IAA-MTurk/DataHuntTask/Schmidt_Sourcesv4-from_IAA-MTurk-Task-3022-DataHunt.csv.gz"
+    },
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "development/ProjectExports/Schmidt_Sourcesv4-from_IAA-MTurk/DataHuntTask/Schmidt_Sourcesv4-from_IAA-MTurk-Task-3023-DataHunt.csv.gz",
+      "filename": "Schmidt_Sourcesv4-from_IAA-MTurk/DataHuntTask/Schmidt_Sourcesv4-from_IAA-MTurk-Task-3023-DataHunt.csv.gz"
+    },
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "development/ProjectExports/Schmidt_Sourcesv4-from_IAA-MTurk/DataHuntTask/Schmidt_Sourcesv4-from_IAA-MTurk-Task-3024-DataHunt.csv.gz",
+      "filename": "Schmidt_Sourcesv4-from_IAA-MTurk/DataHuntTask/Schmidt_Sourcesv4-from_IAA-MTurk-Task-3024-DataHunt.csv.gz"
+    },
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "development/ProjectExports/TurkQual_Language-MTurk/DataHuntTask/TurkQual_Language-MTurk-Task-3086-DataHunt.csv.gz",
+      "filename": "TurkQual_Language-MTurk/DataHuntTask/TurkQual_Language-MTurk-Task-3086-DataHunt.csv.gz"
+    },
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "development/ProjectExports/TurkQual_Language-MTurk/DataHuntTask/TurkQual_Language-MTurk-Task-3087-DataHunt.csv.gz",
+      "filename": "TurkQual_Language-MTurk/DataHuntTask/TurkQual_Language-MTurk-Task-3087-DataHunt.csv.gz"
+    }
+  ],
+  "Texts": [
+    {
+      "metadata_location": {
+        "bucket_name": "tagworks.thusly.co",
+        "key": "development/Articles/1ea77d4bd16475b74243e0a909985a8bb8df305fb6beae159c493af606727e2c/metadata.json.gz",
+        "filename": "1ea77d4bd16475b74243e0a909985a8bb8df305fb6beae159c493af606727e2c/metadata.json.gz"
+      },
+      "bucket_name": "tagworks.thusly.co",
+      "article_sha256": "1ea77d4bd16475b74243e0a909985a8bb8df305fb6beae159c493af606727e2c",
+      "key": "development/Articles/1ea77d4bd16475b74243e0a909985a8bb8df305fb6beae159c493af606727e2c/text.txt.gz",
+      "filename": "1ea77d4bd16475b74243e0a909985a8bb8df305fb6beae159c493af606727e2c/text.txt.gz"
+    }
+  ],
+  "Version": "1",
+  "response_sqs_url": "https://sqs.us-west-2.amazonaws.com/507444306670/pe-tagworks-dev-listener",
+  "pipeline_name": "Schmidt-GEC",
+  "FocusTags": [
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "development/ProjectExports/Schmidt_Sourcesv4-from_IAA-MTurk/FocusTUA/TUA-f02559db-bedf-470b-8999-1b854b54b07f-FocusTags.csv.gz",
+      "filename": "Schmidt_Sourcesv4-from_IAA-MTurk/FocusTUA/TUA-f02559db-bedf-470b-8999-1b854b54b07f-FocusTags.csv.gz"
+    },
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "development/ProjectExports/Schmidt_Sourcesv4-from_IAA-MTurk/FocusTUA/TUA-10d521e2-0a7c-43fa-9bd4-6e2f47d73e12-FocusTags.csv.gz",
+      "filename": "Schmidt_Sourcesv4-from_IAA-MTurk/FocusTUA/TUA-10d521e2-0a7c-43fa-9bd4-6e2f47d73e12-FocusTags.csv.gz"
+    },
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "development/ProjectExports/Schmidt_Sourcesv4-from_IAA-MTurk/FocusTUA/TUA-06155959-2a00-43b3-9ff4-605b53c9d420-FocusTags.csv.gz",
+      "filename": "Schmidt_Sourcesv4-from_IAA-MTurk/FocusTUA/TUA-06155959-2a00-43b3-9ff4-605b53c9d420-FocusTags.csv.gz"
+    },
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "development/ProjectExports/Schmidt_Sourcesv4-from_IAA-MTurk/FocusTUA/TUA-6a76beac-1e0a-4a0a-a81f-44592a4ebbc3-FocusTags.csv.gz",
+      "filename": "Schmidt_Sourcesv4-from_IAA-MTurk/FocusTUA/TUA-6a76beac-1e0a-4a0a-a81f-44592a4ebbc3-FocusTags.csv.gz"
+    },
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "development/ProjectExports/TurkQual_Language-MTurk/FocusTUA/TUA-2c1f84f0-69b9-4f60-b82a-b7325ac0c737-FocusTags.csv.gz",
+      "filename": "TurkQual_Language-MTurk/FocusTUA/TUA-2c1f84f0-69b9-4f60-b82a-b7325ac0c737-FocusTags.csv.gz"
+    },
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "development/ProjectExports/TurkQual_Language-MTurk/FocusTUA/TUA-991be74c-c20e-4002-abf5-22e9276e496a-FocusTags.csv.gz",
+      "filename": "TurkQual_Language-MTurk/FocusTUA/TUA-991be74c-c20e-4002-abf5-22e9276e496a-FocusTags.csv.gz"
+    }
+  ],
+  "Action": "publish_article",
+  "article_number": 530712012,
+  "AdjTags": [],
+  "AdjNegativeTasks": [],
+  "AdjTagsElseIAATags": [
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "development/ProjectExports/Schmidt_EasyTriagev5_ESTF/TaskTags/Schmidt_EasyTriagev5.IAA-6a570fe3-1ace-42d1-9e87-cc9cfceb5c88-Tags.csv.gz",
+      "filename": "Schmidt_EasyTriagev5_ESTF/TaskTags/Schmidt_EasyTriagev5.IAA-6a570fe3-1ace-42d1-9e87-cc9cfceb5c88-Tags.csv.gz"
+    },
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "development/ProjectExports/TurkQual_Language-MTurk/TaskTags/TurkQual_Language-MTurk.IAA-5ca2d688-4b61-4b86-a553-abcd4df7b5f7-Tags.csv.gz",
+      "filename": "TurkQual_Language-MTurk/TaskTags/TurkQual_Language-MTurk.IAA-5ca2d688-4b61-4b86-a553-abcd4df7b5f7-Tags.csv.gz"
+    },
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "development/ProjectExports/TurkQual_Language-MTurk/TaskTags/TurkQual_Language-MTurk.IAA-db17b420-7c29-4873-ad32-2d3bf40bbd0b-Tags.csv.gz",
+      "filename": "TurkQual_Language-MTurk/TaskTags/TurkQual_Language-MTurk.IAA-db17b420-7c29-4873-ad32-2d3bf40bbd0b-Tags.csv.gz"
+    }
+  ],
+  "Schemas": [
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "development/ProjectExports/Schmidt_Sourcesv4_Qualification-MTurk/Schema/Sources2021_02_23-Schema.csv.gz",
+      "filename": "Schmidt_Sourcesv4_Qualification-MTurk/Schema/Sources2021_02_23-Schema.csv.gz"
+    },
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "development/ProjectExports/Turk_Qual_Probabilityv2-MTurk/Schema/Probability_2021_03_19-Schema.csv.gz",
+      "filename": "Turk_Qual_Probabilityv2-MTurk/Schema/Probability_2021_03_19-Schema.csv.gz"
+    },
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "development/ProjectExports/Schmidt_Sourcesv4-from_IAA-MTurk/Schema/Sources2021_02_23-Schema.csv.gz",
+      "filename": "Schmidt_Sourcesv4-from_IAA-MTurk/Schema/Sources2021_02_23-Schema.csv.gz"
+    },
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "development/ProjectExports/Turk_Qual_Argument-MTurk/Schema/Arguments2021_02_01-Schema.csv.gz",
+      "filename": "Turk_Qual_Argument-MTurk/Schema/Arguments2021_02_01-Schema.csv.gz"
+    },
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "development/ProjectExports/Turk_Qual_Evidencev4-MTurk/Schema/Evidence2021_04_20_v2-Schema.csv.gz",
+      "filename": "Turk_Qual_Evidencev4-MTurk/Schema/Evidence2021_04_20_v2-Schema.csv.gz"
+    },
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "development/ProjectExports/TurkQual_Language-MTurk/Schema/Language2021_02_18-Schema.csv.gz",
+      "filename": "TurkQual_Language-MTurk/Schema/Language2021_02_18-Schema.csv.gz"
+    }
+  ]
+}
