@@ -83,7 +83,8 @@ def toArray(starts,ends,length, users, userWeightDict = None, answers = None, wi
         uIndices = getIndicesFromUser(users, uniqueUsers[u])
         ustarts, uends = astarts[uIndices], aends[uIndices]
         for start in range(len(ustarts)):
-            for i in range(int(ustarts[start]), int(uends[start])):
+            #ends should be inclusive
+            for i in range(int(ustarts[start]), int(uends[start])+1):
                 userBlocks[u][i] = weight
     #Now there are arrays of 1s and 0s, gotta collapse them
     #and make the possibilities column

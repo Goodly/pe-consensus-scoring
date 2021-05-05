@@ -149,7 +149,6 @@ def dataStorer(data_hunt_path, schema_path):
 
         # computes the start and end lists
         starts_lists, ends_lists = getStartsEndsLists(starts_ends, uuid)
-
         # gets highlighted information
         usersGrouped = highlight.loc[uuid].groupby("question_label")
         contributors = usersGrouped["contributor_uuid"].apply(list)
