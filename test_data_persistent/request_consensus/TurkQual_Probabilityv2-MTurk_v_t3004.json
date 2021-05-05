@@ -1,0 +1,43 @@
+{
+  "Highlighters": [],
+  "task_type": "QUIZ",
+  "user_id": 1,
+  "source_task_uuid": "de8c8a64-7cab-4b4a-92f7-4afc1eaee7b1",
+  "Tags": [],
+  "project_name": "Turk_Qual_Probabilityv2-MTurk",
+  "project_uuid": "69facffe-8972-47c6-b14e-622f55a0ddc0",
+  "AdjTags": [],
+  "Texts": [
+    {
+      "metadata_location": {
+        "bucket_name": "tagworks.thusly.co",
+        "key": "publiceditor/Articles/371b4c41af48dbc0ae7ef3333945f2f7a3ce168a5d86b334175ea7ed3c158de3/metadata.json.gz",
+        "filename": "371b4c41af48dbc0ae7ef3333945f2f7a3ce168a5d86b334175ea7ed3c158de3/metadata.json.gz"
+      },
+      "bucket_name": "tagworks.thusly.co",
+      "article_sha256": "371b4c41af48dbc0ae7ef3333945f2f7a3ce168a5d86b334175ea7ed3c158de3",
+      "key": "publiceditor/Articles/371b4c41af48dbc0ae7ef3333945f2f7a3ce168a5d86b334175ea7ed3c158de3/text.txt.gz",
+      "filename": "371b4c41af48dbc0ae7ef3333945f2f7a3ce168a5d86b334175ea7ed3c158de3/text.txt.gz"
+    }
+  ],
+  "NegativeTasks": [],
+  "Version": "1",
+  "tua_batch_uuid": "b043dd1b-68f8-4590-aeb9-a9381b6e5d53",
+  "Action": "request_consensus",
+  "log_message": "Request consensus project 'Turk_Qual_Probabilityv2-MTurk' task_type 'QUIZ' source_task_uuid de8c8a64-7cab-4b4a-92f7-4afc1eaee7b1 tua_batch_uuid b043dd1b-68f8-4590-aeb9-a9381b6e5d53",
+  "DataHunts": [
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "publiceditor/ProjectExports/Turk_Qual_Probabilityv2-MTurk/DataHuntTask/Turk_Qual_Probabilityv2-MTurk-Task-3004-DataHunt.csv.gz",
+      "filename": "Turk_Qual_Probabilityv2-MTurk/DataHuntTask/Turk_Qual_Probabilityv2-MTurk-Task-3004-DataHunt.csv.gz"
+    }
+  ],
+  "AdjNegativeTasks": [],
+  "Schemas": [
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "publiceditor/ProjectExports/Turk_Qual_Probabilityv2-MTurk/Schema/Probability_2021_03_19-Schema.csv.gz",
+      "filename": "Turk_Qual_Probabilityv2-MTurk/Schema/Probability_2021_03_19-Schema.csv.gz"
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "Highlighters": [],
+  "task_type": "QUIZ",
+  "user_id": 1,
+  "source_task_uuid": "1639ac46-b2d7-4d1f-806e-a18ae3621da2",
+  "Tags": [],
+  "project_name": "TurkQual_Language-MTurk",
+  "project_uuid": "e3a021e3-8f06-4b3a-b889-3153bd533b8e",
+  "AdjTags": [],
+  "Texts": [
+    {
+      "metadata_location": {
+        "bucket_name": "tagworks.thusly.co",
+        "key": "development/Articles/b29a76b592a75b14b2a5f5a5c4f1481414b865fa1febce59a56c13ae6fbe3099/metadata.json.gz",
+        "filename": "b29a76b592a75b14b2a5f5a5c4f1481414b865fa1febce59a56c13ae6fbe3099/metadata.json.gz"
+      },
+      "bucket_name": "tagworks.thusly.co",
+      "article_sha256": "b29a76b592a75b14b2a5f5a5c4f1481414b865fa1febce59a56c13ae6fbe3099",
+      "key": "development/Articles/b29a76b592a75b14b2a5f5a5c4f1481414b865fa1febce59a56c13ae6fbe3099/text.txt.gz",
+      "filename": "b29a76b592a75b14b2a5f5a5c4f1481414b865fa1febce59a56c13ae6fbe3099/text.txt.gz"
+    }
+  ],
+  "NegativeTasks": [],
+  "Version": "1",
+  "tua_batch_uuid": "a8f321a4-028d-4e2f-8f3e-1d856a345374",
+  "Action": "request_consensus",
+  "log_message": "Request consensus project 'TurkQual_Language-MTurk' task_type 'QUIZ' source_task_uuid 1639ac46-b2d7-4d1f-806e-a18ae3621da2 tua_batch_uuid a8f321a4-028d-4e2f-8f3e-1d856a345374",
+  "DataHunts": [
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "development/ProjectExports/TurkQual_Language-MTurk/DataHuntTask/TurkQual_Language-MTurk-Task-2982-DataHunt.csv.gz",
+      "filename": "TurkQual_Language-MTurk/DataHuntTask/TurkQual_Language-MTurk-Task-2982-DataHunt.csv.gz"
+    }
+  ],
+  "AdjNegativeTasks": [],
+  "Schemas": [
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "development/ProjectExports/TurkQual_Language-MTurk/Schema/Language2021_02_18-Schema.csv.gz",
+      "filename": "TurkQual_Language-MTurk/Schema/Language2021_02_18-Schema.csv.gz"
+    }
+  ]
+}
