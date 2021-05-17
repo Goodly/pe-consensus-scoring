@@ -20,7 +20,7 @@ def eval_dependency(directory, iaa_dir, schema_dir, out_dir):
     for dirpath, dirnames, files in os.walk(iaa_dir):
         for file in files:
             print("IAA OUTPUT",file)
-            if file.endswith('.csv') and 'Dep' not in file and len(file)>10:
+            if file.endswith('.csv'):
                     file_path = os.path.join(dirpath, file)
                     print("evaluating dependencies for " + file_path)
                     iaa.append(file_path)

@@ -23,7 +23,7 @@ def calc_agreement_directory(directory, schema_dir, config_path,  texts_path, re
     schema = []
     for root, dir, files in os.walk(directory):
         for file in files:
-            if file.endswith('.csv') and 'IAA' not in file:
+            if file.endswith('.csv'):
                 print("Checking Agreement for "+directory+'/'+file)
                 highlights.append(directory+'/'+file)
 

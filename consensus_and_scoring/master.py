@@ -211,7 +211,7 @@ if __name__ == '__main__':
     args = load_args()
     # input
     config_path = './config/'
-    input_dir = '../data/datahunts/'
+    input_dir = '../data/test/'
     texts_dir = '../data/texts/'
     metadata_dir = '../data/metadata/'
     tua_dir = '../data/focus_tags/'
