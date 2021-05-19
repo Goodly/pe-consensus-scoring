@@ -59,7 +59,7 @@ def generate_datahunt_consensus(dir_dict):
         iaa_dir = dir_dict['consensus_dir'],
         schema_dir = dir_dict['schemas_dir'],
         adjud_dir = dir_dict['adjud_dir'],
-        threshold_func = 'raw_30'
+        threshold_func = 'raw_50'
     )
     assert(result_dir == dir_dict['adjud_dir'])
     return result_dir
@@ -87,7 +87,7 @@ def configure_publish_directories(parent_dirname):
     return dir_dict
 
 def generate_article_to_publish(dir_dict):
-    threshold_function = 'raw_30'
+    threshold_function = 'raw_50'
     post_adjudicator_master(
         dir_dict['adj_tags_dir'],
         dir_dict['schemas_dir'],
