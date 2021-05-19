@@ -25,7 +25,7 @@ working directory.
 """
 def read_csv_from_path(path=''):
 
-    path += 'Covid_Form1.0.adjudicated-2020-10-04T2314-Tags.csv'
+    path += 'Covid_Form1.0.adjudicated-b89d2c36-9f72-44ad-92da-de79ab159ae9-Tags.csv'
     return pd.read_csv(path)
 
 
@@ -35,10 +35,10 @@ Take article_number, start_pos, end_pos, and add Indices of Label in Article. Re
 Assumption: raw_data contains columns named article_number, start_pos, end_pos
 By default, we place the created csv in the parent directory, where Visualization.html lives.
 """
-def simple_data_from_raw_data(article_sha256, target_dir='../', path=''):
+def simple_data_from_raw_data(article_sha256, path='', target_dir='../'):
 
     raw_data = read_csv_from_path(path)
-    file_name = target_dir+"article_elements.csv"
+    file_name = target_dir+article_sha256+"_article_elements.csv"
     simple_data = raw_data[['article_number', 'article_sha256', 'topic_name', 'start_pos', 'end_pos', 'case_number']]
     simple_data = simple_data.rename(columns = {'article_number': 'Article ID', 'article_sha256': 'Article sha256', 'topic_name': 'Credibility Indicator Category', 'start_pos': 'Start', 'end_pos': 'End', 'case_number': 'Case Number'})
 

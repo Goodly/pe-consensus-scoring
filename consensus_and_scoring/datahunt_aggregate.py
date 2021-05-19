@@ -139,7 +139,7 @@ def create_eta_datahunt(article_sha256, path = '', target_dir='../'):
 					continue
 				else:
 					new_df = new_df.append(new_row)
-			new_df.to_csv(path + target_dir + "user_contributions.csv")
+	new_df.to_csv(target_dir + article_sha256 + "_user_contributions.csv")
 	return new_df
 
 """

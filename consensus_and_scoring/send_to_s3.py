@@ -21,6 +21,9 @@ from requests.compat import urlparse
 import boto3
 from botocore.exceptions import ClientError
 
+from datahunt_aggregate import *
+from form_aggregate import *
+
 s3 = boto3.resource('s3')
 
 def get_s3_config(s3_url):
@@ -57,6 +60,12 @@ def send_s3(viz_dir, text_dir, metadata_dir, s3_bucket, s3_prefix):
         send_with_max_age(viz['data_filepath'], s3_bucket, data_s3_key,
                           ACL='public-read', max_age=10)
 
+        send_with_max_age(vis['form_filepath'], s3_bucket, data_s3_key,
+                          ACL='public-read', max_age=10)
+
+        send_with_max_age(vis['datahunt_filepath'], s3_bucket, data_s3_key,
+                          ACL='public-read', max_age=10)
+
         article_filename_s3 = 'article.txt'
         article_s3_key = os.path.join(s3_prefix,  viz['article_shorter'], article_filename_s3)
         viz['article_s3_key'] = article_s3_key
@@ -67,10 +76,16 @@ def send_s3(viz_dir, text_dir, metadata_dir, s3_bucket, s3_prefix):
         original_url = viz['metadata'].get('extra', {}).get('url','')
         # Since the data files we pushed are in the same directory as the html, the
         # relative url is just the filename.
+
+        form_url =
+        datahunt_url =
+
         context = {
             'DATA_CSV_URL': viz_data_filename_s3,
             'ARTICLE_TEXT_URL': article_filename_s3,
             'ORIGINAL_URL': original_url,
+            'FORM_URL': form_url,
+            'DATAHUNT_URL': datahunt_url
         }
         # Merge template URLs into HTML file
         html_output = html_template.substitute(context)
@@ -101,6 +116,11 @@ def collect_files_to_send(viz_dir, text_dir, metadata_dir):
                 article_filepath = os.path.join(text_dir, article_sha256 + ".txt")
                 metadata_filepath = os.path.join(metadata_dir, article_sha256 + ".metadata.json")
                 metadata = read_metadata(metadata_filepath)
+
+                create_eta_datahunt(article_sha256, "/../data/", "")
+                datahunt_filename = article_sha256 + "_user_contributions.csv"
+                simple_data_from_raw_data(articlesha256, "../data/adj_tags/", "")
+                form_filename = article_sha256 + "_article_elements.csv"
                 if os.path.exists(article_filepath):
                     viz = {
                         'sha_256': article_sha256,
@@ -110,10 +130,15 @@ def collect_files_to_send(viz_dir, text_dir, metadata_dir):
                         'article_filepath': article_filepath,
                         'metadata_filepath': metadata_filepath,
                         'metadata': metadata,
+                        'datahunt_filepath': os.path.join(dirpath, datahunt_file_name),
+                        'datahunt_filename': datahunt_file_name,
+                        'form_filepath': os.path.join(dirpath, form_filename),
+                        'form_filename': form_filename
                     }
                     viz_to_send.append(viz)
                 else:
                     print(article_filepath, 'not found')
+
     return viz_to_send
 
 def generate_newsfeed_items(viz_to_send):
