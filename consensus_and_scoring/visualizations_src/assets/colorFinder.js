@@ -13,6 +13,19 @@ function colorFinder(jsonLine) {
   }
 }
 
+function colorFinderForm(jsonLine) {
+    if (jsonLine["Credibility Indicator Category"] === "Arguments") {
+    return d3.rgb(239, 92, 84);
+  } else if (jsonLine["Credibility Indicator Category"] === "Quoted Sources") {
+    return d3.rgb(0, 165, 150);
+  } else if (jsonLine["Credibility Indicator Category"] === "Assertions") {
+      return d3.rgb(0, 191, 255);
+  } else if (jsonLine["Credibility Indicator Category"] == "Needs Fact-Check") {
+      return d3.rgb(43, 82, 230);
+  }
+}
+
+
 
 function colorFinderPills(categoryInitial) {
     if (categoryInitial == 'R') {
@@ -26,4 +39,22 @@ function colorFinderPills(categoryInitial) {
     } else {
         return "#FDB515";
     }
+}
+/*
+    Given a category, output the corresponding color
+
+
+*/
+function colorFinderCategory(category) {
+  if (category === "Reasoning") {
+    return d3.rgb(239, 92, 84);
+  } else if (category === "Evidence") {
+    return d3.rgb(0, 165, 150);
+  } else if (category == "Probability") {
+      return d3.rgb(0, 191, 255);
+  } else if (category == "Language") {
+      return d3.rgb(43, 82, 230);
+  } else {
+      return d3.rgb(255, 180, 0);
+  }
 }

@@ -12,6 +12,9 @@
   width: 750px;
 }
 
+
+
+
 #sidebar {
   float: right;
   width: 100px;
@@ -62,6 +65,7 @@ div.tooltip {
         pointer-events: none;
 }
 
+
 div.pseudobox {
     text-align: center;
     position: fixed;
@@ -83,7 +87,7 @@ div.pseudobox {
 
 .highlighter .highlightertext {
     visibility: hidden;
-    fit-content = min(max-content, max(min-content, fill-available));
+    fit-content: min(max-content, max(min-content, fill-available));
     text-align: center;
     font-weight: bold;
     border-radius: 15px;
@@ -120,7 +124,7 @@ div.pseudobox {
 .svg-content {
     display: inline-block;
     position: absolute;
-    
+
     top: 0;
     left: 0;
 }
@@ -157,12 +161,82 @@ div.pseudobox {
 }
 
 .sunburst {
+  display: flex;
   position: -webkit-sticky;
   position: sticky;
-  top: 40px;
+  top: 80px;
   left: -1000px;
-  height: 400px;
+  height: 800px;
   width: 400px;
+  z-index: 0;
+}
+
+#popup {
+  height: 25px;
+  width: 25px;
+  bottom: 400px;
+  right: 8px;
+  border-radius: 50%;
+  z-index: 3;
+  position: absolute;
+}
+
+.modal {
+  display: none; /* Hidden by default */
+  position: absolute; /* Stay in place */
+  z-index: 2; /* Sit on top */
+  bottom: 70px;
+  right: 0;
+  width: 100%; /* Full width */
+  height: auto; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 10px solid #888;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+/* .close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+} */
+
+.userScore {
+    position: absolute;
+    top: 345px;
+    left: 9%;
+    font-size: 22px;
+    border-radius: 5px;
+    border-style: solid;
+    padding:5px;
+    border-color: #FFFFFF;
+    display:none;
+}
+
+
+.options {
+    position: -webkit-sticky;
+    position: sticky;
+    margin-left: 10%;
+    font-size: 20px;
+    top: 150px;
 }
 
 #chart {
@@ -171,6 +245,7 @@ div.pseudobox {
   left: 0;
   height: 400px;
   width: 400px;
+  z-index: 13;
 }
 
 #shadow-roor {
@@ -243,7 +318,7 @@ a:hover {
 }
 
 
-}
+
 
 /* Oscar and Quang End */
 
@@ -601,8 +676,157 @@ h3 {
       font-size: 32px;
       margin: 0px;
     }
-
+}
 /* Katie come back  */
+
+
+
+/*Explore the article dropwdown style */
+
+.hide {
+  opacity: 0;
+  max-height: 0;
+  overflow:hidden;
+}
+
+.show {
+  opacity: 1;
+  max-height: 100%;
+}
+
+.hidden {
+  width: 50px;
+  display: none;
+}
+
+.shown {
+  display: inline-block;
+  color: #bd1313;
+}
+
+.userform {
+  position: relative;
+  border-radius: 12px;
+  width: 90%;
+  margin: auto;
+  display: inline-block;
+}
+
+.button_one {
+  border-radius: 12px;
+  margin: 5px;
+  background-color: #ffb400;
+  color: white;
+  text-align: center;
+  display: inline-block;
+  font-size: 20px;
+  opacity: 1;
+  font-family: 'Lato', sans-serif;
+  border: none;
+  width: 94%;
+
+}
+.button_one:hover + .hide {
+  transition: opacity 2s, max-height 1s;
+  opacity: 1;
+  max-height: 100%;
+  margin: 5px;
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  display: block;
+  color: #323648;
+}
+
+.button_two {
+  border-radius: 12px;
+  margin: 5px;
+  font-family: 'Lato', sans-serif;
+  border: none;
+  background-color: #76bce2;
+  color: white;
+  text-align: center;
+  display: inline-block;
+  font-size: 20px;
+  opacity: 0.6;
+  width: 94%;
+}
+.button_two:hover + .hide {
+  transition: opacity 2s, max-height 1s;
+  opacity: 1;
+  max-height: 500px;
+  margin: 5px;
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  display: block;
+  color: #323648;
+}
+
+.button_three {
+  border-radius: 12px;
+  margin: 5px;
+  border: none;
+  font-family: 'Lato', sans-serif;
+  background-color: #57c1ae;
+  color: white;
+  text-align: center;
+  display: inline-block;
+  font-size: 20px;
+  opacity: 0.6;
+  width: 94%;
+
+}
+.button_three:hover + .hide {
+  transition: opacity 2s, max-height 1s;
+  opacity: 1;
+  max-height: 500px;
+  margin: 5px;
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  display: block;
+  color: #323648;
+}
+
+.dropbtn {
+  position: sticky;
+  position: -webkit-sticky;
+  border-radius: 100px;
+  background-color: #4d61b3;
+  color: white;
+  padding: 16px;
+  font-size: 18px;
+  border: none;
+  font-family: 'Raleway';
+  width: 200px;
+  top: 0;
+}
+
+.dropdown {
+  position: sticky;
+  position: -webkit-sticky;
+  display: inline-block;
+}
+
+.dropdown-content {
+  text-align: center;
+  border-radius: 12px;
+  display: none;
+  position: absolute;
+  min-width: 80px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #ddd;}
+
+.dropdown:hover .dropdown-content {display: block !important;}
+
+.dropdown:hover .dropbtn {background-color: #4d61b3;}
+
+/** End Explore the Article section **/
 
 p.p-explain {
   font-weight: 400;
@@ -680,7 +904,7 @@ p.p-annotate {
   padding-right: 30vw;
 }
 
-}
+
 
 
 .image-span {
@@ -876,10 +1100,14 @@ This is mobile
   /*====== mobile: nav ============*/
 
   .nav-pad {
-    padding-top: 44px;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 200px;
+    width: 250px;
+    left: 100px;
+    /* padding-top: 44px; */
     background: #ffffff;
   }
-
   .nav-wrap {
     position: static;
     width: 100%;
@@ -961,7 +1189,7 @@ This is mobile
       margin-top: 0;
   }
 
-}
+
 
 
 
@@ -1121,7 +1349,7 @@ This is mobile
  }
 
 
-}
+
 
 
 
@@ -1200,7 +1428,7 @@ This is mobile
 .span-content-wrapper{
   display: flex;
   flex-direction: column;
-  wrap: no-wrap;
+  flex-wrap: no-wrap;
   padding: 0;
 }
 
@@ -1437,7 +1665,7 @@ This is mobile
     .span-content-wrapper{
       display: flex;
       flex-direction: row;
-      wrap: wrap;
+      flex-wrap: wrap;
       justify-content: space-between;
       align-items: flex-start;
     }
@@ -1522,7 +1750,7 @@ This is mobile
     }
 
 
-  }
+
 
 
 
@@ -1837,7 +2065,7 @@ main {
     top: 5%;
     height: inherit;
     width: inherit;
-    
+
 }
 
 .description_sponsor {
@@ -1846,7 +2074,7 @@ main {
     top:5%;
     height:inherit;
     width: inherit;
-    
+
 }
 
 .links_1 {
@@ -1859,7 +2087,7 @@ main {
     position: absolute;
     right: 20px;
     width:140px;
-    
+
 }
 
 /* = header ========= */
@@ -1873,7 +2101,7 @@ main {
          justify-content: flex-start;
   }
 
-}
+
 
 /* --- nav: web --- */
 
@@ -1905,10 +2133,24 @@ main {
     }
 
 }
-span.highlight { border-bottom:1px solid; }
+span.highlight {
+  border-bottom:1px solid;
+  
+}
 
 span.highlight span.highlight { padding-bottom:2px; }
 
 span.highlight span.highlight span.highlight { padding-bottom:4px; }
 
 span.highlight span.highlight span.highlight span.highlight { padding-bottom:6px; }
+
+
+
+@keyframes pulse-animation {
+  0% {
+    box-shadow: 0 0 0 0px var(--color);
+  }
+  100% {
+    box-shadow: 0 0 0 5px var(--color);
+  }
+}

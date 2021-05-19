@@ -19,8 +19,8 @@ function addDummyData(data) {
     data[i] = {"Credibility Indicator Category": "CATEGORIES", "Credibility Indicator Name": category};
     i ++;
   })
-      
-  
+
+
 
   //Add root nodes.
   data[i] = {"Credibility Indicator Category": undefined, "Credibility Indicator Name": "CATEGORIES"};
@@ -30,7 +30,6 @@ function addDummyData(data) {
 //Convert data to a hierarchical format.
 function convertToHierarchy(data) {
   //Stratify converts flat data to hierarchal data.
-
   var stratify = d3.stratify()
     .id(d => d["Credibility Indicator Name"])
     .parentId(d => d["Credibility Indicator Category"])
@@ -40,7 +39,7 @@ function convertToHierarchy(data) {
 }
 
 
-/** Takes a heirarchical json file and converts it into a tree with unique branches 
+/** Takes a heirarchical json file and converts it into a tree with unique branches
 and unique leaves.
 @param d: a heirarchicical json file outputted by convertToHeirarchy
 */
@@ -49,7 +48,7 @@ function condense(d, pills_map) {
         var indicators = new Map();
         var indicator;
         for (indicator of d.children) {
-            if (indicator.data.data['End'] == "-1" || indicator.data.data['Start'] == "-1") {
+            if (false) {
                 var name = indicator.data.data["Credibility Indicator Name"] + '-' + indicator.data.data["Credibility Indicator ID"].substring(0, 1);
                 if (pills_map.get(name)) {
                     var points = pills_map.get(name);
@@ -71,7 +70,7 @@ function condense(d, pills_map) {
         d.children = newChildren;
         d.data.children = newChildren;
         //d.children = newChildren;
-        
+
     } else {
         var child;
         for (child of d.children) {
@@ -83,8 +82,10 @@ function condense(d, pills_map) {
 
 
 function drawPills(pills_map) {
-    var pills_div = $(".pills")[0];
-    //console.log(pill_div);
+    // var pills_div = $(".pills")[0];
+    var pills_div = document.getElementsByClassName('sunburst')[0];
+    let new_div = document.createElement('div');
+    new_div.className = 'pill_container';
     var div_string = '';
     var entry;
     for (entry of pills_map.entries()) {
@@ -92,20 +93,23 @@ function drawPills(pills_map) {
         var categoryInitial = entry[0].substring(entry[0].length - 1, entry[0].length);
         var score = entry[1];
         var color = colorFinderPills(categoryInitial);
-        var style_string = "style = 'background-color:" +color+"; width:130px; color:#ffffff;height:45px;border-radius: 25px; display: inline-table; margin:3px;padding:5px;vertical-align:bottom;'"
+        var style_string = "style = 'background-color:" +color+"; width:130px; color:#ffffff;height:45px;border-radius: 25px; display: inline-table; margin:3px;padding:5px;vertical-align:bottom;  transform: translate(40%, 0%)'"
         var class_string = "class='" + entry[0] + "'";
         var java_string = "onmouseover='pillMouseover(" + Math.round(score) + ");' onmouseleave='pillMouseleave();'";
         var pill_div = "<div " + class_string + " " + style_string + " " + java_string + "><h5 style='font-size:13px;display: table-cell;vertical-align:middle; text-align:center;'>" + label+"</h5></div>";
-        
+
         div_string += pill_div;
     }
-    pills_div.innerHTML = div_string;
-    
+    new_div.innerHTML = div_string;
+    pills_div.appendChild(new_div);
+    $(".pill_container").css({position: 'relative', top:395});
+    // pills_div.innerHTML = div_string;
+
 }
 
 
-                    
-               
+
+
 
 
 function pillMouseover(score) {
