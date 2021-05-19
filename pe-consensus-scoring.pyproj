@@ -1,0 +1,232 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{eeb44f5c-98a6-44e1-8477-9fb40f4b0877}</ProjectGuid>
+    <ProjectHome />
+    <StartupFile />
+    <SearchPath />
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <ProjectTypeGuids>{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
+    <LaunchProvider>Standard Python launcher</LaunchProvider>
+    <InterpreterId>Global|PythonCore|3.7</InterpreterId>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
+  <PropertyGroup>
+    <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == '' ">10.0</VisualStudioVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="consensus_and_scoring\config\typing_dict.txt" />
+    <Content Include="consensus_and_scoring\newsfeed\assets\ArticleData.js" />
+    <Content Include="consensus_and_scoring\newsfeed\assets\ArticleRead.js" />
+    <Content Include="consensus_and_scoring\newsfeed\assets\ArticleReadv2.js" />
+    <Content Include="consensus_and_scoring\newsfeed\assets\dataConverter.js" />
+    <Content Include="consensus_and_scoring\newsfeed\assets\moveHallmark.js" />
+    <Content Include="consensus_and_scoring\newsfeed\assets\navig.css" />
+    <Content Include="consensus_and_scoring\newsfeed\assets\newsfeed.js" />
+    <Content Include="consensus_and_scoring\newsfeed\assets\newsfeedstyle.css" />
+    <Content Include="consensus_and_scoring\newsfeed\assets\newsfeedSunburstGenerator.js" />
+    <Content Include="consensus_and_scoring\newsfeed\assets\read.js" />
+    <Content Include="consensus_and_scoring\newsfeed\assets\scoredArticleCSS.css" />
+    <Content Include="consensus_and_scoring\newsfeed\assets\sequences.js" />
+    <Content Include="consensus_and_scoring\newsfeed\assets\sunburstCode.js" />
+    <Content Include="consensus_and_scoring\newsfeed\assets\Sunburst\sequences.css" />
+    <Content Include="consensus_and_scoring\newsfeed\menu.html" />
+    <Content Include="consensus_and_scoring\newsfeed\newsfeed.html" />
+    <Content Include="consensus_and_scoring\newsfeed\test\testroom\100005SSSArticle.txt" />
+    <Content Include="consensus_and_scoring\newsfeed\test\testroom\17120SSSArticle.txt" />
+    <Content Include="consensus_and_scoring\newsfeed\test\testroom\1712SSSArticle.txt" />
+    <Content Include="consensus_and_scoring\newsfeed\test\testroom\1721SSSArticle.txt" />
+    <Content Include="consensus_and_scoring\newsfeed\test\testroom\1737SSSArticle.txt" />
+    <Content Include="consensus_and_scoring\newsfeed\test\testroom\38428e24cdfa0392f3f5e1efda3253ffab6d7ed3051b1dee9f209f871ca91e2cSSSArticle.txt" />
+    <Content Include="consensus_and_scoring\newsfeed\test\testroom\c35844f62ee12d09c0450281624c89e2533bbb621f23dd1b7062a6ee26ae2b97SSSArticle.txt" />
+    <Content Include="consensus_and_scoring\newsfeed\test\testroom\D3MockData2.html" />
+    <Content Include="consensus_and_scoring\newsfeed\test\testroom\scoredArticleCSS.css" />
+    <Content Include="consensus_and_scoring\newsfeed\test\testroom\sequences.js" />
+    <Content Include="consensus_and_scoring\newsfeed\test\testroom\sequencesRead.js" />
+    <Content Include="consensus_and_scoring\newsfeed\test\testroom\Sunburst.html" />
+    <Content Include="consensus_and_scoring\newsfeed\test\testroom\sunburstCode.js" />
+    <Content Include="consensus_and_scoring\newsfeed\visualizations\09a894f06d1157dd7a22a198c6ef78c2\article.txt" />
+    <Content Include="consensus_and_scoring\newsfeed\visualizations\09a894f06d1157dd7a22a198c6ef78c2\visualization.html" />
+    <Content Include="consensus_and_scoring\newsfeed\visualizations\3be14d67e2d88964904dcbe7df176bb8\article.txt" />
+    <Content Include="consensus_and_scoring\newsfeed\visualizations\3be14d67e2d88964904dcbe7df176bb8\visualization.html" />
+    <Content Include="consensus_and_scoring\newsfeed\visualizations\47990959103662e94e796d979018922a\article.txt" />
+    <Content Include="consensus_and_scoring\newsfeed\visualizations\47990959103662e94e796d979018922a\visualization.html" />
+    <Content Include="consensus_and_scoring\newsfeed\visualizations\7360da3cdcf83a48e365821654ef0750\article.txt" />
+    <Content Include="consensus_and_scoring\newsfeed\visualizations\7360da3cdcf83a48e365821654ef0750\visualization.html" />
+    <Content Include="consensus_and_scoring\newsfeed\visualizations\7d1747829a65cd4dad0faf30a704875a\article.txt" />
+    <Content Include="consensus_and_scoring\newsfeed\visualizations\7d1747829a65cd4dad0faf30a704875a\visualization.html" />
+    <Content Include="consensus_and_scoring\newsfeed\visualizations\assets\colorFinder.js" />
+    <Content Include="consensus_and_scoring\newsfeed\visualizations\assets\createHighlights.js" />
+    <Content Include="consensus_and_scoring\newsfeed\visualizations\assets\dataConverter.js" />
+    <Content Include="consensus_and_scoring\newsfeed\visualizations\assets\FlexArray.js" />
+    <Content Include="consensus_and_scoring\newsfeed\visualizations\assets\parser.js" />
+    <Content Include="consensus_and_scoring\newsfeed\visualizations\assets\scoredArticleCSS-copy.css" />
+    <Content Include="consensus_and_scoring\newsfeed\visualizations\assets\sunburstGenerator.js" />
+    <Content Include="consensus_and_scoring\newsfeed\visualizations\assets\THIS_DIRECTORY_TESTING_ONLY.txt" />
+    <Content Include="consensus_and_scoring\newsfeed\visualizations\be0b18a87d4370fa579180ef26dcb708\article.txt" />
+    <Content Include="consensus_and_scoring\newsfeed\visualizations\be0b18a87d4370fa579180ef26dcb708\visualization.html" />
+    <Content Include="consensus_and_scoring\requirements.txt" />
+    <Content Include="consensus_and_scoring\visualizations\THIS_DIRECTORY_REMOVED.txt" />
+    <Content Include="consensus_and_scoring\visualizations_src\assets\colorFinder.js" />
+    <Content Include="consensus_and_scoring\visualizations_src\assets\createHighlights.js" />
+    <Content Include="consensus_and_scoring\visualizations_src\assets\dataConverter.js" />
+    <Content Include="consensus_and_scoring\visualizations_src\assets\embedder.js" />
+    <Content Include="consensus_and_scoring\visualizations_src\assets\FlexArray.js" />
+    <Content Include="consensus_and_scoring\visualizations_src\assets\parser.js" />
+    <Content Include="consensus_and_scoring\visualizations_src\assets\scoredArticleCSS-copy.css" />
+    <Content Include="consensus_and_scoring\visualizations_src\assets\sunburstGenerator.js" />
+    <Content Include="consensus_and_scoring\visualizations_src\test\17120SSSArticle.txt" />
+    <Content Include="consensus_and_scoring\visualizations_src\Visualization.html" />
+    <Content Include="data\texts\0b35b06a22779418f775a804f36485f7bc978071d1709ad263a68f4f18117b11.txt" />
+    <Content Include="data\texts\4b537e0ed21179a29ed28da28057d338e67330ae12123ccceba6724f35bd68a4.txt" />
+    <Content Include="requirements.txt" />
+    <Content Include="test_data\texts\0b35b06a22779418f775a804f36485f7bc978071d1709ad263a68f4f18117b11.txt" />
+    <Content Include="test_data\texts\2dd2abc43a2a0d4d7f43619fc6b6e662c990f297a345b0f6b231eaff7b616de7.txt" />
+    <Content Include="test_data\texts\5bb9960c58b63acfa6260bfed0411d9b01e10ccea8d81f96d08ee24a5c8e264c.txt" />
+    <Content Include="test_data\texts\6a94cc2c856f03c17b322a1b9612b9d1c18444456feb81d619abdffb0743f0c3.txt" />
+    <Content Include="test_data\texts\7518423ac58f12b6cee1f416242039e7385097b16446c005a065a19e2eb5848c.txt" />
+    <Content Include="test_data\texts\b4ed838c7d10b04e5f46cdd587aee573c80ff71020653e024c58272b13bd1368.txt" />
+    <Content Include="test_data\texts\bd79a3b1464a0bb85a5f606a59bb8a017d5e1cd4e71f66b3bff163a988b4eb9b.txt" />
+    <Content Include="test_data\texts\e08dccb0564d4666cdda5b48672449c4562412c7941dabf574283282c6580516.txt" />
+    <Content Include="test_output\Covid2.1_Sources-t2571\texts\fe316f79b88e5f946d7ab6f8a91bc29a3af2d37ce0b551d13c832f12da59331a.txt" />
+    <Content Include="test_output\Covid2.1_Sources-Task-2570-DataHunt\texts\fe316f79b88e5f946d7ab6f8a91bc29a3af2d37ce0b551d13c832f12da59331a.txt" />
+    <Content Include="test_output\Covid2.1_Sources-Task-2597-DataHunt\texts\f70ee47ae7c5fd63e6ba8bedc1b47b4a3b88a9e666d33a63e922bd3209717aa5.txt" />
+    <Content Include="test_output\Covid_ArgumentRelevancev1.2-t2135\texts\09a894f06d1157dd7a22a198c6ef78c2b9f4116266d2b0a177d7bb129a51f6e8.txt" />
+    <Content Include="test_output\Covid_ArgumentRelevancev1.2-t2136\texts\09a894f06d1157dd7a22a198c6ef78c2b9f4116266d2b0a177d7bb129a51f6e8.txt" />
+    <Content Include="test_output\Covid_ArgumentRelevancev1.2-t2138\texts\09a894f06d1157dd7a22a198c6ef78c2b9f4116266d2b0a177d7bb129a51f6e8.txt" />
+    <Content Include="test_output\Covid_Evidencev1_t2327\texts\09a894f06d1157dd7a22a198c6ef78c2b9f4116266d2b0a177d7bb129a51f6e8.txt" />
+    <Content Include="test_output\Covid_Holisiticv1.2_t2360\texts\47990959103662e94e796d979018922afddc880fb4b867c7ca2ac8aa2146e7c4.txt" />
+    <Content Include="test_output\Covid_Languagev1.1-t2166\texts\7360da3cdcf83a48e365821654ef0750810f3483efb8e25ad792eed6f4bf0b6f.txt" />
+    <Content Include="test_output\Covid_Languagev1.1-t2167\texts\7360da3cdcf83a48e365821654ef0750810f3483efb8e25ad792eed6f4bf0b6f.txt" />
+    <Content Include="test_output\Covid_Languagev1.1-t2168\texts\7360da3cdcf83a48e365821654ef0750810f3483efb8e25ad792eed6f4bf0b6f.txt" />
+    <Content Include="test_output\Covid_Probabilityv1-t2177\texts\7360da3cdcf83a48e365821654ef0750810f3483efb8e25ad792eed6f4bf0b6f.txt" />
+    <Content Include="test_output\Covid_Probabilityv1-t2178\texts\7360da3cdcf83a48e365821654ef0750810f3483efb8e25ad792eed6f4bf0b6f.txt" />
+    <Content Include="test_output\Covid_Reasoningv1-t2203\texts\09a894f06d1157dd7a22a198c6ef78c2b9f4116266d2b0a177d7bb129a51f6e8.txt" />
+    <Content Include="test_output\Covid_Reasoningv1-t2204\texts\09a894f06d1157dd7a22a198c6ef78c2b9f4116266d2b0a177d7bb129a51f6e8.txt" />
+    <Content Include="test_output\Covid_SourceRelevance1_t2255\texts\09a894f06d1157dd7a22a198c6ef78c2b9f4116266d2b0a177d7bb129a51f6e8.txt" />
+    <Content Include="test_output\Covid_SourceRelevance1_t2256\texts\09a894f06d1157dd7a22a198c6ef78c2b9f4116266d2b0a177d7bb129a51f6e8.txt" />
+    <Content Include="test_output\Covid_SourceRelevance1_t2257\texts\7d1747829a65cd4dad0faf30a704875a125e9decce3b3bcc82f151193923aad8.txt" />
+    <Content Include="test_output\Covid_SourceRelevance1_t2260\texts\be0b18a87d4370fa579180ef26dcb7080598f27f9ec76181f2cfd851f320da06.txt" />
+    <Content Include="test_output\publish_p1-a146\texts\47990959103662e94e796d979018922afddc880fb4b867c7ca2ac8aa2146e7c4.txt" />
+    <Content Include="test_output\publish_p1-a151\texts\be0b18a87d4370fa579180ef26dcb7080598f27f9ec76181f2cfd851f320da06.txt" />
+    <Content Include="test_output\publish_p1-a152\texts\4b537e0ed21179a29ed28da28057d338e67330ae12123ccceba6724f35bd68a4.txt" />
+    <Content Include="test_output\publish_p4-a401\texts\1ea77d4bd16475b74243e0a909985a8bb8df305fb6beae159c493af606727e2c.txt" />
+    <Content Include="test_output\Schmidt_Sourcesv4_Qualification-MTurk-Task-2837\texts\073eadd7575c1a8103f753d8100c5a3d16832c593924032a264b65543a1881fb.txt" />
+    <Content Include="test_output\Schmidt_Sourcesv4_Qualification-MTurk_t2826\texts\f70ee47ae7c5fd63e6ba8bedc1b47b4a3b88a9e666d33a63e922bd3209717aa5.txt" />
+    <Content Include="test_output\TurkQual_Probabilityv2-MTurk_v_t3004\texts\371b4c41af48dbc0ae7ef3333945f2f7a3ce168a5d86b334175ea7ed3c158de3.txt" />
+    <Content Include="test_output\TurkQual_Reasoning-MTurk_t4269\texts\ad9c90c4c9db587d34dd696a15be004668df29880da43ec47fb71a032180050a.txt" />
+    <Content Include="test_output\TurkQual_Reasoning-MTurk_t4270\texts\ad9c90c4c9db587d34dd696a15be004668df29880da43ec47fb71a032180050a.txt" />
+    <Content Include="test_output\TurkQual_Reasoning-MTurk_t4287\texts\c7015dda961a70779fa2e42d8a822224b64bc676a513f5949012c8b4f7436296.txt" />
+    <Content Include="test_output\TurkQual_TurkQual_Language-MTurk_t2982\texts\b29a76b592a75b14b2a5f5a5c4f1481414b865fa1febce59a56c13ae6fbe3099.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="consensus_and_scoring\app.py" />
+    <Compile Include="consensus_and_scoring\art_to_id_key.py" />
+    <Compile Include="consensus_and_scoring\ChecklistCoding.py" />
+    <Compile Include="consensus_and_scoring\CodingScoring.py" />
+    <Compile Include="consensus_and_scoring\dataV3.py" />
+    <Compile Include="consensus_and_scoring\Dependency.py" />
+    <Compile Include="consensus_and_scoring\export_tags.py" />
+    <Compile Include="consensus_and_scoring\ExtraInfo.py" />
+    <Compile Include="consensus_and_scoring\holistic_eval.py" />
+    <Compile Include="consensus_and_scoring\IAA.py" />
+    <Compile Include="consensus_and_scoring\iaa_only.py" />
+    <Compile Include="consensus_and_scoring\IAA_report.py" />
+    <Compile Include="consensus_and_scoring\import_tags.py" />
+    <Compile Include="consensus_and_scoring\master.py" />
+    <Compile Include="consensus_and_scoring\pointAssignment.py" />
+    <Compile Include="consensus_and_scoring\post_adjudicator.py" />
+    <Compile Include="consensus_and_scoring\process_dirs.py" />
+    <Compile Include="consensus_and_scoring\repScores.py" />
+    <Compile Include="consensus_and_scoring\scoring_only.py" />
+    <Compile Include="consensus_and_scoring\send_to_s3.py" />
+    <Compile Include="consensus_and_scoring\Separator.py" />
+    <Compile Include="consensus_and_scoring\test.py" />
+    <Compile Include="consensus_and_scoring\test2\manual_test_consensus_with_S3_fetch.py" />
+    <Compile Include="consensus_and_scoring\test2\manual_test_publish_with_S3_fetch.py" />
+    <Compile Include="consensus_and_scoring\test2\manual_test_unpublish_S3_write.py" />
+    <Compile Include="consensus_and_scoring\test2\test_consensus_locally.py" />
+    <Compile Include="consensus_and_scoring\test2\test_publish_article_locally.py" />
+    <Compile Include="consensus_and_scoring\test2\__init__.py" />
+    <Compile Include="consensus_and_scoring\test\conftest.py" />
+    <Compile Include="consensus_and_scoring\test\dummy_data.py" />
+    <Compile Include="consensus_and_scoring\test\filegen_utils.py" />
+    <Compile Include="consensus_and_scoring\test\test_dep.py" />
+    <Compile Include="consensus_and_scoring\test\test_highlights.py" />
+    <Compile Include="consensus_and_scoring\test\test_holistic_eval.py" />
+    <Compile Include="consensus_and_scoring\test\test_IAA.py" />
+    <Compile Include="consensus_and_scoring\test\test_import_tags.py" />
+    <Compile Include="consensus_and_scoring\test\test_main.py" />
+    <Compile Include="consensus_and_scoring\test\test_point_assignment.py" />
+    <Compile Include="consensus_and_scoring\test\test_utils.py" />
+    <Compile Include="consensus_and_scoring\test\test_weighting.py" />
+    <Compile Include="consensus_and_scoring\ThresholdMatrix.py" />
+    <Compile Include="consensus_and_scoring\TriagerScoring.py" />
+    <Compile Include="consensus_and_scoring\UnitizingScoring.py" />
+    <Compile Include="consensus_and_scoring\Weighting.py" />
+    <Compile Include="consensus_and_scoring\__init__.py" />
+    <Compile Include="scripts\lookup_target_text.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="consensus_and_scoring" />
+    <Folder Include="consensus_and_scoring\config" />
+    <Folder Include="consensus_and_scoring\newsfeed" />
+    <Folder Include="consensus_and_scoring\newsfeed\assets" />
+    <Folder Include="consensus_and_scoring\newsfeed\assets\Sunburst" />
+    <Folder Include="consensus_and_scoring\newsfeed\test\testroom" />
+    <Folder Include="consensus_and_scoring\newsfeed\visualizations\09a894f06d1157dd7a22a198c6ef78c2" />
+    <Folder Include="consensus_and_scoring\newsfeed\visualizations\3be14d67e2d88964904dcbe7df176bb8" />
+    <Folder Include="consensus_and_scoring\newsfeed\visualizations\47990959103662e94e796d979018922a" />
+    <Folder Include="consensus_and_scoring\newsfeed\visualizations\7360da3cdcf83a48e365821654ef0750" />
+    <Folder Include="consensus_and_scoring\newsfeed\visualizations\7d1747829a65cd4dad0faf30a704875a" />
+    <Folder Include="consensus_and_scoring\newsfeed\visualizations\assets" />
+    <Folder Include="consensus_and_scoring\newsfeed\visualizations\be0b18a87d4370fa579180ef26dcb708" />
+    <Folder Include="consensus_and_scoring\test" />
+    <Folder Include="consensus_and_scoring\test2" />
+    <Folder Include="consensus_and_scoring\visualizations" />
+    <Folder Include="consensus_and_scoring\visualizations_src" />
+    <Folder Include="consensus_and_scoring\visualizations_src\assets" />
+    <Folder Include="consensus_and_scoring\visualizations_src\test" />
+    <Folder Include="data\texts" />
+    <Folder Include="scripts" />
+    <Folder Include="test_data\texts" />
+    <Folder Include="test_output\Covid2.1_Sources-t2571\texts" />
+    <Folder Include="test_output\Covid2.1_Sources-Task-2570-DataHunt\texts" />
+    <Folder Include="test_output\Covid2.1_Sources-Task-2597-DataHunt\texts" />
+    <Folder Include="test_output\Covid_ArgumentRelevancev1.2-t2135\texts" />
+    <Folder Include="test_output\Covid_ArgumentRelevancev1.2-t2136\texts" />
+    <Folder Include="test_output\Covid_ArgumentRelevancev1.2-t2138\texts" />
+    <Folder Include="test_output\Covid_Evidencev1_t2327\texts" />
+    <Folder Include="test_output\Covid_Holisiticv1.2_t2360\texts" />
+    <Folder Include="test_output\Covid_Languagev1.1-t2166\texts" />
+    <Folder Include="test_output\Covid_Languagev1.1-t2167\texts" />
+    <Folder Include="test_output\Covid_Languagev1.1-t2168\texts" />
+    <Folder Include="test_output\Covid_Probabilityv1-t2177\texts" />
+    <Folder Include="test_output\Covid_Probabilityv1-t2178\texts" />
+    <Folder Include="test_output\Covid_Reasoningv1-t2203\texts" />
+    <Folder Include="test_output\Covid_Reasoningv1-t2204\texts" />
+    <Folder Include="test_output\Covid_SourceRelevance1_t2255\texts" />
+    <Folder Include="test_output\Covid_SourceRelevance1_t2256\texts" />
+    <Folder Include="test_output\Covid_SourceRelevance1_t2257\texts" />
+    <Folder Include="test_output\Covid_SourceRelevance1_t2260\texts" />
+    <Folder Include="test_output\publish_p1-a146\texts" />
+    <Folder Include="test_output\publish_p1-a151\texts" />
+    <Folder Include="test_output\publish_p1-a152\texts" />
+    <Folder Include="test_output\publish_p4-a401\texts" />
+    <Folder Include="test_output\Schmidt_Sourcesv4_Qualification-MTurk-Task-2837\texts" />
+    <Folder Include="test_output\Schmidt_Sourcesv4_Qualification-MTurk_t2826\texts" />
+    <Folder Include="test_output\TurkQual_Probabilityv2-MTurk_v_t3004\texts" />
+    <Folder Include="test_output\TurkQual_Reasoning-MTurk_t4269\texts" />
+    <Folder Include="test_output\TurkQual_Reasoning-MTurk_t4270\texts" />
+    <Folder Include="test_output\TurkQual_Reasoning-MTurk_t4287\texts" />
+    <Folder Include="test_output\TurkQual_TurkQual_Language-MTurk_t2982\texts" />
+  </ItemGroup>
+  <ItemGroup>
+    <InterpreterReference Include="Global|PythonCore|3.7" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
+</Project>
