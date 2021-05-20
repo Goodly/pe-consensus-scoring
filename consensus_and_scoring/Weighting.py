@@ -31,7 +31,7 @@ def launch_Weighting(directory, out_directory = None, reporting = False):
 
         weight = weighting_alg(f, weight_key_path, weight_scaling_path, out_directory,reporting=reporting,
                                weight_col = weight_col)
-        if not weight.empty:
+        if weight is not None and not weight.empty:
             weight_list.append(weight)
     if len(weight_list) == 0:
         file = pd.read_csv(iaaFiles[0], encoding = 'utf-8')
