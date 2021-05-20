@@ -181,6 +181,7 @@ def filter_uuids(src_path, filter_column, uuids_to_filter):
             dialect=tagworks_dialect,
             fieldnames=reader.fieldnames
         )
+        writer.writeheader()
         for row in reader:
             if row[filter_column]:
                 if UUID(row[filter_column]) in uuids_to_filter:
