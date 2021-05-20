@@ -23,15 +23,24 @@ def launch_Weighting(directory, out_directory = None, reporting = False):
             if len(q1) > 0 and int(q1.iloc[0]['agreed_Answer']) == 3:
                 weight_col = 'Op-Ed'
             break
+    dirname = os.path.dirname(__file__)
+    # can't use os.path.join, probably because windows uses \ as a  separator instead of /
+    weight_key_path = dirname + os.sep + 'config' + os.sep + 'weight_key.csv'
+    weight_scaling_path = dirname + os.sep + 'config' + os.sep + 'weight_key_scaling_guide.csv'
     for f in iaaFiles:
-        dirname = os.path.dirname(__file__)
-        #can't use os.path.join, probably because windows uses \ as a  separator instead of /
-        weight_key_path = dirname+os.sep+'config'+os.sep+'weight_key.csv'
-        weight_scaling_path = dirname+os.sep+'config'+os.sep+'weight_key_scaling_guide.csv'
+
         weight = weighting_alg(f, weight_key_path, weight_scaling_path, out_directory,reporting=reporting,
                                weight_col = weight_col)
-        weight_list.append(weight)
-    weights = pd.concat(weight_list)
+        if not weight.empty:
+            weight_list.append(weight)
+    if len(weight_list) == 0:
+        file = pd.read_csv(iaaFiles[0], encoding = 'utf-8')
+        columns =  file.columns.tolist()
+        weight_key_cols = pd.read_csv(weight_key_path, encoding= 'utf-8').columns.tolist()
+        columns = columns + weight_key_cols
+        weights = pd.DataFrame(columns = columns)
+    else:
+        weights = pd.concat(weight_list)
     return weights
 
 def weighting_alg(IAA_csv_file, credibility_weights_csv_file, weight_scale_csv, directory = './', reporting = False,
