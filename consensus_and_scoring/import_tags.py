@@ -26,17 +26,19 @@ def import_tags(old_s_iaa_dir, tags_dir, schema_dir, output_dir):
     for root, dir, files in os.walk(tags_dir):
         for file in files:
                     tag_files.append(tags_dir+'/'+file)
+    print('tag files: ', tags_dir, tag_files)
     iaa_files = []
     for root, dir, files in os.walk(old_s_iaa_dir):
         for file in files:
             if file.endswith('.csv') and 'iaa' in file.lower():
                     iaa_files.append(old_s_iaa_dir + '/' + file)
-
+    print('iaa files: ', old_s_iaa_dir, iaa_files)
     schema_files = []
     for root, dir, files in os.walk(schema_dir):
         for file in files:
             if file.endswith('.csv'):
                 schema_files.append(schema_dir + '/' + file)
+
     print('schema files: ', schema_dir, schema_files)
     temp_dfs = []
     for i in range(len(iaa_files)):
@@ -107,14 +109,22 @@ def import_tags(old_s_iaa_dir, tags_dir, schema_dir, output_dir):
         tags.iloc[i, tags.columns.get_loc('tua_uuid')] = tua_id
         tags.iloc[i, tags.columns.get_loc('agreement_score')] = agreement_score
         tags.iloc[i, tags.columns.get_loc('highlighted_indices')] = json.dumps(highlight_indices)
-    for source_task_uuid in tags['source_task_uuid'].unique():
-        task_tags = tags[tags['source_task_uuid'] == source_task_uuid]
-        namespace = task_tags['namespace'].iloc[0]
+    #iaa tasks will always be a superset of the adjudicated tasks
 
-        out_path = os.path.join(output_dir, namespace+'.adjudicated-'+source_task_uuid+'-Tags.csv')
+    for source_task_uuid in iaa['source_task_uuid'].unique():
+        if source_task_uuid in tags['source_task_uuid']:
+            task_tags = tags[tags['source_task_uuid'] == source_task_uuid]
+            iaa = False
+        else:
+            task_tags = iaa[iaa['source_task_uuid'] == source_task_uuid]
+            iaa = True
+        namespace = task_tags['namespace'].iloc[0]
+        if iaa:
+            out_path = os.path.join(output_dir, namespace + '.adjudicated-untouched_iaa_result-' + source_task_uuid + '-Tags.csv')
+        else:
+            out_path = os.path.join(output_dir, namespace+'.adjudicated-'+source_task_uuid+'-Tags.csv')
         print('OUTPUTTING', out_path)
         task_tags.to_csv(out_path)
-
 
     return output_dir
 
