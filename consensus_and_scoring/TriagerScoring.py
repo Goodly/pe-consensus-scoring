@@ -8,6 +8,7 @@ import argparse
 from UnitizingScoring import toArray, scorePercentageUnitizing, getIndicesFromUser
 from ThresholdMatrix import evalThresholdMatrix
 
+STRICT_MINIMUM_CONTRIBUTORS = 1
 
 path1 = 'SemanticsTriager1.3C2-2018-07-28T21.csv'
 path2 = 'FormTriager1.2C2-2018-07-28T21.csv'
@@ -46,7 +47,7 @@ def importData(path, out_path):
         #flagExclusions = exclusionList(users, flags, cats)
         flagExclusions = []
         #print(flagExclusions)
-        if annotator_count >= 2:
+        if annotator_count >= STRICT_MINIMUM_CONTRIBUTORS:
             cats = np.unique(art_data['topic_name'])
             for c in cats:
                 cat_data = art_data.loc[art_data['topic_name'] == c]
