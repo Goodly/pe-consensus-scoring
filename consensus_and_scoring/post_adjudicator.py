@@ -45,23 +45,23 @@ if __name__ == '__main__':
         args = load_args()
         # input
         config_path = './config/'
-        input_dir = '../data/dh_evi/'
-        texts_dir = '../data/texts/'
-        adjudication_dir = '../data/adj_evi/'
+        input_dir = '../test_output/publish_p4-a506/datahunts'
+        texts_dir = '../test_output/publish_p4-a506/texts/'
+        adjudication_dir = '../test_output/publish_p4-a506/tags/'
         # metadata_dir = '../data/metadata/'
-        tua_dir = '../data/focus_tags/'
-        schema_dir = '../data/schemas/'
+        tua_dir = '../test_output/publish_p4-a506/focus_tags/'
+        schema_dir = '../test_output/publish_p4-a506/schemas/'
 
         #output data
-        iaa_temp_dir = make_directory('../data/out_temp_iaa/')
+        iaa_temp_dir = make_directory('../test_output/publish_p4-a506/out_temp_iaa/')
 
 
 
 
-        adjudicated_dir = make_directory('../data/out_adjudicated_iaa/')
-        scoring_dir = make_directory('../data/out_scoring/')
-        viz_dir = make_directory('../data/out_viz/')
-        threshold_function = 'raw_30'
+        adjudicated_dir = make_directory('../test_output/publish_p4-a506/out_adjudicated_iaa/')
+        scoring_dir = make_directory('../test_output/publish_p4-a506/out_scoring/')
+        viz_dir = make_directory('../test_output/publish_p4-a506/out_viz/')
+        threshold_function = 'raw_50'
         if args.input_dir:
             input_dir = args.input_dir
         if args.schema_dir:

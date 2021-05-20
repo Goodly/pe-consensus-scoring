@@ -323,63 +323,85 @@ Evidence2021_02_01,14,2,Alternative explanation,-2,-2
 Evidence2021_02_01,14,3,Alternative explanation,-1,-1
 Evidence2021_02_01,14,4,Alternative explanation,0,0
 Evidence2021_02_01,14,5,Alternative explanation,0,0
-,,,,,
-,,,,,
-,,,,,
-,,,,,
-,,,,,
-,,,,,
-,,,,,
-,,,,,
-,,,,,
-,,,,,
-,,,,,
-,,,,,
-,,,,,
-,,,,,
-,,,,,
-,,,,,
-,,,,,
-,,,,,
-,,,,,
-,,,,,
-new probability schema name,2,1,Inappropriate confidence,0,0
-new probability schema name,2,2,Inappropriate confidence,-0.5,-0.5
-new probability schema name,2,3,Inappropriate confidence,-1,-1
-new probability schema name,2,4,Inappropriate confidence,-2,-2
-new probability schema name,2,5,Inappropriate confidence,-3,-3
-,,,,,
-,,,,,
-,,,,,
-,,,,,
-,,,,,
-,,,,,
-new probability schema name,7,1,Base rate neglect,-2,-2
-new probability schema name,7,2,Base rate neglect,-1,-1
-new probability schema name,7,3,Numeric context,1,1
-new probability schema name,10,1,False precision,0,0
-new probability schema name,10,2,False precision,-1,0
-new probability schema name,10,3,Calibrated precision,1,1
-new probability schema name,10,4,Calibrated precision,2,2
-new probability schema name,10,5,Calibrated precision,3,3
-new probability schema name,11,1,Open to evidence,2,2
-new probability schema name,11,2,Open to evidence,1,1
-new probability schema name,11,3,Overconfident,-1,0
-new probability schema name,11,4,Overconfident,-2,0
-new probability schema name,12,1,Open to evidence,1,1
-new probability schema name,12,2,Open to evidence,2,2
-new probability schema name,12,3,Open to evidence,1,1
-new probability schema name,12,4,,0,0
-new probability schema name,12,5,,0,0
-new holistic schema name,11,2,Misleading Title,-2,-2
-new holistic schema name,11,3,Misleading Title,-4,-4
-new holistic schema name,11,4,ClickBait title,-8,-8
+Probability_2021_03_19,2,1,Inappropriate confidence,0,0
+Probability_2021_03_19,2,2,Inappropriate confidence,-0.5,-0.5
+Probability_2021_03_19,2,3,Inappropriate confidence,-1,-1
+Probability_2021_03_19,2,4,Inappropriate confidence,-2,-2
+Probability_2021_03_19,2,5,Inappropriate confidence,-3,-3
+Probability_2021_03_19,7,1,Base rate neglect,-2,-2
+Probability_2021_03_19,7,2,Base rate neglect,-1,-1
+Probability_2021_03_19,7,3,Numeric context,1,1
+Probability_2021_03_19,10,1,False precision,0,0
+Probability_2021_03_19,10,2,False precision,-1,0
+Probability_2021_03_19,10,3,Calibrated precision,1,1
+Probability_2021_03_19,10,4,Calibrated precision,2,2
+Probability_2021_03_19,10,5,Calibrated precision,3,3
+Probability_2021_03_19,11,1,Open to evidence,2,2
+Probability_2021_03_19,11,2,Open to evidence,1,1
+Probability_2021_03_19,11,3,Overconfident,-1,0
+Probability_2021_03_19,11,4,Overconfident,-2,0
+Probability_2021_03_19,12,1,Open to evidence,1,1
+Probability_2021_03_19,12,2,Open to evidence,2,2
+Probability_2021_03_19,12,3,Open to evidence,1,1
+Probability_2021_03_19,12,4,,0,0
+Probability_2021_03_19,12,5,,0,0
+Probability_2021_03_19,11,2,Misleading Title,-2,-2
+Probability_2021_03_19,11,3,Misleading Title,-4,-4
+Probability_2021_03_19,11,4,ClickBait title,-8,-8
 ,,,,,
 new holistic schema name,8,1,Very Biased,-8,-4
 new holistic schema name,8,2,Very Biased,-6,-3
 new holistic schema name,8,3,Biased,-2,-1
 new holistic schema name,8,4,Minor Bias,-1,0
-new source namespace,2,1,Qualified Source,2,2
-new source namespace,2,2,Qualified Source,1,1
-new source namespace,2,7,Unqualified Source,-1,-1
-new source namespace,2,8,Unqualified Source,-2,-2
+Sources2021_02_23,2,1,Qualified Source,2,2
+Sources2021_02_23,2,2,Qualified Source,1,1
+Sources2021_02_23,2,7,Unqualified Source,-1,-1
+Sources2021_02_23,2,8,Unqualified Source,-2,-2
+Language2021_02_18,2,1,Metaphor unhelpful,-4,-3
+Language2021_02_18,2,2,Metaphor unhelpful,-3,-2
+Language2021_02_18,2,3,Metaphor unhelpful,-2,-1
+Language2021_02_18,2,4,Metaphor unhelpful,-1,0
+Language2021_02_18,2,5,Metaphor unhelpful,0,0
+Language2021_02_18,3,1,Exaggeration,-5,-3
+Language2021_02_18,3,2,Exaggeration,-3.75,-2
+Language2021_02_18,3,3,Exaggeration,-2.5,-1
+Language2021_02_18,3,4,Exaggeration,-1.25,0
+Language2021_02_18,3,5,Exaggeration,0,0
+Language2021_02_18,4,1,Manufactured Scandal,-4,-3
+Language2021_02_18,4,2,Manufactured Scandal,-3,-2
+Language2021_02_18,4,3,Manufactured Scandal,-2,-1
+Language2021_02_18,4,4,Manufactured Scandal,-1,0
+Language2021_02_18,4,5,Manufactured Scandal,0,0
+Language2021_02_18,5,1,Inappropriately emotional,-4,-3
+Language2021_02_18,5,2,Inappropriately emotional,-3,-2
+Language2021_02_18,5,3,Inappropriately emotional,-2,-1
+Language2021_02_18,5,4,Inappropriately emotional,-1,0
+Language2021_02_18,5,5,Inappropriately emotional,0,0
+Language2021_02_18,8,1,,0,0
+Language2021_02_18,8,2,,0,0
+Language2021_02_18,8,3,Feigned Shock,-2,-1
+Language2021_02_18,8,4,Feigned Shock,-3,-2
+Language2021_02_18,9,1,Inappropriate slang,-2,-1
+Language2021_02_18,9,2,Inappropriate slang,-1,-0.5
+Language2021_02_18,9,3,Inappropriate slang,-0.5,-0.25
+Language2021_02_18,9,4,Inappropriate slang,-0.25,0
+Language2021_02_18,9,5,Inappropriate slang,0,0
+Language2021_02_18,10,1,Denigration,-3,-3
+Language2021_02_18,10,2,Denigration,-1.5,-1.5
+Language2021_02_18,10,3,Denigration,-0.5,-0.5
+Language2021_02_18,10,4,,0,0
+Language2021_02_18,10,5,,0,0
+Language2021_02_18,11,1,Writing errors,-4,-4
+Language2021_02_18,11,2,Writing errors,-3,-3
+Language2021_02_18,11,3,Writing errors,-2,-2
+Language2021_02_18,11,4,Writing errors,-1,-1
+Language2021_02_18,11,5,Writing errors,0,0
+Language2021_02_18,13,1,Problematic tone,-4,-3
+Language2021_02_18,13,2,Problematic tone,-3,-2
+Language2021_02_18,13,3,Problematic tone,-2,-1
+Language2021_02_18,13,4,Problematic tone,-1,0
+Language2021_02_18,13,5,,0,0
+Language2021_02_18,12,1,,0,0
+Language2021_02_18,12,2,Well-balanced,1,1
+Language2021_02_18,12,3,Well-balanced,2,2
+Language2021_02_18,12,4,Well-balanced,3,3

@@ -68,6 +68,8 @@ def weighting_alg(IAA_csv_file, credibility_weights_csv_file, weight_scale_csv, 
     IAA_csv = IAA_csv.rename(columns={ "question_Number": "Question_Number", 'agreed_Answer': 'Answer_Number'})
     IAA_csv['Schema'] = IAA_csv_schema_type
     credibility_weights_csv = pd.read_csv(credibility_weights_csv_file)
+    if IAA_csv_schema_name not in credibility_weights_csv.values:
+        raise Exception("Couldn't find weights for schema namespace {}".format(IAA_csv_schema_name))
     weight_scale_table = pd.read_csv(weight_scale_csv)
 
     IAA_csv["Question_Number"] = IAA_csv["Question_Number"].apply(int)

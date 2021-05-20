@@ -572,8 +572,8 @@ def get_answer_text(data, task_id, question_num, answer_num):
         print("ZERROOR")
         return 'zeroeororororororo'
     contents = data[task_id]['quesData'][question_num]['answer_text']
-    print(answer_num)
-    print(contents)
+    #print(answer_num)
+    #print(contents)
     myAnswer = contents[answer_num]
     return myAnswer
 
