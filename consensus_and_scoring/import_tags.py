@@ -112,14 +112,15 @@ def import_tags(old_s_iaa_dir, tags_dir, schema_dir, output_dir):
     #iaa tasks will always be a superset of the adjudicated tasks
 
     for source_task_uuid in iaa['source_task_uuid'].unique():
-        if source_task_uuid in tags['source_task_uuid']:
+        print('stu',source_task_uuid, 'series',tags['source_task_uuid'].iloc[0],'in,', source_task_uuid in tags['source_task_uuid'].values, source_task_uuid == tags['source_task_uuid'].iloc[0])
+        if source_task_uuid in tags['source_task_uuid'].values:
             task_tags = tags[tags['source_task_uuid'] == source_task_uuid]
-            iaa = False
+            use_iaa = False
         else:
             task_tags = iaa[iaa['source_task_uuid'] == source_task_uuid]
-            iaa = True
+            use_iaa = True
         namespace = task_tags['namespace'].iloc[0]
-        if iaa:
+        if use_iaa:
             out_path = os.path.join(output_dir, namespace + '.adjudicated-untouched_iaa_result-' + source_task_uuid + '-Tags.csv')
         else:
             out_path = os.path.join(output_dir, namespace+'.adjudicated-'+source_task_uuid+'-Tags.csv')
@@ -140,8 +141,8 @@ def make_namespace_to_schema_dict(tags, iaa, schema_dir):
     return dict
 
 if __name__ == '__main__':
-    old_s_iaa_dir = '../data/out_temp_iaa/'
-    tags_dir = '../data/adj_tags/'
+    old_s_iaa_dir = '../test_data/imptags_iaa_1_iaa_1_adj_disagree/'
+    tags_dir = '../test_data/imptags_adj_1_iaa_1_adj_disagree/'
     schema_dir = '../data/schemas/'
     output_dir = '../data/out_adjudicated_iaa/'
     import_tags(old_s_iaa_dir, tags_dir, schema_dir, output_dir)
