@@ -7,7 +7,7 @@ import argparse
 def post_adjudicator_master(tags_dir, schema_dir, new_s_iaa_dir, iaa_temp_dir, input_dir, scoring_dir, viz_dir,
                             tua_dir, text_dir, config_path, threshold_func):
     iaa_dir = calc_agreement_directory(input_dir, schema_dir, config_path, text_dir, repCSV=None,  outDirectory = iaa_temp_dir,
-                             useRep = False, threshold_func = 'raw_30')
+                             useRep = False, threshold_func = threshold_func)
     import_tags(iaa_dir, tags_dir, schema_dir, new_s_iaa_dir)
     scoring_only(input_dir, new_s_iaa_dir, schema_dir, scoring_dir, viz_dir, tua_dir, threshold_func)
 
@@ -45,22 +45,22 @@ if __name__ == '__main__':
         args = load_args()
         # input
         config_path = './config/'
-        input_dir = '../test_output/publish_p4-a506/datahunts'
-        texts_dir = '../test_output/publish_p4-a506/texts/'
-        adjudication_dir = '../test_output/publish_p4-a506/tags/'
+        input_dir = '../test_output/publish_p4-a401/datahunts'
+        texts_dir = '../test_output/publish_p4-a401/texts/'
+        adjudication_dir = '../test_output/publish_p4-a401/tags/'
         # metadata_dir = '../data/metadata/'
-        tua_dir = '../test_output/publish_p4-a506/focus_tags/'
-        schema_dir = '../test_output/publish_p4-a506/schemas/'
+        tua_dir = '../test_output/publish_p4-a401/focus_tags/'
+        schema_dir = '../test_output/publish_p4-a401/schemas/'
 
         #output data
-        iaa_temp_dir = make_directory('../test_output/publish_p4-a506/out_temp_iaa/')
+        iaa_temp_dir = make_directory('../test_output/publish_p4-a401/out_temp_iaa/')
 
 
 
 
-        adjudicated_dir = make_directory('../test_output/publish_p4-a506/out_adjudicated_iaa/')
-        scoring_dir = make_directory('../test_output/publish_p4-a506/out_scoring/')
-        viz_dir = make_directory('../test_output/publish_p4-a506/out_viz/')
+        adjudicated_dir = make_directory('../test_output/publish_p4-a401/out_adjudicated_iaa/')
+        scoring_dir = make_directory('../test_output/publish_p4-a401/out_scoring/')
+        viz_dir = make_directory('../test_output/publish_p4-a401/out_viz/')
         threshold_function = 'raw_50'
         if args.input_dir:
             input_dir = args.input_dir
