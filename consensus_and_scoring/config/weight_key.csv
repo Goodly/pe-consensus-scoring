@@ -405,3 +405,123 @@ Language2021_02_18,12,1,,0,0
 Language2021_02_18,12,2,Well-balanced,1,1
 Language2021_02_18,12,3,Well-balanced,2,2
 Language2021_02_18,12,4,Well-balanced,3,3
+Reasoning2021_05_14,3,1,Misleading Assumption,-4,-3
+Reasoning2021_05_14,3,2,Bogus Assumption,-3,-2
+Reasoning2021_05_14,3,3,Faulty Assumption,-2,-1
+Reasoning2021_05_14,3,4,Dubious Assumption,-1,0
+Reasoning2021_05_14,11,1,Egregious Sterotyping,-4,-3
+Reasoning2021_05_14,11,2,Sterotyping,-3,-2
+Reasoning2021_05_14,11,3,Sterotyping,-2,-1
+Reasoning2021_05_14,11,4,Sterotyping,-1,0
+Reasoning2021_05_14,12,1,Egregious Availability Bias,-4,-3
+Reasoning2021_05_14,12,2,Availability Bias,-3,-2
+Reasoning2021_05_14,12,3,Availability Bias,-2,-1
+Reasoning2021_05_14,12,4,Availability Bias,-1,0
+Reasoning2021_05_14,13,1,Egregious Hindsight Bias,-4,-3
+Reasoning2021_05_14,13,2,Hindsight Bias,-3,-2
+Reasoning2021_05_14,13,3,Hindsight Bias,-2,-1
+Reasoning2021_05_14,13,4,Hindsight Bias,-1,0
+Reasoning2021_05_14,14,1,Egregious Appeal From Ignorance,-4,-3
+Reasoning2021_05_14,14,2,Appeal From Ignorance,-3,-2
+Reasoning2021_05_14,14,3,Appeal From Ignorance,-2,-1
+Reasoning2021_05_14,14,4,Appeal From Ignorance,-1,0
+Reasoning2021_05_14,15,1,Egregious Distraction|Red Herring,-4,-3
+Reasoning2021_05_14,15,2,Distraction|Red Herring,-3,-2
+Reasoning2021_05_14,15,3,Distraction|Red Herring,-2,-1
+Reasoning2021_05_14,15,4,Distraction|Red Herring,-1,0
+Reasoning2021_05_14,16,1,Egregious Equivocation,-4,-3
+Reasoning2021_05_14,16,2,Equivocation,-3,-2
+Reasoning2021_05_14,16,3,Equivocation,-2,-1
+Reasoning2021_05_14,16,4,Equivocation,-1,0
+Reasoning2021_05_14,17,1,Egregious Slippery Slope,-4,-3
+Reasoning2021_05_14,17,2,Slippery Slope,-3,-2
+Reasoning2021_05_14,17,3,Slippery Slope,-2,-1
+Reasoning2021_05_14,17,4,Slippery Slope,-1,0
+Reasoning2021_05_14,18,1,Egregious Before therefore Because,-4,-3
+Reasoning2021_05_14,18,2,Before therefore Because,-3,-2
+Reasoning2021_05_14,18,3,Before therefore Because,-2,-1
+Reasoning2021_05_14,18,4,Before therefore Because,-1,0
+Reasoning2021_05_14,19,1,Egregious Personal Attack,-4,-3
+Reasoning2021_05_14,19,2,Personal Attack|Ad Hominem,-3,-2
+Reasoning2021_05_14,19,3,Personal Attack|Ad Hominem,-2,-1
+Reasoning2021_05_14,19,4,Personal Attack|Ad Hominem,-1,0
+Reasoning2021_05_14,20,1,Egregious Straw Man,-4,-3
+Reasoning2021_05_14,20,2,Straw Man Fallacy,-3,-2
+Reasoning2021_05_14,20,3,Straw Man Fallacy,-2,-1
+Reasoning2021_05_14,20,4,Straw Man Fallacy,-1,0
+Reasoning2021_05_14,21,1,Egregious False Dilemma,-4,-3
+Reasoning2021_05_14,21,2,False Dilemma,-3,-2
+Reasoning2021_05_14,21,3,False Dilemma,-2,-1
+Reasoning2021_05_14,21,4,False Dilemma,-1,0
+Reasoning2021_05_14,22,1,Egregious Circular Reasoning,-4,-3
+Reasoning2021_05_14,22,2,Circular Reasoning,-3,-2
+Reasoning2021_05_14,22,3,Circular Reasoning,-2,-1
+Reasoning2021_05_14,22,4,Circular Reasoning,-1,0
+Reasoning2021_05_14,23,1,Egregious Gambler's Fallacy,-4,-3
+Reasoning2021_05_14,23,2,Gambler's Fallacy,-3,-2
+Reasoning2021_05_14,23,3,Gambler's Fallacy,-2,-1
+Reasoning2021_05_14,23,4,Gambler's Fallacy,-1,0
+Reasoning2021_05_14,24,1,Egregious Sunk Cost Fallacy,-4,-3
+Reasoning2021_05_14,24,2,Sunk Cost Fallacy,-3,-2
+Reasoning2021_05_14,24,3,Sunk Cost Fallacy,-2,-1
+Reasoning2021_05_14,24,4,Sunk Cost Fallacy,-1,0
+Reasoning2021_05_14,25,1,Egregious Just World Fallacy,-4,-3
+Reasoning2021_05_14,25,2,Just World Fallacy,-3,-2
+Reasoning2021_05_14,25,3,Just World Fallacy,-2,-1
+Reasoning2021_05_14,25,4,Just World Fallacy,-1,0
+Reasoning2021_05_14,26,1,Egregious Good Old Days Fallacy,-4,-3
+Reasoning2021_05_14,26,2,Good Old Days Fallacy,-3,-2
+Reasoning2021_05_14,26,3,Good Old Days Fallacy,-2,-1
+Reasoning2021_05_14,26,4,Good Old Days Fallacy,-1,0
+Reasoning2021_05_14,27,1,Egregious Naturalistic Fallacy,-4,-3
+Reasoning2021_05_14,27,2,Naturalistic Fallacy,-3,-2
+Reasoning2021_05_14,27,3,Naturalistic Fallacy,-2,-1
+Reasoning2021_05_14,27,4,Naturalistic Fallacy,-1,0
+Reasoning2021_05_14,28,1,Egregious False Equivalence,-4,-3
+Reasoning2021_05_14,28,2,False Equivalence,-3,-2
+Reasoning2021_05_14,28,3,False Equivalence,-2,-1
+Reasoning2021_05_14,28,4,False Equivalence,-1,0
+Reasoning2021_05_14,30,1,Egregious Misc. Reasoning Error,-4,-3
+Reasoning2021_05_14,30,2,Other Reasoning Error,-3,-2
+Reasoning2021_05_14,30,3,Other Reasoning Error,-2,-1
+Reasoning2021_05_14,30,4,Other Reasoning Error,-1,0
+Evidence2021_05_14,2,1,Data-Driven Evidence,2,2
+Evidence2021_05_14,2,2,,0,0
+Evidence2021_05_14,2,3,,0,0
+Evidence2021_05_14,2,4,Anecdote not Data,-2,0
+Evidence2021_05_14,4,1,Representative Sample,2,2
+Evidence2021_05_14,4,2,Representative Sample,1,2
+Evidence2021_05_14,4,4,Unrepresentative Sample,-2,-2
+Evidence2021_05_14,4,5,Unrepresentative Sample,-4,-4
+Evidence2021_05_14,5,1,Statisical Error,-2,-2
+Evidence2021_05_14,5,2,Statisical Error,-1,-0.5
+Evidence2021_05_14,5,3,,0,0
+Evidence2021_05_14,5,4,Statistical confidence,1,1
+Evidence2021_05_14,5,5,Statistical certainty,2,2
+Evidence2021_05_14,6,1,Faulty Research Methods,-3,-3
+Evidence2021_05_14,6,2,Faulty Research Methods,-2,-2
+Evidence2021_05_14,6,3,,0,0
+Evidence2021_05_14,6,4,Proper Research Methods,1,1
+Evidence2021_05_14,6,5,Proper Research Methods,2,2
+Evidence2021_05_14,7,1,,0,0
+Evidence2021_05_14,7,2,Representative Subject Pool,1,1
+Evidence2021_05_14,7,3,Treatment Group,1,1
+Evidence2021_05_14,7,4,Control Group,1,1
+Evidence2021_05_14,7,5,Comparable Groups,1,1
+Evidence2021_05_14,7,6,Proper Comparison,1,1
+Evidence2021_05_14,7,7,Proper Interpretation,1,1
+Evidence2021_05_14,7,8,Faulty Experiment,-4,-3
+Evidence2021_05_14,10,1,,,
+Evidence2021_05_14,10,2,,,
+Evidence2021_05_14,10,3,,,
+Evidence2021_05_14,10,4,,,
+Evidence2021_05_14,10,5,,,
+Evidence2021_05_14,12,1,Open to Evidence,2,2
+Evidence2021_05_14,12,2,Open to Evidence,1,1
+Evidence2021_05_14,12,3,,0,0
+Evidence2021_05_14,12,4,Unopen to Evidence,-1,-1
+Evidence2021_05_14,14,1,Alternative explanation,-3,-3
+Evidence2021_05_14,14,2,Alternative explanation,-2,-2
+Evidence2021_05_14,14,3,Alternative explanation,-1,-1
+Evidence2021_05_14,14,4,Alternative explanation,0,0
+Evidence2021_05_14,14,5,Alternative explanation,0,0
