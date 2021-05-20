@@ -1,6 +1,8 @@
 import os
 import json
 import fnmatch
+import csv
+from uuid import UUID
 
 import logging
 if len(logging.getLogger().handlers) > 0:
@@ -50,6 +52,9 @@ def generate_highlighter_consensus(dir_dict):
             importData(input_file, output_file)
 
 def generate_datahunt_consensus(dir_dict):
+    uuids_to_filter = read_filter_uuids('../data_patches')
+    filter_directory(uuids_to_filter, 'tua_uuid', dir_dict['tags_dir'])
+    filter_directory(uuids_to_filter, 'tua_uuid', dir_dict['datahunts_dir'])
     result_dir = iaa_only(
         dir_dict['datahunts_dir'],
         dir_dict['texts_dir'],
@@ -88,6 +93,9 @@ def configure_publish_directories(parent_dirname):
 
 def generate_article_to_publish(dir_dict):
     threshold_function = 'raw_50'
+    uuids_to_filter = read_filter_uuids('../data_patches')
+    filter_directory(uuids_to_filter, 'tua_uuid', dir_dict['tags_dir'])
+    filter_directory(uuids_to_filter, 'tua_uuid', dir_dict['datahunts_dir'])
     post_adjudicator_master(
         dir_dict['adj_tags_dir'],
         dir_dict['schemas_dir'],
@@ -118,3 +126,71 @@ def clean_output_csvs(dest_dirname):
         file_path = os.path.join(dest_dirname, filename)
         logger.info("Cleaning {}".format(file_path))
         os.remove(file_path)
+
+def read_filter_uuids(data_patch_dir):
+    uuids_to_filter = {}
+    if not os.path.isdir(data_patch_dir):
+        return uuids_to_filter
+    files = os.listdir(data_patch_dir)
+    csvs = fnmatch.filter(files, '*.csv')
+    for filename in csvs:
+        file_path = os.path.join(data_patch_dir, filename)
+        with open(file_path, "r") as csv_in:
+            reader = csv.DictReader(csv_in)
+            assert('bad_tua_uuid' in reader.fieldnames)
+            key_dict = { UUID(row['bad_tua_uuid']):'' for row in reader }
+        uuids_to_filter.update(key_dict)
+        logger.info(
+            "Loaded {} TUAs from {} to filter out in loading."
+            .format(len(key_dict), file_path)
+        )
+    return uuids_to_filter
+
+def filter_directory(uuids_to_filter, filter_column, dest_dirname):
+    files = os.listdir(dest_dirname)
+    csvs = fnmatch.filter(files, '*.csv')
+    for filename in csvs:
+        file_path = os.path.join(dest_dirname, filename)
+        filter_uuids(file_path, filter_column, uuids_to_filter)
+
+class aws_hadoop_compat(csv.Dialect):
+    # AWS Glue uses org.apache.hadoop.mapred.TextInputFormat which doesn't accept CRLF
+    lineterminator = '\n'
+    # normal defaults
+    delimiter = ','
+    escapechar = '\\'
+    doublequote = True
+    quotechar = '"'
+    quoting = csv.QUOTE_MINIMAL
+
+tagworks_dialect = aws_hadoop_compat
+
+def filter_uuids(src_path, filter_column, uuids_to_filter):
+    dest_path = src_path
+    if dest_path.endswith(".csv"):
+        dest_path = dest_path[:-4]
+    else:
+        return
+    dest_path += "-filtered.csv"
+    filter_count = 0
+    with open(src_path, "r") as csv_in, open(dest_path, "w") as csv_out:
+        reader = csv.DictReader(csv_in)
+        assert(filter_column in reader.fieldnames)
+        writer = csv.DictWriter(
+            csv_out,
+            dialect=tagworks_dialect,
+            fieldnames=reader.fieldnames
+        )
+        writer.writeheader()
+        for row in reader:
+            if row[filter_column]:
+                if UUID(row[filter_column]) in uuids_to_filter:
+                    filter_count += 1
+                    continue
+            writer.writerow(row)
+    if filter_count != 0:
+        logger.info("Removed {} rows from {}".format(filter_count, src_path))
+        os.remove(src_path)
+    else:
+        # Delete the copy
+        os.remove(dest_path)

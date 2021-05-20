@@ -281,7 +281,7 @@ def retrieve_s3_file(s3_location, dest_dirname):
     s3_obj.download_file(dest_path)
     # if gzipped, decompress
     if filename.endswith(".gz"):
-        new_path = os.path.join(dest_dirname, filename.rstrip(".gz"))
+        new_path = os.path.join(dest_dirname, filename[:-3])
         with gzip.open(dest_path, 'rb') as f_in, \
             open(new_path, 'wb') as f_out:
             shutil.copyfileobj(f_in, f_out)
