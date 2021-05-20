@@ -52,7 +52,7 @@ def generate_highlighter_consensus(dir_dict):
             importData(input_file, output_file)
 
 def generate_datahunt_consensus(dir_dict):
-    uuids_to_filter = read_filter_uuids('../data_patches')
+    uuids_to_filter = read_filter_uuids('./data_patches/')
     filter_directory(uuids_to_filter, 'tua_uuid', dir_dict['tags_dir'])
     filter_directory(uuids_to_filter, 'tua_uuid', dir_dict['datahunts_dir'])
     result_dir = iaa_only(
@@ -93,7 +93,7 @@ def configure_publish_directories(parent_dirname):
 
 def generate_article_to_publish(dir_dict):
     threshold_function = 'raw_50'
-    uuids_to_filter = read_filter_uuids('../data_patches')
+    uuids_to_filter = read_filter_uuids('./data_patches/')
     filter_directory(uuids_to_filter, 'tua_uuid', dir_dict['tags_dir'])
     filter_directory(uuids_to_filter, 'tua_uuid', dir_dict['datahunts_dir'])
     post_adjudicator_master(
@@ -147,6 +147,8 @@ def read_filter_uuids(data_patch_dir):
     return uuids_to_filter
 
 def filter_directory(uuids_to_filter, filter_column, dest_dirname):
+    if len(uuids_to_filter) == 0:
+        return
     files = os.listdir(dest_dirname)
     csvs = fnmatch.filter(files, '*.csv')
     for filename in csvs:
