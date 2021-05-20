@@ -48,6 +48,15 @@ def import_tags(old_s_iaa_dir, tags_dir, schema_dir, output_dir):
     temp_dfs = []
     for i in range(len(tag_files)):
         temp_dfs.append(pd.read_csv(tag_files[i]))
+    # if nothing's adjudicated then output and return
+    if len(temp_dfs) == 0:
+        for source_task_uuid in iaa['source_task_uuid'].unique():
+            task_tags = iaa[iaa['source_task_uuid'] == source_task_uuid]
+            namespace = task_tags['namespace'].iloc[0]
+            out_path = os.path.join(output_dir, namespace + '.adjudicated-untouched_iaa_result-' + source_task_uuid + '-Tags.csv')
+            print('OUTPUTTING', out_path)
+            task_tags.to_csv(out_path)
+            return output_dir
     tags = pd.concat(temp_dfs)
     #Nan answer_uuid means it likely came from a triager task and we can disregard
     tags = tags.dropna(subset = ['answer_uuid'])
@@ -112,7 +121,6 @@ def import_tags(old_s_iaa_dir, tags_dir, schema_dir, output_dir):
     #iaa tasks will always be a superset of the adjudicated tasks
 
     for source_task_uuid in iaa['source_task_uuid'].unique():
-        print('stu',source_task_uuid, 'series',tags['source_task_uuid'].iloc[0],'in,', source_task_uuid in tags['source_task_uuid'].values, source_task_uuid == tags['source_task_uuid'].iloc[0])
         if source_task_uuid in tags['source_task_uuid'].values:
             task_tags = tags[tags['source_task_uuid'] == source_task_uuid]
             use_iaa = False
