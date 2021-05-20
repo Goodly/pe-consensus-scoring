@@ -1,0 +1,239 @@
+{
+  "AdjNegativeTasksElseIAA": [],
+  "Highlighters": [
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "publiceditor/ProjectExports/Schmidt_EasyTriagev5_ESTF/HighlighterTask/Schmidt_EasyTriagev5_ESTF-Task-2149-Highlighter.csv.gz",
+      "filename": "Schmidt_EasyTriagev5_ESTF/HighlighterTask/Schmidt_EasyTriagev5_ESTF-Task-2149-Highlighter.csv.gz"
+    },
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "publiceditor/ProjectExports/ESTF_HardTriage/HighlighterTask/ESTF_HardTriage-Task-2497-Highlighter.csv.gz",
+      "filename": "ESTF_HardTriage/HighlighterTask/ESTF_HardTriage-Task-2497-Highlighter.csv.gz"
+    }
+  ],
+  "user_id": 2,
+  "Tags": [
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "publiceditor/ProjectExports/Schmidt_EasyTriagev5_ESTF/TaskTags/Schmidt_EasyTriagev5.IAA-7b32c7dc-dcff-4c3e-a199-01051c1ac0e4-Tags.csv.gz",
+      "filename": "Schmidt_EasyTriagev5_ESTF/TaskTags/Schmidt_EasyTriagev5.IAA-7b32c7dc-dcff-4c3e-a199-01051c1ac0e4-Tags.csv.gz"
+    },
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "publiceditor/ProjectExports/ESTF_HardTriage/TaskTags/ESTF_HardTriage.IAA-a75ac51e-06ac-4d43-a169-15d9a5999580-Tags.csv.gz",
+      "filename": "ESTF_HardTriage/TaskTags/ESTF_HardTriage.IAA-a75ac51e-06ac-4d43-a169-15d9a5999580-Tags.csv.gz"
+    }
+  ],
+  "NegativeTasks": [],
+  "pipeline_uuid": "9c1bdf6b-0626-407a-aab3-a0d4820ecdcd",
+  "article_sha256": "6d18bf2107626a05465ea8ae8573bf2952e1d2d62ff486ba9d304f8f09e8cf7e",
+  "DataHunts": [
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "publiceditor/ProjectExports/TurkQual_Language-MTurk/DataHuntTask/TurkQual_Language-MTurk-Task-3414-DataHunt.csv.gz",
+      "filename": "TurkQual_Language-MTurk/DataHuntTask/TurkQual_Language-MTurk-Task-3414-DataHunt.csv.gz"
+    },
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "publiceditor/ProjectExports/Turk_Qual_Probabilityv2-MTurk/DataHuntTask/Turk_Qual_Probabilityv2-MTurk-Task-3477-DataHunt.csv.gz",
+      "filename": "Turk_Qual_Probabilityv2-MTurk/DataHuntTask/Turk_Qual_Probabilityv2-MTurk-Task-3477-DataHunt.csv.gz"
+    },
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "publiceditor/ProjectExports/Schmidt_Sourcesv4-from_IAA-MTurk/DataHuntTask/Schmidt_Sourcesv4-from_IAA-MTurk-Task-3486-DataHunt.csv.gz",
+      "filename": "Schmidt_Sourcesv4-from_IAA-MTurk/DataHuntTask/Schmidt_Sourcesv4-from_IAA-MTurk-Task-3486-DataHunt.csv.gz"
+    },
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "publiceditor/ProjectExports/Schmidt_Sourcesv4-from_IAA-MTurk/DataHuntTask/Schmidt_Sourcesv4-from_IAA-MTurk-Task-3487-DataHunt.csv.gz",
+      "filename": "Schmidt_Sourcesv4-from_IAA-MTurk/DataHuntTask/Schmidt_Sourcesv4-from_IAA-MTurk-Task-3487-DataHunt.csv.gz"
+    },
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "publiceditor/ProjectExports/Schmidt_Sourcesv4-from_IAA-MTurk/DataHuntTask/Schmidt_Sourcesv4-from_IAA-MTurk-Task-3488-DataHunt.csv.gz",
+      "filename": "Schmidt_Sourcesv4-from_IAA-MTurk/DataHuntTask/Schmidt_Sourcesv4-from_IAA-MTurk-Task-3488-DataHunt.csv.gz"
+    },
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "publiceditor/ProjectExports/Schmidt_Sourcesv4-from_IAA-MTurk/DataHuntTask/Schmidt_Sourcesv4-from_IAA-MTurk-Task-3489-DataHunt.csv.gz",
+      "filename": "Schmidt_Sourcesv4-from_IAA-MTurk/DataHuntTask/Schmidt_Sourcesv4-from_IAA-MTurk-Task-3489-DataHunt.csv.gz"
+    },
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "publiceditor/ProjectExports/Schmidt_Sourcesv4-from_IAA-MTurk/DataHuntTask/Schmidt_Sourcesv4-from_IAA-MTurk-Task-3490-DataHunt.csv.gz",
+      "filename": "Schmidt_Sourcesv4-from_IAA-MTurk/DataHuntTask/Schmidt_Sourcesv4-from_IAA-MTurk-Task-3490-DataHunt.csv.gz"
+    },
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "publiceditor/ProjectExports/Schmidt_Sourcesv4-from_IAA-MTurk/DataHuntTask/Schmidt_Sourcesv4-from_IAA-MTurk-Task-3491-DataHunt.csv.gz",
+      "filename": "Schmidt_Sourcesv4-from_IAA-MTurk/DataHuntTask/Schmidt_Sourcesv4-from_IAA-MTurk-Task-3491-DataHunt.csv.gz"
+    },
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "publiceditor/ProjectExports/Schmidt_Sourcesv4-from_IAA-MTurk/DataHuntTask/Schmidt_Sourcesv4-from_IAA-MTurk-Task-3492-DataHunt.csv.gz",
+      "filename": "Schmidt_Sourcesv4-from_IAA-MTurk/DataHuntTask/Schmidt_Sourcesv4-from_IAA-MTurk-Task-3492-DataHunt.csv.gz"
+    },
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "publiceditor/ProjectExports/Schmidt_Sourcesv4-from_IAA-MTurk/DataHuntTask/Schmidt_Sourcesv4-from_IAA-MTurk-Task-3493-DataHunt.csv.gz",
+      "filename": "Schmidt_Sourcesv4-from_IAA-MTurk/DataHuntTask/Schmidt_Sourcesv4-from_IAA-MTurk-Task-3493-DataHunt.csv.gz"
+    },
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "publiceditor/ProjectExports/Schmidt_Sourcesv4-from_IAA-MTurk/DataHuntTask/Schmidt_Sourcesv4-from_IAA-MTurk-Task-3494-DataHunt.csv.gz",
+      "filename": "Schmidt_Sourcesv4-from_IAA-MTurk/DataHuntTask/Schmidt_Sourcesv4-from_IAA-MTurk-Task-3494-DataHunt.csv.gz"
+    },
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "publiceditor/ProjectExports/Turk_Qual_Argument-MTurk/DataHuntTask/Turk_Qual_Argument-MTurk-Task-3944-DataHunt.csv.gz",
+      "filename": "Turk_Qual_Argument-MTurk/DataHuntTask/Turk_Qual_Argument-MTurk-Task-3944-DataHunt.csv.gz"
+    },
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "publiceditor/ProjectExports/Turk_Qual_Argument-MTurk/DataHuntTask/Turk_Qual_Argument-MTurk-Task-3945-DataHunt.csv.gz",
+      "filename": "Turk_Qual_Argument-MTurk/DataHuntTask/Turk_Qual_Argument-MTurk-Task-3945-DataHunt.csv.gz"
+    },
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "publiceditor/ProjectExports/Turk_Qual_Argument-MTurk/DataHuntTask/Turk_Qual_Argument-MTurk-Task-3946-DataHunt.csv.gz",
+      "filename": "Turk_Qual_Argument-MTurk/DataHuntTask/Turk_Qual_Argument-MTurk-Task-3946-DataHunt.csv.gz"
+    }
+  ],
+  "Texts": [
+    {
+      "metadata_location": {
+        "bucket_name": "tagworks.thusly.co",
+        "key": "publiceditor/Articles/6d18bf2107626a05465ea8ae8573bf2952e1d2d62ff486ba9d304f8f09e8cf7e/metadata.json.gz",
+        "filename": "6d18bf2107626a05465ea8ae8573bf2952e1d2d62ff486ba9d304f8f09e8cf7e/metadata.json.gz"
+      },
+      "bucket_name": "tagworks.thusly.co",
+      "article_sha256": "6d18bf2107626a05465ea8ae8573bf2952e1d2d62ff486ba9d304f8f09e8cf7e",
+      "key": "publiceditor/Articles/6d18bf2107626a05465ea8ae8573bf2952e1d2d62ff486ba9d304f8f09e8cf7e/text.txt.gz",
+      "filename": "6d18bf2107626a05465ea8ae8573bf2952e1d2d62ff486ba9d304f8f09e8cf7e/text.txt.gz"
+    }
+  ],
+  "Version": "1",
+  "response_sqs_url": "https://sqs.us-west-2.amazonaws.com/507444306670/pe-task-queues-OutputQueue-17CD4JAHZCDB3",
+  "pipeline_name": "Schmidt-GEC",
+  "FocusTags": [
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "publiceditor/ProjectExports/TurkQual_Language-MTurk/FocusTUA/TUA-7e995d98-7cae-41d3-851b-ee70a846ea1a-FocusTags.csv.gz",
+      "filename": "TurkQual_Language-MTurk/FocusTUA/TUA-7e995d98-7cae-41d3-851b-ee70a846ea1a-FocusTags.csv.gz"
+    },
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "publiceditor/ProjectExports/Turk_Qual_Probabilityv2-MTurk/FocusTUA/TUA-29afe1b3-800e-4387-b033-da82ecd5d150-FocusTags.csv.gz",
+      "filename": "Turk_Qual_Probabilityv2-MTurk/FocusTUA/TUA-29afe1b3-800e-4387-b033-da82ecd5d150-FocusTags.csv.gz"
+    },
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "publiceditor/ProjectExports/Schmidt_Sourcesv4-from_IAA-MTurk/FocusTUA/TUA-b2f8dbc6-4988-42d9-9bfd-f0cda21ecaa1-FocusTags.csv.gz",
+      "filename": "Schmidt_Sourcesv4-from_IAA-MTurk/FocusTUA/TUA-b2f8dbc6-4988-42d9-9bfd-f0cda21ecaa1-FocusTags.csv.gz"
+    },
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "publiceditor/ProjectExports/Schmidt_Sourcesv4-from_IAA-MTurk/FocusTUA/TUA-92b00ff5-939a-4fff-a43d-f7dcf46243df-FocusTags.csv.gz",
+      "filename": "Schmidt_Sourcesv4-from_IAA-MTurk/FocusTUA/TUA-92b00ff5-939a-4fff-a43d-f7dcf46243df-FocusTags.csv.gz"
+    },
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "publiceditor/ProjectExports/Schmidt_Sourcesv4-from_IAA-MTurk/FocusTUA/TUA-2f831010-b990-45b1-8a94-ec0d032c24ed-FocusTags.csv.gz",
+      "filename": "Schmidt_Sourcesv4-from_IAA-MTurk/FocusTUA/TUA-2f831010-b990-45b1-8a94-ec0d032c24ed-FocusTags.csv.gz"
+    },
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "publiceditor/ProjectExports/Schmidt_Sourcesv4-from_IAA-MTurk/FocusTUA/TUA-bae8e5fc-4147-420f-b6a9-02c647c9e8be-FocusTags.csv.gz",
+      "filename": "Schmidt_Sourcesv4-from_IAA-MTurk/FocusTUA/TUA-bae8e5fc-4147-420f-b6a9-02c647c9e8be-FocusTags.csv.gz"
+    },
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "publiceditor/ProjectExports/Schmidt_Sourcesv4-from_IAA-MTurk/FocusTUA/TUA-9e99b3a9-66c9-434e-ada9-ae2d91de2897-FocusTags.csv.gz",
+      "filename": "Schmidt_Sourcesv4-from_IAA-MTurk/FocusTUA/TUA-9e99b3a9-66c9-434e-ada9-ae2d91de2897-FocusTags.csv.gz"
+    },
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "publiceditor/ProjectExports/Schmidt_Sourcesv4-from_IAA-MTurk/FocusTUA/TUA-796cb08f-d4fe-4642-a3c7-c26a24001917-FocusTags.csv.gz",
+      "filename": "Schmidt_Sourcesv4-from_IAA-MTurk/FocusTUA/TUA-796cb08f-d4fe-4642-a3c7-c26a24001917-FocusTags.csv.gz"
+    },
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "publiceditor/ProjectExports/Schmidt_Sourcesv4-from_IAA-MTurk/FocusTUA/TUA-4ecf4afa-938e-44f1-9e68-098defeb5834-FocusTags.csv.gz",
+      "filename": "Schmidt_Sourcesv4-from_IAA-MTurk/FocusTUA/TUA-4ecf4afa-938e-44f1-9e68-098defeb5834-FocusTags.csv.gz"
+    },
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "publiceditor/ProjectExports/Schmidt_Sourcesv4-from_IAA-MTurk/FocusTUA/TUA-a66f8d4b-df51-45fa-9c45-2dcdeeaa99af-FocusTags.csv.gz",
+      "filename": "Schmidt_Sourcesv4-from_IAA-MTurk/FocusTUA/TUA-a66f8d4b-df51-45fa-9c45-2dcdeeaa99af-FocusTags.csv.gz"
+    },
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "publiceditor/ProjectExports/Schmidt_Sourcesv4-from_IAA-MTurk/FocusTUA/TUA-31c6fc38-beaf-4d3e-898b-c93a43d9c365-FocusTags.csv.gz",
+      "filename": "Schmidt_Sourcesv4-from_IAA-MTurk/FocusTUA/TUA-31c6fc38-beaf-4d3e-898b-c93a43d9c365-FocusTags.csv.gz"
+    },
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "publiceditor/ProjectExports/Turk_Qual_Argument-MTurk/FocusTUA/TUA-fd2e2b1b-0a02-45e8-b678-75326dc54537-FocusTags.csv.gz",
+      "filename": "Turk_Qual_Argument-MTurk/FocusTUA/TUA-fd2e2b1b-0a02-45e8-b678-75326dc54537-FocusTags.csv.gz"
+    },
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "publiceditor/ProjectExports/Turk_Qual_Argument-MTurk/FocusTUA/TUA-626d86da-1a0d-41d6-bb64-24fc1a244b11-FocusTags.csv.gz",
+      "filename": "Turk_Qual_Argument-MTurk/FocusTUA/TUA-626d86da-1a0d-41d6-bb64-24fc1a244b11-FocusTags.csv.gz"
+    },
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "publiceditor/ProjectExports/Turk_Qual_Argument-MTurk/FocusTUA/TUA-dc1be857-4eb0-4f8c-b89a-42cb16bda66f-FocusTags.csv.gz",
+      "filename": "Turk_Qual_Argument-MTurk/FocusTUA/TUA-dc1be857-4eb0-4f8c-b89a-42cb16bda66f-FocusTags.csv.gz"
+    }
+  ],
+  "Action": "publish_article",
+  "article_number": 530712117,
+  "AdjTags": [],
+  "AdjNegativeTasks": [],
+  "AdjTagsElseIAATags": [
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "publiceditor/ProjectExports/Schmidt_EasyTriagev5_ESTF/TaskTags/Schmidt_EasyTriagev5.IAA-7b32c7dc-dcff-4c3e-a199-01051c1ac0e4-Tags.csv.gz",
+      "filename": "Schmidt_EasyTriagev5_ESTF/TaskTags/Schmidt_EasyTriagev5.IAA-7b32c7dc-dcff-4c3e-a199-01051c1ac0e4-Tags.csv.gz"
+    },
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "publiceditor/ProjectExports/ESTF_HardTriage/TaskTags/ESTF_HardTriage.IAA-a75ac51e-06ac-4d43-a169-15d9a5999580-Tags.csv.gz",
+      "filename": "ESTF_HardTriage/TaskTags/ESTF_HardTriage.IAA-a75ac51e-06ac-4d43-a169-15d9a5999580-Tags.csv.gz"
+    }
+  ],
+  "Schemas": [
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "publiceditor/ProjectExports/Schmidt_Sourcesv4-from_IAA-MTurk/Schema/Sources2021_02_23-Schema.csv.gz",
+      "filename": "Schmidt_Sourcesv4-from_IAA-MTurk/Schema/Sources2021_02_23-Schema.csv.gz"
+    },
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "publiceditor/ProjectExports/Schmidt_Sourcesv4_Qualification-MTurk/Schema/Sources2021_02_23-Schema.csv.gz",
+      "filename": "Schmidt_Sourcesv4_Qualification-MTurk/Schema/Sources2021_02_23-Schema.csv.gz"
+    },
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "publiceditor/ProjectExports/Turk_Qual_Argument-MTurk/Schema/Arguments2021_02_01-Schema.csv.gz",
+      "filename": "Turk_Qual_Argument-MTurk/Schema/Arguments2021_02_01-Schema.csv.gz"
+    },
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "publiceditor/ProjectExports/Turk_Qual_Evidencev4-MTurk/Schema/Evidence2021_04_20_v2-Schema.csv.gz",
+      "filename": "Turk_Qual_Evidencev4-MTurk/Schema/Evidence2021_04_20_v2-Schema.csv.gz"
+    },
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "publiceditor/ProjectExports/TurkQual_Language-MTurk/Schema/Language2021_02_18-Schema.csv.gz",
+      "filename": "TurkQual_Language-MTurk/Schema/Language2021_02_18-Schema.csv.gz"
+    },
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "publiceditor/ProjectExports/Turk_Qual_Probabilityv2-MTurk/Schema/Probability_2021_03_19-Schema.csv.gz",
+      "filename": "Turk_Qual_Probabilityv2-MTurk/Schema/Probability_2021_03_19-Schema.csv.gz"
+    }
+  ]
+}
