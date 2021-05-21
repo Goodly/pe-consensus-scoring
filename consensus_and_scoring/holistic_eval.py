@@ -101,6 +101,9 @@ def eval_triage_scoring(tua, pointsdf, scoring_dir, threshold_func='logis_0', re
             checkArtType(6,5, art_holistic) or checkArtType(10,2, art_holistic)):  # T1.Q6.A5 and T1.Q10.2
             if (num_sources < 2 and num_evidence < num_assertions + num_args):
                 overallChange = addPoints(overallChange, -2, 'Low Information', art_num, art_sha256, art_id)
+    print("POINTS_DF \n ", pointsdf.shape, '\n',pointsdf)
+    print("OVERALL \n", overallChange.shape, '\n', overallChange)
+
     pointsdf = pd.concat([pointsdf, overallChange], axis=0, ignore_index=True)
     if reporting:
         pointsdf.to_csv(scoring_dir + '/AssessedPoints.csv')
