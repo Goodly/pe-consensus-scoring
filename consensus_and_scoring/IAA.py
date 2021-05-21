@@ -61,7 +61,7 @@ def calc_agreement_directory(directory, schema_dir, config_path,  texts_path, re
     return outDirectory
 
 def unpack_iaa(input):
-    print("unpacking", input)
+    #print("unpacking", input)
     calc_scores(input[0],  repCSV = input[2],
                             answersFile = input[3], schemaFile=input[4], outDirectory=input[5], useRep=input[6],
                 directory = input[7], threshold_func=input[8])

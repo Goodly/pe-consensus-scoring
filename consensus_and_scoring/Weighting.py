@@ -34,10 +34,11 @@ def launch_Weighting(directory, out_directory = None, reporting = False):
         if weight is not None and not weight.empty:
             weight_list.append(weight)
     if len(weight_list) == 0:
+        print("No weights")
         file = pd.read_csv(iaaFiles[0], encoding = 'utf-8')
         columns =  file.columns.tolist()
         weight_key_cols = pd.read_csv(weight_key_path, encoding= 'utf-8').columns.tolist()
-        columns = columns + weight_key_cols + ['agreement_adjusted_points']
+        columns = columns + weight_key_cols + ['agreement_adjusted_points', 'Schema']
         weights = pd.DataFrame(columns = columns)
         weights = weights.loc[:, ~weights.columns().duplicated()]
 

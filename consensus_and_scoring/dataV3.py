@@ -219,7 +219,7 @@ def getStartsEndsLists(starts_ends, uuid):
     Gets the starts and ends DataFrame by uuid.
     Outputs a pair of DataFrames. Each entry is a LIST of start or end positions
     """
-    print(starts_ends, uuid)
+    #print(starts_ends, uuid)
     grouped = starts_ends.loc[uuid].groupby("question_label")
 
     return grouped['start_pos'].apply(list), grouped['end_pos'].apply(list)
