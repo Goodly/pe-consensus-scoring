@@ -1,8 +1,0 @@
-Article ID,Credibility Indicator ID,Credibility Indicator Category,Credibility Indicator Name,Points,Indices of Label in Article,Start,End,target_text
-1ea77d4bd16475b74243e0a909985a8bb8df305fb6beae159c493af606727e2c,L0,Language,Inappropriately emotional,-3.8917166631461173,"range(2264, 2297)",2264,2297,nan
-1ea77d4bd16475b74243e0a909985a8bb8df305fb6beae159c493af606727e2c,L1,Language,Exaggeration,-3.1799883995810627,"range(1602, 1618)",1602,1618,nan
-1ea77d4bd16475b74243e0a909985a8bb8df305fb6beae159c493af606727e2c,L2,Language,Inappropriately emotional,-3.0,"range(1564, 1568)",1564,1568,nan
-1ea77d4bd16475b74243e0a909985a8bb8df305fb6beae159c493af606727e2c,L2,Language,Inappropriately emotional,0,"range(1575, 1618)",1575,1618,nan
-1ea77d4bd16475b74243e0a909985a8bb8df305fb6beae159c493af606727e2c,S0,Source,Qualified Source,1.834445352391903,[],-1,-1,nan
-1ea77d4bd16475b74243e0a909985a8bb8df305fb6beae159c493af606727e2c,S1,Source,Qualified Source,0.8715699480384027,[],-1,-1,nan
-,,,,,,,,
