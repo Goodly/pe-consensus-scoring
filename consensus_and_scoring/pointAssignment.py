@@ -80,6 +80,11 @@ def pointSort(scoring_directory, input_dir = None, weights = None,
             weight_list.append(wf)
 
         weights = pd.concat(weight_list)
+    print("WEIGHTS_CONCAT")
+    print(weights)
+    print("COLUMNS")
+    for col in weights.columns:
+        print(col)
     weights['agreement_adjusted_points'] = weights['agreement_adjusted_points'].apply(float)
     weights = weights[weights['agreement_adjusted_points'] != 0]
     if reporting:
