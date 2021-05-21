@@ -54,9 +54,9 @@ def import_tags(old_s_iaa_dir, tags_dir, schema_dir, output_dir):
             task_tags = iaa[iaa['source_task_uuid'] == source_task_uuid]
             namespace = task_tags['namespace'].iloc[0]
             out_path = os.path.join(output_dir, namespace + '.adjudicated-untouched_iaa_result-' + source_task_uuid + '-Tags.csv')
-            print('OUTPUTTING', out_path)
+            print('IMPORT_TAGS OUTPUTTING_no adjud', out_path)
             task_tags.to_csv(out_path)
-            return output_dir
+        return output_dir
     tags = pd.concat(temp_dfs)
     #Nan answer_uuid means it likely came from a triager task and we can disregard
     tags = tags.dropna(subset = ['answer_uuid'])
@@ -132,7 +132,7 @@ def import_tags(old_s_iaa_dir, tags_dir, schema_dir, output_dir):
             out_path = os.path.join(output_dir, namespace + '.adjudicated-untouched_iaa_result-' + source_task_uuid + '-Tags.csv')
         else:
             out_path = os.path.join(output_dir, namespace+'.adjudicated-'+source_task_uuid+'-Tags.csv')
-        print('OUTPUTTING', out_path)
+        print('IMport_tags outputting after adjudication', out_path)
         task_tags.to_csv(out_path)
 
     return output_dir
