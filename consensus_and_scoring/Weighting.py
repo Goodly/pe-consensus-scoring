@@ -11,8 +11,8 @@ def launch_Weighting(directory, out_directory = None, reporting = False):
     for root, dir, files in os.walk(directory):
         for file in files:
             if file.endswith('.csv') and 'Dep' in file:
-                print('gotaFile', file)
                 iaaFiles.append(directory+'/'+file)
+    print("IAA files found:", iaaFiles)
     weight_list = []
     #get holistic so different weight keys can be used for different types of articles
     weight_col = 'Point_Recommendation'
@@ -40,7 +40,7 @@ def launch_Weighting(directory, out_directory = None, reporting = False):
         weight_key_cols = pd.read_csv(weight_key_path, encoding= 'utf-8').columns.tolist()
         columns = columns + weight_key_cols + ['agreement_adjusted_points', 'Schema']
         weights = pd.DataFrame(columns = columns)
-        weights = weights.loc[:, ~weights.columns().duplicated()]
+        weights = weights.loc[:, ~weights.columns.duplicated()]
 
     else:
         weights = pd.concat(weight_list)

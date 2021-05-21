@@ -51,13 +51,8 @@ if __name__ == '__main__':
         # metadata_dir = '../data/metadata/'
         tua_dir = '../test_output/publish_p4-a506/focus_tags/'
         schema_dir = '../test_output/publish_p4-a506/schemas/'
-
         #output data
         iaa_temp_dir = make_directory('../test_output/publish_p4-a506/output_temp_iaa/')
-
-
-
-
         adjudicated_dir = make_directory('../test_output/publish_p4-a506/output_adjudicated_iaa/')
         scoring_dir = make_directory('../test_output/publish_p4-a506/output_scoring/')
         viz_dir = make_directory('../test_output/publish_p4-a506/output_viz/')
