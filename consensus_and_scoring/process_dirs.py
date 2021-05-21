@@ -135,7 +135,7 @@ def read_filter_uuids(data_patch_dir):
     csvs = fnmatch.filter(files, '*.csv')
     for filename in csvs:
         file_path = os.path.join(data_patch_dir, filename)
-        with open(file_path, "r", newline='') as csv_in:
+        with open(file_path, 'r', encoding='utf-8', newline='') as csv_in:
             reader = csv.DictReader(csv_in)
             assert('bad_tua_uuid' in reader.fieldnames)
             key_dict = { UUID(row['bad_tua_uuid']):'' for row in reader }
@@ -175,8 +175,8 @@ def filter_uuids(src_path, filter_column, uuids_to_filter):
         return
     dest_path += "-filtered.csv"
     filter_count = 0
-    with open(src_path, "r", newline='') as csv_in, \
-         open(dest_path, "w", newline='') as csv_out:
+    with open(src_path, 'r', encoding='utf-8', newline='') as csv_in, \
+         open(dest_path, 'w', encoding='utf-8', newline='') as csv_out:
         reader = csv.DictReader(csv_in)
         assert(filter_column in reader.fieldnames)
         writer = csv.DictWriter(

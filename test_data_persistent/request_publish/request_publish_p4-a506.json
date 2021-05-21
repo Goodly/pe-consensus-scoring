@@ -12,7 +12,7 @@
       "filename": "ESTF_HardTriage/HighlighterTask/ESTF_HardTriage-Task-2497-Highlighter.csv.gz"
     }
   ],
-  "user_id": 2,
+  "user_id": 1,
   "Tags": [
     {
       "bucket_name": "tagworks.thusly.co",
@@ -207,6 +207,21 @@
   "Schemas": [
     {
       "bucket_name": "tagworks.thusly.co",
+      "key": "publiceditor/ProjectExports/Turk_Qual_Argument_redo-MTurk/Schema/Arguments2021_02_01-Schema.csv.gz",
+      "filename": "Turk_Qual_Argument_redo-MTurk/Schema/Arguments2021_02_01-Schema.csv.gz"
+    },
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "publiceditor/ProjectExports/Turk_Qual_Reasoningv3.2-MTurk/Schema/Reasoning2021_05_14-Schema.csv.gz",
+      "filename": "Turk_Qual_Reasoningv3.2-MTurk/Schema/Reasoning2021_05_14-Schema.csv.gz"
+    },
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "publiceditor/ProjectExports/Turk_Qual_Sourcesv4_redo-MTurk/Schema/Sources2021_02_23-Schema.csv.gz",
+      "filename": "Turk_Qual_Sourcesv4_redo-MTurk/Schema/Sources2021_02_23-Schema.csv.gz"
+    },
+    {
+      "bucket_name": "tagworks.thusly.co",
       "key": "publiceditor/ProjectExports/Schmidt_Sourcesv4-from_IAA-MTurk/Schema/Sources2021_02_23-Schema.csv.gz",
       "filename": "Schmidt_Sourcesv4-from_IAA-MTurk/Schema/Sources2021_02_23-Schema.csv.gz"
     },
@@ -222,11 +237,6 @@
     },
     {
       "bucket_name": "tagworks.thusly.co",
-      "key": "publiceditor/ProjectExports/Turk_Qual_Evidencev4-MTurk/Schema/Evidence2021_04_20_v2-Schema.csv.gz",
-      "filename": "Turk_Qual_Evidencev4-MTurk/Schema/Evidence2021_04_20_v2-Schema.csv.gz"
-    },
-    {
-      "bucket_name": "tagworks.thusly.co",
       "key": "publiceditor/ProjectExports/TurkQual_Language-MTurk/Schema/Language2021_02_18-Schema.csv.gz",
       "filename": "TurkQual_Language-MTurk/Schema/Language2021_02_18-Schema.csv.gz"
     },
@@ -234,6 +244,11 @@
       "bucket_name": "tagworks.thusly.co",
       "key": "publiceditor/ProjectExports/Turk_Qual_Probabilityv2-MTurk/Schema/Probability_2021_03_19-Schema.csv.gz",
       "filename": "Turk_Qual_Probabilityv2-MTurk/Schema/Probability_2021_03_19-Schema.csv.gz"
+    },
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "publiceditor/ProjectExports/Turk_Qual_Evidencev5-MTurk/Schema/Evidence2021_05_19-Schema.csv.gz",
+      "filename": "Turk_Qual_Evidencev5-MTurk/Schema/Evidence2021_05_19-Schema.csv.gz"
     }
   ]
 }
