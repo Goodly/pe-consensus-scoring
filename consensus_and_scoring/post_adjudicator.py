@@ -42,13 +42,20 @@ def load_args():
         return parser.parse_args()
 
 if __name__ == '__main__':
-        from process_dirs import configure_publish_directories, generate_article_to_publish
         args = load_args()
         # input
-        test_message_dir = '../test_output/publish_p4-a506/'
-        dir_dict = configure_publish_directories(test_message_dir)
-        generate_article_to_publish(dir_dict)
-
+        config_path = './config/'
+        input_dir = '../test_output/publish_p4-a506/datahunts'
+        texts_dir = '../test_output/publish_p4-a506/texts/'
+        adjudication_dir = '../test_output/publish_p4-a506/tags/'
+        # metadata_dir = '../data/metadata/'
+        tua_dir = '../test_output/publish_p4-a506/focus_tags/'
+        schema_dir = '../test_output/publish_p4-a506/schemas/'
+        #output data
+        iaa_temp_dir = make_directory('../test_output/publish_p4-a506/output_temp_iaa/')
+        adjudicated_dir = make_directory('../test_output/publish_p4-a506/output_adjudicated_iaa/')
+        scoring_dir = make_directory('../test_output/publish_p4-a506/output_scoring/')
+        viz_dir = make_directory('../test_output/publish_p4-a506/output_viz/')
         threshold_function = 'raw_50'
         if args.input_dir:
             input_dir = args.input_dir
@@ -64,6 +71,7 @@ if __name__ == '__main__':
             threshold_function = args.threshold_function
         if args.tua_dir:
             tua_dir = args.tua_dir
-        #post_adjudicator_master(adjudication_dir, schema_dir, adjudicated_dir, iaa_temp_dir, input_dir, scoring_dir, viz_dir,
-        #                       tua_dir, texts_dir, config_path, threshold_function)
+        post_adjudicator_master(adjudication_dir, schema_dir, adjudicated_dir, iaa_temp_dir, input_dir, scoring_dir, viz_dir,
+                                tua_dir, texts_dir, config_path, threshold_function)
+
 
