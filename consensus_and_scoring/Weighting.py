@@ -37,7 +37,7 @@ def launch_Weighting(directory, out_directory = None, reporting = False):
         file = pd.read_csv(iaaFiles[0], encoding = 'utf-8')
         columns =  file.columns.tolist()
         weight_key_cols = pd.read_csv(weight_key_path, encoding= 'utf-8').columns.tolist()
-        columns = columns + weight_key_cols
+        columns = columns + weight_key_cols + ['agreement_adjusted_points']
         weights = pd.DataFrame(columns = columns)
     else:
         weights = pd.concat(weight_list)
