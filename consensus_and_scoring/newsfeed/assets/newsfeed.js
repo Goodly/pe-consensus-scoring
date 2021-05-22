@@ -2,22 +2,22 @@ window.addEventListener('load', (event) => {
     const visPromise = readVisData();
     visPromise.then(function() {
         generateAndMove();
-        
+
     });
-    
+
 });
 
 
 var listofarticles = [];
 
 function readVisData() {
-    return $.get("visData.json").done(function(data) {
-        
+    return $.get("visDataTest.json").done(function(data) {
+        console.log(data);
         for (var i = 0; i < Object.keys(data).length; i++) {
             var article = data[i];
             var articleEntry = new ArticleData(article["Title"], article["Author"], article["Date"], article["ID"], article["Article Link"], article["Visualization Link"], article["Plain Text"], article["Highlight Data"]);
             //articleEntry.setCredibilityScore();
-            
+
             listofarticles.push(articleEntry);
         }
     });
@@ -88,7 +88,7 @@ function sortArticles(listofarticles, sortBy, order) {
     } else {
       console.log(listofarticles);
         if (order == "high") {
-            
+
             listofarticles.sort((a, b) => (a.credibilityScore < b.credibilityScore) ? 1 : -1)
         } else {
             listofarticles.sort((a, b) => (a.credibilityScore > b.credibilityScore) ? 1 : -1)
@@ -98,29 +98,44 @@ function sortArticles(listofarticles, sortBy, order) {
 }
 
 function generateAndMove() {
-    
+
   $.get("#showLimit").done(function(){
     const generatePromise = new Promise(function() {
        generateList();
     });
-    
+
       moveHallmarks();
-    
-    
-    
-  } ); 
-    
-    
-  
+
+
+
+  } );
+
+
+
 }
 
 function generateEntry(entry) {
-    
+
     var previewPromise = $.get(entry.plainText).done(function(data) {
-      
-      var previewText = data.toString().substring(0, 200);
-      
-      
+      var totalText = data.toString()
+      var previewText = totalText.substring(0, 200);
+
+      if (entry.title == "") {
+        const regexTitle = /(Title:).+/
+        const matches = totalText.match(regexTitle);
+        const title_string = matches[0].substring(7, matches[0].length); //Slice out the 'Title: '
+        entry.title = title_string;
+      }
+
+      if (entry.date == "") {
+        const regexDate = /(Date.+:)(.+)/
+        matches = regexDate.exec(totalText);
+        const date_string = matches[2]; // Get the last match, which is the date;
+        entry.date = date_string;
+      }
+
+      entry.date = reformatDate(entry.date);
+
       var articleEntry = "<div id='" + entry.id + "' class='row'>" +
                             "<div class='col-2 date'>" + entry.date + "</div>" +
                             "<div class='col-6'>" +
@@ -140,10 +155,10 @@ function generateEntry(entry) {
           document.querySelector("svg[articleID='" + entry.id +"']").remove();
       }
       hallmark(entry.highlightData, entry.id);
-      
-      
+
+
     });
-    
+
 }
 
 function csvJSON(csv){
@@ -160,4 +175,18 @@ function csvJSON(csv){
   }
   //return result; //JavaScript object
   return result
+}
+
+
+// Reformat date to the style MONTH - DAY - YEAR (September 16, 2017)
+// @param date : string containing date info.
+function reformatDate(date_string) {
+  var options = { month: 'long'};
+
+  const date_object = new Date(date_string);
+
+  const day = date_object.getDate();
+  const year = date_object.getFullYear();
+  const month = new Intl.DateTimeFormat('en-US', options).format(date_object)
+  return month + " " + day + ", " + year;
 }
