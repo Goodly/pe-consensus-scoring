@@ -246,7 +246,7 @@ function hallmark(data) {
 
 }
 
-/*** HELPER FUNCTIONS ***/
+/****************************** HELPER FUNCTIONS ******************************/
 
 /* Function that provides the color based on the node.
     @param d: the node in the data heirarchy
@@ -263,8 +263,12 @@ function colorFinderSun(d) {
                 return d3.rgb(118, 188, 226);
             } else if (d.data.data['Credibility Indicator Name'] == "Language") {
                return d3.rgb(75, 95, 178);
-            } else {
+            } else if (d.data.data['Credibility Indicator Name'] == "Holistic"){
                 return d3.rgb(255, 180, 0);
+            } else if (d.data.data['Credibility Indicator Name'] == "Source") {
+                return d3.rgb(201, 87, 198)
+            } else {
+              return d3.rgb(255, 255, 255);
             }
         }   else {
             if (d.data.size > 0) {
@@ -278,8 +282,12 @@ function colorFinderSun(d) {
                 return d3.rgb(118, 188, 226);
             } else if (d.parent.data.data['Credibility Indicator Name'] == "Language") {
                 return d3.rgb(75, 95, 178);
-            } else {
+            } else if (d.parent.data.data['Credibility Indicator Name'] == "Holistic" ){
                 return d3.rgb(255, 180, 0);
+            } else if (d.parent.data.data['Credibility Indicator Name'] == "Source") {
+              return d3.rgb(201, 87, 198)
+            } else {
+              return d3.rgb(255, 255, 255);
             }
         }
   }
@@ -390,7 +398,6 @@ function drawVis(d, root, me, div) {
         if (d.data.data.Start == -1) {
           console.log("This fallacy does not have a highlight in the article body.");
         } else {
-
             highlightSun(textToHighlight[0]);
         }
     } else if (d.height == 2) {
@@ -440,7 +447,6 @@ function drawVis(d, root, me, div) {
     var pointsGained = scoreSum(d);
     SVG.selectAll(".center-text").style('display', 'none');
 
-    console.log(d.data.data["Credibility Indicator Name"]);
     if (d.data.data["Credibility Indicator Name"] == "Waiting for fact-checkers") {
       pointsGained = "";
     }
@@ -503,9 +509,14 @@ function pulse(x) {
 function highlightSun(x) {
   var color = x.style.borderBottomColor;      // grab color of border underline in rgb form
   var color = color.match(/\d+/g);                      // split rgb into r, g, b, components
+  var cred_id = x.getAttribute("cred_id");
 
-  x.style.setProperty("background-color", "rgba(" + color[0] + "," + color[1] + "," + color[2] + "," + "0.25");
-  x.style.setProperty("background-clip", "content-box");
+  $("span[cred_id='"+cred_id+"']").each(function() {
+    this.style.setProperty("background-color", "rgba(" + color[0] + "," + color[1] + "," + color[2] + "," + "0.25");
+    this.style.setProperty("background-clip", "content-box");
+  });
+  // x.style.setProperty("background-color", "rgba(" + color[0] + "," + color[1] + "," + color[2] + "," + "0.25");
+  // x.style.setProperty("background-clip", "content-box");
 }
 
 function normalSun() {

@@ -148,13 +148,16 @@
                       <div class="dropdown-content">
                           <button type ="button" class = "button_three" id = "button_three"> Article Elements</button>
                           <div class="hide">
-                          Which sections of this article are  arguments, quoted sources or assertions? Which sections need fact checking?</div>
+                          Which sections of this article are  arguments, quoted sources or assertions? Which sections need fact checking?<br>
+                          <i>Coming soon!</i>
+                          </div>
                           <button type ="button" class = "button_two" id = "button_two">Your Contribution</button>
                           <div class="hide">
-                            What is your contribution to this article? What highlights and points did you give this article?
+                            What is your contribution to this article? What highlights and points did you give this article?<br>
+                            <i>Coming soon!</i>
                           </div>
 
-                          <input type="text" class='hidden' id="userid" placeholder="User ID" autocomplete="off">
+                          <!-- <input type="text" class='hidden' id="userid" placeholder="User ID" autocomplete="off"> -->
                           <div class='hidden' id='errormsg'>
                             No highlights
                           </div>
@@ -182,8 +185,7 @@
                 <script type="text/javascript">
                   var textFileUrl = "$ARTICLE_TEXT_URL";
                   var dataFileUrl = "$DATA_CSV_URL";
-                  textFileUrl = "article.txt";
-                  dataFileUrl =  "viz_data.csv";
+                  
                   formFileUrl = "form.csv";
                   var userFileUrl = "user_contributions.csv";
                   import("/visualizations/assets/createHighlights.js").then(scoreArticle(textFileUrl, dataFileUrl, formFileUrl, userFileUrl));
@@ -216,10 +218,10 @@
                     btn.onclick = function() {
                       if (modal.style.display === "block") {
                         modal.style.display = "none";
-                        jQuery("#popup").html("?");
+                        $("#popup").html("?");
                       } else {
                         modal.style.display = "block";
-                        jQuery("#popup").html("X");
+                        $("#popup").html("X");
                       }
                     }
 
