@@ -5,6 +5,9 @@ import csv
 from uuid import UUID
 
 import logging
+#threshold function options: raw_30, raw_50, raw_70, logis_0, logis+20, logis+40
+THRESHOLD_FUNCTION = 'raw_30'
+
 if len(logging.getLogger().handlers) > 0:
     # The Lambda environment pre-configures a handler logging to stderr.
     # If a handler is already configured, `.basicConfig` does not execute.
@@ -64,7 +67,7 @@ def generate_datahunt_consensus(dir_dict):
         iaa_dir = dir_dict['consensus_dir'],
         schema_dir = dir_dict['schemas_dir'],
         adjud_dir = dir_dict['adjud_dir'],
-        threshold_func = 'raw_50'
+        threshold_func = THRESHOLD_FUNCTION
     )
     assert(result_dir == dir_dict['adjud_dir'])
     return result_dir
@@ -92,7 +95,7 @@ def configure_publish_directories(parent_dirname):
     return dir_dict
 
 def generate_article_to_publish(dir_dict):
-    threshold_function = 'raw_50'
+    threshold_function = THRESHOLD_FUNCTION
     uuids_to_filter = read_filter_uuids('./data_patches/')
     filter_directory(uuids_to_filter, 'tua_uuid', dir_dict['tags_dir'])
     filter_directory(uuids_to_filter, 'tua_uuid', dir_dict['datahunts_dir'])
