@@ -316,7 +316,7 @@ def dictAddendumDict(dict, key, newDict):
             if k in dict[key].keys():
                 dict[key][k].append(newDict[k][0])
             else:
-                dict[key][k] = newDict[k][0]
+                dict[key][k] = newDict[k]#[0]
     return dict
 
 def dictAddendumList(dict, key, newFriend):
