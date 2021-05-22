@@ -194,18 +194,18 @@ function createHighlights(json, textString) {
 function openHighlight(textArray, index, entry, highlightStack, i) {
   let allIDsBelow = "";
     highlightStack.getArray().forEach((entry) => {
-       allIDsBelow = allIDsBelow + entry[0].toString() + "__"; // all the unqiue IDs are separated by spaces
+       allIDsBelow = allIDsBelow + entry[0].toString() + "__"; // all the unqiue IDs are separated by dunders
   })
   allIDsBelow = " allIDsBelow='" + allIDsBelow + "'";
   let text = textArray[index-1];
   let uniqueId = entry[0].toString();
   let color = entry[1];
   let name = " name='" + uniqueId + "'";
-
+  let cred_id = " cred_id = '" +uniqueId.substring(0, 2) + "'";
   let style = " style= 'border-bottom:1px solid " + color;
   color['opacity'] = 0.1;
   style = style + "; --color: " + color + "'";
-  let highlight = "<span class='highlight' start='"+index+"'" + name + allIDsBelow + style + ">";
+  let highlight = "<span class='highlight' start='"+index+"'" + name + allIDsBelow + cred_id + style + ">";
   textArray[index-1] = text + highlight;
   return textArray;
 }
@@ -282,6 +282,7 @@ function formHighlight(x) {
 
 function highlight(x) {
   var topID = x.toElement.getAttribute("name");
+  var cred_id = x.toElement.getAttribute("cred_id");
   var color = x.toElement.style.borderBottomColor;      // grab color of border underline in rgb form
   var color = color.match(/\d+/g);                      // split rgb into r, g, b, components
   var allIds = x.toElement.getAttribute("allIDsBelow").concat("__" + topID)
@@ -290,8 +291,11 @@ function highlight(x) {
   }
   allIds = allIds.split("__");
   highlightManyHallmark(allIds, ROOT);
-  x.toElement.style.setProperty("background-color", "rgba(" + color[0] + "," + color[1] + "," + color[2] + "," + "0.4");
-  x.toElement.style.setProperty("background-clip", "content-box");
+  $("span[cred_id='"+cred_id+"']").each(function() {
+    this.style.setProperty("background-color", "rgba(" + color[0] + "," + color[1] + "," + color[2] + "," + "0.25");
+    this.style.setProperty("background-clip", "content-box");
+  });
+
 
 }
 
@@ -397,14 +401,12 @@ function highlightManyHallmark(idArray, d) {
                         .style("opacity", .5);
                         var nameFromElement = id.substring(3);
                         nameFromElement = nameFromElement.replace(/[0-9]|[-]/g, '');
-                        console.log(nameFromElement);
                         if (nameFromElement == "Waiting for factcheckers") {
                           nameFromElement = "Waiting for fact-checkers";
                         }
                         //console.log(indicatorName);
                         //console.log(nameFromElement);
                         if (indicatorName == nameFromElement) {
-                            console.log('test');
                             pathList = pathList.concat(path);
                             var score = scoreSum(indicator);
                             pointsGained += score;
