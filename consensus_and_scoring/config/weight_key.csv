@@ -525,3 +525,43 @@ Evidence2021_05_14,14,2,Alternative explanation,-2,-2
 Evidence2021_05_14,14,3,Alternative explanation,-1,-1
 Evidence2021_05_14,14,4,Alternative explanation,0,0
 Evidence2021_05_14,14,5,Alternative explanation,0,0
+Evidence2021_05_19,2,1,Data-Driven Evidence,2,2
+Evidence2021_05_19,2,2,,0,0
+Evidence2021_05_19,2,3,,0,0
+Evidence2021_05_19,2,4,Anecdote not Data,-2,0
+Evidence2021_05_19,4,1,Representative Sample,2,2
+Evidence2021_05_19,4,2,Representative Sample,1,2
+Evidence2021_05_19,4,4,Unrepresentative Sample,-2,-2
+Evidence2021_05_19,4,5,Unrepresentative Sample,-4,-4
+Evidence2021_05_19,5,1,Statisical Error,-2,-2
+Evidence2021_05_19,5,2,Statisical Error,-1,-0.5
+Evidence2021_05_19,5,3,,0,0
+Evidence2021_05_19,5,4,Statistical confidence,1,1
+Evidence2021_05_19,5,5,Statistical certainty,2,2
+Evidence2021_05_19,6,1,Faulty Research Methods,-3,-3
+Evidence2021_05_19,6,2,Faulty Research Methods,-2,-2
+Evidence2021_05_19,6,3,,0,0
+Evidence2021_05_19,6,4,Proper Research Methods,1,1
+Evidence2021_05_19,6,5,Proper Research Methods,2,2
+Evidence2021_05_19,7,1,,0,0
+Evidence2021_05_19,7,2,Representative Subject Pool,1,1
+Evidence2021_05_19,7,3,Treatment Group,1,1
+Evidence2021_05_19,7,4,Control Group,1,1
+Evidence2021_05_19,7,5,Comparable Groups,1,1
+Evidence2021_05_19,7,6,Proper Comparison,1,1
+Evidence2021_05_19,7,7,Proper Interpretation,1,1
+Evidence2021_05_19,7,8,Faulty Experiment,-4,-3
+Evidence2021_05_19,10,1,,,
+Evidence2021_05_19,10,2,,,
+Evidence2021_05_19,10,3,,,
+Evidence2021_05_19,10,4,,,
+Evidence2021_05_19,10,5,,,
+Evidence2021_05_19,12,1,Open to Evidence,2,2
+Evidence2021_05_19,12,2,Open to Evidence,1,1
+Evidence2021_05_19,12,3,,0,0
+Evidence2021_05_19,12,4,Unopen to Evidence,-1,-1
+Evidence2021_05_19,14,1,Alternative explanation,-3,-3
+Evidence2021_05_19,14,2,Alternative explanation,-2,-2
+Evidence2021_05_19,14,3,Alternative explanation,-1,-1
+Evidence2021_05_19,14,4,Alternative explanation,0,0
+Evidence2021_05_19,14,5,Alternative explanation,0,0

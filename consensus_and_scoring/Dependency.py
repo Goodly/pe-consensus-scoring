@@ -45,6 +45,7 @@ def eval_dependency(directory, iaa_dir, schema_dir, out_dir):
     print('Schemas found', schema)
     ins = []
     for i in range(len(iaa)):
+        print(i)
         ins.append((schema[i], iaa[i], out_dir))
         handleDependencies(schema[i], iaa[i], out_dir)
 
@@ -133,13 +134,11 @@ def handleDependencies(schemaPath, iaaPath, out_dir):
                     indices = merge_indices(row_indices, indices).tolist()
                     iaaData.at[row, 'highlighted_indices'] = json.dumps(indices)
 
-    print('exporting to csv')
     path, name = get_path(iaaPath)
     outputpath  = os.path.join(out_dir, 'Dep_'+name)
     print("outputting dependency to", outputpath)
     iaaData.to_csv(outputpath,  encoding = 'utf-8', index = False)
 
-    print("Table complete")
     return out_dir
 
 
