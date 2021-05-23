@@ -11,7 +11,7 @@ window.addEventListener('load', (event) => {
 var listofarticles = [];
 
 function readVisData() {
-    return $.get("visDataTest.json").done(function(data) {
+    return $.get("visData.json").done(function(data) {
         console.log(data);
         for (var i = 0; i < Object.keys(data).length; i++) {
             var article = data[i];
