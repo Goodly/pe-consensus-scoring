@@ -119,7 +119,7 @@ function generateEntry(entry) {
     var previewPromise = $.get(entry.plainText).done(function(data) {
       var totalText = data.toString()
       var previewText = totalText.substring(0, 200);
-
+      // Empty string checks
       if (entry.title == "") {
         const regexTitle = /(Title:).+/
         const matches = totalText.match(regexTitle);
