@@ -154,6 +154,7 @@ function generateEntry(entry) {
       if (document.querySelector("svg[articleID='" + entry.id +"']") != null) {
           document.querySelector("svg[articleID='" + entry.id +"']").remove();
       }
+      console.log(entry.highlightData);
       hallmark(entry.highlightData, entry.id);
 
 
