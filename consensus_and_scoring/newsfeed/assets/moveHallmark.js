@@ -1,13 +1,10 @@
 function moveHallmarks() {
-           
-                    var item;    
-                    for (item of listofarticles) {
-                        var divID = item['id'];
-                        var hallmark = document.querySelector("svg[articleID='" + divID +"']");
-                        waitForElementToDisplay("#"+divID, "svg[articleID='" + divID +"']", 100, item);
-                        
-                    }
-                
+  var item;
+  for (item of listofarticles) {
+      var divID = item['sha256'];
+      var hallmark = document.querySelector("svg[articleID='" + divID +"']");
+      waitForElementToDisplay("#"+divID, "svg[articleID='" + divID +"']", 100, item);
+  }
 }
 
 
@@ -25,6 +22,7 @@ function waitForElementToDisplay(divSelector, hallmarkSelector, time, item) {
             hallmark.style.left = "70%";
             hallmark.style.top = box_y;
             item.credibilityScore = parseInt(hallmark.getAttribute("score"));
+            console.log('test');
             return;
         }
         else {

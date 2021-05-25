@@ -12,10 +12,9 @@ var listofarticles = [];
 
 function readVisData() {
     return $.get("visData.json").done(function(data) {
-        console.log(data);
         for (var i = 0; i < Object.keys(data).length; i++) {
             var article = data[i];
-            var articleEntry = new ArticleData(article["Title"], article["Author"], article["Date"], article["ID"], article["Article Link"], article["Visualization Link"], article["Plain Text"], article["Highlight Data"]);
+            var articleEntry = new ArticleData(article["Title"], article["Author"], article["Date"], article["ID"], article["Article Link"], article["Visualization Link"], article["Plain Text"], article["Highlight Data"], article["article_sha256"]);
             //articleEntry.setCredibilityScore();
 
             listofarticles.push(articleEntry);
@@ -86,7 +85,6 @@ function sortArticles(listofarticles, sortBy, order) {
             listofarticles.sort((a, b) => (Date.parse(a.date) < Date.parse(b.date)) ? 1 : -1)
         }
     } else {
-      console.log(listofarticles);
         if (order == "high") {
 
             listofarticles.sort((a, b) => (a.credibilityScore < b.credibilityScore) ? 1 : -1)
@@ -136,7 +134,7 @@ function generateEntry(entry) {
 
       entry.date = reformatDate(entry.date);
 
-      var articleEntry = "<div id='" + entry.id + "' class='row'>" +
+      var articleEntry = "<div id='" + entry.sha256 + "' class='row'>" +
                             "<div class='col-2 date'>" + entry.date + "</div>" +
                             "<div class='col-6'>" +
                                 "<a class='hyperlink' href='" + entry.visLink + "' target='_blank'> <h3>" + entry.title + "</h3></a>" +
@@ -154,8 +152,7 @@ function generateEntry(entry) {
       if (document.querySelector("svg[articleID='" + entry.id +"']") != null) {
           document.querySelector("svg[articleID='" + entry.id +"']").remove();
       }
-      console.log(entry.highlightData);
-      hallmark(entry.highlightData, entry.id);
+      hallmark(entry.highlightData, entry.sha256);
 
 
     });

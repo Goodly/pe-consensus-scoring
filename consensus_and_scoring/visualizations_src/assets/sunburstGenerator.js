@@ -266,7 +266,7 @@ function colorFinderSun(d) {
             } else if (d.data.data['Credibility Indicator Name'] == "Holistic"){
                 return d3.rgb(255, 180, 0);
             } else if (d.data.data['Credibility Indicator Name'] == "Source") {
-                return d3.rgb(201, 87, 198)
+                return d3.rgb(167, 67, 224);
             } else {
               return d3.rgb(255, 255, 255);
             }
@@ -285,7 +285,7 @@ function colorFinderSun(d) {
             } else if (d.parent.data.data['Credibility Indicator Name'] == "Holistic" ){
                 return d3.rgb(255, 180, 0);
             } else if (d.parent.data.data['Credibility Indicator Name'] == "Source") {
-              return d3.rgb(201, 87, 198)
+              return d3.rgb(167, 67, 224)
             } else {
               return d3.rgb(255, 255, 255);
             }

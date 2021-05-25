@@ -11,7 +11,7 @@ function colorFinder(jsonLine) {
   } else if (jsonLine["Credibility Indicator Category"] == "Holistic"){
       return d3.rgb(255, 180, 0);
   } else if (jsonLine["Credibility Indicator Category"] == "Source") {
-      return d3.rgb(201, 87, 198)
+      return d3.rgb(167, 67, 224);
   } else {
     return d3.rgb(255, 255, 255);
   }
@@ -61,7 +61,7 @@ function colorFinderCategory(category) {
   } else if (category == "Holistic"){
       return d3.rgb(255, 180, 0);
   } else if (category == "Source") {
-    return d3.rgb(201, 87, 198)
+    return d3.rgb(167, 67, 224);
   } else {
     return d3.rgb(255, 255, 255);
   }

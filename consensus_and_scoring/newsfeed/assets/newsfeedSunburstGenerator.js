@@ -55,7 +55,7 @@ var svg = d3.select("body").append("svg")
     .attr("height", height)
     .append('g')
     .attr("transform", "translate(" + (width / 2) + "," + (height / 2) + ")");
-    
+
 var visualizationOn = false;
 
 var div = d3.select("body").append("div")
@@ -67,22 +67,16 @@ d3.csv(dataFileName, function(error, data) {
   if (error) throw error;
   delete data["columns"];
   data = addDummyData(data);
-    
-  
   var root = convertToHierarchy(data);
-    console.log(root);
   condense(root);
-  console.log(HOLISTIC_MAP);
   var holistic_score = 0;
   for (let [key, value] of HOLISTIC_MAP) {
     holistic_score += Math.round(value);
   }
-  
+
   ROOT = root;
   totalScore = 100 + scoreSum(root) + holistic_score;
-  console.log(id + ": " + scoreSum(root) + ", " + holistic_score);
-  console.log(root);    
-    
+
   document.querySelector("svg[articleID='" + id + "'").setAttribute("score", totalScore);
   root.sum(function(d) {
     return Math.abs(parseFloat(d.data.Points));
@@ -99,7 +93,7 @@ svg.selectAll("path")
       }).style("display", function(d) {
         if (d.height == 0 || d.height == 2) {
             return "none";
-        }  
+        }
     });
 
 
@@ -123,8 +117,8 @@ d3.selectAll("path").transition().each(function(d) {
         this.style.opacity = 0;
     }
 })
-    
-    
+
+
 
 //Mouse animations.
 svg.selectAll('path')
@@ -161,7 +155,7 @@ svg.selectAll('path')
         .style("left", (d3.event.pageX)+ "px")
         .style("top", (d3.event.pageY - 28) + "px");
         visualizationOn = true;
-    
+
     })
     .on('mousemove', function(d) {
         if (visualizationOn) {
@@ -181,8 +175,8 @@ svg.selectAll('path')
             .duration(300)
             .attr('stroke-width', 2)
             .style("opacity", 1)
-        
-    
+
+
     div.transition()
             .delay(200)
             .duration(600)
@@ -199,7 +193,7 @@ svg.selectAll('path')
     .style("fill", colorFinderSun);
     visualizationOn = false;
 
-}); 
+});
 d3.select(self.frameElement).style("height", height + "px");
 
 }
@@ -225,10 +219,14 @@ function colorFinderSun(d) {
                 return d3.rgb(118,188,226);
             } else if (d.data.data['Credibility Indicator Name'] == "Language") {
                return d3.rgb(75, 95, 178);
-            } else {
+            } else if (d.data.data['Credibility Indicator Name'] == "Holistic"){
                 return d3.rgb(255, 180, 0);
+            } else if (d.data.data['Credibility Indicator Name'] == "Source") {
+              return d3.rgb(167, 67, 224);
+            } else {
+              return d3.rgb(255, 255, 255);
             }
-        }  
+        }
   }
 
 

@@ -4,25 +4,28 @@ var HOLISTIC_MAP;
 function addDummyData(data) {
   HOLISTIC_MAP = new Map();
   var newData = [];
-  
+
   var line;
   for (line of data) {
-    //console.log(line);
-    if (line["End"] == "-1" || line["Start"] == "-1") {
-      if (HOLISTIC_MAP.has(line["Credibility Indicator Name"])) {
-        var score = HOLISTIC_MAP.get(line["Credibility Indicator Name"]) + parseFloat(line["Points"]);
-        HOLISTIC_MAP.set(line["Credibility Indicator Name"], score);
-      } else {
-        HOLISTIC_MAP.set(line["Credibility Indicator Name"], parseFloat(line["Points"]));
-      }
-    } else {
-      newData.push(line);
-    }
+    newData.push(line);
   }
-  
-  
-  
-  
+  // for (line of data) {
+  //   //console.log(line);
+  //   if (line["End"] == "-1" || line["Start"] == "-1") {
+  //     if (HOLISTIC_MAP.has(line["Credibility Indicator Name"])) {
+  //       var score = HOLISTIC_MAP.get(line["Credibility Indicator Name"]) + parseFloat(line["Points"]);
+  //       HOLISTIC_MAP.set(line["Credibility Indicator Name"], score);
+  //     } else {
+  //       HOLISTIC_MAP.set(line["Credibility Indicator Name"], parseFloat(line["Points"]));
+  //     }
+  //   } else {
+  //     newData.push(line);
+  //   }
+  // }
+
+
+
+
   var categories = new Set([]);
   var i = 0;
   //Get all categories that are non-empty.
@@ -37,12 +40,12 @@ function addDummyData(data) {
     newData[i] = {"Credibility Indicator Category": "CATEGORIES", "Credibility Indicator Name": category};
     i ++;
   })
-      
-  
+
+
 
   //Add root nodes.
   newData[i] = {"Credibility Indicator Category": undefined, "Credibility Indicator Name": "CATEGORIES"};
-        
+
 
   return newData;
 }
@@ -60,7 +63,7 @@ function convertToHierarchy(data) {
 }
 
 
-/** Takes a heirarchical json file and converts it into a tree with unique branches 
+/** Takes a heirarchical json file and converts it into a tree with unique branches
 and unique leaves.
 @param data: a heirarchicical json file outputted by convertToHeirarchy
 */
@@ -92,7 +95,7 @@ function condense(d) {
         d.children = newChildren;
         d.data.children = newChildren;
         //d.children = newChildren;
-        
+
     } else {
         var child;
         for (child of d.children) {
