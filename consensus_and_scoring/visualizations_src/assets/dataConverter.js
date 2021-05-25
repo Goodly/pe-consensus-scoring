@@ -48,18 +48,14 @@ function condense(d, pills_map) {
         var indicators = new Map();
         var indicator;
         for (indicator of d.children) {
-            if (false) {
-                var name = indicator.data.data["Credibility Indicator Name"] + '-' + indicator.data.data["Credibility Indicator ID"].substring(0, 1);
-                if (pills_map.get(name)) {
-                    var points = pills_map.get(name);
-                    points += parseFloat(indicator.data.data["Points"]);
-                    pills_map.set(name, points);
-                } else {
-                    pills_map.set(name, parseFloat(indicator.data.data['Points']));
-                }
-            } else if (indicators.get(indicator.data.data["Credibility Indicator Name"])) {
+           if (indicators.get(indicator.data.data["Credibility Indicator Name"])) {
                 json = indicators.get(indicator.data.data["Credibility Indicator Name"]).data.data;
                 json["Points"] = parseFloat(json.Points) + parseFloat(indicator.data.data["Points"]);
+                if (indicator.data.data["Start"] != -1 && indicator.data.data["End"] != -1) {
+                  json["Start"] = indicator.data.data["Start"];
+                  json["End"] = indicator.data.data["End"];
+                  json["Credibility Indicator ID"] = indicator.data.data["Credibility Indicator ID"];
+                }
             } else {
                 //console.log(indicator.data.data["Credibility Indicator Name"]);
                 indicators.set(indicator.data.data["Credibility Indicator Name"], indicator);

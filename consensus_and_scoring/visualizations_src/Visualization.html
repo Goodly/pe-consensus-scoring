@@ -1,4 +1,4 @@
-jQuery(<!DOCTYPE html>
+<!DOCTYPE html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="UTF-8"/>
 
@@ -185,7 +185,7 @@ jQuery(<!DOCTYPE html>
                 <script type="text/javascript">
                   var textFileUrl = "$ARTICLE_TEXT_URL";
                   var dataFileUrl = "$DATA_CSV_URL";
-
+                  
                   formFileUrl = "form.csv";
                   var userFileUrl = "user_contributions.csv";
                   import("/visualizations/assets/createHighlights.js").then(scoreArticle(textFileUrl, dataFileUrl, formFileUrl, userFileUrl));
@@ -218,10 +218,10 @@ jQuery(<!DOCTYPE html>
                     btn.onclick = function() {
                       if (modal.style.display === "block") {
                         modal.style.display = "none";
-                        jQuery("#popup").html("?");
+                        $("#popup").html("?");
                       } else {
                         modal.style.display = "block";
-                        jQuery("#popup").html("X");
+                        $("#popup").html("X");
                       }
                     }
 
