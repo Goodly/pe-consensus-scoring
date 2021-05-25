@@ -72,25 +72,25 @@ def eval_triage_scoring(tua, pointsdf, scoring_dir, threshold_func='logis_0', re
                         indices = get_indices_by_uuid(tua, tua_uuid)
                         num_vague_sources += 1
                         overallChange = addPoints(overallChange, -2, 'Vague Sourcing', art_num, art_sha256, art_id,
-                                                  indices=str(indices))
+                                                  indices=str(indices), schema='Sourcing')
         vagueness_index = (num_vague_sources + num_vague_quals) / article_size_index
         print(num_vague_quals, num_vague_sources, article_size_index, vagueness_index)
         if vagueness_index > 4:
-            overallChange = addPoints(overallChange, -10, 'Vague Sourcing', art_num, art_sha256, art_id)
+            overallChange = addPoints(overallChange, -10, 'Vague Sourcing', art_num, art_sha256, art_id, schema='Sourcing')
 
 
 
         if (num_assertions - num_args - num_sources - num_evidence) > -1:
             # 5aff36a3-f8c5-4e24-b28f-6b1bc7527694 T1.Q1.A1 News report
             if checkArtType(1,1, art_holistic):
-                overallChange = addPoints(overallChange, -5, 'Low Information', art_num, art_sha256, art_id)
+                overallChange = addPoints(overallChange, -5, 'Low Information', art_num, art_sha256, art_id, schema='Holistic')
             else:
-                overallChange = addPoints(overallChange, -2, 'Low Information', art_num, art_sha256, art_id)
+                overallChange = addPoints(overallChange, -2, 'Low Information', art_num, art_sha256, art_id, schema='Holistic')
         # a2f97bce-2512-43e0-9605-0d137d30d8e6 T1.Q1.A3 Op-Ed
         if not checkArtType(1,3, art_holistic):
             indexVal = (1 + num_assertions) / (1 + num_evidence + num_evidence)
             if indexVal > 1:
-                overallChange = addPoints(overallChange, -2, 'Low Information', art_num, art_sha256, art_id)
+                overallChange = addPoints(overallChange, -2, 'Low Information', art_num, art_sha256, art_id, schema='Holistic')
 
         if not (
                 # 251e628c-2cd1-467a-9204-6f1b7c80cf79: T1.Q1.A6 Interview;
@@ -100,7 +100,7 @@ def eval_triage_scoring(tua, pointsdf, scoring_dir, threshold_func='logis_0', re
             checkArtType(1,6, art_holistic) or checkArtType(1,3, art_holistic)  or
             checkArtType(6,5, art_holistic) or checkArtType(10,2, art_holistic)):  # T1.Q6.A5 and T1.Q10.2
             if (num_sources < 2 and num_evidence < num_assertions + num_args):
-                overallChange = addPoints(overallChange, -2, 'Low Information', art_num, art_sha256, art_id)
+                overallChange = addPoints(overallChange, -2, 'Low Information', art_num, art_sha256, art_id, schema='Holistic')
     print("POINTS_DF \n ", pointsdf.shape, '\n',pointsdf)
     print("OVERALL \n", overallChange.shape, '\n', overallChange)
 
@@ -193,9 +193,17 @@ def count_cases(tua, topic):
     return len(case_nums.unique())
 
 
-def addPoints(df, points, label, art_num, art_sha, art_id, indices='[]'):
-    df = df.append({'Schema': 'Holistic', 'schema_sha256': 'Holistic', 'points': points, 'Label': label, 'article_num': art_num,
+def addPoints(df, points, label, art_num, art_sha, art_id, indices='[]', schema = 'Holistic'):
+    if schema == 'Holistic':
+        df = df.append({'Schema': 'Holistic', 'schema_sha256': 'Holistic', 'points': points, 'Label': label, 'article_num': art_num,
                     'article_sha256': art_sha, 'article_id': art_id, 'highlighted_indices': indices}, ignore_index=True)
+    elif schema == 'Sourcing':
+        df = df.append({'Schema': 'Sourcing', 'schema_sha256': 'Sourcing', 'points': points, 'Label': label,
+                        'article_num': art_num,
+                        'article_sha256': art_sha, 'article_id': art_id, 'highlighted_indices': indices},
+                       ignore_index=True)
+    else:
+        raise Exception("Invalid Schema for holistic evaluation {}".format(schema))
     return df
 
 if __name__ == '__main__':
