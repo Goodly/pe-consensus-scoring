@@ -209,8 +209,8 @@ def send_assets(asset_dir, s3_bucket, s3_prefix):
             common_path = os.path.commonpath([asset_dir, dirpath])
             subpath = dirpath[len(common_path):].lstrip('/')
             asset_s3_key = os.path.join(s3_prefix, subpath, asset_name)
-            send_command(source_path, s3_bucket, asset_s3_key,
-                         ACL='public-read')
+            send_with_max_age(source_path, s3_bucket, asset_s3_key,
+                              wait=True, ACL='public-read', max_age=10)
 
 def send_with_max_age(source_filename, s3_bucket, s3_key,
                       wait=False, ACL='private', max_age=24*60*60):
