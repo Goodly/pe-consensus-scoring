@@ -72,7 +72,7 @@ def weighting_alg(IAA_csv_file, credibility_weights_csv_file, weight_scale_csv, 
     elif 'olistic' in IAA_csv_schema_name:
         IAA_csv_schema_type = "Holistic"
     elif 'ource' in IAA_csv_schema_name:
-        IAA_csv_schema_type = "Source"
+        IAA_csv_schema_type = "Sourcing"
     else:
         print("unweighted IAA", IAA_csv_file, "aborting")
         return
