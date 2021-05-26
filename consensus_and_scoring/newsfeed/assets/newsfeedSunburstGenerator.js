@@ -222,7 +222,7 @@ function colorFinderSun(d) {
                return d3.rgb(75, 95, 178);
             } else if (d.data.data['Credibility Indicator Name'] == "Holistic"){
                 return d3.rgb(255, 180, 0);
-            } else if (d.data.data['Credibility Indicator Name'] == "Source") {
+            } else if (d.data.data['Credibility Indicator Name'] == "Sourcing") {
               return d3.rgb(167, 67, 224);
             } else {
               return d3.rgb(255, 255, 255);
