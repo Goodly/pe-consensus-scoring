@@ -1,12 +1,18 @@
 window.addEventListener('load', (event) => {
+    SVG_IDS = [];
     const visPromise = readVisData();
     visPromise.then(function() {
-        generateAndMove();
+        generateAndMove(20);
 
     });
 
 });
 
+
+$(document).on('change','#showLimit',function(e){
+    var limit = this.options[e.target.selectedIndex].text;
+    generateAndMove(limit);
+});
 
 var listofarticles = [];
 
@@ -32,9 +38,9 @@ function setScores() {
 }
 
 
-function generateList() {
+async function generateList(limit) {
+  console.log("first");
     // Collect values from the HTML
-
     //Sort by... Most Recent, Alphabetical, Credibility Score (High to Low & Low to High)
     var sortOptions = document.getElementById("sortByList");
     var sortBy = sortOptions.options[sortOptions.selectedIndex].value;
@@ -49,8 +55,12 @@ function generateList() {
     var sortedArticles = sortArticles(searchedArticles, sortBy, order);
     //Filter by tags (Needs additional information)
 
-    //Only show the top X results
-    var showLimit = Math.max(sortedArticles.length, document.getElementById("showLimit").value);
+    //Only show the top 20 results
+    if (limit == 20) {
+      var showLimit = 20;
+    } else {
+      var showLimit = sortedArticles.length;
+    }
     sortedArticles = sortedArticles.slice(0, showLimit);
     document.getElementById("articleList").innerHTML = "";
 
@@ -95,22 +105,13 @@ function sortArticles(listofarticles, sortBy, order) {
     return listofarticles;
 }
 
-function generateAndMove() {
+async function generateAndMove(limit) {
+  await removeHallmarks();
+  await generateList(limit);
 
-  $.get("#showLimit").done(function(){
-    const generatePromise = new Promise(function() {
-       generateList();
-    });
-
-      moveHallmarks();
-
-
-
-  } );
-
-
-
+  moveHallmarks();
 }
+
 
 function generateEntry(entry) {
 

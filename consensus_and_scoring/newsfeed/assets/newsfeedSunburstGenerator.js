@@ -44,157 +44,158 @@ var arc = d3.arc()
 
 //This variable creates the floating textbox on the hallmark
 var DIV;
-
 var ROOT;
+var SVG_IDS = [];
 
 function hallmark(dataFileName, id) {
-
-var svg = d3.select("body").append("svg")
+  SVG_IDS.push(13);
+  SVG_IDS.push(13);
+  var svg = d3.select("body").append("svg")
     .attr("articleID", id)
     .attr("width", width)
     .attr("height", height)
     .append('g')
     .attr("transform", "translate(" + (width / 2) + "," + (height / 2) + ")");
 
-var visualizationOn = false;
+  var visualizationOn = false;
 
-var div = d3.select("body").append("div")
-    .attr("class", "tooltip")
-    .style("opacity", 0);
+  var div = d3.select("body").append("div")
+      .attr("class", "tooltip")
+      .style("opacity", 0);
 
-//This code block takes the csv and creates the visualization.
-d3.csv(dataFileName, function(error, data) {
-  if (error) throw error;
-  delete data["columns"];
-  data = addDummyData(data);
-  var root = convertToHierarchy(data);
-  condense(root);
-  var holistic_score = 0;
-  for (let [key, value] of HOLISTIC_MAP) {
-    holistic_score += Math.round(value);
-  }
+  //This code block takes the csv and creates the visualization.
+  d3.csv(dataFileName, function(error, data) {
+    if (error) throw error;
+    delete data["columns"];
+    data = addDummyData(data);
+    var root = convertToHierarchy(data);
+    condense(root);
+    var holistic_score = 0;
+    for (let [key, value] of HOLISTIC_MAP) {
+      holistic_score += Math.round(value);
+    }
 
-  ROOT = root;
-  totalScore = 100 + scoreSum(root) + holistic_score;
+    ROOT = root;
+    totalScore = 100 + scoreSum(root) + holistic_score;
 
-  document.querySelector("svg[articleID='" + id + "'").setAttribute("score", totalScore);
-  root.sum(function(d) {
-    return Math.abs(parseFloat(d.data.Points));
-  });
-
-//Fill in the colors
-svg.selectAll("path")
-    .data(partition(root).descendants())
-    .enter().append("path")
-      .attr("d", arc)
-      .style("fill", function(d) {
-        nodeToPath.set(d, this)
-        return color(d.data.data["Credibility Indicator Category"]);
-      }).style("display", function(d) {
-        if (d.height == 0 || d.height == 2) {
-            return "none";
-        }
+    document.querySelector("svg[articleID='" + id + "']").setAttribute("score", totalScore);
+    root.sum(function(d) {
+      return Math.abs(parseFloat(d.data.Points));
     });
 
-
-//Setting the center circle to the score
-svg.selectAll(".center-text")
-        .style("display", "none")
-    svg.append("text")
-        .attr("class", "center-text")
-        .attr("x", 0)
-        .attr("y", 13)
-        .style("font-size", 40)
-        .style("text-anchor", "middle")
-        .html((totalScore))
-
-
-//Setting the outer and inside rings to be transparent.
-d3.selectAll("path").transition().each(function(d) {
-    if (!d.children) {
-        this.style.display = "none";
-    } else if (d.height == 2) {
-        this.style.opacity = 0;
-    }
-})
+    //Fill in the colors
+  svg.selectAll("path")
+      .data(partition(root).descendants())
+      .enter().append("path")
+        .attr("d", arc)
+        .style("fill", function(d) {
+          nodeToPath.set(d, this)
+          return color(d.data.data["Credibility Indicator Category"]);
+        }).style("display", function(d) {
+          if (d.height == 0 || d.height == 2) {
+              return "none";
+          }
+      });
 
 
-
-//Mouse animations.
-svg.selectAll('path')
-    .on('mouseover', function(d) {
-        if (d.height == 2) {
-            return;
-        }
-        //console.log(d);
-        d3.select(nodeToPath.get(d))
-      	            .transition()
-      	            .duration(300)
-      	            .attr('stroke-width',3)
-      	            .style("opacity", .8)
-        div.transition()
-            .duration(200)
-            .style("display", "block")
-            .style("opacity", .9);
-        div.html(d.data.data['Credibility Indicator Name'])
-            .style("left", (d3.event.pageX) + "px")
-            .style("top", (d3.event.pageY) + "px")
-            .style("width", "100px");
-
-    var pointsGained = scoreSum(d);
-    svg.selectAll(".center-text").style('display', 'none');
-    svg.append("text")
-        .attr("class", "center-text")
-        .attr("x", 0)
-        .attr("y", 13)
-        .style("font-size", 40)
-        .style("text-anchor", "middle")
-        .html((pointsGained));
-    div
-        .style("opacity", .7)
-        .style("left", (d3.event.pageX)+ "px")
-        .style("top", (d3.event.pageY - 28) + "px");
-        visualizationOn = true;
-
-    })
-    .on('mousemove', function(d) {
-        if (visualizationOn) {
-        div
-            .style("left", (d3.event.pageX)+ "px")
-            .style("top", (d3.event.pageY - 28) + "px")
-        } else {
-            div.transition()
-                .duration(10)
-                .style("opacity", 0);
-        }
-    })
-    .on('mouseleave', function(d) {
-        score = nodeToPath.get(d).parentElement.parentElement.getAttribute("score");
-        d3.select(nodeToPath.get(d))
-            .transition()
-            .duration(300)
-            .attr('stroke-width', 2)
-            .style("opacity", 1)
+  //Setting the center circle to the score
+  svg.selectAll(".center-text")
+          .style("display", "none")
+      svg.append("text")
+          .attr("class", "center-text")
+          .attr("x", 0)
+          .attr("y", 13)
+          .style("font-size", 40)
+          .style("text-anchor", "middle")
+          .html((totalScore));
 
 
-    div.transition()
-            .delay(200)
-            .duration(600)
-            .style("opacity", 0);
-    svg.selectAll(".center-text").style("display", "none");
-    svg.append("text")
-        .attr("class", "center-text")
-        .attr("x", 0)
-        .attr("y", 13)
-        .style("font-size", 40)
-        .style("text-anchor", "middle")
-        .html((score));
-    })
-    .style("fill", colorFinderSun);
-    visualizationOn = false;
+  //Setting the outer and inside rings to be transparent.
+  d3.selectAll("path").transition().each(function(d) {
+      if (!d.children) {
+          this.style.display = "none";
+      } else if (d.height == 2) {
+          this.style.opacity = 0;
+      }
+  })
 
-});
-d3.select(self.frameElement).style("height", height + "px");
+
+
+  //Mouse animations.
+  svg.selectAll('path')
+      .on('mouseover', function(d) {
+          if (d.height == 2) {
+              return;
+          }
+          //console.log(d);
+          d3.select(nodeToPath.get(d))
+        	            .transition()
+        	            .duration(300)
+        	            .attr('stroke-width',3)
+        	            .style("opacity", .8)
+          div.transition()
+              .duration(200)
+              .style("display", "block")
+              .style("opacity", .9);
+          div.html(d.data.data['Credibility Indicator Name'])
+              .style("left", (d3.event.pageX) + "px")
+              .style("top", (d3.event.pageY) + "px")
+              .style("width", "100px");
+
+      var pointsGained = scoreSum(d);
+      svg.selectAll(".center-text").style('display', 'none');
+      svg.append("text")
+          .attr("class", "center-text")
+          .attr("x", 0)
+          .attr("y", 13)
+          .style("font-size", 40)
+          .style("text-anchor", "middle")
+          .html((pointsGained));
+      div
+          .style("opacity", .7)
+          .style("left", (d3.event.pageX)+ "px")
+          .style("top", (d3.event.pageY - 28) + "px");
+          visualizationOn = true;
+
+      })
+      .on('mousemove', function(d) {
+          if (visualizationOn) {
+          div
+              .style("left", (d3.event.pageX)+ "px")
+              .style("top", (d3.event.pageY - 28) + "px")
+          } else {
+              div.transition()
+                  .duration(10)
+                  .style("opacity", 0);
+          }
+      })
+      .on('mouseleave', function(d) {
+          score = nodeToPath.get(d).parentElement.parentElement.getAttribute("score");
+          d3.select(nodeToPath.get(d))
+              .transition()
+              .duration(300)
+              .attr('stroke-width', 2)
+              .style("opacity", 1)
+
+
+      div.transition()
+              .delay(200)
+              .duration(600)
+              .style("opacity", 0);
+      svg.selectAll(".center-text").style("display", "none");
+      svg.append("text")
+          .attr("class", "center-text")
+          .attr("x", 0)
+          .attr("y", 13)
+          .style("font-size", 40)
+          .style("text-anchor", "middle")
+          .html((score));
+      })
+      .style("fill", colorFinderSun);
+      visualizationOn = false;
+
+  });
+  d3.select(self.frameElement).style("height", height + "px");
 
 }
 

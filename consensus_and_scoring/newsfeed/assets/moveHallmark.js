@@ -8,6 +8,14 @@ function moveHallmarks() {
 }
 
 
+async function removeHallmarks() {
+  var id;
+  for (id of SVG_IDS) {
+     d3.select("body").select("svg").remove();
+  }
+d3.select("body").select("svg").remove();
+
+}
 
 
 
