@@ -69,33 +69,27 @@ and unique leaves.
 */
 function condense(d) {
     if (d.height == 1) {
+        var indicators = new Map();
         var niceIndicators = new Map();
         var naughtyIndicators = new Map();
         var indicator;
         for (indicator of d.children) {
-            if (indicator.data.data['End'] == -1 || indicator.data.data['Start'] == -1) {
-                var name = indicator.data.data["Credibility Indicator Name"];
-                if (naughtyIndicators.get(name)) {
-                    json = naughtyIndicators.get(name);
-                    json["Points"] = parseFloat(json["Points"]) + parseFloat(indicator.data.data["Points"]);
-                } else {
-                    naughtyIndicators.set(name, indicator);
-                }
-            } else if (niceIndicators.get(indicator.data.data["Credibility Indicator Name"])) {
-                json = niceIndicators.get(indicator.data.data["Credibility Indicator Name"]).data.data;
-                json["Points"] = parseFloat(json.Points) + parseFloat(indicator.data.data["Points"]);
-            } else {
-                //console.log(indicator.data.data["Credibility Indicator Name"]);
-                niceIndicators.set(indicator.data.data["Credibility Indicator Name"], indicator);
-            }
+          if (indicators.get(indicator.data.data["Credibility Indicator Name"])) {
+              json = indicators.get(indicator.data.data["Credibility Indicator Name"]).data.data;
+              json["Points"] = parseFloat(json.Points) + parseFloat(indicator.data.data["Points"]);
+              if (indicator.data.data["Start"] != -1 && indicator.data.data["End"] != -1) {
+                json["Start"] = indicator.data.data["Start"];
+                json["End"] = indicator.data.data["End"];
+                json["Credibility Indicator ID"] = indicator.data.data["Credibility Indicator ID"];
+              }
+          } else {
+              indicators.set(indicator.data.data["Credibility Indicator Name"], indicator);
+          }
         }
-        //console.log(indicators);
-        var newChildren = Array.from(niceIndicators.values());
-        newChildren = newChildren.concat(Array.from(naughtyIndicators.values()));
+
+        var newChildren = Array.from(indicators.values());
         d.children = newChildren;
         d.data.children = newChildren;
-        //d.children = newChildren;
-
     } else {
         var child;
         for (child of d.children) {
