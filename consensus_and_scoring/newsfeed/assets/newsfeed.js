@@ -9,6 +9,9 @@ window.addEventListener('load', (event) => {
 });
 
 
+// On showLimit selection change, regenerate hallmarks and move them into place
+//
+
 $(document).on('change','#showLimit',function(e){
     var limit = this.options[e.target.selectedIndex].text;
     generateAndMove(limit);
