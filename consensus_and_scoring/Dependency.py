@@ -66,7 +66,7 @@ def handleDependencies(schemaPath, iaaPath, out_dir):
     iaaData['prereq_passed'] = iaaData['agreed_Answer']
 
     iaaData = iaaData.sort_values(['question_Number'])
-
+    iaaData['question_Number'] = iaaData["question_Number"].apply(int)
     #filter out questions that should never of been asksed because no agreement on prerequisites
     for q in range(len(iaaData)):
         qnum = iaaData['question_Number'].iloc[q]
@@ -82,6 +82,7 @@ def handleDependencies(schemaPath, iaaPath, out_dir):
 
     for t in tasks:
         iaaTask = iaaData[iaaData['source_task_uuid'] == t]
+
         #childQuestions
         #TODO: speed this up by only checking the
         for ch in dependencies.keys():
