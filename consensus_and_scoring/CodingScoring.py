@@ -116,7 +116,7 @@ def passToUnitizing(answers, hlusers, starts, ends, numUsers, length, \
         # fNumUsers = len(np.unique(fUsers))
         fNumUsers = scaledNumUsers
         # If somebody highlights something
-        if len(starts) >= 2:
+        if len(starts) >= STRICT_MINIMUM_CONTRIBUTORS:
             assert len(fStarts) == len(fhlusers)
             uScore, iScore, units = scoreNuUnitizing(fStarts, fEnds, length, fNumUsers, fhlusers,
                                                      userWeightDict, answers, winner, useRep = useRep,
