@@ -64,7 +64,7 @@ function moveFactCheckLabels(triage_data, visDataArray) {
     var item;
     var maxEvidenceID = 0;
     for (item of visDataArray) {
-      if (item["Credibility Indicator Category"] == "Language") {
+      if (item["Credibility Indicator Category"] == "Evidence") {
         var id = item["Credibility Indicator ID"];
         var id_num = parseInt(id.substring(1, 2));
         maxEvidenceID = Math.max(id_num, maxEvidenceID);
