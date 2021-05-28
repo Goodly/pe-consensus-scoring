@@ -185,10 +185,10 @@
                 <script type="text/javascript">
                   var textFileUrl = "$ARTICLE_TEXT_URL";
                   var dataFileUrl = "$DATA_CSV_URL";
+                  var triageFileUrl = "$TRIAGER_CSV_URL";
 
-                  formFileUrl = "form.csv";
                   var userFileUrl = "user_contributions.csv";
-                  import("/visualizations/assets/createHighlights.js").then(scoreArticle(textFileUrl, dataFileUrl, formFileUrl, userFileUrl));
+                  import("/visualizations/assets/createHighlights.js").then(scoreArticle(textFileUrl, dataFileUrl, triageFileUrl, userFileUrl));
                 </script>
                 <div class="sunburst">
                   <button id="popup">

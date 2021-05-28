@@ -79,7 +79,6 @@ function hallmark(data) {
     delete data["columns"];
     data = addDummyData(data);
     var root = convertToHierarchy(data);
-    console.log(root);
     var PILLS_MAP = new Map();
     condense(root, PILLS_MAP);
     drawPills(PILLS_MAP);
@@ -180,8 +179,6 @@ function hallmark(data) {
           } else if (d.height == 2) {
               this.style.opacity = 0;
           }
-      } else {
-          //console.log("error catching");
       }
   });
 
@@ -205,7 +202,6 @@ function hallmark(data) {
           }
       })
       .on('mousemove', function(d) {
-        console.log(visualizationOn);
           if (visualizationOn) {
               var sunburstBox = $(".sunburst")[0].getBoundingClientRect()
               var divBox = $(".tooltip")[0].getBoundingClientRect()
@@ -440,7 +436,10 @@ function drawVis(d, root, me, div) {
         }
         return longest.length.toString()+"ch";
       }).style("height", function() {
-        return ((words_len / longest.length) + 2).toString() + "ch";
+        if (words_len / 4 > longest.length) {
+          return (.1).toString() + "ch";
+        }
+        return ((words_len / longest.length) + 5).toString() + "ch";
       }).style("line-height", function() {
         return ((words_len / longest.length) + 1.5).toString() + "ch";
       });

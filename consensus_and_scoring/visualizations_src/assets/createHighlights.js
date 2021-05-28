@@ -1,4 +1,4 @@
-var FORM_FILE_URL;
+var TRIAGE_FILE_URL;
 var USER_FILE_URL;
 var TEXT_FILE_URL;
 var DATA_FILE_URL;
@@ -7,7 +7,6 @@ function sortJSONentries(json) {
   var sortArray = []; // an array of arrays
   for (i = 0; i < json.length; i++) {
       if (parseInt(json[i].Start) == -1 || parseInt(json[i].End) == -1 || json[i].Start == "") {
-        //console.log(json[i]);
         continue; // ignore entries where indices are -1 or null]
       }
     // [uniqueID, color, index, boolean]
@@ -25,7 +24,7 @@ function sortJSONentries(json) {
   return sortArray;
 }
 
-function scoreArticle(textFileUrl, dataFileUrl, formFileUrl, userFileUrl) {
+function scoreArticle(textFileUrl, dataFileUrl, triageFileUrl, userFileUrl) {
       TEXT_FILE_URL = textFileUrl;
       DATA_FILE_URL = dataFileUrl;
       d3.text(textFileUrl, function(text) {
@@ -33,14 +32,15 @@ function scoreArticle(textFileUrl, dataFileUrl, formFileUrl, userFileUrl) {
 
           d3.csv(dataFileUrl, function(error, data) {
             if (error) throw error;
-            d3.csv(formFileUrl, function(error, form_data) {
+            d3.csv(triageFileUrl, function(error, triage_data) {
               if (error) {
-                console.log("No form file found");
+                console.log("No triage file found");
                 createHighlights(data, text.toString());
-                hallmark(data)
+                hallmark(data);
               } else {
                 delete data['columns'];
-                moveFactCheckLabels(form_data, data);
+                console.log(triage_data)
+                moveFactCheckLabels(triage_data, data);
                 createHighlights(data, text.toString());
                 data.splice(data.length-2, 1);
                 hallmark(data);
@@ -48,7 +48,7 @@ function scoreArticle(textFileUrl, dataFileUrl, formFileUrl, userFileUrl) {
             });
 
         });
-          FORM_FILE_URL = formFileUrl;
+          triage_FILE_URL = triageFileUrl;
           USER_FILE_URL = userFileUrl;
 
       });
@@ -57,35 +57,47 @@ function scoreArticle(textFileUrl, dataFileUrl, formFileUrl, userFileUrl) {
 }
 
 
-// Mutates data
 
 
-function moveFactCheckLabels(form_data, visDataArray) {
+// Pulls the "Needs fact-check" label from the triage data to the vis_data object
+function moveFactCheckLabels(triage_data, visDataArray) {
+    var item;
+    var maxEvidenceID = 0;
+    for (item of visDataArray) {
+      if (item["Credibility Indicator Category"] == "Language") {
+        var id = item["Credibility Indicator ID"];
+        var id_num = parseInt(id.substring(1, 2));
+        maxEvidenceID = Math.max(id_num, maxEvidenceID);
+      }
+    }
+    var factCheckID = maxEvidenceID + 1;
 
-    for (rowIndex in form_data) {
-      if (form_data[rowIndex]["Credibility Indicator Category"] == "Needs Fact-Check") {
+    var caseNumbersSoFar = [];
+    for (rowIndex in triage_data) {
+      if (triage_data[rowIndex]["Credibility Indicator Category"] == "Needs Fact-Check") { // You'll need to change this
         // data[rowIndex]
-        var row = Object.assign({}, form_data[rowIndex]);
+        var row = Object.assign({}, triage_data[rowIndex]);
 
         delete row[""]
-        delete row["Case Number"]
 
-        row["Points"] = ".5";
-        row["Credibility Indicator ID"] = "E26";
-        row["Credibility Indicator Name"] = "Waiting for fact-checkers";
-        row["Credibility Indicator Category"] = "Evidence";
-        row["target_text"] = "nan";
+        if (!(caseNumbersSoFar.includes(row["case_number"]))) {// You'll need to change this
+          caseNumbersSoFar.push(row["case_number"]);
+          row["Credibility Indicator ID"] = "E" + factCheckID.toString();
+          factCheckID++;
+        }
+        row["Points"] = ".5";                          // You'll need to change this
+        row["Credibility Indicator Name"] = "Waiting for fact-checkers";// You'll need to change this
+        row["Credibility Indicator Category"] = "Evidence";// You'll need to change this
+        row["target_text"] = "nan";// You'll need to change this
         Object.defineProperty(row, 'Article ID',
             Object.getOwnPropertyDescriptor(row, 'Article sha256'));
         delete row['Article sha256'];
-        //console.log(row);
         visDataArray.push(row);
-        //console.log(visDataArray[visDataArray.length-1]);
       }
     }
 }
 
-function sortFormEntries(json) {
+function sortTriageEntries(json) {
   var sortArray = []; // an array of arrays
   for (i = 0; i < json.length; i++) {
 
@@ -95,10 +107,10 @@ function sortFormEntries(json) {
       }
     // [uniqueID, color, index, boolean]
 
-    let uniqueID = json[i]["Credibility Indicator Category"] +'_' + json[i].Start + "_" + json[i].End + "_form";
+    let uniqueID = json[i]["Credibility Indicator Category"] +'_' + json[i].Start + "_" + json[i].End + "_triage";
 
-    let startEntry = [uniqueID, colorFinderForm(json[i]), parseInt(json[i].Start), true];
-    let endEntry = [uniqueID, colorFinderForm(json[i]), parseInt(json[i].End), false];
+    let startEntry = [uniqueID, colorFinderTriage(json[i]), parseInt(json[i].Start), true];
+    let endEntry = [uniqueID, colorFinderTriage(json[i]), parseInt(json[i].End), false];
 
     sortArray.push(startEntry);
     sortArray.push(endEntry);
@@ -133,11 +145,11 @@ function sortUserEntries(json) {
   return sortArray;
 }
 
-function createFormHighlights(json, textString, form) {
+function createTriageHighlights(json, textString, triage) {
   textArray = textString.split("");  // Splitting the string into an array of strings, one item per character
   var sortedEntries;
-  if (form) {
-    sortedEntries = sortFormEntries(json); // an array highlight arrays, sorted by their indices
+  if (triage) {
+    sortedEntries = sortTriageEntries(json); // an array highlight arrays, sorted by their indices
   } else {
       sortedEntries = sortUserEntries(json);
   }
@@ -158,7 +170,7 @@ function createFormHighlights(json, textString, form) {
 
   finalHTML = textArray.join('');
   document.getElementById('textArticle').innerHTML = finalHTML;
-  $(".highlight").hover(formHighlight, formNormal);
+  $(".highlight").hover(triageHighlight, triageNormal);
 }
 
 
@@ -234,16 +246,16 @@ function closeHighlights(textArray, index, highlightStack) {
 }
 
 
-function formHighlight(x) {
+function triageHighlight(x) {
   var topID = x.toElement.getAttribute("name");
   var colorRGB = x.toElement.style.borderBottomColor;
   var color = colorRGB.match(/\d+/g);                      // split rgb into r, g, b, components
   DIV.transition().duration(50)
             .style("opacity", .9);
   var divContent;
-  var form = topID.split("_")[topID.split("_").length - 1] == "form"
+  var triage = topID.split("_")[topID.split("_").length - 1] == "triage"
 
-  if (form) {
+  if (triage) {
     divContent = topID.split("_")[0];
 
   } else {
@@ -283,7 +295,7 @@ function formHighlight(x) {
 function highlight(x) {
   var topID = x.toElement.getAttribute("name");
   var cred_id = x.toElement.getAttribute("cred_id");
-  var color = x.toElement.style.borderBottomColor;      // grab color of border underline in rgb form
+  var color = x.toElement.style.borderBottomColor;      // grab color of border underline in rgb triage
   var color = color.match(/\d+/g);                      // split rgb into r, g, b, components
   var allIds = x.toElement.getAttribute("allIDsBelow").concat("__" + topID)
   if (allIds.substring(0,1) == ' ') {
@@ -300,7 +312,7 @@ function highlight(x) {
 }
 
 
-function formNormal(x) {
+function triageNormal(x) {
     DIV.transition()
         .duration(600)
         .style("opacity",0);
@@ -404,8 +416,6 @@ function highlightManyHallmark(idArray, d) {
                         if (nameFromElement == "Waiting for factcheckers") {
                           nameFromElement = "Waiting for fact-checkers";
                         }
-                        //console.log(indicatorName);
-                        //console.log(nameFromElement);
                         if (indicatorName == nameFromElement) {
                             pathList = pathList.concat(path);
                             var score = scoreSum(indicator);

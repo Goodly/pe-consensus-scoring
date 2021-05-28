@@ -1,7 +1,6 @@
 $(document).ready(function () {
     $("#switchOptions").change(function () {
         var val = $(this).val();
-        console.log(val);
         if (val == "alg") {
           d3.text(TEXT_FILE_URL, function(text) {
             document.getElementById("textArticle").innerHTML = text.toString();

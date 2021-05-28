@@ -57,15 +57,12 @@ function condense(d, pills_map) {
                   json["Credibility Indicator ID"] = indicator.data.data["Credibility Indicator ID"];
                 }
             } else {
-                //console.log(indicator.data.data["Credibility Indicator Name"]);
                 indicators.set(indicator.data.data["Credibility Indicator Name"], indicator);
             }
         }
-        //console.log(indicators);
         var newChildren = Array.from(indicators.values());
         d.children = newChildren;
         d.data.children = newChildren;
-        //d.children = newChildren;
 
     } else {
         var child;
