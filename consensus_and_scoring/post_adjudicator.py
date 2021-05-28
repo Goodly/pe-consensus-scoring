@@ -2,14 +2,16 @@ from import_tags import import_tags
 from scoring_only import scoring_only
 from IAA import calc_agreement_directory
 from dataV3 import make_directory
+from MergeHighlighter import merge
 import argparse
 
 def post_adjudicator_master(tags_dir, schema_dir, new_s_iaa_dir, iaa_temp_dir, input_dir, scoring_dir, viz_dir,
-                            tua_dir, text_dir, config_path, threshold_func):
+                            tua_dir, text_dir, config_path, concat_tua_dir, threshold_func):
     iaa_dir = calc_agreement_directory(input_dir, schema_dir, config_path, text_dir, repCSV=None,  outDirectory = iaa_temp_dir,
                              useRep = False, threshold_func = threshold_func)
     import_tags(iaa_dir, tags_dir, schema_dir, new_s_iaa_dir)
     scoring_only(input_dir, new_s_iaa_dir, schema_dir, scoring_dir, viz_dir, tua_dir, threshold_func)
+    merge(tua_dir, concat_tua_dir)
 
 
 def load_args():
@@ -56,6 +58,7 @@ if __name__ == '__main__':
         adjudicated_dir = make_directory('../test_output/publish_p4-a530712123/output_adjudicated_iaa/')
         scoring_dir = make_directory('../test_output/publish_p4-a530712123/output_scoring/')
         viz_dir = make_directory('../test_output/publish_p4-a530712123/output_viz/')
+        concat_tua_dir = make_directory('../test_output/publish_p4-a530712123/output_concat_tags/')
         threshold_function = 'raw_50'
         if args.input_dir:
             input_dir = args.input_dir
@@ -72,6 +75,6 @@ if __name__ == '__main__':
         if args.tua_dir:
             tua_dir = args.tua_dir
         post_adjudicator_master(adjudication_dir, schema_dir, adjudicated_dir, iaa_temp_dir, input_dir, scoring_dir, viz_dir,
-                                tua_dir, texts_dir, config_path, threshold_function)
+                                tua_dir, texts_dir, config_path, concat_tua_dir, threshold_function)
 
 
