@@ -23,7 +23,6 @@
     <script type="text/javascript" src="/visualizations/assets/colorFinder.js"></script>
     <script type="text/javascript" src="/visualizations/assets/dataConverter.js"></script>
     <script type="text/javascript" src = "/visualizations/assets/embedder.js"></script>
-    <!-- <script type="text/javascript" src="/visualizations/assets/switchVis.js"></script> -->
     <script type="text/javascript" src ="/visualizations/assets/eta.js"></script>
     <script type="text/javascript" src="/visualizations/assets/dropdown.js"></script>
 
@@ -144,25 +143,25 @@
                 <!-- <h2 class="dropTitle">Categories</h2> -->
                 <div class="options">
                   <div class="dropdown">
-                      <button class="dropbtn">Explore the Article</button>
+                      <button class="dropbtn" id = "explore_button">Explore the Article</button>
                       <div class="dropdown-content">
-                          <button type ="button" class = "button_three" id = "button_three"> Article Elements</button>
+                          <button type ="button" class = "article_elem_button" id = "article_elem_button"> Article Elements</button>
                           <div class="hide">
-                          Which sections of this article are  arguments, quoted sources or assertions? Which sections need fact checking?<br>
-                          <i>Coming soon!</i>
+                            Which sections of this article are  arguments, quoted sources or assertions? Which sections need fact checking?
                           </div>
-                          <button type ="button" class = "button_two" id = "button_two">Your Contribution</button>
+                          <!-- <button type ="button" class = "user_button" id = "user_button">Your Contribution</button>
                           <div class="hide">
                             What is your contribution to this article? What highlights and points did you give this article?<br>
                             <i>Coming soon!</i>
-                          </div>
+                          </div> -->
 
                           <!-- <input type="text" class='hidden' id="userid" placeholder="User ID" autocomplete="off"> -->
-                          <div class='hidden' id='errormsg'>
+                          <!-- <div class='hidden' id='errormsg'>
                             No highlights
-                          </div>
-                          <button type ="button" class = "button_one" id = "button_one">Classic View</button>
+                          </div> -->
+                          <button type ="button" class = "classic_button" id = "classic_button">Classic View</button>
                           <div class="hide" id="classic">How does the Public Editor algorithm evaluate this article?</div>
+                          <span id="x_button">x</span>
                         </div>
                     </div>
                   </div>

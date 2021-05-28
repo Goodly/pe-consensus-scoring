@@ -73,6 +73,7 @@ function moveFactCheckLabels(triage_data, visDataArray) {
     var factCheckID = maxEvidenceID + 1;
 
     var caseNumbersSoFar = [];
+    var i = 0;
     for (rowIndex in triage_data) {
       if (triage_data[rowIndex]["topic_name"] == "Needs Fact-Check") { // You'll need to change this
         // data[rowIndex]
@@ -94,6 +95,7 @@ function moveFactCheckLabels(triage_data, visDataArray) {
         delete row['Article sha256'];
         visDataArray.push(row);
       }
+      i++;
     }
 }
 
@@ -101,13 +103,22 @@ function sortTriageEntries(json) {
   var sortArray = []; // an array of arrays
   for (i = 0; i < json.length; i++) {
 
-      if (parseInt(json[i].start_pos) == -1 || parseInt(json[i].end_pos) == -1 || json[i].start_pos == "") {
+    // if (json["topic_name"] == "Needs Fact-Check") {
+    //   continue; // This would remove it from the article elements view
+    // }
 
-        continue; // ignore entries where indices are -1 or null
-      }
+    if (json["topic_name"] == "Evidence" || json["topic_name"] == "Reasoning" ||
+        json["topic_name"] == "Probability" || json["topic_name"] == "Language") {
+        continue;
+    }
+
+    if (parseInt(json[i].start_pos) == -1 || parseInt(json[i].end_pos) == -1 || json[i].start_pos == "") {
+
+      continue; // ignore entries where indices are -1 or null
+    }
     // [uniqueID, color, index, boolean]
 
-    let uniqueID = json[i]["topic_name"] +'_' + json[i].start_pos + "_" + json[i].end_pos + "_triage";
+    let uniqueID = json[i]["topic_name"] +'_' + json[i].start_pos + "_" + json[i].end_pos + "_"+json[i]["topic_name"]+ json[i]["case_number"] +  "_triage" ;
 
     let startEntry = [uniqueID, colorFinderTriage(json[i]), parseInt(json[i].start_pos), true];
     let endEntry = [uniqueID, colorFinderTriage(json[i]), parseInt(json[i].end_pos), false];
@@ -123,9 +134,10 @@ function sortTriageEntries(json) {
 function sortUserEntries(json) {
   var sortArray = [];
   for (i = 0; i < json.length; i++) {
-      if (parseInt(json[i].Start) == -1 || parseInt(json[i].End) == -1 || (json[i].Start == 0 && json[i].End == 0)) {
-        continue; // ignore entries where indices are -1 or null
-      }
+
+    if (parseInt(json[i].Start) == -1 || parseInt(json[i].End) == -1 || (json[i].Start == 0 && json[i].End == 0)) {
+      continue; // ignore entries where indices are -1 or null
+    }
     // [uniqueID, color, index, boolean]
 
 //    let uniqueID = json[i]["question_text"] +'-'+json[i]["answer_text"] +"-"+ json[i].start_pos + "-" + json[i].end_pos + "-user";
@@ -158,13 +170,15 @@ function createTriageHighlights(json, textString, triage) {
   sortedEntries.forEach((entry) => {  // for each entry, open a span if open or close then reopen all spans if a close
     const index = entry[2];
 
+
+
     if (entry[3]) {
-      textArray = openHighlight(textArray, index, entry, highlightStack, 0);
+      textArray = openHighlight(textArray, index, entry, highlightStack, 0, false);
       highlightStack.push(entry);
     } else {
       textArray = closeHighlights(textArray, index, highlightStack);
       highlightStack.remove(entry);
-      textArray = openHighlights(textArray, index+1, highlightStack);
+      textArray = openHighlights(textArray, index+1, highlightStack, false);
     }
   })
 
@@ -189,12 +203,12 @@ function createHighlights(json, textString) {
     const index = entry[2];
 
     if (entry[3]) {
-      textArray = openHighlight(textArray, index, entry, highlightStack, 0);
+      textArray = openHighlight(textArray, index, entry, highlightStack, 0, true);
       highlightStack.push(entry);
     } else {
       textArray = closeHighlights(textArray, index, highlightStack);
       highlightStack.remove(entry);
-      textArray = openHighlights(textArray, index+1, highlightStack);
+      textArray = openHighlights(textArray, index+1, highlightStack, true);
     }
   })
 
@@ -203,7 +217,7 @@ function createHighlights(json, textString) {
   $(".highlight").hover(highlight, normal);
 }
 
-function openHighlight(textArray, index, entry, highlightStack, i) {
+function openHighlight(textArray, index, entry, highlightStack, i, classic) {
   let allIDsBelow = "";
     highlightStack.getArray().forEach((entry) => {
        allIDsBelow = allIDsBelow + entry[0].toString() + "__"; // all the unqiue IDs are separated by dunders
@@ -213,20 +227,25 @@ function openHighlight(textArray, index, entry, highlightStack, i) {
   let uniqueId = entry[0].toString();
   let color = entry[1];
   let name = " name='" + uniqueId + "'";
-  let cred_id = " cred_id = '" +uniqueId.substring(0, 2) + "'";
+  var cred_id;
+  if (classic) {
+    cred_id = " cred_id = '" +uniqueId.substring(0, 2) + "'";
+  } else {
+    cred_id = " cred_id = '" + uniqueId.split("_")[3] + "'";
+  }
   let style = " style= 'border-bottom:1px solid " + color;
-  color['opacity'] = 0.1;
+  //color['opacity'] = 0.1;
   style = style + "; --color: " + color + "'";
   let highlight = "<span class='highlight' start='"+index+"'" + name + allIDsBelow + cred_id + style + ">";
   textArray[index-1] = text + highlight;
   return textArray;
 }
 
-function openHighlights(textArray, index, highlightStack) {
+function openHighlights(textArray, index, highlightStack, classic) {
   let text = textArray[index];
   for (var i = 0; i < highlightStack.getSize(); i++) {
 
-    textArray = openHighlight(textArray, index, highlightStack.get(i), highlightStack, i);
+    textArray = openHighlight(textArray, index, highlightStack.get(i), highlightStack, i, classic);
   }
   // highlightStack.getArray().forEach((entry) => {
   //   textArray = openHighlight(textArray, index, entry);
@@ -256,8 +275,49 @@ function triageHighlight(x) {
   var triage = topID.split("_")[topID.split("_").length - 1] == "triage"
 
   if (triage) {
-    divContent = topID.split("_")[0];
+    var topIDName = topID.split("_")[0];
+    if (topIDName != "Needs Fact-Check" && topIDName != "Evidence") {
+      topIDName = topIDName.substring(0, topIDName.length -1);
+    }
+    var cred_id = x.toElement.getAttribute("cred_id");
+    cred_id = cred_id[cred_id.length-1];
+    divContent = topIDName + " " + cred_id + ", ";
+    var allIDsBelow = x.toElement.getAttribute("allidsbelow").split("__");
+    var id;
+    var cred_ids = [x.toElement.getAttribute("cred_id")];
+    for (id of allIDsBelow) {
+      if (id == "") {
+        continue;
+      }
+      var id_name = id.split("_")[0];
+      cred_id = id.split("_")[3];
+      console.log(cred_id);
 
+      var case_number = cred_id.substring(cred_id.length-1, cred_id.length);
+      if (!cred_ids.includes(cred_id)) {
+        cred_ids.push(cred_id);
+      }
+      if (id_name != "Needs Fact-Check" && topIDName != "Evidence") {
+        id_name = id_name.substring(0, id_name.length - 1);
+      }
+      if (divContent.includes(id_name)) {
+        continue;
+      }
+      divContent = divContent + id_name + " " + case_number + ", ";
+    }
+    divContent = divContent.substring(0, divContent.length -2);
+
+    console.log(cred_ids);
+    cred_id;
+
+    for (cred_id of cred_ids) {
+      $("span[cred_id='"+cred_id+"']").each(function() {
+        colorRGB = this.style.borderBottomColor;
+        color = colorRGB.match(/\d+/g);
+        this.style.setProperty("background-color", "rgba(" + color[0] + "," + color[1] + "," + color[2] + "," + "0.4");
+        this.style.setProperty("background-clip", "content-box");
+      });
+    }
   } else {
       divContent = topID.split("_")[1];
       //We gotta make that score shit....

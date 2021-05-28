@@ -1,30 +1,36 @@
 window.addEventListener("DOMContentLoaded", function () {
-  var button_one = document.getElementById("button_one");
-  var button_two = document.getElementById("button_two");
-  var button_three = document.getElementById("button_three");
+  var article_elem_button = document.getElementById("article_elem_button");
+  // var user_button = document.getElementById("user_button");
+  var classic_button = document.getElementById("classic_button");
+  var explore_button = document.getElementById("explore_button");
   var input = document.getElementById('userid')
   var content = document.getElementsByClassName("dropdown-content")[0];
+  var x_button = document.getElementById("x_button");
+
+  var button_state = 0; // We have TWO states for this deployment;
   // HARD CODED
   var userIDs = ['1234', '5678', '9012']
   //HARD CODED
 
   var articleElements = document.getElementsByClassName('hide')[0];
-  var yourCont = document.getElementsByClassName('hide')[1];
+  //var yourCont = document.getElementsByClassName('hide')[1];
+  var classicElements = document.getElementsByClassName('hide')[1];
 
-  button_one.onclick = function() {
+  function classic_click() {
     $("#popup").css("opacity", 1);
     classic = true;
-    content.style.display = "none";
+    //content.style.display = "none";
+    classicElements.setAttribute('class', 'show');
     articleElements.setAttribute('class', 'hide');
-    yourCont.setAttribute('class', 'hide');
+    //yourCont.setAttribute('class', 'hide');
     $("#chart").css("opacity", 1);
     // document.querySelector('#userid').setAttribute('class', 'hidden');
     // document.querySelector('#errormsg').setAttribute('class', 'hidden');
     sunburst = $(".userScore");
     sunburst.css("display", "none");
-    this.style.opacity = 1;
-    button_two.style.opacity = 0.6;
-    button_three.style.opacity = 0.6;
+    classic_button.style.opacity = 1;
+    // user_button.style.opacity = 0.6;
+    article_elem_button.style.opacity = 0.6;
     d3.text(TEXT_FILE_URL, function(text) {
       document.getElementById("textArticle").innerHTML = text.toString();
       d3.csv(DATA_FILE_URL, function(error, data) {
@@ -33,6 +39,8 @@ window.addEventListener("DOMContentLoaded", function () {
       });
     });
   }
+
+  article_elem_button.onclick = article_click;
 
   //Your Contribution
   // input.addEventListener("keyup", e => { // redoing individual contribution functionality
@@ -72,40 +80,39 @@ window.addEventListener("DOMContentLoaded", function () {
   // });
 
 
-  button_two.onclick = function() {
-    //document.querySelector('#userid').setAttribute('class', 'userform');
-    d3.text(TEXT_FILE_URL, function(text) {
-      document.getElementById("textArticle").innerHTML = text.toString();
-      d3.csv(USER_FILE_URL, function(error, data) {
-        if (error) {
-          console.log('No user file found');
-        } else {
-          createTriageHighlights(data, text.toString(), false);
-        }
-        });
-    });
+  // user_button.onclick = function() {
+  //   //document.querySelector('#userid').setAttribute('class', 'userform');
+  //   d3.text(TEXT_FILE_URL, function(text) {
+  //     document.getElementById("textArticle").innerHTML = text.toString();
+  //     d3.csv(USER_FILE_URL, function(error, data) {
+  //       if (error) {
+  //         console.log('No user file found');
+  //       } else {
+  //         createTriageHighlights(data, text.toString(), false);
+  //       }
+  //       });
+  //   });
+  //
+  //   content.style.display = "block";
+  //   yourCont.setAttribute('class', 'show');
+  //   articleElements.setAttribute('class', 'hide');
+  //   this.style.opacity = 1;
+  //   article_elem_button.style.opacity = 0.6;
+  //   classic_button.style.opacity = 0.6;
+  //
+  //
+  //   // Gray out hallmark, remove functionality
+  //   classic = false;
+  //   visualizationOn = false;
+  //   $("#chart").css("opacity", .2);
+  //   $("#popup").css("opacity", .5);
+  //   $("#myModal").hide();
+  //   $("#popup").html("?");
+  //   sunburst = $(".userScore");
+  //   sunburst.css("display", "none");
+  // }
 
-    content.style.display = "block";
-    yourCont.setAttribute('class', 'show');
-    articleElements.setAttribute('class', 'hide');
-    this.style.opacity = 1;
-    button_one.style.opacity = 0.6;
-    button_three.style.opacity = 0.6;
-
-
-    // Gray out hallmark, remove functionality
-    classic = false;
-    visualizationOn = false;
-    $("#chart").css("opacity", .2);
-    $("#popup").css("opacity", .5);
-    $("#myModal").hide();
-    $("#popup").html("?");
-    sunburst = $(".userScore");
-    sunburst.css("display", "none");
-  }
-
-  //Article Elements
-  button_three.onclick = function() {
+  function article_click() {
     classic = false;
     visualizationOn = false;
     $("#chart").css("opacity", .2);
@@ -114,18 +121,16 @@ window.addEventListener("DOMContentLoaded", function () {
     $("#popup").html("?");
     content.style.display = "block";
     articleElements.setAttribute('class', 'show');
-    yourCont.setAttribute('class', 'hide');
+    classicElements.setAttribute('class', 'hide');
+    //yourCont.setAttribute('class', 'hide');
     // document.querySelector('#userid').setAttribute('class', 'hidden'); redoing individual contribution functionality
     // document.querySelector('#errormsg').setAttribute('class', 'hidden');
     sunburst = $(".userScore");
     sunburst.css("display", "none");
-    this.style.opacity = 1;
-    button_one.style.opacity = 0.6;
-    button_two.style.opacity = 0.6;
+    article_elem_button.style.opacity = 1;
+    classic_button.style.opacity = 0.6;
+    // user_button.style.opacity = 0.6;
     var article_sha256;
-
-
-
 
     d3.text(TEXT_FILE_URL, function(text) {
       document.getElementById("textArticle").innerHTML = text.toString();
@@ -135,5 +140,23 @@ window.addEventListener("DOMContentLoaded", function () {
       });
     });
   }
+  //Article Elements
+  classic_button.onclick = classic_click;
+
+  explore_button.onclick = function() {
+    if (button_state == 0) {
+      console.log(button_state);
+      article_click();
+    } else {
+      classic_click();
+
+    }
+    button_state = (button_state + 1) % 2
+  }
+
+  x_button.onclick = function() {
+    $(".dropdown-content").slideUp("slow");
+  }
+
 
 });

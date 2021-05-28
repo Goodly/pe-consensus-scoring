@@ -712,7 +712,7 @@ h3 {
   display: inline-block;
 }
 
-.button_one {
+.article_elem_button {
   border-radius: 12px;
   margin: 5px;
   background-color: #ffb400;
@@ -726,7 +726,7 @@ h3 {
   width: 94%;
 
 }
-.button_one:hover + .hide {
+.article_elem_button:hover + .hide {
   transition: opacity 2s, max-height 1s;
   opacity: 1;
   max-height: 100%;
@@ -736,7 +736,7 @@ h3 {
   color: #323648;
 }
 
-.button_two {
+.user_button {
   border-radius: 12px;
   margin: 5px;
   font-family: 'Lato', sans-serif;
@@ -749,7 +749,7 @@ h3 {
   opacity: 0.6;
   width: 94%;
 }
-.button_two:hover + .hide {
+.user_button:hover + .hide {
   transition: opacity 2s, max-height 1s;
   opacity: 1;
   max-height: 500px;
@@ -759,7 +759,7 @@ h3 {
   color: #323648;
 }
 
-.button_three {
+.classic_button {
   border-radius: 12px;
   margin: 5px;
   border: none;
@@ -773,7 +773,7 @@ h3 {
   width: 94%;
 
 }
-.button_three:hover + .hide {
+.classic_button:hover + .hide {
   transition: opacity 2s, max-height 1s;
   opacity: 1;
   max-height: 500px;
@@ -811,6 +811,7 @@ h3 {
   min-width: 80px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
+  padding:5px;
 }
 
 .dropdown-content a {
@@ -826,6 +827,17 @@ h3 {
 
 .dropdown:hover .dropbtn {background-color: #4d61b3;}
 
+
+#x_button {
+  cursor: pointer;
+  color: #aaaaaa;
+  padding-top: 110px;
+}
+
+#x_button:hover {
+  transition: color 1.3s;
+  color: #000000;
+}
 /** End Explore the Article section **/
 
 p.p-explain {
