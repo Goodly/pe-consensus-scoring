@@ -80,7 +80,7 @@ window.addEventListener("DOMContentLoaded", function () {
         if (error) {
           console.log('No user file found');
         } else {
-          createFormHighlights(data, text.toString(), false);
+          createTriageHighlights(data, text.toString(), false);
         }
         });
     });
@@ -129,9 +129,9 @@ window.addEventListener("DOMContentLoaded", function () {
 
     d3.text(TEXT_FILE_URL, function(text) {
       document.getElementById("textArticle").innerHTML = text.toString();
-      d3.csv(FORM_FILE_URL, function(error, data) {
+      d3.csv(TRIAGE_FILE_URL, function(error, data) {
         if (error) throw error;
-        createFormHighlights(data, text.toString(), true);
+        createTriageHighlights(data, text.toString(), true);
       });
     });
   }

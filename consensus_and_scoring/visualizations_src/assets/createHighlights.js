@@ -27,6 +27,7 @@ function sortJSONentries(json) {
 function scoreArticle(textFileUrl, dataFileUrl, triageFileUrl, userFileUrl) {
       TEXT_FILE_URL = textFileUrl;
       DATA_FILE_URL = dataFileUrl;
+      TRIAGE_FILE_URL = triageFileUrl;
       d3.text(textFileUrl, function(text) {
           document.getElementById("textArticle").innerHTML = text.toString();
 
@@ -48,7 +49,6 @@ function scoreArticle(textFileUrl, dataFileUrl, triageFileUrl, userFileUrl) {
             });
 
         });
-          triage_FILE_URL = triageFileUrl;
           USER_FILE_URL = userFileUrl;
 
       });
@@ -74,7 +74,7 @@ function moveFactCheckLabels(triage_data, visDataArray) {
 
     var caseNumbersSoFar = [];
     for (rowIndex in triage_data) {
-      if (triage_data[rowIndex]["Credibility Indicator Category"] == "Needs Fact-Check") { // You'll need to change this
+      if (triage_data[rowIndex]["topic_name"] == "Needs Fact-Check") { // You'll need to change this
         // data[rowIndex]
         var row = Object.assign({}, triage_data[rowIndex]);
 
@@ -101,16 +101,16 @@ function sortTriageEntries(json) {
   var sortArray = []; // an array of arrays
   for (i = 0; i < json.length; i++) {
 
-      if (parseInt(json[i].Start) == -1 || parseInt(json[i].End) == -1 || json[i].Start == "") {
+      if (parseInt(json[i].start_pos) == -1 || parseInt(json[i].end_pos) == -1 || json[i].start_pos == "") {
 
         continue; // ignore entries where indices are -1 or null
       }
     // [uniqueID, color, index, boolean]
 
-    let uniqueID = json[i]["Credibility Indicator Category"] +'_' + json[i].Start + "_" + json[i].End + "_triage";
+    let uniqueID = json[i]["topic_name"] +'_' + json[i].start_pos + "_" + json[i].end_pos + "_triage";
 
-    let startEntry = [uniqueID, colorFinderTriage(json[i]), parseInt(json[i].Start), true];
-    let endEntry = [uniqueID, colorFinderTriage(json[i]), parseInt(json[i].End), false];
+    let startEntry = [uniqueID, colorFinderTriage(json[i]), parseInt(json[i].start_pos), true];
+    let endEntry = [uniqueID, colorFinderTriage(json[i]), parseInt(json[i].end_pos), false];
 
     sortArray.push(startEntry);
     sortArray.push(endEntry);

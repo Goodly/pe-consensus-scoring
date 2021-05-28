@@ -23,7 +23,7 @@
     <script type="text/javascript" src="/visualizations/assets/colorFinder.js"></script>
     <script type="text/javascript" src="/visualizations/assets/dataConverter.js"></script>
     <script type="text/javascript" src = "/visualizations/assets/embedder.js"></script>
-    <script type="text/javascript" src="/visualizations/assets/switchVis.js"></script>
+    <!-- <script type="text/javascript" src="/visualizations/assets/switchVis.js"></script> -->
     <script type="text/javascript" src ="/visualizations/assets/eta.js"></script>
     <script type="text/javascript" src="/visualizations/assets/dropdown.js"></script>
 
@@ -187,6 +187,7 @@
                   var dataFileUrl = "$DATA_CSV_URL";
                   var triageFileUrl = "$TRIAGER_CSV_URL";
 
+                  
 
                   var userFileUrl = "user_contributions.csv";
                   import("/visualizations/assets/createHighlights.js").then(scoreArticle(textFileUrl, dataFileUrl, triageFileUrl, userFileUrl));
