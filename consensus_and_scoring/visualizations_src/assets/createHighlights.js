@@ -2,6 +2,7 @@ var TRIAGE_FILE_URL;
 var USER_FILE_URL;
 var TEXT_FILE_URL;
 var DATA_FILE_URL;
+var ADJUSTMENT = 0;
 
 function sortJSONentries(json) {
   var sortArray = []; // an array of arrays
@@ -40,10 +41,8 @@ function scoreArticle(textFileUrl, dataFileUrl, triageFileUrl, userFileUrl) {
                 hallmark(data);
               } else {
                 delete data['columns'];
-                console.log(triage_data)
                 moveFactCheckLabels(triage_data, data);
                 createHighlights(data, text.toString());
-                data.splice(data.length-2, 1);
                 hallmark(data);
               }
             });
@@ -62,7 +61,8 @@ function scoreArticle(textFileUrl, dataFileUrl, triageFileUrl, userFileUrl) {
 // Pulls the "Needs fact-check" label from the triage data to the vis_data object
 function moveFactCheckLabels(triage_data, visDataArray) {
     var item;
-    var maxEvidenceID = 0;
+    var maxEvidenceID = -1;
+
     for (item of visDataArray) {
       if (item["Credibility Indicator Category"] == "Evidence") {
         var id = item["Credibility Indicator ID"];
@@ -73,29 +73,28 @@ function moveFactCheckLabels(triage_data, visDataArray) {
     var factCheckID = maxEvidenceID + 1;
 
     var caseNumbersSoFar = [];
-    var i = 0;
-    for (rowIndex in triage_data) {
-      if (triage_data[rowIndex]["topic_name"] == "Needs Fact-Check") { // You'll need to change this
+    var triageRow;
+    for (triageRow of triage_data) {
+      if (triageRow["topic_name"] == "Needs Fact-Check") { // You'll need to change this
         // data[rowIndex]
-        var row = Object.assign({}, triage_data[rowIndex]);
+        var newVisRow = Object.assign({}, visDataArray[0]);
 
-        delete row[""]
 
-        if (!(caseNumbersSoFar.includes(row["case_number"]))) {// You'll need to change this
-          caseNumbersSoFar.push(row["case_number"]);
-          row["Credibility Indicator ID"] = "E" + factCheckID.toString();
+        if (!(caseNumbersSoFar.includes(triageRow["case_number"]))) {
+          caseNumbersSoFar.push(triageRow["case_number"]);
+          newVisRow["Credibility Indicator ID"] = "E" + factCheckID.toString();
           factCheckID++;
         }
-        row["Points"] = ".5";                          // You'll need to change this
-        row["Credibility Indicator Name"] = "Waiting for fact-checkers";// You'll need to change this
-        row["Credibility Indicator Category"] = "Evidence";// You'll need to change this
-        row["target_text"] = "nan";// You'll need to change this
-        Object.defineProperty(row, 'Article ID',
-            Object.getOwnPropertyDescriptor(row, 'Article sha256'));
-        delete row['Article sha256'];
-        visDataArray.push(row);
+        newVisRow["Points"] = ".5";                          // You'll need to change this
+        newVisRow["Credibility Indicator Name"] = "Waiting for fact-checkers";// You'll need to change this
+        newVisRow["Credibility Indicator Category"] = "Evidence";// You'll need to change this
+        newVisRow["target_text"] = "nan";// You'll need to change this
+        newVisRow["Start"] = triageRow["start_pos"];
+        newVisRow["End"] = triageRow["end_pos"];
+
+        visDataArray.push(newVisRow);
+        ADJUSTMENT = ADJUSTMENT - .5;
       }
-      i++;
     }
 }
 
