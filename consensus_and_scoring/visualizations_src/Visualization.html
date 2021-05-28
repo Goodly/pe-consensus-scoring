@@ -187,6 +187,7 @@
                   var dataFileUrl = "$DATA_CSV_URL";
                   var triageFileUrl = "$TRIAGER_CSV_URL";
 
+
                   var userFileUrl = "user_contributions.csv";
                   import("/visualizations/assets/createHighlights.js").then(scoreArticle(textFileUrl, dataFileUrl, triageFileUrl, userFileUrl));
                 </script>
@@ -219,9 +220,11 @@
                       if (modal.style.display === "block") {
                         modal.style.display = "none";
                         jQuery("#popup").html("?");
+                        jQuery("#popup").css("bottom", "488px");
                       } else {
                         modal.style.display = "block";
                         jQuery("#popup").html("X");
+                        jQuery("#popup").css("bottom", "452px");
                       }
                     }
 
