@@ -89,10 +89,12 @@ def configure_publish_directories(parent_dirname):
     dir_dict['iaa_temp_dir'] = make_dir(parent_dirname, "output_iaa_temp")
     dir_dict['scoring_dir'] = make_dir(parent_dirname, "output_scoring")
     dir_dict['viz_dir'] = make_dir(parent_dirname, "output_viz")
+    dir_dict['concat_focus_tags_dir'] = make_dir(parent_dirname, "output_concat_tags")
     clean_output_csvs(dir_dict['output_dir'])
     clean_output_csvs(dir_dict['iaa_temp_dir'])
     clean_output_csvs(dir_dict['scoring_dir'])
     clean_output_csvs(dir_dict['viz_dir'])
+    clean_output_csvs(dir_dict['concat_focus_tags_dir'])
     return dir_dict
 
 def generate_article_to_publish(dir_dict):
@@ -111,6 +113,7 @@ def generate_article_to_publish(dir_dict):
         dir_dict['focus_tags_dir'],
         dir_dict['texts_dir'],
         dir_dict['config_path'],
+        dir_dict['concat_focus_tags_dir'],
         threshold_function,
     )
 
