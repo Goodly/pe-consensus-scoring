@@ -180,6 +180,7 @@ def handle_publish_article(body, parent_dirname):
         dir_dict['viz_dir'],
         dir_dict['texts_dir'],
         dir_dict['metadata_dir'],
+        dir_dict['concat_focus_tags_dir'],
         viz_s3_bucket,
         s3_prefix=viz_s3_prefix
     )
