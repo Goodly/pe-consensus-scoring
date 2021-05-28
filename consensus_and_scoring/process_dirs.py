@@ -21,6 +21,7 @@ logger = logging.getLogger(__name__)
 from iaa_only import iaa_only
 from TriagerScoring import importData
 from post_adjudicator import post_adjudicator_master
+from MergeHighlighter import merge
 
 # This code does not invoke any AWS APIs such as S3 or SQS so that it can be
 # imported by the test code without requiring AWS credentials.
@@ -89,7 +90,7 @@ def configure_publish_directories(parent_dirname):
     dir_dict['iaa_temp_dir'] = make_dir(parent_dirname, "output_iaa_temp")
     dir_dict['scoring_dir'] = make_dir(parent_dirname, "output_scoring")
     dir_dict['viz_dir'] = make_dir(parent_dirname, "output_viz")
-    dir_dict['concat_focus_tags_dir'] = make_dir(parent_dirname, "output_concat_tags")
+    dir_dict['concat_tags_dir'] = make_dir(parent_dirname, "output_concat_tags")
     clean_output_csvs(dir_dict['output_dir'])
     clean_output_csvs(dir_dict['iaa_temp_dir'])
     clean_output_csvs(dir_dict['scoring_dir'])
@@ -101,6 +102,7 @@ def generate_article_to_publish(dir_dict):
     threshold_function = THRESHOLD_FUNCTION
     uuids_to_filter = read_filter_uuids('./data_patches/')
     filter_directory(uuids_to_filter, 'tua_uuid', dir_dict['tags_dir'])
+    filter_directory(uuids_to_filter, 'tua_uuid', dir_dict['focus_tags_dir'])
     filter_directory(uuids_to_filter, 'tua_uuid', dir_dict['datahunts_dir'])
     post_adjudicator_master(
         dir_dict['adj_tags_dir'],
@@ -113,9 +115,9 @@ def generate_article_to_publish(dir_dict):
         dir_dict['focus_tags_dir'],
         dir_dict['texts_dir'],
         dir_dict['config_path'],
-        dir_dict['concat_focus_tags_dir'],
         threshold_function,
     )
+    merge(dir_dict['tags_dir'], dir_dict['concat_tags_dir'])
 
 def make_dir(parent_dirname, join_path):
     dest_dirname = os.path.join(parent_dirname, join_path)

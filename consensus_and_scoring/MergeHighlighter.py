@@ -9,13 +9,16 @@ def merge(tua_input_dir, output_csv):
     for root, dir, files in os.walk(tua_input_dir):
         for file in files:
             tuaFiles.append(pd.read_csv((tua_input_dir+'/'+file), encoding='utf-8'))
-    # we can throw this error because there should always be focus tags if there's specialist tasks
+    # It is possible theoretically to have an article with no tags.
+    # In that case, the preferred solution would be to output just the csv header.
+    # But for now throw an error since it is very unlikely an article with zero tags
+    # would be sent through the publish pipeline.
     if len(tuaFiles) == 0:
-            raise Exception("No focus tags found {}".format(tua_input_dir))
+            raise Exception("No tags found {}".format(tua_input_dir))
     merged = pd.concat(tuaFiles)
     make_directory(output_csv)
     merged.to_csv(output_csv+'/triager_data.csv', encoding='utf-8')
-    print("Merged focus tag csvs")
+    print("Merged tag csvs")
 
 if __name__ == '__main__':
-    merge("../data/focus_tags/", "../data/output_concat_tags")
+    merge("../data/tags/", "../data/output_concat_tags")
