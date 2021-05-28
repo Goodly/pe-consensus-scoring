@@ -40,8 +40,8 @@ def s3_safe_path(unsafe_name, fallback):
         safe_name = re.sub(unsafe_chars, '-', fallback)
     return safe_name
 
-def send_s3(viz_dir, text_dir, metadata_dir, concat_focus_tags_dir, s3_bucket, s3_prefix):
-    viz_to_send = collect_files_to_send(viz_dir, text_dir, metadata_dir, concat_focus_tags_dir)
+def send_s3(viz_dir, text_dir, metadata_dir, concat_tags_dir, s3_bucket, s3_prefix):
+    viz_to_send = collect_files_to_send(viz_dir, text_dir, metadata_dir, concat_tags_dir)
 
     print("Sending visualization files to S3.")
     # Retrieve HTML template.
@@ -94,7 +94,7 @@ def send_s3(viz_dir, text_dir, metadata_dir, concat_focus_tags_dir, s3_bucket, s
     update_newsfeed(newsfeed_items, s3_bucket, "newsfeed/visData.json")
     return viz_to_send
 
-def collect_files_to_send(viz_dir, text_dir, metadata_dir, concat_focus_tags_dir):
+def collect_files_to_send(viz_dir, text_dir, metadata_dir, concat_tags_dir):
     # Collect the list of sha256 of by iterating over the VisualizationData_sha256.csv files
     print("Gathering files to send for visualization")
     viz_to_send = []
@@ -111,7 +111,7 @@ def collect_files_to_send(viz_dir, text_dir, metadata_dir, concat_focus_tags_dir
                 # triager_data filename should also be using article_sha256 for consistency,
                 # but I don't think this algorithm will ever actually process multiple articles
                 # concurrently, that command line bulk data code path is long abandoned.
-                triager_data_filepath = os.path.join(concat_focus_tags_dir, "triager_data.csv")
+                triager_data_filepath = os.path.join(concat_tags_dir, "triager_data.csv")
                 if os.path.exists(article_filepath):
                     viz = {
                         'sha_256': article_sha256,

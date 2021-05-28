@@ -95,7 +95,7 @@ def configure_publish_directories(parent_dirname):
     clean_output_csvs(dir_dict['iaa_temp_dir'])
     clean_output_csvs(dir_dict['scoring_dir'])
     clean_output_csvs(dir_dict['viz_dir'])
-    clean_output_csvs(dir_dict['concat_focus_tags_dir'])
+    clean_output_csvs(dir_dict['concat_tags_dir'])
     return dir_dict
 
 def generate_article_to_publish(dir_dict):
