@@ -144,11 +144,11 @@
                 <div class="options">
                   <div class="dropdown">
                       <button class="dropbtn" id = "explore_button">Explore the Article</button>
-                      <div class="dropdown-content">
-                          <button type ="button" class = "article_elem_button" id = "article_elem_button"> Article Elements</button>
-                          <div class="hide">
+                      <!-- <div class="dropdown-content"> -->
+                          <!-- <button type ="button" class = "article_elem_button" id = "article_elem_button"> Article Elements</button> -->
+                          <!-- <div class="hide">
                             Which sections of this article are  arguments, quoted sources or assertions? Which sections need fact checking?
-                          </div>
+                          </div> -->
                           <!-- <button type ="button" class = "user_button" id = "user_button">Your Contribution</button>
                           <div class="hide">
                             What is your contribution to this article? What highlights and points did you give this article?<br>
@@ -159,10 +159,10 @@
                           <!-- <div class='hidden' id='errormsg'>
                             No highlights
                           </div> -->
-                          <button type ="button" class = "classic_button" id = "classic_button">Classic View</button>
+                          <!-- <button type ="button" class = "classic_button" id = "classic_button">Classic View</button>
                           <div class="hide" id="classic">How does the Public Editor algorithm evaluate this article?</div>
-                          <span id="close_button">CLOSE</span>
-                        </div>
+                          <span id="close_button">CLOSE</span> -->
+                        <!-- </div> -->
                     </div>
                   </div>
             </div>
@@ -204,7 +204,7 @@
                             &times;
                         </span> -->
                         <p>
-                          "Public Editor's Credibility Hallmark allows you to quickly understand an article's credibility, scored from 0-100. Hover over the Credibility Hallmark to learn how many points were subtracted from the article score for each mistake. If you click on a specific mistake in the outer ring of the Credibility Hallmark, the page will automatically scroll to the erroneous passage within the article. (If a - ? - question mark appears in the center of the Credibility Hallmark, the accuracy of the article's credibility score cannot be determined until claims within the article are fact-checked.)"
+                          "Public Editor's Credibility Hallmark allows you to quickly understand an article's Credibility Score (from 0-100). Hover over the Credibility Hallmark to learn how many points were deducted from the article's total Credibility Score for each mistake. If you click the outer ring of the Credibility Hallmark, you will automatically scroll to the erroneous passage within the article. ... If a question mark - ? - appears in the center of the Credibility Hallmark, the accuracy of the article's credibility score cannot be determined until claims within the article are fact-checked."
                         </p>
                       </div>
                   </div>
@@ -223,11 +223,13 @@
                       if (modal.style.display === "block") {
                         modal.style.display = "none";
                         jQuery("#popup").html("?");
-                        jQuery("#popup").css("bottom", "488px");
+                        jQuery("#popup").css("right", "186px");
+                        jQuery("#popup").css("bottom", "484px");
                       } else {
                         modal.style.display = "block";
                         jQuery("#popup").html("X");
-                        jQuery("#popup").css("bottom", "452px");
+                        jQuery("#popup").css("right", "60px");
+                        jQuery("#popup").css("bottom", "504px");
                       }
                     }
 

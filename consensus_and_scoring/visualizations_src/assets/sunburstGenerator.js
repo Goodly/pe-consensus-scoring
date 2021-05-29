@@ -119,6 +119,7 @@ var text_size = center_style[2];
 var question_x = center_style[3];
 var question_y = center_style[4];
 var question_size = center_style[5]
+var double_question = center_style[6];
 
   svg.selectAll(".center-text")
     .style("display", "none");
@@ -130,13 +131,21 @@ var question_size = center_style[5]
     .style("text-anchor", "middle")
     .html((totalScore));
 
-
-  svg.append("text")
-    .attr("class", "center-question")
-    .attr("x", question_x)
-    .attr("y", question_y)
-    .style("font-size", question_size)
-    .html("?")
+  if (double_question) {
+    svg.append("text")
+      .attr("class", "center-question")
+      .attr("x", question_x)
+      .attr("y", question_y)
+      .style("font-size", question_size)
+      .html("??")
+  } else {
+    svg.append("text")
+      .attr("class", "center-question")
+      .attr("x", question_x)
+      .attr("y", question_y)
+      .style("font-size", question_size)
+      .html("?")
+  }
 
 
 
@@ -181,6 +190,7 @@ var question_size = center_style[5]
         }
     })
     .on('mouseleave', function(d) {
+      console.log('leaving');
         resetVis(d);
     }).on('click', function(d) {
       scrolltoView(d)
@@ -316,8 +326,10 @@ function colorFinderSun(d) {
 */
 function resetVis(d) {
   // theresa start
+  setTimeout(function() {
+    jQuery("#popup").css("bottom", "484px");
+  }, 2000);
     normalSun(d);
-// theresa end
     d3.selectAll("path")
         .transition()
         .delay(300)
@@ -358,6 +370,7 @@ function resetVis(d) {
     var question_x = center_style[3];
     var question_y = center_style[4];
     var question_size = center_style[5]
+    var double_question = center_style[6];
 
 
     SVG.selectAll(".center-text").style('display', 'none');
@@ -370,12 +383,21 @@ function resetVis(d) {
         .style("text-anchor", "middle")
         .html((totalScore));
 
-    SVG.append("text")
-        .attr("class", "center-question")
-        .attr("x", question_x)
-        .attr("y", question_y)
-        .style("font-size", question_size)
-        .html("?")
+    if (double_question) {
+      SVG.append("text")
+          .attr("class", "center-question")
+          .attr("x", question_x)
+          .attr("y", question_y)
+          .style("font-size", question_size)
+          .html("??")
+    } else {
+      SVG.append("text")
+          .attr("class", "center-question")
+          .attr("x", question_x)
+          .attr("y", question_y)
+          .style("font-size", question_size)
+          .html("?")
+    }
 
 
     visualizationOn = false;
@@ -388,6 +410,7 @@ function resetVis(d) {
     @return : none
 */
 function drawVis(d, root, me, div) {
+    jQuery("#popup").css("bottom", "434px");
     if (d.height == 2) {
         resetVis(d);
         return;
@@ -458,7 +481,7 @@ function drawVis(d, root, me, div) {
         tooltip_text = tooltip_text + "<br><i>(Throughout article)</i></span>";
         words_len += "(Throughout article)".length;
       } else {
-        tooltip_text = tooltip_text + "<br><i>(No highlight in text) siufydg suyf suyg ufydg sdufy udsy sudgfyi uyu sdf uygf uygsudyf uydgf uyuy uyuy uyuy uyuy uyuy uyuy uy </i></span>";
+        tooltip_text = tooltip_text + "<br><i>(No highlight in text)</i></span>";
         words_len += "(No highlight in text)".length;
       }
     } else {
@@ -582,19 +605,19 @@ function normalSun() {
 function getCenterStyle(num_nfc) {
   switch(num_nfc) {
     case 0:
-      return [0, 13, 40, 0, 0, 0]
+      return [0, 13, 40, 0, 0, 0, false]
     case 1:
-      return [-1, 13, 33, 17, -5, 19]
+      return [-1, 13, 33, 17, -5, 19, false]
     case 2:
-      return [-2, 13, 29, 14, -0, 25]
+      return [-3, 13, 25, 11, -0, 30, false]
     case 3:
-      return [-3, 13, 25, 11, -0, 30]
+      return [-9.5, 17, 20, 0, 5, 39, false]
     case 4:
-      return [-4, 13, 20, 8, -0, 33]
+      return [-8, 14, 14, -4, 7.5, 48, false]
     case 5:
-      return [-5, 13, 14, 0, 0, 37]
+      return [-23, 26, 13, -19, 20, 56, true]
     default:
-      return [-6, 13, 12, -1, 0, 40]
+      return [-5, 13, 14, 0, 0, 37]
   }
 }
 //theresa end

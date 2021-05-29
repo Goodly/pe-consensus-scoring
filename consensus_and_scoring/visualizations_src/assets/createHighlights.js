@@ -444,13 +444,39 @@ function resetHallmark() {
             }
         })
     SVG.selectAll(".center-text").style('display', 'none');
+    SVG.selectAll(".center-question").style('display', 'none');
+
+    var center_style = getCenterStyle(NUM_NFC);
+    var text_x = center_style[0];
+    var text_y = center_style[1];
+    var text_size = center_style[2];
+    var question_x = center_style[3];
+    var question_y = center_style[4];
+    var question_size = center_style[5]
+    var double_question = center_style[6];
+
     SVG.append("text")
         .attr("class", "center-text")
-        .attr("x", 0)
-        .attr("y", 13)
-        .style("font-size", 40)
+        .attr("x", text_x)
+        .attr("y", text_y)
+        .style("font-size", text_size)
         .style("text-anchor", "middle")
         .html((totalScore));
+    if (double_question) {
+      SVG.append("text")
+          .attr("class", "center-question")
+          .attr("x", question_x)
+          .attr("y", question_y)
+          .style("font-size", question_size)
+          .html("??");
+    } else {
+      SVG.append("text")
+          .attr("class", "center-question")
+          .attr("x", question_x)
+          .attr("y", question_y)
+          .style("font-size", question_size)
+          .html("?");
+    }
 }
 
 
@@ -533,6 +559,7 @@ function highlightManyHallmark(idArray, d) {
 
 
     SVG.selectAll(".center-text").style('display', 'none');
+    SVG.selectAll(".center-question").style('display', 'none');
     if (indicators == "Waiting for fact-checkers") {
       SVG.append("text")
       .attr("class", "center-text")
@@ -542,6 +569,7 @@ function highlightManyHallmark(idArray, d) {
       .style("text-anchor", "middle")
       .html(("?"));
     } else {
+
     SVG.append("text")
     .attr("class", "center-text")
     .attr("x", 0)
@@ -549,6 +577,8 @@ function highlightManyHallmark(idArray, d) {
     .style("font-size", 40)
     .style("text-anchor", "middle")
     .html((pointsGained));
+
+
 }
 
 }
