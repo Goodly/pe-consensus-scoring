@@ -326,9 +326,6 @@ function colorFinderSun(d) {
 */
 function resetVis(d) {
   // theresa start
-  setTimeout(function() {
-    jQuery("#popup").css("bottom", "484px");
-  }, 2000);
     normalSun(d);
     d3.selectAll("path")
         .transition()
@@ -410,7 +407,6 @@ function resetVis(d) {
     @return : none
 */
 function drawVis(d, root, me, div) {
-    jQuery("#popup").css("bottom", "434px");
     if (d.height == 2) {
         resetVis(d);
         return;

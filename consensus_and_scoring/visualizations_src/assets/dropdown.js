@@ -155,6 +155,12 @@ window.addEventListener("DOMContentLoaded", function () {
   explore_button.onclick = function() {
 
     if (button_state == 0) {
+      $("#chart").css("opacity", .2);
+      $("#popup").css("opacity", .4);
+      $("#myModal").hide();
+      $("#popup").html("?");
+      document.getElementById("popup").disabled = true;
+      classic = false;
       this.innerHTML = "Classic View";
       this.style["background-color"] = "#57c1ae";
       this.style["font-weight"] = "30px";
@@ -166,6 +172,10 @@ window.addEventListener("DOMContentLoaded", function () {
           });
       });
     } else {
+      $("#chart").css("opacity", 1);
+      $("#popup").css("opacity", .65);
+      document.getElementById("popup").disabled = false;
+      classic = true;
       this.innerHTML = "Article Elements";
       this.style["background-color"] = "#76BCE2";
       this.style["font-weight"] = "30px";
