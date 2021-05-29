@@ -107,6 +107,8 @@ function hallmark(data) {
       return color(d.data.data["Credibility Indicator Category"]);
     });
 
+
+
   //Setting the center circle to the score
   svg.selectAll(".center-text")
     .style("display", "none");
@@ -117,6 +119,25 @@ function hallmark(data) {
     .style("font-size", 40)
     .style("text-anchor", "middle")
     .html((totalScore));
+
+  switch(NUM_NFC) {
+    case 0:
+      $(".center-text").css("font-weight", "bold");
+      break;
+    case 1:
+      $(".center-text").css("opacity", ".95");
+      break;
+    case 2:
+      $(".center-text").css("opacity", ".85");
+    case 3:
+      $(".center-text").css("opacity", ".75");
+    case 4:
+      $(".center-text").css("opacity", ".65");
+    case 5:
+      $(".center-text").css("opacity", ".55");
+    default:
+      $(".center-text").css("opacity", ".45");
+  }
 
 
   //Setting the outer and inside rings to be transparent.
@@ -337,6 +358,25 @@ function resetVis(d) {
         .style("font-size", 40)
         .style("text-anchor", "middle")
         .html((totalScore));
+
+    switch(NUM_NFC) {
+      case 0:
+        $(".center-text").css("font-weight", "bold");
+        break;
+      case 1:
+        $(".center-text").css("opacity", ".95");
+        break;
+      case 2:
+        $(".center-text").css("opacity", ".85");
+      case 3:
+        $(".center-text").css("opacity", ".75");
+      case 4:
+        $(".center-text").css("opacity", ".65");
+      case 5:
+        $(".center-text").css("opacity", ".55");
+      default:
+        $(".center-text").css("opacity", ".45");
+    }
     visualizationOn = false;
 }
 
@@ -464,6 +504,25 @@ function drawVis(d, root, me, div) {
       .style("font-size", 40)
       .style("text-anchor", "middle")
       .html((pointsGained));
+
+    switch(NUM_NFC) {
+        case 0:
+          $(".center-text").css("font-weight", "bold");
+          break;
+        case 1:
+          $(".center-text").css("opacity", ".95");
+          break;
+        case 2:
+          $(".center-text").css("opacity", ".85");
+        case 3:
+          $(".center-text").css("opacity", ".75");
+        case 4:
+          $(".center-text").css("opacity", ".65");
+        case 5:
+          $(".center-text").css("opacity", ".55");
+        default:
+          $(".center-text").css("opacity", ".45");
+    }
 }
 
 
