@@ -18,4 +18,4 @@ def merge(tua_input_dir, output_csv):
     print("Merged focus tag csvs")
 
 if __name__ == '__main__':
-    merge("../data/focus_tags/", "../data/output_concat_tags")
+    merge("../test_output/publish_p4-a530712123/focus_tags", "../test_output/publish_p4-a530712123/output_concat_tags")
