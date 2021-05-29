@@ -381,10 +381,10 @@ function highlight(x) {
 
 
 function triageNormal(x) {
-    DIV.transition()
-        .duration(600)
-        .style("opacity",0);
-    DIV.style("position", "absolute");
+    TRIAGE_DIV.transition()
+    .delay(5)
+    .duration(200)
+    .style("opacity", 0);
     var allSpans = document.getElementsByTagName('span');
     for (var i = 0; i < allSpans.length; i++) {
       allSpans[i].style.setProperty("background-color", "transparent");
@@ -405,6 +405,8 @@ function normal(x) {
         .delay(300)
         .duration(600)
         .style("opacity", 0)
+
+
   var allSpans = document.getElementsByTagName('span');
   for (var i = 0; i < allSpans.length; i++) {
     allSpans[i].style.setProperty("background-color", "transparent");
@@ -538,7 +540,7 @@ function highlightManyHallmark(idArray, d) {
       .attr("y", 13)
       .style("font-size", 40)
       .style("text-anchor", "middle")
-      .html((""));
+      .html(("?"));
     } else {
     SVG.append("text")
     .attr("class", "center-text")

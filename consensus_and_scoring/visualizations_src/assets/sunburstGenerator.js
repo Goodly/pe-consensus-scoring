@@ -483,7 +483,7 @@ function drawVis(d, root, me, div) {
     var pointsGained = scoreSum(d);
     SVG.selectAll(".center-text").style('display', 'none');
     if (d.data.data["Credibility Indicator Name"] == "Waiting for fact-checkers") {
-      pointsGained = "";
+      pointsGained = "?";
     } else if (d.data.data["Credibility Indicator Name"] == "Evidence") {
       var child;
       var allFactCheck = true;
@@ -494,7 +494,7 @@ function drawVis(d, root, me, div) {
         }
       }
       if (allFactCheck) {
-        pointsGained = "";
+        pointsGained = "?";
       }
     }
     SVG.append("text")
