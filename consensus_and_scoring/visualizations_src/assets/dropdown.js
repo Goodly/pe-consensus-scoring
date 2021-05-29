@@ -5,7 +5,8 @@ window.addEventListener("DOMContentLoaded", function () {
   var explore_button = document.getElementById("explore_button");
   var input = document.getElementById('userid')
   var content = document.getElementsByClassName("dropdown-content")[0];
-  var x_button = document.getElementById("x_button");
+  var close_button = document.getElementById("close_button");
+  var showClassicText = true;
 
   var button_state = 0; // We have TWO states for this deployment;
   // HARD CODED
@@ -17,10 +18,14 @@ window.addEventListener("DOMContentLoaded", function () {
   var classicElements = document.getElementsByClassName('hide')[1];
 
   function classic_click() {
+    button_state = 0;
+    visualizationOn = true;
     $("#popup").css("opacity", 1);
     classic = true;
     //content.style.display = "none";
-    classicElements.setAttribute('class', 'show');
+    if (showClassicText) {
+      classicElements.setAttribute('class', 'show');
+    }
     articleElements.setAttribute('class', 'hide');
     //yourCont.setAttribute('class', 'hide');
     $("#chart").css("opacity", 1);
@@ -35,7 +40,10 @@ window.addEventListener("DOMContentLoaded", function () {
       document.getElementById("textArticle").innerHTML = text.toString();
       d3.csv(DATA_FILE_URL, function(error, data) {
         if (error) throw error;
-        createHighlights(data, text.toString());
+        d3.csv(TRIAGE_FILE_URL, function(error, triageData) {
+          if (error) throw error;
+          createHighlights(data, triageData, text.toString());
+        });
       });
     });
   }
@@ -113,6 +121,7 @@ window.addEventListener("DOMContentLoaded", function () {
   // }
 
   function article_click() {
+    button_state = 1;
     classic = false;
     visualizationOn = false;
     $("#chart").css("opacity", .2);
@@ -154,8 +163,11 @@ window.addEventListener("DOMContentLoaded", function () {
     button_state = (button_state + 1) % 2
   }
 
-  x_button.onclick = function() {
+  close_button.onclick = function() {
     $(".dropdown-content").slideUp("slow");
+    showClassicText = false;
+    classic_click();
+    showClassicText = true;
   }
 
 

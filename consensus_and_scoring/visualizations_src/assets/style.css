@@ -720,7 +720,7 @@ h3 {
   text-align: center;
   display: inline-block;
   font-size: 20px;
-  opacity: 1;
+  opacity: .6;
   font-family: 'Lato', sans-serif;
   border: none;
   width: 94%;
@@ -769,7 +769,7 @@ h3 {
   text-align: center;
   display: inline-block;
   font-size: 20px;
-  opacity: 0.6;
+  opacity: 1;
   width: 94%;
 
 }
@@ -828,15 +828,17 @@ h3 {
 .dropdown:hover .dropbtn {background-color: #4d61b3;}
 
 
-#x_button {
+#close_button {
   cursor: pointer;
   color: #aaaaaa;
   padding-top: 110px;
+  font-size: 16px;
 }
 
-#x_button:hover {
+#close_button:hover {
   transition: color 1.3s;
   color: #000000;
+
 }
 /** End Explore the Article section **/
 

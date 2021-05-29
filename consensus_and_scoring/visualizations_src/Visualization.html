@@ -161,7 +161,7 @@
                           </div> -->
                           <button type ="button" class = "classic_button" id = "classic_button">Classic View</button>
                           <div class="hide" id="classic">How does the Public Editor algorithm evaluate this article?</div>
-                          <span id="x_button">x</span>
+                          <span id="close_button">CLOSE</span>
                         </div>
                     </div>
                   </div>
@@ -186,7 +186,10 @@
                   var dataFileUrl = "$DATA_CSV_URL";
                   var triageFileUrl = "$TRIAGER_CSV_URL";
 
-                  
+                  // textFileUrl = "article_8c09.txt";
+                  // dataFileUrl = "viz_data_8c09.csv";
+                  // triageFileUrl = "triager_data_8c09.csv";
+
 
                   var userFileUrl = "user_contributions.csv";
                   import("/visualizations/assets/createHighlights.js").then(scoreArticle(textFileUrl, dataFileUrl, triageFileUrl, userFileUrl));

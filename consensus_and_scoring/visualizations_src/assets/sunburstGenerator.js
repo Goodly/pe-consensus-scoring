@@ -400,6 +400,7 @@ function drawVis(d, root, me, div) {
         return b.length - a.length;
       }
     )[0];
+    var max_width = Math.max(longest.length, 20);
     var words_len = tooltip_text.length;
     var start_index = d.data.data.Start;
     var end_index = d.data.data.End;
@@ -409,7 +410,7 @@ function drawVis(d, root, me, div) {
         tooltip_text = tooltip_text + "<br><i>(Throughout article)</i></span>";
         words_len += "(Throughout article)".length;
       } else {
-        tooltip_text = tooltip_text + "<br><i>(No highlight in text)</i></span>";
+        tooltip_text = tooltip_text + "<br><i>(No highlight in text) siufydg suyf suyg ufydg sdufy udsy sudgfyi uyu sdf uygf uygsudyf uydgf uyuy uyuy uyuy uyuy uyuy uyuy uy </i></span>";
         words_len += "(No highlight in text)".length;
       }
     } else {
@@ -422,17 +423,14 @@ function drawVis(d, root, me, div) {
       .style("left", (d3.event.pageX) + "px")
       .style("top", (d3.event.pageY) + "px")
       .style("width", function() {
-        if (words_len / 4 > longest.length) {
-          return (2 * longest.length).toString() + "ch";
+        if (words_len < 20) {
+          return words_len.toString() + "ch";
         }
-        return longest.length.toString()+"ch";
+        return max_width.toString() + "ch";
+      }).style("min-height", function() {
+        return "1ch";
       }).style("height", function() {
-        if (words_len / 4 > longest.length) {
-          return (.1).toString() + "ch";
-        }
-        return ((words_len / longest.length) + 5).toString() + "ch";
-      }).style("line-height", function() {
-        return ((words_len / longest.length) + 1.5).toString() + "ch";
+        return "fit-content";
       });
 
     var pointsGained = scoreSum(d);
@@ -443,7 +441,7 @@ function drawVis(d, root, me, div) {
       var child;
       var allFactCheck = true;
       for (child of d.children) {
-        
+
         if (child.data.data["Credibility Indicator Name"] != "Waiting for fact-checkers") {
           allFactCheck = false;
         }

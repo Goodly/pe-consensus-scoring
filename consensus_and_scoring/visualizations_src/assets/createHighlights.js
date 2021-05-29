@@ -37,12 +37,11 @@ function scoreArticle(textFileUrl, dataFileUrl, triageFileUrl, userFileUrl) {
             d3.csv(triageFileUrl, function(error, triage_data) {
               if (error) {
                 console.log("No triage file found");
-                createHighlights(data, text.toString());
+                createHighlights(data, triage_data, text.toString());
                 hallmark(data);
               } else {
                 delete data['columns'];
-                moveFactCheckLabels(triage_data, data);
-                createHighlights(data, text.toString());
+                createHighlights(data, triage_data, text.toString());
                 hallmark(data);
               }
             });
@@ -191,10 +190,11 @@ function createTriageHighlights(json, textString, triage) {
 
 
 
-function createHighlights(json, textString) {
+function createHighlights(visData, triageData, textString) {
+  moveFactCheckLabels(triageData, visData);
   //var textString = document.getElementById('textArticle').innerHTML;
   textArray = textString.split("");  // Splitting the string into an array of strings, one item per character
-  var sortedEntries = sortJSONentries(json); // an array highlight arrays, sorted by their indices
+  var sortedEntries = sortJSONentries(visData); // an array highlight arrays, sorted by their indices
   var highlightStack = new FlexArray();
 
   sortedEntries.forEach((entry) => {  // for each entry, open a span if open or close then reopen all spans if a close
@@ -209,7 +209,7 @@ function createHighlights(json, textString) {
       highlightStack.remove(entry);
       textArray = openHighlights(textArray, index+1, highlightStack, true);
     }
-  })
+  });
 
   finalHTML = textArray.join('');
   document.getElementById('textArticle').innerHTML = finalHTML;
