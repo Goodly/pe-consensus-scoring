@@ -59,6 +59,8 @@ function hallmark(data) {
   SVG = svg;
 
 
+
+
   visualizationOn = false;
 
   var div = d3.select("body").append("div")
@@ -110,34 +112,32 @@ function hallmark(data) {
 
 
   //Setting the center circle to the score
+var center_style = getCenterStyle(NUM_NFC);
+var text_x = center_style[0];
+var text_y = center_style[1];
+var text_size = center_style[2];
+var question_x = center_style[3];
+var question_y = center_style[4];
+var question_size = center_style[5]
+
   svg.selectAll(".center-text")
     .style("display", "none");
   svg.append("text")
     .attr("class", "center-text")
-    .attr("x", 0)
-    .attr("y", 13)
-    .style("font-size", 40)
+    .attr("x", text_x)
+    .attr("y", text_y)
+    .style("font-size", text_size)
     .style("text-anchor", "middle")
     .html((totalScore));
 
-  switch(NUM_NFC) {
-    case 0:
-      $(".center-text").css("font-weight", "bold");
-      break;
-    case 1:
-      $(".center-text").css("opacity", ".95");
-      break;
-    case 2:
-      $(".center-text").css("opacity", ".85");
-    case 3:
-      $(".center-text").css("opacity", ".75");
-    case 4:
-      $(".center-text").css("opacity", ".65");
-    case 5:
-      $(".center-text").css("opacity", ".55");
-    default:
-      $(".center-text").css("opacity", ".45");
-  }
+
+  svg.append("text")
+    .attr("class", "center-question")
+    .attr("x", question_x)
+    .attr("y", question_y)
+    .style("font-size", question_size)
+    .html("?")
+
 
 
   //Setting the outer and inside rings to be transparent.
@@ -350,33 +350,34 @@ function resetVis(d) {
             .duration(600)
             .style("opacity", 0);
     var total = parseFloat(scoreSum(d) + ADJUSTMENT);
+
+    var center_style = getCenterStyle(NUM_NFC);
+    var text_x = center_style[0];
+    var text_y = center_style[1];
+    var text_size = center_style[2];
+    var question_x = center_style[3];
+    var question_y = center_style[4];
+    var question_size = center_style[5]
+
+
     SVG.selectAll(".center-text").style('display', 'none');
+    SVG.selectAll(".center-question").style('display', 'none');
     SVG.append("text")
         .attr("class", "center-text")
-        .attr("x", 0)
-        .attr("y", 13)
-        .style("font-size", 40)
+        .attr("x", text_x)
+        .attr("y", text_y)
+        .style("font-size", text_size)
         .style("text-anchor", "middle")
         .html((totalScore));
 
-    switch(NUM_NFC) {
-      case 0:
-        $(".center-text").css("font-weight", "bold");
-        break;
-      case 1:
-        $(".center-text").css("opacity", ".95");
-        break;
-      case 2:
-        $(".center-text").css("opacity", ".85");
-      case 3:
-        $(".center-text").css("opacity", ".75");
-      case 4:
-        $(".center-text").css("opacity", ".65");
-      case 5:
-        $(".center-text").css("opacity", ".55");
-      default:
-        $(".center-text").css("opacity", ".45");
-    }
+    SVG.append("text")
+        .attr("class", "center-question")
+        .attr("x", question_x)
+        .attr("y", question_y)
+        .style("font-size", question_size)
+        .html("?")
+
+
     visualizationOn = false;
 }
 
@@ -482,6 +483,7 @@ function drawVis(d, root, me, div) {
 
     var pointsGained = scoreSum(d);
     SVG.selectAll(".center-text").style('display', 'none');
+    SVG.selectAll(".center-question").style('display', 'none');
     if (d.data.data["Credibility Indicator Name"] == "Waiting for fact-checkers") {
       pointsGained = "?";
     } else if (d.data.data["Credibility Indicator Name"] == "Evidence") {
@@ -505,24 +507,6 @@ function drawVis(d, root, me, div) {
       .style("text-anchor", "middle")
       .html((pointsGained));
 
-    switch(NUM_NFC) {
-        case 0:
-          $(".center-text").css("font-weight", "bold");
-          break;
-        case 1:
-          $(".center-text").css("opacity", ".95");
-          break;
-        case 2:
-          $(".center-text").css("opacity", ".85");
-        case 3:
-          $(".center-text").css("opacity", ".75");
-        case 4:
-          $(".center-text").css("opacity", ".65");
-        case 5:
-          $(".center-text").css("opacity", ".55");
-        default:
-          $(".center-text").css("opacity", ".45");
-    }
 }
 
 
@@ -590,5 +574,27 @@ function normalSun() {
     for (var i = 0; i < allSpans.length; i++) {
       allSpans[i].style.setProperty("background-color", "transparent");
     }
+}
+
+
+// Returns
+//    [score_x, score_y, score_size, question_x, question_y, question_size]
+function getCenterStyle(num_nfc) {
+  switch(num_nfc) {
+    case 0:
+      return [0, 13, 40, 0, 0, 0]
+    case 1:
+      return [-1, 13, 33, 17, -5, 19]
+    case 2:
+      return [-2, 13, 29, 14, -0, 25]
+    case 3:
+      return [-3, 13, 25, 11, -0, 30]
+    case 4:
+      return [-4, 13, 20, 8, -0, 33]
+    case 5:
+      return [-5, 13, 14, 0, 0, 37]
+    default:
+      return [-6, 13, 12, -1, 0, 40]
+  }
 }
 //theresa end
