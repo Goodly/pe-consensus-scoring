@@ -42,6 +42,7 @@ var arc = d3.arc()
 
 //This variable creates the floating textbox on the hallmark
 var DIV;
+var TRIAGE_DIV;
 var PSEUDOBOX;
 
 var ROOT;
@@ -66,11 +67,17 @@ function hallmark(data) {
       .style("text-align", "center")
       .style("margin", "auto");
 
+  var triage_div = d3.select('body').append('div')
+      .attr("class", "tooltip")
+      .style("opacity", 0)
+      .style("text-align", "center")
+
   var pseudobox = d3.select("body").append("div")
       .attr("class", "pseudobox")
       .style("opacity", 1);
 
   DIV = div;
+  TRIAGE_DIV = triage_div;
 
   PSEUDOBOX = pseudobox;
   delete data["columns"];

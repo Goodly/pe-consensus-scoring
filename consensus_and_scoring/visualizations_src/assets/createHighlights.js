@@ -268,7 +268,7 @@ function triageHighlight(x) {
   var topID = x.toElement.getAttribute("name");
   var colorRGB = x.toElement.style.borderBottomColor;
   var color = colorRGB.match(/\d+/g);                      // split rgb into r, g, b, components
-  DIV.transition().duration(50)
+  TRIAGE_DIV.transition().duration(50)
             .style("opacity", .9);
   var divContent;
   var triage = topID.split("_")[topID.split("_").length - 1] == "triage"
@@ -328,22 +328,29 @@ function triageHighlight(x) {
   }
 
 
-  DIV.style("position", "fixed");
-  var width;
-  DIV.style("width", function() {
-      if (divContent.length < 30) {
-          width = (divContent.length * 10);
-          return width.toString() +"px";
+
+  var words = divContent.split(" ");
+  var longest = words.sort(
+    function (a, b) {
+      return b.length - a.length;
+    }
+  )[0];
+  var max_width = Math.max(17, longest.length);
+
+  TRIAGE_DIV.style("width", function() {
+      if (divContent.length < 17) {
+          return divContent.length.toString() + "ch";
       } else {
-          width = divContent.length + 5
-          return width.toString() +"px";
+          return max_width.toString() +"ch";
       }
   });
 
-  var box_x = $(".p-article")[0].getBoundingClientRect().x - width - 40;
+  var box_x = $(".p-article")[0].getBoundingClientRect().x - 13*max_width;
   var box_y = event.clientY;
-  DIV.style("height", "auto");
-  DIV.style("left", box_x + "px")
+  TRIAGE_DIV.style("min-height", "1ch");
+  TRIAGE_DIV.style("position", "absolute");
+  TRIAGE_DIV.style("height", "fit-content");
+  TRIAGE_DIV.style("left", box_x + "px")
             .style("top", box_y + "px")
             .html(divContent);
   x.toElement.style.setProperty("background-color", "rgba(" + color[0] + "," + color[1] + "," + color[2] + "," + "0.4");
