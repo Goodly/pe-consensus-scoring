@@ -174,8 +174,8 @@ div.pseudobox {
 #popup {
   height: 25px;
   width: 25px;
-  bottom: 511px;
-  right: 308px;
+  bottom: 0px;
+  right: 300px;
   border-radius: 50%;
   z-index: 100;
   position: absolute;
@@ -190,11 +190,11 @@ div.pseudobox {
   display: none; /* Hidden by default */
   position: absolute; /* Stay in place */
   z-index: 2; /* Sit on top */
-  bottom: 50px;
+  bottom: -110px;
   right: 8px;
   width: auto; /* Full width */
   height: 70%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
+  /* overflow: auto; /* Enable scroll if needed */ */
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0,0); /* Black w/ opacity */
 }

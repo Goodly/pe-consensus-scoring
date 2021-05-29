@@ -3,7 +3,7 @@ var USER_FILE_URL;
 var TEXT_FILE_URL;
 var DATA_FILE_URL;
 var ADJUSTMENT = 0;
-var NUM_NFC = 0;
+var NUM_NFC;
 
 function sortJSONentries(json) {
   var sortArray = []; // an array of arrays
@@ -60,6 +60,7 @@ function scoreArticle(textFileUrl, dataFileUrl, triageFileUrl, userFileUrl) {
 
 // Pulls the "Needs fact-check" label from the triage data to the vis_data object
 function moveFactCheckLabels(triage_data, visDataArray) {
+    NUM_NFC = 0;
     var item;
     var maxEvidenceID = -1;
 

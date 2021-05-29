@@ -93,7 +93,7 @@ function hallmark(data) {
   // var newheight = sunburst_div.clientHeight + document.getElementById('chart').clientHeight;
   // sunburst_div.style.height = newheight.toString() + "px";
   ROOT = root;
-  totalScore = 100 + scoreSum(root) + ADJUSTMENT;
+  totalScore = 100 + scoreSum(root);
   root.sum(function(d) {
 
     return Math.abs(parseFloat(d.data.Points));
@@ -542,6 +542,9 @@ For the center, we simply return the score of the article (100 plus the collecte
 */
 function scoreSum(d) {
     if (d.data.data.Points) {
+        if (d.data.data["Credibility Indicator Name"] == "Waiting for fact-checkers") {
+          return 0;
+        }
         return Math.round(d.data.data.Points);
     } else {
         var sum = 0;
@@ -599,6 +602,7 @@ function normalSun() {
 // Returns
 //    [score_x, score_y, score_size, question_x, question_y, question_size]
 function getCenterStyle(num_nfc) {
+  console.log(num_nfc);
   switch(num_nfc) {
     case 0:
       return [0, 13, 40, 0, 0, 0, false]
