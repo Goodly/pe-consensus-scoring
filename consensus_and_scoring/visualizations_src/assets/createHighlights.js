@@ -2,6 +2,8 @@ var TRIAGE_FILE_URL;
 var USER_FILE_URL;
 var TEXT_FILE_URL;
 var DATA_FILE_URL;
+var ADJUSTMENT = 0;
+var NUM_NFC;
 
 function sortJSONentries(json) {
   var sortArray = []; // an array of arrays
@@ -36,14 +38,11 @@ function scoreArticle(textFileUrl, dataFileUrl, triageFileUrl, userFileUrl) {
             d3.csv(triageFileUrl, function(error, triage_data) {
               if (error) {
                 console.log("No triage file found");
-                createHighlights(data, text.toString());
+                createHighlights(data, triage_data, text.toString());
                 hallmark(data);
               } else {
                 delete data['columns'];
-                console.log(triage_data)
-                moveFactCheckLabels(triage_data, data);
-                createHighlights(data, text.toString());
-                data.splice(data.length-2, 1);
+                createHighlights(data, triage_data, text.toString());
                 hallmark(data);
               }
             });
@@ -61,8 +60,10 @@ function scoreArticle(textFileUrl, dataFileUrl, triageFileUrl, userFileUrl) {
 
 // Pulls the "Needs fact-check" label from the triage data to the vis_data object
 function moveFactCheckLabels(triage_data, visDataArray) {
+    NUM_NFC = 0;
     var item;
-    var maxEvidenceID = 0;
+    var maxEvidenceID = -1;
+
     for (item of visDataArray) {
       if (item["Credibility Indicator Category"] == "Evidence") {
         var id = item["Credibility Indicator ID"];
@@ -73,26 +74,28 @@ function moveFactCheckLabels(triage_data, visDataArray) {
     var factCheckID = maxEvidenceID + 1;
 
     var caseNumbersSoFar = [];
-    for (rowIndex in triage_data) {
-      if (triage_data[rowIndex]["topic_name"] == "Needs Fact-Check") { // You'll need to change this
+    var triageRow;
+    for (triageRow of triage_data) {
+      if (triageRow["topic_name"] == "Needs Fact-Check") { // You'll need to change this
         // data[rowIndex]
-        var row = Object.assign({}, triage_data[rowIndex]);
+        var newVisRow = Object.assign({}, visDataArray[0]);
 
-        delete row[""]
 
-        if (!(caseNumbersSoFar.includes(row["case_number"]))) {// You'll need to change this
-          caseNumbersSoFar.push(row["case_number"]);
-          row["Credibility Indicator ID"] = "E" + factCheckID.toString();
+        if (!(caseNumbersSoFar.includes(triageRow["case_number"]))) {
+          caseNumbersSoFar.push(triageRow["case_number"]);
+          newVisRow["Credibility Indicator ID"] = "E" + factCheckID.toString();
           factCheckID++;
         }
-        row["Points"] = ".5";                          // You'll need to change this
-        row["Credibility Indicator Name"] = "Waiting for fact-checkers";// You'll need to change this
-        row["Credibility Indicator Category"] = "Evidence";// You'll need to change this
-        row["target_text"] = "nan";// You'll need to change this
-        Object.defineProperty(row, 'Article ID',
-            Object.getOwnPropertyDescriptor(row, 'Article sha256'));
-        delete row['Article sha256'];
-        visDataArray.push(row);
+        newVisRow["Points"] = ".5";                          // You'll need to change this
+        newVisRow["Credibility Indicator Name"] = "Waiting for fact-checkers";// You'll need to change this
+        newVisRow["Credibility Indicator Category"] = "Evidence";// You'll need to change this
+        newVisRow["target_text"] = "nan";// You'll need to change this
+        newVisRow["Start"] = triageRow["start_pos"];
+        newVisRow["End"] = triageRow["end_pos"];
+
+        visDataArray.push(newVisRow);
+        ADJUSTMENT = ADJUSTMENT - .5;
+        NUM_NFC += 1;
       }
     }
 }
@@ -101,13 +104,22 @@ function sortTriageEntries(json) {
   var sortArray = []; // an array of arrays
   for (i = 0; i < json.length; i++) {
 
-      if (parseInt(json[i].start_pos) == -1 || parseInt(json[i].end_pos) == -1 || json[i].start_pos == "") {
+    // if (json["topic_name"] == "Needs Fact-Check") {
+    //   continue; // This would remove it from the article elements view
+    // }
 
-        continue; // ignore entries where indices are -1 or null
-      }
+    if (json["topic_name"] == "Evidence" || json["topic_name"] == "Reasoning" ||
+        json["topic_name"] == "Probability" || json["topic_name"] == "Language") {
+        continue;
+    }
+
+    if (parseInt(json[i].start_pos) == -1 || parseInt(json[i].end_pos) == -1 || json[i].start_pos == "") {
+
+      continue; // ignore entries where indices are -1 or null
+    }
     // [uniqueID, color, index, boolean]
 
-    let uniqueID = json[i]["topic_name"] +'_' + json[i].start_pos + "_" + json[i].end_pos + "_triage";
+    let uniqueID = json[i]["topic_name"] +'_' + json[i].start_pos + "_" + json[i].end_pos + "_"+json[i]["topic_name"]+ json[i]["case_number"] +  "_triage" ;
 
     let startEntry = [uniqueID, colorFinderTriage(json[i]), parseInt(json[i].start_pos), true];
     let endEntry = [uniqueID, colorFinderTriage(json[i]), parseInt(json[i].end_pos), false];
@@ -123,9 +135,10 @@ function sortTriageEntries(json) {
 function sortUserEntries(json) {
   var sortArray = [];
   for (i = 0; i < json.length; i++) {
-      if (parseInt(json[i].Start) == -1 || parseInt(json[i].End) == -1 || (json[i].Start == 0 && json[i].End == 0)) {
-        continue; // ignore entries where indices are -1 or null
-      }
+
+    if (parseInt(json[i].Start) == -1 || parseInt(json[i].End) == -1 || (json[i].Start == 0 && json[i].End == 0)) {
+      continue; // ignore entries where indices are -1 or null
+    }
     // [uniqueID, color, index, boolean]
 
 //    let uniqueID = json[i]["question_text"] +'-'+json[i]["answer_text"] +"-"+ json[i].start_pos + "-" + json[i].end_pos + "-user";
@@ -158,13 +171,15 @@ function createTriageHighlights(json, textString, triage) {
   sortedEntries.forEach((entry) => {  // for each entry, open a span if open or close then reopen all spans if a close
     const index = entry[2];
 
+
+
     if (entry[3]) {
-      textArray = openHighlight(textArray, index, entry, highlightStack, 0);
+      textArray = openHighlight(textArray, index, entry, highlightStack, 0, false);
       highlightStack.push(entry);
     } else {
       textArray = closeHighlights(textArray, index, highlightStack);
       highlightStack.remove(entry);
-      textArray = openHighlights(textArray, index+1, highlightStack);
+      textArray = openHighlights(textArray, index+1, highlightStack, false);
     }
   })
 
@@ -178,10 +193,11 @@ function createTriageHighlights(json, textString, triage) {
 
 
 
-function createHighlights(json, textString) {
+function createHighlights(visData, triageData, textString) {
+  moveFactCheckLabels(triageData, visData);
   //var textString = document.getElementById('textArticle').innerHTML;
   textArray = textString.split("");  // Splitting the string into an array of strings, one item per character
-  var sortedEntries = sortJSONentries(json); // an array highlight arrays, sorted by their indices
+  var sortedEntries = sortJSONentries(visData); // an array highlight arrays, sorted by their indices
   var highlightStack = new FlexArray();
 
   sortedEntries.forEach((entry) => {  // for each entry, open a span if open or close then reopen all spans if a close
@@ -189,21 +205,21 @@ function createHighlights(json, textString) {
     const index = entry[2];
 
     if (entry[3]) {
-      textArray = openHighlight(textArray, index, entry, highlightStack, 0);
+      textArray = openHighlight(textArray, index, entry, highlightStack, 0, true);
       highlightStack.push(entry);
     } else {
       textArray = closeHighlights(textArray, index, highlightStack);
       highlightStack.remove(entry);
-      textArray = openHighlights(textArray, index+1, highlightStack);
+      textArray = openHighlights(textArray, index+1, highlightStack, true);
     }
-  })
+  });
 
   finalHTML = textArray.join('');
   document.getElementById('textArticle').innerHTML = finalHTML;
   $(".highlight").hover(highlight, normal);
 }
 
-function openHighlight(textArray, index, entry, highlightStack, i) {
+function openHighlight(textArray, index, entry, highlightStack, i, classic) {
   let allIDsBelow = "";
     highlightStack.getArray().forEach((entry) => {
        allIDsBelow = allIDsBelow + entry[0].toString() + "__"; // all the unqiue IDs are separated by dunders
@@ -213,20 +229,25 @@ function openHighlight(textArray, index, entry, highlightStack, i) {
   let uniqueId = entry[0].toString();
   let color = entry[1];
   let name = " name='" + uniqueId + "'";
-  let cred_id = " cred_id = '" +uniqueId.substring(0, 2) + "'";
+  var cred_id;
+  if (classic) {
+    cred_id = " cred_id = '" +uniqueId.substring(0, 2) + "'";
+  } else {
+    cred_id = " cred_id = '" + uniqueId.split("_")[3] + "'";
+  }
   let style = " style= 'border-bottom:1px solid " + color;
-  color['opacity'] = 0.1;
+  //color['opacity'] = 0.1;
   style = style + "; --color: " + color + "'";
   let highlight = "<span class='highlight' start='"+index+"'" + name + allIDsBelow + cred_id + style + ">";
   textArray[index-1] = text + highlight;
   return textArray;
 }
 
-function openHighlights(textArray, index, highlightStack) {
+function openHighlights(textArray, index, highlightStack, classic) {
   let text = textArray[index];
   for (var i = 0; i < highlightStack.getSize(); i++) {
 
-    textArray = openHighlight(textArray, index, highlightStack.get(i), highlightStack, i);
+    textArray = openHighlight(textArray, index, highlightStack.get(i), highlightStack, i, classic);
   }
   // highlightStack.getArray().forEach((entry) => {
   //   textArray = openHighlight(textArray, index, entry);
@@ -250,14 +271,55 @@ function triageHighlight(x) {
   var topID = x.toElement.getAttribute("name");
   var colorRGB = x.toElement.style.borderBottomColor;
   var color = colorRGB.match(/\d+/g);                      // split rgb into r, g, b, components
-  DIV.transition().duration(50)
+  TRIAGE_DIV.transition().duration(50)
             .style("opacity", .9);
   var divContent;
   var triage = topID.split("_")[topID.split("_").length - 1] == "triage"
 
   if (triage) {
-    divContent = topID.split("_")[0];
+    var topIDName = topID.split("_")[0];
+    if (topIDName != "Needs Fact-Check" && topIDName != "Evidence") {
+      topIDName = topIDName.substring(0, topIDName.length -1);
+    }
+    var cred_id = x.toElement.getAttribute("cred_id");
+    cred_id = cred_id[cred_id.length-1];
+    divContent = topIDName + " " + cred_id + ", ";
+    var allIDsBelow = x.toElement.getAttribute("allidsbelow").split("__");
+    var id;
+    var cred_ids = [x.toElement.getAttribute("cred_id")];
+    for (id of allIDsBelow) {
+      if (id == "") {
+        continue;
+      }
+      var id_name = id.split("_")[0];
+      cred_id = id.split("_")[3];
+      console.log(cred_id);
 
+      var case_number = cred_id.substring(cred_id.length-1, cred_id.length);
+      if (!cred_ids.includes(cred_id)) {
+        cred_ids.push(cred_id);
+      }
+      if (id_name != "Needs Fact-Check" && topIDName != "Evidence") {
+        id_name = id_name.substring(0, id_name.length - 1);
+      }
+      if (divContent.includes(id_name)) {
+        continue;
+      }
+      divContent = divContent + id_name + " " + case_number + ", ";
+    }
+    divContent = divContent.substring(0, divContent.length -2);
+
+    console.log(cred_ids);
+    cred_id;
+
+    for (cred_id of cred_ids) {
+      $("span[cred_id='"+cred_id+"']").each(function() {
+        colorRGB = this.style.borderBottomColor;
+        color = colorRGB.match(/\d+/g);
+        this.style.setProperty("background-color", "rgba(" + color[0] + "," + color[1] + "," + color[2] + "," + "0.4");
+        this.style.setProperty("background-clip", "content-box");
+      });
+    }
   } else {
       divContent = topID.split("_")[1];
       //We gotta make that score shit....
@@ -269,22 +331,29 @@ function triageHighlight(x) {
   }
 
 
-  DIV.style("position", "fixed");
-  var width;
-  DIV.style("width", function() {
-      if (divContent.length < 30) {
-          width = (divContent.length * 10);
-          return width.toString() +"px";
+
+  var words = divContent.split(" ");
+  var longest = words.sort(
+    function (a, b) {
+      return b.length - a.length;
+    }
+  )[0];
+  var max_width = Math.max(17, longest.length);
+
+  TRIAGE_DIV.style("width", function() {
+      if (divContent.length < 17) {
+          return divContent.length.toString() + "ch";
       } else {
-          width = divContent.length + 5
-          return width.toString() +"px";
+          return max_width.toString() +"ch";
       }
   });
 
-  var box_x = $(".p-article")[0].getBoundingClientRect().x - width - 40;
+  var box_x = $(".p-article")[0].getBoundingClientRect().x - 13*max_width;
   var box_y = event.clientY;
-  DIV.style("height", "auto");
-  DIV.style("left", box_x + "px")
+  TRIAGE_DIV.style("min-height", "1ch");
+  TRIAGE_DIV.style("position", "absolute");
+  TRIAGE_DIV.style("height", "fit-content");
+  TRIAGE_DIV.style("left", box_x + "px")
             .style("top", box_y + "px")
             .html(divContent);
   x.toElement.style.setProperty("background-color", "rgba(" + color[0] + "," + color[1] + "," + color[2] + "," + "0.4");
@@ -313,10 +382,10 @@ function highlight(x) {
 
 
 function triageNormal(x) {
-    DIV.transition()
-        .duration(600)
-        .style("opacity",0);
-    DIV.style("position", "absolute");
+    TRIAGE_DIV.transition()
+    .delay(5)
+    .duration(200)
+    .style("opacity", 0);
     var allSpans = document.getElementsByTagName('span');
     for (var i = 0; i < allSpans.length; i++) {
       allSpans[i].style.setProperty("background-color", "transparent");
@@ -337,6 +406,8 @@ function normal(x) {
         .delay(300)
         .duration(600)
         .style("opacity", 0)
+
+
   var allSpans = document.getElementsByTagName('span');
   for (var i = 0; i < allSpans.length; i++) {
     allSpans[i].style.setProperty("background-color", "transparent");
@@ -374,13 +445,39 @@ function resetHallmark() {
             }
         })
     SVG.selectAll(".center-text").style('display', 'none');
+    SVG.selectAll(".center-question").style('display', 'none');
+
+    var center_style = getCenterStyle(NUM_NFC);
+    var text_x = center_style[0];
+    var text_y = center_style[1];
+    var text_size = center_style[2];
+    var question_x = center_style[3];
+    var question_y = center_style[4];
+    var question_size = center_style[5]
+    var double_question = center_style[6];
+
     SVG.append("text")
         .attr("class", "center-text")
-        .attr("x", 0)
-        .attr("y", 13)
-        .style("font-size", 40)
+        .attr("x", text_x)
+        .attr("y", text_y)
+        .style("font-size", text_size)
         .style("text-anchor", "middle")
         .html((totalScore));
+    if (double_question) {
+      SVG.append("text")
+          .attr("class", "center-question")
+          .attr("x", question_x)
+          .attr("y", question_y)
+          .style("font-size", question_size)
+          .html("??");
+    } else {
+      SVG.append("text")
+          .attr("class", "center-question")
+          .attr("x", question_x)
+          .attr("y", question_y)
+          .style("font-size", question_size)
+          .html("?");
+    }
 }
 
 
@@ -463,6 +560,7 @@ function highlightManyHallmark(idArray, d) {
 
 
     SVG.selectAll(".center-text").style('display', 'none');
+    SVG.selectAll(".center-question").style('display', 'none');
     if (indicators == "Waiting for fact-checkers") {
       SVG.append("text")
       .attr("class", "center-text")
@@ -470,8 +568,9 @@ function highlightManyHallmark(idArray, d) {
       .attr("y", 13)
       .style("font-size", 40)
       .style("text-anchor", "middle")
-      .html((""));
+      .html(("?"));
     } else {
+
     SVG.append("text")
     .attr("class", "center-text")
     .attr("x", 0)
@@ -479,6 +578,8 @@ function highlightManyHallmark(idArray, d) {
     .style("font-size", 40)
     .style("text-anchor", "middle")
     .html((pointsGained));
+
+
 }
 
 }

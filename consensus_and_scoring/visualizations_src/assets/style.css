@@ -164,9 +164,9 @@ div.pseudobox {
   display: flex;
   position: -webkit-sticky;
   position: sticky;
-  top: 80px;
-  left: -1000px;
-  height: 800px;
+  top: 60px;
+  left: -2000px;
+  height: 300px;
   width: 400px;
   z-index: 0;
 }
@@ -174,22 +174,27 @@ div.pseudobox {
 #popup {
   height: 25px;
   width: 25px;
-  bottom: 488px;
-  right: 60px;
+  bottom: 0px;
+  right: 300px;
   border-radius: 50%;
   z-index: 100;
   position: absolute;
+  opacity: .55;
+}
+
+#popup:focus {
+  outline: none;
 }
 
 .modal {
   display: none; /* Hidden by default */
   position: absolute; /* Stay in place */
   z-index: 2; /* Sit on top */
-  bottom: 70px;
-  right: 45px;
-  width: 80%; /* Full width */
-  height: auto; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
+  bottom: -110px;
+  right: 8px;
+  width: auto; /* Full width */
+  height: 70%; /* Full height */
+  /* overflow: auto; /* Enable scroll if needed */ */
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0,0); /* Black w/ opacity */
 }
@@ -712,7 +717,7 @@ h3 {
   display: inline-block;
 }
 
-.button_one {
+.article_elem_button {
   border-radius: 12px;
   margin: 5px;
   background-color: #ffb400;
@@ -720,13 +725,13 @@ h3 {
   text-align: center;
   display: inline-block;
   font-size: 20px;
-  opacity: 1;
+  opacity: .6;
   font-family: 'Lato', sans-serif;
   border: none;
   width: 94%;
 
 }
-.button_one:hover + .hide {
+.article_elem_button:hover + .hide {
   transition: opacity 2s, max-height 1s;
   opacity: 1;
   max-height: 100%;
@@ -736,7 +741,7 @@ h3 {
   color: #323648;
 }
 
-.button_two {
+.user_button {
   border-radius: 12px;
   margin: 5px;
   font-family: 'Lato', sans-serif;
@@ -749,7 +754,7 @@ h3 {
   opacity: 0.6;
   width: 94%;
 }
-.button_two:hover + .hide {
+.user_button:hover + .hide {
   transition: opacity 2s, max-height 1s;
   opacity: 1;
   max-height: 500px;
@@ -759,7 +764,7 @@ h3 {
   color: #323648;
 }
 
-.button_three {
+.classic_button {
   border-radius: 12px;
   margin: 5px;
   border: none;
@@ -769,11 +774,11 @@ h3 {
   text-align: center;
   display: inline-block;
   font-size: 20px;
-  opacity: 0.6;
+  opacity: 1;
   width: 94%;
 
 }
-.button_three:hover + .hide {
+.classic_button:hover + .hide {
   transition: opacity 2s, max-height 1s;
   opacity: 1;
   max-height: 500px;
@@ -797,6 +802,10 @@ h3 {
   top: 0;
 }
 
+.dropbtn:focus {
+  outline: none;
+}
+
 .dropdown {
   position: sticky;
   position: -webkit-sticky;
@@ -811,6 +820,7 @@ h3 {
   min-width: 80px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
+  padding:5px;
 }
 
 .dropdown-content a {
@@ -826,6 +836,19 @@ h3 {
 
 .dropdown:hover .dropbtn {background-color: #4d61b3;}
 
+
+#close_button {
+  cursor: pointer;
+  color: #aaaaaa;
+  padding-top: 110px;
+  font-size: 16px;
+}
+
+#close_button:hover {
+  transition: color 1.3s;
+  color: #000000;
+
+}
 /** End Explore the Article section **/
 
 p.p-explain {
@@ -851,6 +874,7 @@ p.p-article {
   font-size: 16px;
   color: black;
   white-space: pre-line;
+  margin-top:80px;
 }
 
 p.p-annotate {
@@ -1479,7 +1503,9 @@ This is mobile
 .cred-score-container {
   grid-column: 11/13;
   grid-row: 1/3;
-  padding-left: 47px;
+  position: relative;
+  left: -65px;
+  padding-left: 00px;
 }
 
 

@@ -42,6 +42,7 @@ var arc = d3.arc()
 
 //This variable creates the floating textbox on the hallmark
 var DIV;
+var TRIAGE_DIV;
 var PSEUDOBOX;
 
 var ROOT;
@@ -58,6 +59,8 @@ function hallmark(data) {
   SVG = svg;
 
 
+
+
   visualizationOn = false;
 
   var div = d3.select("body").append("div")
@@ -66,178 +69,204 @@ function hallmark(data) {
       .style("text-align", "center")
       .style("margin", "auto");
 
+  var triage_div = d3.select('body').append('div')
+      .attr("class", "tooltip")
+      .style("opacity", 0)
+      .style("text-align", "center")
+
   var pseudobox = d3.select("body").append("div")
       .attr("class", "pseudobox")
       .style("opacity", 1);
 
   DIV = div;
+  TRIAGE_DIV = triage_div;
 
   PSEUDOBOX = pseudobox;
-  //This code block takes the csv and creates the visualization.
-  // d3.csv(dataFileName, function(error, data) {
-    // if (error) throw error;
-    delete data["columns"];
-    data = addDummyData(data);
-    var root = convertToHierarchy(data);
-    var PILLS_MAP = new Map();
-    condense(root, PILLS_MAP);
-    drawPills(PILLS_MAP);
-    // var sunburst_div = document.getElementsByClassName('sunburst')[0]
-    // var newheight = sunburst_div.clientHeight + document.getElementById('chart').clientHeight;
-    // sunburst_div.style.height = newheight.toString() + "px";
-    ROOT = root;
-    var entry;
-    var pillscore = 0;
-    for (entry of PILLS_MAP) {
+  delete data["columns"];
+  clean(data);
+  data = addDummyData(data);
+  var root = convertToHierarchy(data);
+  var PILLS_MAP = new Map();
+  condense(root, PILLS_MAP);
+  drawPills(PILLS_MAP);
+  // var sunburst_div = document.getElementsByClassName('sunburst')[0]
+  // var newheight = sunburst_div.clientHeight + document.getElementById('chart').clientHeight;
+  // sunburst_div.style.height = newheight.toString() + "px";
+  ROOT = root;
+  totalScore = 100 + scoreSum(root);
+  root.sum(function(d) {
 
-        pillscore += Math.round(parseFloat(entry[1]));
-    }
-    totalScore = 100 + scoreSum(root) + pillscore;
-    root.sum(function(d) {
-
-      return Math.abs(parseFloat(d.data.Points));
-    });
+    return Math.abs(parseFloat(d.data.Points));
+  });
 
   //Fill in the colors
-    svg.selectAll("g")
-      .data(partition(root).descendants())
-      .enter().append("path")
-      .attr("d", arc)
-      .style("fill", function(d) {
-        nodeToPath.set(d, this)
-        return color(d.data.data["Credibility Indicator Category"]);
-      });
-
-  //Setting the center circle to the score
-    svg.selectAll(".center-text")
-      .style("display", "none");
-    svg.append("text")
-      .attr("class", "center-text")
-      .attr("x", 0)
-      .attr("y", 13)
-      .style("font-size", 40)
-      .style("text-anchor", "middle")
-      .html((totalScore));
-
-
-  //Setting the outer and inside rings to be transparent.
-    d3.selectAll("path").transition().each(function(d) {
-      if (d) {
-          if (!d.children) {
-              this.style.display = "none";
-          } else if (d.height == 2) {
-              this.style.opacity = 0;
-          }
-      }
+  svg.selectAll("g")
+    .data(partition(root).descendants())
+    .enter().append("path")
+    .attr("d", arc)
+    .style("fill", function(d) {
+      nodeToPath.set(d, this)
+      return color(d.data.data["Credibility Indicator Category"]);
     });
 
-  //Mouse animations.
-    svg.selectAll("path")
-       .on('mouseover', function(d) {
-            drawVis(d, root, this, div);
-            visualizationOn = true;
-      })
-      .on('mousemove', function(d) {
-          if (visualizationOn) {
-              var sunburstBox = $(".sunburst")[0].getBoundingClientRect();
-              var divBox = $(".tooltip")[0].getBoundingClientRect();
-              var midline = (sunburstBox.right + sunburstBox.left) / 2;
-              var width = divBox.right - divBox.left;
-              if (d3.event.pageX < midline) {
-                  div
-                      .style("opacity", .7)
-                      .style("left", (d3.event.pageX)+ "px")
-                      .style("top", (d3.event.pageY) + "px");
-              } else {
-                  div
-                      .style("opacity", .7)
-                      .style("left", (d3.event.pageX - width)+ "px")
-                      .style("top", (d3.event.pageY) + "px");
-              }
-          } else {
-              div.transition()
-                  .duration(10)
-                  .style("opacity", 0);
-          }
-      })
-      .on('mouseleave', function(d) {
-          resetVis(d);
-      }).on('click', function(d) {
-        scrolltoView(d)
-      })
-      .on('click', function(d) {
-          scrolltoView(d);
-      })
-      .style("fill", colorFinderSun);
+
+
+  //Setting the center circle to the score
+var center_style = getCenterStyle(NUM_NFC);
+var text_x = center_style[0];
+var text_y = center_style[1];
+var text_size = center_style[2];
+var question_x = center_style[3];
+var question_y = center_style[4];
+var question_size = center_style[5]
+var double_question = center_style[6];
+
+  svg.selectAll(".center-text")
+    .style("display", "none");
+  svg.append("text")
+    .attr("class", "center-text")
+    .attr("x", text_x)
+    .attr("y", text_y)
+    .style("font-size", text_size)
+    .style("text-anchor", "middle")
+    .html((totalScore));
+
+  if (double_question) {
+    svg.append("text")
+      .attr("class", "center-question")
+      .attr("x", question_x)
+      .attr("y", question_y)
+      .style("font-size", question_size)
+      .html("??")
+  } else {
+    svg.append("text")
+      .attr("class", "center-question")
+      .attr("x", question_x)
+      .attr("y", question_y)
+      .style("font-size", question_size)
+      .html("?")
+  }
+
 
 
   //Setting the outer and inside rings to be transparent.
   d3.selectAll("path").transition().each(function(d) {
-      if (d) {
-          if (!d.children) {
-              this.style.display = "none";
-          } else if (d.height == 2) {
-              this.style.opacity = 0;
-          }
-      }
+    if (d) {
+        if (!d.children) {
+            this.style.display = "none";
+        } else if (d.height == 2) {
+            this.style.opacity = 0;
+        }
+    }
   });
 
   //Mouse animations.
   svg.selectAll("path")
-      .on('mouseover', function(d) {
-          if (d.height == 0) {
-            var start_index = d.data.data.Start;
-            var end_index = d.data.data.End;
-            if (start_index == -1 || end_index == -1) {
-              document.body.style.cursor = "default";
+     .on('mouseover', function(d) {
+          drawVis(d, root, this, div);
+          visualizationOn = true;
+    })
+    .on('mousemove', function(d) {
+        if (visualizationOn) {
+            var sunburstBox = $(".sunburst")[0].getBoundingClientRect();
+            var divBox = $(".tooltip")[0].getBoundingClientRect();
+            var midline = (sunburstBox.right + sunburstBox.left) / 2;
+            var width = divBox.right - divBox.left;
+            if (d3.event.pageX < midline) {
+                div
+                    .style("opacity", .7)
+                    .style("left", (d3.event.pageX)+ "px")
+                    .style("top", (d3.event.pageY) + "px");
             } else {
-              document.body.style.cursor = "pointer";
+                div
+                    .style("opacity", .7)
+                    .style("left", (d3.event.pageX - width)+ "px")
+                    .style("top", (d3.event.pageY) + "px");
             }
-          } else {
-            document.body.style.cursor = "default";
-          }
-          if (classic) {
-            drawVis(d, root, this, div);
-            visualizationOn = true;
-          }
-      })
-      .on('mousemove', function(d) {
-          if (visualizationOn) {
-              var sunburstBox = $(".sunburst")[0].getBoundingClientRect()
-              var divBox = $(".tooltip")[0].getBoundingClientRect()
-              var midline = (sunburstBox.right + sunburstBox.left) / 2;
-              var width = divBox.right - divBox.left;
-              if (d3.event.pageX < midline) {
-                  div
-                      .style("opacity", .7)
-                      .style("left", (d3.event.pageX)+ "px")
-                      .style("top", (d3.event.pageY) + "px")
-              } else {
-                  div
-                      .style("opacity", .7)
-                      .style("left", (d3.event.pageX - width)+ "px")
-                      .style("top", (d3.event.pageY) + "px")
-              }
-          } else {
-              div.transition()
-                  .duration(10)
-                  .style("opacity", 0);
-          }
-      })
-      .on('mouseleave', function(d) {
-          resetVis(d);
-          document.body.style.cursor = "default";
-      }).on('click', function(d) {
+        } else {
+            div.transition()
+                .duration(10)
+                .style("opacity", 0);
+        }
+    })
+    .on('mouseleave', function(d) {
+      console.log('leaving');
+        resetVis(d);
+    }).on('click', function(d) {
+      scrolltoView(d)
+    })
+    .on('click', function(d) {
         scrolltoView(d);
-        pulse(d);
-      })
-      .on('click', function(d) { //Redundant??????
-          scrolltoView(d); //Redundant??????
-          pulse(d);
-      }) //Redundant??????
-      .style("fill", colorFinderSun);
+    })
+    .style("fill", colorFinderSun);
 
-  // });
+
+  //Setting the outer and inside rings to be transparent.
+    d3.selectAll("path").transition().each(function(d) {
+        if (d) {
+            if (!d.children) {
+                this.style.display = "none";
+            } else if (d.height == 2) {
+                this.style.opacity = 0;
+            }
+        }
+    });
+
+  //Mouse animations.
+    svg.selectAll("path")
+        .on('mouseover', function(d) {
+            if (d.height == 0) {
+              var start_index = d.data.data.Start;
+              var end_index = d.data.data.End;
+              if (start_index == -1 || end_index == -1) {
+                document.body.style.cursor = "default";
+              } else {
+                document.body.style.cursor = "pointer";
+              }
+            } else {
+              document.body.style.cursor = "default";
+            }
+            if (classic) {
+              drawVis(d, root, this, div);
+              visualizationOn = true;
+            }
+        })
+        .on('mousemove', function(d) {
+            if (visualizationOn) {
+                var sunburstBox = $(".sunburst")[0].getBoundingClientRect()
+                var divBox = $(".tooltip")[0].getBoundingClientRect()
+                var midline = (sunburstBox.right + sunburstBox.left) / 2;
+                var width = divBox.right - divBox.left;
+                if (d3.event.pageX < midline) {
+                    div
+                        .style("opacity", .7)
+                        .style("left", (d3.event.pageX)+ "px")
+                        .style("top", (d3.event.pageY) + "px")
+                } else {
+                    div
+                        .style("opacity", .7)
+                        .style("left", (d3.event.pageX - width)+ "px")
+                        .style("top", (d3.event.pageY) + "px")
+                }
+            } else {
+                div.transition()
+                    .duration(10)
+                    .style("opacity", 0);
+            }
+        })
+        .on('mouseleave', function(d) {
+            resetVis(d);
+            document.body.style.cursor = "default";
+        }).on('click', function(d) {
+          scrolltoView(d);
+          pulse(d);
+        })
+        .on('click', function(d) {
+            scrolltoView(d);
+            pulse(d);
+        })
+        .style("fill", colorFinderSun);
+
   d3.select(self.frameElement).style("height", height + "px");
 
 }
@@ -298,7 +327,6 @@ function colorFinderSun(d) {
 function resetVis(d) {
   // theresa start
     normalSun(d);
-// theresa end
     d3.selectAll("path")
         .transition()
         .delay(300)
@@ -330,15 +358,45 @@ function resetVis(d) {
             .delay(200)
             .duration(600)
             .style("opacity", 0);
-    var total = parseFloat(scoreSum(d));
+    var total = parseFloat(scoreSum(d) + ADJUSTMENT);
+
+    var center_style = getCenterStyle(NUM_NFC);
+    var text_x = center_style[0];
+    var text_y = center_style[1];
+    var text_size = center_style[2];
+    var question_x = center_style[3];
+    var question_y = center_style[4];
+    var question_size = center_style[5]
+    var double_question = center_style[6];
+
+
     SVG.selectAll(".center-text").style('display', 'none');
+    SVG.selectAll(".center-question").style('display', 'none');
     SVG.append("text")
         .attr("class", "center-text")
-        .attr("x", 0)
-        .attr("y", 13)
-        .style("font-size", 40)
+        .attr("x", text_x)
+        .attr("y", text_y)
+        .style("font-size", text_size)
         .style("text-anchor", "middle")
         .html((totalScore));
+
+    if (double_question) {
+      SVG.append("text")
+          .attr("class", "center-question")
+          .attr("x", question_x)
+          .attr("y", question_y)
+          .style("font-size", question_size)
+          .html("??")
+    } else {
+      SVG.append("text")
+          .attr("class", "center-question")
+          .attr("x", question_x)
+          .attr("y", question_y)
+          .style("font-size", question_size)
+          .html("?")
+    }
+
+
     visualizationOn = false;
 }
 
@@ -409,6 +467,7 @@ function drawVis(d, root, me, div) {
         return b.length - a.length;
       }
     )[0];
+    var max_width = Math.max(longest.length, 20);
     var words_len = tooltip_text.length;
     var start_index = d.data.data.Start;
     var end_index = d.data.data.End;
@@ -431,24 +490,33 @@ function drawVis(d, root, me, div) {
       .style("left", (d3.event.pageX) + "px")
       .style("top", (d3.event.pageY) + "px")
       .style("width", function() {
-        if (words_len / 4 > longest.length) {
-          return (2 * longest.length).toString() + "ch";
+        if (words_len < 20) {
+          return words_len.toString() + "ch";
         }
-        return longest.length.toString()+"ch";
+        return max_width.toString() + "ch";
+      }).style("min-height", function() {
+        return "1ch";
       }).style("height", function() {
-        if (words_len / 4 > longest.length) {
-          return (.1).toString() + "ch";
-        }
-        return ((words_len / longest.length) + 5).toString() + "ch";
-      }).style("line-height", function() {
-        return ((words_len / longest.length) + 1.5).toString() + "ch";
+        return "fit-content";
       });
 
     var pointsGained = scoreSum(d);
     SVG.selectAll(".center-text").style('display', 'none');
-
+    SVG.selectAll(".center-question").style('display', 'none');
     if (d.data.data["Credibility Indicator Name"] == "Waiting for fact-checkers") {
-      pointsGained = "";
+      pointsGained = "?";
+    } else if (d.data.data["Credibility Indicator Name"] == "Evidence") {
+      var child;
+      var allFactCheck = true;
+      for (child of d.children) {
+
+        if (child.data.data["Credibility Indicator Name"] != "Waiting for fact-checkers") {
+          allFactCheck = false;
+        }
+      }
+      if (allFactCheck) {
+        pointsGained = "?";
+      }
     }
     SVG.append("text")
       .attr("class", "center-text")
@@ -457,6 +525,7 @@ function drawVis(d, root, me, div) {
       .style("font-size", 40)
       .style("text-anchor", "middle")
       .html((pointsGained));
+
 }
 
 
@@ -473,6 +542,9 @@ For the center, we simply return the score of the article (100 plus the collecte
 */
 function scoreSum(d) {
     if (d.data.data.Points) {
+        if (d.data.data["Credibility Indicator Name"] == "Waiting for fact-checkers") {
+          return 0;
+        }
         return Math.round(d.data.data.Points);
     } else {
         var sum = 0;
@@ -486,6 +558,7 @@ function scoreSum(d) {
         return sum;
     }
 }
+
 // theresa start
 function scrolltoView(x) {
     if (x.height == 0) {
@@ -523,5 +596,28 @@ function normalSun() {
     for (var i = 0; i < allSpans.length; i++) {
       allSpans[i].style.setProperty("background-color", "transparent");
     }
+}
+
+
+// Returns
+//    [score_x, score_y, score_size, question_x, question_y, question_size]
+function getCenterStyle(num_nfc) {
+  console.log(num_nfc);
+  switch(num_nfc) {
+    case 0:
+      return [0, 13, 40, 0, 0, 0, false]
+    case 1:
+      return [-1, 13, 33, 17, -5, 19, false]
+    case 2:
+      return [-3, 13, 25, 11, -0, 30, false]
+    case 3:
+      return [-9.5, 17, 20, 0, 5, 39, false]
+    case 4:
+      return [-8, 14, 14, -4, 7.5, 48, false]
+    case 5:
+      return [-23, 26, 13, -19, 20, 56, true]
+    default:
+      return [-5, 13, 14, 0, 0, 37]
+  }
 }
 //theresa end
