@@ -1,5 +1,5 @@
 class ArticleData {
-    constructor(title, author, date, ID, articleLink, visLink, plainText, highlightData, article_sha256) {
+    constructor(title, author, date, ID, articleLink, visLink, plainText, highlightData, triageData, article_sha256) {
         this.title = title;
         this.author = author;
         this.date = date;
@@ -9,6 +9,7 @@ class ArticleData {
         this.plainText = plainText;
         this.visLink = visLink;
         this.highlightData = highlightData;
+        this.triageData = triageData;
         this.credibilityScore = 100;
     }
 }

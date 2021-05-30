@@ -27,6 +27,7 @@ var y = d3.scaleSqrt()
 var color = d3.scaleOrdinal(d3.schemeCategory10);
 
 var partition = d3.partition();
+var NUM_NFC = {};
 
 
 
@@ -45,9 +46,10 @@ var arc = d3.arc()
 //This variable creates the floating textbox on the hallmark
 var DIV;
 var ROOT;
-var SVG_IDS = [];
+var SVG_IDS = []; // SVG_IDS has an element for every SVG we need to remove upon
+                  // page change
 
-function hallmark(dataFileName, id) {
+function hallmark(dataFileName, triageDataFileName, id) {
   SVG_IDS.push(13);
   SVG_IDS.push(13);
   var svg = d3.select("body").append("svg")
@@ -65,135 +67,208 @@ function hallmark(dataFileName, id) {
 
   //This code block takes the csv and creates the visualization.
   d3.csv(dataFileName, function(error, data) {
-    if (error) throw error;
-    delete data["columns"];
-    data = addDummyData(data);
-    var root = convertToHierarchy(data);
-    condense(root);
-    var holistic_score = 0;
-    for (let [key, value] of HOLISTIC_MAP) {
-      holistic_score += Math.round(value);
+    if (error) {
+      console.log(error);
+      return;
     }
+    console.log(data.length)
+    d3.csv(triageDataFileName, function(error, triageData) {
+      moveFactCheckLabels(triageData, data, id);
+      console.log(data.length);
+      delete data["columns"];
+      clean(data);
+      data = addDummyData(data);
+      var root = convertToHierarchy(data);
+      condense(root);
+      var holistic_score = 0;
+      for (let [key, value] of HOLISTIC_MAP) {
+        holistic_score += Math.round(value);
+      }
 
-    ROOT = root;
-    totalScore = 100 + scoreSum(root) + holistic_score;
+      ROOT = root;
+      totalScore = 100 + scoreSum(root) + holistic_score;
 
-    document.querySelector("svg[articleID='" + id + "']").setAttribute("score", totalScore);
-    root.sum(function(d) {
-      return Math.abs(parseFloat(d.data.Points));
-    });
-
-    //Fill in the colors
-  svg.selectAll("path")
-      .data(partition(root).descendants())
-      .enter().append("path")
-        .attr("d", arc)
-        .style("fill", function(d) {
-          nodeToPath.set(d, this)
-          return color(d.data.data["Credibility Indicator Category"]);
-        }).style("display", function(d) {
-          if (d.height == 0 || d.height == 2) {
-              return "none";
-          }
+      document.querySelector("svg[articleID='" + id + "']").setAttribute("score", totalScore);
+      root.sum(function(d) {
+        return Math.abs(parseFloat(d.data.Points));
       });
 
+      //Fill in the colors
+    svg.selectAll("path")
+        .data(partition(root).descendants())
+        .enter().append("path")
+          .attr("d", arc)
+          .style("fill", function(d) {
+            nodeToPath.set(d, this)
+            return color(d.data.data["Credibility Indicator Category"]);
+          }).style("display", function(d) {
+            if (d.height == 0 || d.height == 2) {
+                return "none";
+            }
+        });
 
-  //Setting the center circle to the score
-  svg.selectAll(".center-text")
-          .style("display", "none")
+    var center_style = getCenterStyle(NUM_NFC[id]);
+    var text_x = center_style[0];
+    var text_y = center_style[1];
+    var text_size = center_style[2];
+    var question_x = center_style[3];
+    var question_y = center_style[4];
+    var question_size = center_style[5]
+    var double_question = center_style[6];
+
+    //Setting the center circle to the score
+    svg.selectAll(".center-text")
+      .style("display", "none")
+    svg.append("text")
+      .attr("class", "center-text")
+      .attr("x", text_x)
+      .attr("y", text_y)
+      .style("font-size", text_size)
+      .style("text-anchor", "middle")
+      .html((totalScore));
+
+    if (double_question) {
       svg.append("text")
-          .attr("class", "center-text")
-          .attr("x", 0)
-          .attr("y", 13)
-          .style("font-size", 40)
-          .style("text-anchor", "middle")
-          .html((totalScore));
-
-
-  //Setting the outer and inside rings to be transparent.
-  d3.selectAll("path").transition().each(function(d) {
-      if (!d.children) {
-          this.style.display = "none";
-      } else if (d.height == 2) {
-          this.style.opacity = 0;
-      }
-  })
-
-
-
-  //Mouse animations.
-  svg.selectAll('path')
-      .on('mouseover', function(d) {
-          if (d.height == 2) {
-              return;
-          }
-          //console.log(d);
-          d3.select(nodeToPath.get(d))
-        	            .transition()
-        	            .duration(300)
-        	            .attr('stroke-width',3)
-        	            .style("opacity", .8)
-          div.transition()
-              .duration(200)
-              .style("display", "block")
-              .style("opacity", .9);
-          div.html(d.data.data['Credibility Indicator Name'])
-              .style("left", (d3.event.pageX) + "px")
-              .style("top", (d3.event.pageY) + "px")
-              .style("width", "100px");
-
-      var pointsGained = scoreSum(d);
-      svg.selectAll(".center-text").style('display', 'none');
+        .attr("class", "center-question")
+        .attr("x", question_x)
+        .attr("y", question_y)
+        .style("font-size", question_size)
+        .html("??")
+    } else {
       svg.append("text")
-          .attr("class", "center-text")
-          .attr("x", 0)
-          .attr("y", 13)
-          .style("font-size", 40)
-          .style("text-anchor", "middle")
-          .html((pointsGained));
-      div
-          .style("opacity", .7)
-          .style("left", (d3.event.pageX)+ "px")
-          .style("top", (d3.event.pageY - 28) + "px");
-          visualizationOn = true;
+        .attr("class", "center-question")
+        .attr("x", question_x)
+        .attr("y", question_y)
+        .style("font-size", question_size)
+        .html("?")
+    }
 
-      })
-      .on('mousemove', function(d) {
-          if (visualizationOn) {
-          div
-              .style("left", (d3.event.pageX)+ "px")
-              .style("top", (d3.event.pageY - 28) + "px")
-          } else {
-              div.transition()
-                  .duration(10)
-                  .style("opacity", 0);
+    //Setting the outer and inside rings to be transparent.
+    d3.selectAll("path").transition().each(function(d) {
+        if (!d.children) {
+            this.style.display = "none";
+        } else if (d.height == 2) {
+            this.style.opacity = 0;
+        }
+    })
+
+
+
+    //Mouse animations.
+    svg.selectAll('path')
+        .on('mouseover', function(d) {
+            if (d.height == 2) {
+                return;
+            }
+            //console.log(d);
+            d3.select(nodeToPath.get(d))
+          	            .transition()
+          	            .duration(300)
+          	            .attr('stroke-width',3)
+          	            .style("opacity", .8)
+            div.transition()
+                .duration(200)
+                .style("display", "block")
+                .style("opacity", .9);
+            div.html(d.data.data['Credibility Indicator Name'])
+                .style("left", (d3.event.pageX) + "px")
+                .style("top", (d3.event.pageY) + "px")
+                .style("width", "100px");
+
+        var pointsGained = scoreSum(d);
+        svg.selectAll(".center-text").style('display', 'none');
+        svg.selectAll(".center-question").style('display', 'none');
+        if (d.data.data["Credibility Indicator Name"] == "Evidence") {
+          var child;
+          var allFactCheck = true;
+          for (child of d.children) {
+
+            if (child.data.data["Credibility Indicator Name"] != "Waiting for fact-checkers") {
+              allFactCheck = false;
+            }
           }
-      })
-      .on('mouseleave', function(d) {
-          score = nodeToPath.get(d).parentElement.parentElement.getAttribute("score");
+          if (allFactCheck) {
+            pointsGained = "?";
+          }
+        }
+
+        svg.append("text")
+            .attr("class", "center-text")
+            .attr("x", 0)
+            .attr("y", 13)
+            .style("font-size", 40)
+            .style("text-anchor", "middle")
+            .html((pointsGained));
+        div
+            .style("opacity", .7)
+            .style("left", (d3.event.pageX)+ "px")
+            .style("top", (d3.event.pageY - 28) + "px");
+            visualizationOn = true;
+
+        })
+        .on('mousemove', function(d) {
+            if (visualizationOn) {
+            div
+                .style("left", (d3.event.pageX)+ "px")
+                .style("top", (d3.event.pageY - 28) + "px")
+            } else {
+                div.transition()
+                    .duration(10)
+                    .style("opacity", 0);
+            }
+        })
+        .on('mouseleave', function(d) {
+          var pointsGained = nodeToPath.get(d).parentElement.parentElement.getAttribute("score");
           d3.select(nodeToPath.get(d))
               .transition()
               .duration(300)
               .attr('stroke-width', 2)
               .style("opacity", 1)
 
+          div.transition()
+                  .delay(200)
+                  .duration(600)
+                  .style("opacity", 0);
 
-      div.transition()
-              .delay(200)
-              .duration(600)
-              .style("opacity", 0);
-      svg.selectAll(".center-text").style("display", "none");
-      svg.append("text")
-          .attr("class", "center-text")
-          .attr("x", 0)
-          .attr("y", 13)
-          .style("font-size", 40)
-          .style("text-anchor", "middle")
-          .html((score));
-      })
-      .style("fill", colorFinderSun);
-      visualizationOn = false;
+          var center_style = getCenterStyle(NUM_NFC[id]);
+          var text_x = center_style[0];
+          var text_y = center_style[1];
+          var text_size = center_style[2];
+          var question_x = center_style[3];
+          var question_y = center_style[4];
+          var question_size = center_style[5]
+          var double_question = center_style[6];
 
+
+          svg.selectAll(".center-text").style('display', 'none');
+          svg.selectAll(".center-question").style('display', 'none');
+          svg.append("text")
+              .attr("class", "center-text")
+              .attr("x", text_x)
+              .attr("y", text_y)
+              .style("font-size", text_size)
+              .style("text-anchor", "middle")
+              .html((pointsGained));
+
+          if (double_question) {
+            svg.append("text")
+                .attr("class", "center-question")
+                .attr("x", question_x)
+                .attr("y", question_y)
+                .style("font-size", question_size)
+                .html("??")
+          } else {
+            svg.append("text")
+                .attr("class", "center-question")
+                .attr("x", question_x)
+                .attr("y", question_y)
+                .style("font-size", question_size)
+                .html("?")
+          }
+        })
+        .style("fill", colorFinderSun);
+        visualizationOn = false;
+    });
   });
   d3.select(self.frameElement).style("height", height + "px");
 
@@ -238,9 +313,7 @@ function colorFinderSun(d) {
    @return : none
 */
 function resetVis(d, graphObject) {
-  // theresa start
     normalSun(d);
-// theresa end
     d3.selectAll("path")
         .transition()
         .delay(300)
@@ -268,13 +341,43 @@ function resetVis(d, graphObject) {
             .style("opacity", 0);
     var total = parseFloat(scoreSum(d));
     graphObject.selectAll(".center-text").style('display', 'none');
+
+
+    var center_style = getCenterStyle(NUM_NFC);
+    var text_x = center_style[0];
+    var text_y = center_style[1];
+    var text_size = center_style[2];
+    var question_x = center_style[3];
+    var question_y = center_style[4];
+    var question_size = center_style[5]
+    var double_question = center_style[6];
+
+
+    graphObject.selectAll(".center-text").style('display', 'none');
+    graphObject.selectAll(".center-question").style('display', 'none');
     graphObject.append("text")
         .attr("class", "center-text")
-        .attr("x", 0)
-        .attr("y", 13)
-        .style("font-size", 40)
+        .attr("x", text_x)
+        .attr("y", text_y)
+        .style("font-size", text_size)
         .style("text-anchor", "middle")
         .html((totalScore));
+
+    if (double_question) {
+      graphObject.append("text")
+          .attr("class", "center-question")
+          .attr("x", question_x)
+          .attr("y", question_y)
+          .style("font-size", question_size)
+          .html("??")
+    } else {
+      graphObject.append("text")
+          .attr("class", "center-question")
+          .attr("x", question_x)
+          .attr("y", question_y)
+          .style("font-size", question_size)
+          .html("?")
+    }
 }
 
 /*Function that draws the visualization based on what is being hovered over.
@@ -302,20 +405,15 @@ function drawVis(d, root, me, graphObject) {
         .style("opacity", 1)
 
     if (d.height == 0) {
-      // let textToHighlight = document.getElementById(d["Credibility Indicator Name"] + "-" + d.Start + "-" + d.End);
-      // console.log(textToHighlight);
-      // highlight(textToHighlight);
         d3.select(nodeToPath.get(d.parent))
             .transition()
             .duration(300)
             .attr('stroke-width', 5)
             .style("opacity", 1)
-// theresa start
     } if (d.height == 0) {
         let textToHighlight = document.getElementsByName(d.data.data["Credibility Indicator ID"] + "-" + d.data.data.Start + "-" + d.data.data.End);
         highlightSun(textToHighlight[0]);
     }
-    //theresa end
     else if (d.height == 2) {
         d3.select(me).style('display', 'none');
     } else if (d.height == 1) {
@@ -334,7 +432,7 @@ function drawVis(d, root, me, graphObject) {
                 } else {
                     return "180px";
                 }
-            })
+            });
 
     var pointsGained = scoreSum(d);
     graphObject.selectAll(".center-text").style('display', 'none');
@@ -361,6 +459,9 @@ For the center, we simply return the score of the article (100 plus the collecte
 */
 function scoreSum(d) {
     if (d.data.data.Points) {
+        if (d.data.data["Credibility Indicator Name"] == "Waiting for fact-checkers") {
+          return 0;
+        }
         return Math.round(d.data.data.Points);
     } else {
         var sum = 0;
@@ -374,7 +475,7 @@ function scoreSum(d) {
         return sum;
     }
 }
-// theresa start
+
 function scrolltoView(x) {
     if (x.height == 0) {
         let textToView = document.getElementsByName(x.data.data["Credibility Indicator ID"] + '-' + x.data.data.Start + '-' + x.data.data.End);
@@ -384,21 +485,77 @@ function scrolltoView(x) {
 
 
 function highlightSun(x) {
-  // console.log(x.toElement);
-  //console.log(x.toElement.style);
   var color = x.style.borderBottomColor;      // grab color of border underline in rgb form
   var color = color.match(/\d+/g);                      // split rgb into r, g, b, components
-  //console.log(color);
 
   x.style.setProperty("background-color", "rgba(" + color[0] + "," + color[1] + "," + color[2] + "," + "0.25");
   x.style.setProperty("background-clip", "content-box");
 }
 
 function normalSun() {
-    //console.log(x.toElement);
-    var allSpans = document.getElementsByTagName('span');
-    for (var i = 0; i < allSpans.length; i++) {
-      allSpans[i].style.setProperty("background-color", "transparent");
-    }
+  var allSpans = document.getElementsByTagName('span');
+  for (var i = 0; i < allSpans.length; i++) {
+    allSpans[i].style.setProperty("background-color", "transparent");
+  }
 }
-//theresa end
+
+function moveFactCheckLabels(triageData, visDataArray, id) {
+  NUM_NFC[id] = 0;
+  var item;
+  var maxEvidenceID = -1;
+
+  for (item of visDataArray) {
+    if (item["Credibility Indicator Category"] == "Evidence") {
+      var id = item["Credibility Indicator ID"];
+      var id_num = parseInt(id.substring(1, 2));
+      maxEvidenceID = Math.max(id_num, maxEvidenceID);
+    }
+  }
+  var factCheckID = maxEvidenceID + 1;
+
+  var caseNumbersSoFar = [];
+  var triageRow;
+  for (triageRow of triageData) {
+    if (triageRow["topic_name"] == "Needs Fact-Check") { // You'll need to change this
+      // data[rowIndex]
+      var newVisRow = Object.assign({}, visDataArray[0]);
+
+
+      if (!(caseNumbersSoFar.includes(triageRow["case_number"]))) {
+        caseNumbersSoFar.push(triageRow["case_number"]);
+        newVisRow["Credibility Indicator ID"] = "E" + factCheckID.toString();
+        factCheckID++;
+      }
+      newVisRow["Points"] = ".5";                          // You'll need to change this
+      newVisRow["Credibility Indicator Name"] = "Waiting for fact-checkers";// You'll need to change this
+      newVisRow["Credibility Indicator Category"] = "Evidence";// You'll need to change this
+      newVisRow["target_text"] = "nan";// You'll need to change this
+      newVisRow["Start"] = triageRow["start_pos"];
+      newVisRow["End"] = triageRow["end_pos"];
+
+      visDataArray.push(newVisRow);
+      NUM_NFC[id] += 1;
+    }
+  }
+}
+
+
+function getCenterStyle(num_nfc) {
+  console.log(num_nfc);
+  switch(num_nfc) {
+    case 0:
+      return [0, 13, 40, 0, 0, 0, false]
+    case 1:
+      return [-1, 13, 33, 17, -5, 19, false]
+    case 2:
+      return [-3, 13, 25, 11, -0, 30, false]
+    case 3:
+      return [-9.5, 17, 20, 0, 5, 39, false]
+    case 4:
+      return [-8, 14, 14, -4, 7.5, 48, false]
+    case 5:
+      return [-23, 26, 13, -19, 20, 56, true]
+    default:
+      return [-5, 13, 14, 0, 0, 37]
+  }
+  }

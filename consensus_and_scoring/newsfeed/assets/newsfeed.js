@@ -23,8 +23,10 @@ function readVisData() {
     return $.get("visData.json").done(function(data) {
         for (var i = 0; i < Object.keys(data).length; i++) {
             var article = data[i];
-            var articleEntry = new ArticleData(article["Title"], article["Author"], article["Date"], article["ID"], article["Article Link"], article["Visualization Link"], article["Plain Text"], article["Highlight Data"], article["article_sha256"]);
-            //articleEntry.setCredibilityScore();
+            var triage_path = "/visualizations/" + article["article_sha256"].substring(0, 32) +"/triager_data.csv";
+            var articleEntry = new ArticleData(article["Title"], article["Author"], article["Date"], article["ID"],
+                                              article["Article Link"], article["Visualization Link"], article["Plain Text"],
+                                              article["Highlight Data"], triage_path, article["article_sha256"]);
 
             listofarticles.push(articleEntry);
         }
@@ -42,7 +44,6 @@ function setScores() {
 
 
 async function generateList(limit) {
-  console.log("first");
     // Collect values from the HTML
     //Sort by... Most Recent, Alphabetical, Credibility Score (High to Low & Low to High)
     var sortOptions = document.getElementById("sortByList");
@@ -147,16 +148,17 @@ function generateEntry(entry) {
                             "</div>" +
                             "<div class='cred-score-container col-4'>" +
                                 "<div class='sunburst'>" +
-                                    "<svg id='sunburst" + entry.id + "' viewBox='0 0 200 200'  preserveAspectRatio='xMidYMid meet'></svg>" +
+                                    "<svg id='sunburst_" + entry.sha256 + "' viewBox= '0 0 200 200'></svg>" +
                                 "</div>" +
                             "</div>" +
                        "</div>" +
                        "<hr>";
       document.getElementById("articleList").innerHTML += articleEntry;
+      console.log(document.getElementById(entry.sha256));
       if (document.querySelector("svg[articleID='" + entry.id +"']") != null) {
           document.querySelector("svg[articleID='" + entry.id +"']").remove();
       }
-      hallmark(entry.highlightData, entry.sha256);
+      hallmark(entry.highlightData, entry.triageData, entry.sha256);
 
 
     });
