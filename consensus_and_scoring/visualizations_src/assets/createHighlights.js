@@ -12,24 +12,61 @@ function handleMouseMove(event) {
 
   var box_y = event.pageY;
 
-
-  console.log("page", event.pageY);
-  console.log("client", event.clientY);
   TRIAGE_DIV.style("top", box_y + "px");
 }
 
-function sortJSONentries(json) {
+function checkNullVisData(data) {
+  var row;
+  for (row of data) {
+    const cat = row["Credibility Indicator Category"];
+    const name = row["Credibility Indicator Name"];
+    const points = row["Points"];
+    const catType = typeof row["Credibility Indicator Category"];
+    const nameType = typeof row["Credibility Indicator Name"];
+    const pointsType = typeof row["Points"];
+    if (catType === "undefined" || nameType === "undefined" || pointsType === "undefined") {
+      return true;
+    } else if (cat === "nan" || name == "nan" || points == "nan") {
+      return true;
+    }
+
+  }
+  return false;
+}
+
+function checkNullTriageData(data) {
+  var row;
+  for (row of data) {
+    for (var key of Object.keys(row)) {
+      if (key === "target_text") {
+        continue;
+      } else if (typeof row[key] === "undefined") {
+        return true;
+      } else if (row[key] === "nan") {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+
+function hideExtraElem() {
+  $("#popup").hide();
+  $("#explore_button").hide();
+}
+function sortJSONentries(data) {
   var sortArray = []; // an array of arrays
-  for (i = 0; i < json.length; i++) {
-      if (parseInt(json[i].Start) == -1 || parseInt(json[i].End) == -1 || json[i].Start == "") {
+  for (i = 0; i < data.length; i++) {
+      if (parseInt(data[i].Start) == -1 || parseInt(data[i].End) == -1 || data[i].Start == "") {
         continue; // ignore entries where indices are -1 or null]
       }
     // [uniqueID, color, index, boolean]
 
-    let uniqueID = json[i]["Credibility Indicator ID"] +'-' + json[i]["Credibility Indicator Name"] + "-" + json[i].Start + "-" + json[i].End;
+    let uniqueID = data[i]["Credibility Indicator ID"] +'-' + data[i]["Credibility Indicator Name"] + "-" + data[i].Start + "-" + data[i].End;
 
-    let startEntry = [uniqueID, colorFinder(json[i]), parseInt(json[i].Start), true];
-    let endEntry = [uniqueID, colorFinder(json[i]), parseInt(json[i].End), false];
+    let startEntry = [uniqueID, colorFinder(data[i]), parseInt(data[i].Start), true];
+    let endEntry = [uniqueID, colorFinder(data[i]), parseInt(data[i].End), false];
 
     sortArray.push(startEntry);
     sortArray.push(endEntry);
@@ -44,16 +81,29 @@ function scoreArticle(textFileUrl, dataFileUrl, triageFileUrl, userFileUrl) {
       DATA_FILE_URL = dataFileUrl;
       TRIAGE_FILE_URL = triageFileUrl;
       d3.text(textFileUrl, function(text) {
-          document.getElementById("textArticle").innerHTML = text.toString();
 
           d3.csv(dataFileUrl, function(error, data) {
-            if (error) throw error;
+            if (error) {
+              console.log(error);
+              hideExtraElem();
+              return;
+            }
             d3.csv(triageFileUrl, function(error, triage_data) {
               if (error) {
                 console.log("No triage file found");
+                if (checkNullVisData(data)) {
+                  hideExtraElem();
+                  return;
+                }
+                document.getElementById("textArticle").innerHTML = text.toString();
                 createHighlights(data, triage_data, text.toString());
                 hallmark(data);
               } else {
+                if (checkNullVisData(data) || checkNullTriageData(triage_data)) {
+                  hideExtraElem();
+                  return;
+                }
+                document.getElementById("textArticle").innerHTML = text.toString();
                 delete data['columns'];
                 createHighlights(data, triage_data, text.toString());
                 hallmark(data);

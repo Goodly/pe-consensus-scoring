@@ -86,6 +86,7 @@ function hallmark(data) {
   clean(data);
   data = addDummyData(data);
   var root = convertToHierarchy(data);
+
   var PILLS_MAP = new Map();
   condense(root, PILLS_MAP);
   drawPills(PILLS_MAP);
@@ -541,8 +542,10 @@ For the center, we simply return the score of the article (100 plus the collecte
               points lost would be 0.
 */
 function scoreSum(d) {
-    if (d.data.data.Points) {
+    if (d.depth == 2) {
         if (d.data.data["Credibility Indicator Name"] == "Waiting for fact-checkers") {
+          return 0;
+        } else if (typeof d.data.data["Points"] === "undefined") {
           return 0;
         }
         return Math.round(d.data.data.Points);
