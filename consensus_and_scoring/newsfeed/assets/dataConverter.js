@@ -1,5 +1,17 @@
 var HOLISTIC_MAP;
 
+
+// Remove anything that might be used as a multiple ROOT
+// Mutates data
+function clean(data) {
+  for(var i in data){
+    if(data[i]["Article ID"]==""){
+      data.splice(i,1);
+      break;
+    }
+  }
+}
+
 //Add dummy data so that the data has the correct nodes to form a tree.
 function addDummyData(data) {
   HOLISTIC_MAP = new Map();

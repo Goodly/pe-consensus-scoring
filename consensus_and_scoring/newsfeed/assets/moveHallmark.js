@@ -30,7 +30,6 @@ function waitForElementToDisplay(divSelector, hallmarkSelector, time, item) {
             hallmark.style.left = "70%";
             hallmark.style.top = box_y;
             item.credibilityScore = parseInt(hallmark.getAttribute("score"));
-            console.log('test');
             return;
         }
         else {

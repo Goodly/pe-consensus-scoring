@@ -2,8 +2,21 @@ var TRIAGE_FILE_URL;
 var USER_FILE_URL;
 var TEXT_FILE_URL;
 var DATA_FILE_URL;
-var ADJUSTMENT = 0;
 var NUM_NFC;
+
+document.onmousemove = handleMouseMove;
+
+function handleMouseMove(event) {
+  var eventDoc, doc, body;
+
+
+  var box_y = event.pageY;
+
+
+  console.log("page", event.pageY);
+  console.log("client", event.clientY);
+  TRIAGE_DIV.style("top", box_y + "px");
+}
 
 function sortJSONentries(json) {
   var sortArray = []; // an array of arrays
@@ -59,6 +72,7 @@ function scoreArticle(textFileUrl, dataFileUrl, triageFileUrl, userFileUrl) {
 
 
 // Pulls the "Needs fact-check" label from the triage data to the vis_data object
+// Mutates the visDataArray in place.
 function moveFactCheckLabels(triage_data, visDataArray) {
     NUM_NFC = 0;
     var item;
@@ -94,7 +108,6 @@ function moveFactCheckLabels(triage_data, visDataArray) {
         newVisRow["End"] = triageRow["end_pos"];
 
         visDataArray.push(newVisRow);
-        ADJUSTMENT = ADJUSTMENT - .5;
         NUM_NFC += 1;
       }
     }
@@ -139,9 +152,6 @@ function sortUserEntries(json) {
     if (parseInt(json[i].Start) == -1 || parseInt(json[i].End) == -1 || (json[i].Start == 0 && json[i].End == 0)) {
       continue; // ignore entries where indices are -1 or null
     }
-    // [uniqueID, color, index, boolean]
-
-//    let uniqueID = json[i]["question_text"] +'-'+json[i]["answer_text"] +"-"+ json[i].start_pos + "-" + json[i].end_pos + "-user";
     let uniqueID = json[i]["Credibility Indicator Category"] + "_" +
                     json[i]['Credibility Indicator Name'] + "_" +
                     json[i]["Point Recommendation"] + "_" + json[i]["Start"] +
@@ -309,8 +319,8 @@ function triageHighlight(x) {
     }
     divContent = divContent.substring(0, divContent.length -2);
 
-    console.log(cred_ids);
-    cred_id;
+
+    var cred_id;
 
     for (cred_id of cred_ids) {
       $("span[cred_id='"+cred_id+"']").each(function() {
@@ -349,13 +359,13 @@ function triageHighlight(x) {
   });
 
   var box_x = $(".p-article")[0].getBoundingClientRect().x - 13*max_width;
-  var box_y = event.clientY;
+
   TRIAGE_DIV.style("min-height", "1ch");
   TRIAGE_DIV.style("position", "absolute");
   TRIAGE_DIV.style("height", "fit-content");
-  TRIAGE_DIV.style("left", box_x + "px")
-            .style("top", box_y + "px")
-            .html(divContent);
+  console.log(box_x);
+  TRIAGE_DIV.style("left", box_x.toString()+"px");
+  TRIAGE_DIV.html(divContent);
   x.toElement.style.setProperty("background-color", "rgba(" + color[0] + "," + color[1] + "," + color[2] + "," + "0.4");
   x.toElement.style.setProperty("background-clip", "content-box");
 }

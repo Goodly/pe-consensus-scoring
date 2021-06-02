@@ -358,7 +358,7 @@ function resetVis(d) {
             .delay(200)
             .duration(600)
             .style("opacity", 0);
-    var total = parseFloat(scoreSum(d) + ADJUSTMENT);
+    var total = parseFloat(scoreSum(d));
 
     var center_style = getCenterStyle(NUM_NFC);
     var text_x = center_style[0];

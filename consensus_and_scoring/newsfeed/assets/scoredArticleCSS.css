@@ -113,8 +113,15 @@ div.tooltip {
 }
 
 .center-text{
-    font-family: Roboto, sans-serif;
-    font-weight: bold;
+    font-family: Lato, sans-serif;
+    font-weight: lighter;
+    stroke: #000;
+}
+
+.center-question{
+    font-family: Lato, sans-serif;
+    font-weight: lighter;
+    stroke: #000;
 }
 
 svg {
