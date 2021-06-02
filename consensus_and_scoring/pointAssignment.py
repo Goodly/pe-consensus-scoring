@@ -86,7 +86,12 @@ def pointSort(scoring_directory, input_dir = None, weights = None,
     for col in weights.columns:
         print(col)
     weights['agreement_adjusted_points'] = weights['agreement_adjusted_points'].apply(float)
+
     weights = weights[weights['agreement_adjusted_points'] != 0]
+    weights = weights[~weights['agreement_adjusted_points'].isnull()]
+    if weights['Label'].isnull().any():
+        raise Exception("Couldn't find labels for a weight")
+
     if reporting:
         make_directory(rep_direc)
         weights.to_csv(rep_direc+'/weightsStacked'+'.csv')
