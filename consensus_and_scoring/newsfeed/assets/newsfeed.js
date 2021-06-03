@@ -130,14 +130,6 @@ function generateEntry(entry) {
         entry.title = title_string;
       }
 
-      if (entry.date == "") {
-        const regexDate = /(Date.+:)(.+)/
-        matches = regexDate.exec(totalText);
-        const date_string = matches[2]; // Get the last match, which is the date;
-        entry.date = date_string;
-      }
-
-      entry.date = reformatDate(entry.date);
 
       var articleEntry = "<div id='" + entry.sha256 + "' class='row'>" +
                             "<div class='col-2 date'>" + entry.date + "</div>" +
