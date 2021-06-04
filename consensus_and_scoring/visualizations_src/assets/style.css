@@ -168,7 +168,7 @@ div.pseudobox {
   left: -2000px;
   height: 300px;
   width: 400px;
-  z-index: 0;
+  z-index: 3;
 }
 
 #popup {
@@ -189,7 +189,7 @@ div.pseudobox {
 .modal {
   display: none; /* Hidden by default */
   position: absolute; /* Stay in place */
-  z-index: 2; /* Sit on top */
+  z-index: 3; /* Sit on top */
   bottom: -110px;
   right: 8px;
   width: auto; /* Full width */
@@ -2107,12 +2107,14 @@ main {
     position: absolute;
     right: 200px;
     width:150px;
+    z-index: 1;
 }
 
 .links_2 {
     position: absolute;
     right: 20px;
     width:140px;
+    z-index: 1;
 
 }
 
