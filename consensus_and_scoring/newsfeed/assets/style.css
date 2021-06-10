@@ -1990,3 +1990,8 @@ main {
 #search {
   padding-bottom: 20px;
 }
+
+.stop-scrolling {
+  height: 100%;
+  overflow: hidden;
+}

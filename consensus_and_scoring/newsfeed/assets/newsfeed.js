@@ -2,7 +2,7 @@ window.addEventListener('load', (event) => {
     SVG_IDS = [];
     const visPromise = readVisData();
     visPromise.then(function() {
-        generateAndMove(20);
+        generateAndMove("all;");
 
     });
 
@@ -50,7 +50,7 @@ async function generateList(limit) {
     var sortBy = sortOptions.options[sortOptions.selectedIndex].value;
     var orderOptions = document.getElementById("order")
     var order = orderOptions.options[orderOptions.selectedIndex].value;
-    search = document.getElementById("searchtext").value;
+    var search = document.getElementById("searchtext").value;
 
     //search
     var searchedArticles = unlimitedSearchWorks(search, listofarticles);
@@ -72,6 +72,17 @@ async function generateList(limit) {
         generateEntry(sortedArticles[i]);
     }
     return false;
+}
+
+// As the hallmarks are generated and placed, we don't want the user to scroll and
+// mess up the positioning.
+async function scrollPause() {
+  window.scrollTo(0, 0);
+  $('body').addClass('stop-scrolling');
+}
+
+function scrollContinue() {
+  $('body').removeClass('stop-scrolling');
 }
 
 function unlimitedSearchWorks(query, listofarticles) {
@@ -111,9 +122,11 @@ function sortArticles(listofarticles, sortBy, order) {
 
 async function generateAndMove(limit) {
   await removeHallmarks();
+  await scrollPause();
   await generateList(limit);
 
-  moveHallmarks();
+  await moveHallmarks();
+  scrollContinue();
 }
 
 

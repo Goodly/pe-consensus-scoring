@@ -1,4 +1,4 @@
-function moveHallmarks() {
+async function moveHallmarks() {
   var item;
   for (item of listofarticles) {
       var divID = item['sha256'];

@@ -71,10 +71,8 @@ function hallmark(dataFileName, triageDataFileName, id) {
       console.log(error);
       return;
     }
-    console.log(data.length)
     d3.csv(triageDataFileName, function(error, triageData) {
       moveFactCheckLabels(triageData, data, id);
-      console.log(data.length);
       delete data["columns"];
       clean(data);
       data = addDummyData(data);
@@ -541,7 +539,6 @@ function moveFactCheckLabels(triageData, visDataArray, id) {
 
 
 function getCenterStyle(num_nfc) {
-  console.log(num_nfc);
   switch(num_nfc) {
     case 0:
       return [0, 13, 40, 0, 0, 0, false]
