@@ -72,6 +72,10 @@ function hallmark(dataFileName, triageDataFileName, id) {
       return;
     }
     d3.csv(triageDataFileName, function(error, triageData) {
+      if (error) {
+        console.log(error);
+        return;
+      }
       moveFactCheckLabels(triageData, data, id);
       delete data["columns"];
       clean(data);

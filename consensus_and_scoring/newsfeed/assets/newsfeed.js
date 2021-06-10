@@ -21,6 +21,7 @@ var listofarticles = [];
 
 function readVisData() {
     return $.get("visData.json").done(function(data) {
+      console.log(data);
         for (var i = 0; i < Object.keys(data).length; i++) {
             var article = data[i];
             var triage_path = "/visualizations/" + article["article_sha256"].substring(0, 32) +"/triager_data.csv";
