@@ -147,12 +147,12 @@ function generateEntry(entry) {
       var totalText = data.toString()
       var previewText = totalText.substring(0, 200);
       // Empty string checks
-      // if (entry.title == "") {
-      //   const regexTitle = /(Title:).+/
-      //   const matches = totalText.match(regexTitle);
-      //   const title_string = matches[0].substring(7, matches[0].length); //Slice out the 'Title: '
-      //   entry.title = title_string;
-      // }
+      if (entry.title == "") {
+        const regexTitle = /(Title:).+/
+        const matches = totalText.match(regexTitle);
+        const title_string = matches[0].substring(7, matches[0].length); //Slice out the 'Title: '
+        entry.title = title_string;
+      }
 
 
       var articleEntry = "<div id='" + entry.sha256 + "' class='row'>" +
