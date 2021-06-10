@@ -21,7 +21,6 @@ var listofarticles = [];
 
 function readVisData() {
     return $.get("visData.json").done(function(data) {
-      console.log(data);
         for (var i = 0; i < Object.keys(data).length; i++) {
             var article = data[i];
             var triage_path = "/visualizations/" + article["article_sha256"].substring(0, 32) +"/triager_data.csv";
@@ -51,13 +50,13 @@ async function generateList(limit) {
     var sortBy = sortOptions.options[sortOptions.selectedIndex].value;
     var orderOptions = document.getElementById("order")
     var order = orderOptions.options[orderOptions.selectedIndex].value;
-    var search = document.getElementById("searchtext").value;
+    // var search = document.getElementById("searchtext").value;
 
     //search
-    var searchedArticles = unlimitedSearchWorks(search, listofarticles);
+    // var searchedArticles = unlimitedSearchWorks(search, listofarticles);
 
     //sort
-    var sortedArticles = sortArticles(searchedArticles, sortBy, order);
+    var sortedArticles = sortArticles(listofarticles, sortBy, order);
     //Filter by tags (Needs additional information)
 
     //Only show the top 20 results
@@ -87,14 +86,25 @@ function scrollContinue() {
 }
 
 function unlimitedSearchWorks(query, listofarticles) {
-    output = []
-    var re = new RegExp(search, 'gi');
+    output = [];
+
+
     for (var i = 0; i < listofarticles.length; i++) {
-        if (listofarticles[i].title.match(re) != null) {
-            output.push(listofarticles[i])
-        }
-    }
-    return output
+      $.get(listofarticles[i].plainText).done(function(data) {
+        var totalText = data.toString()
+        totalText = totalText.toLowerCase();
+        console.log(query);
+        if (query === "") {
+          output.push(listofarticles[i]);
+
+
+        } else if (totalText.includes(query) && query !== "") {
+            output.push(listofarticles[i]);
+      }
+    });
+  }
+  console.log(output);
+  return output;
 }
 
 function sortArticles(listofarticles, sortBy, order) {
@@ -137,12 +147,12 @@ function generateEntry(entry) {
       var totalText = data.toString()
       var previewText = totalText.substring(0, 200);
       // Empty string checks
-      if (entry.title == "") {
-        const regexTitle = /(Title:).+/
-        const matches = totalText.match(regexTitle);
-        const title_string = matches[0].substring(7, matches[0].length); //Slice out the 'Title: '
-        entry.title = title_string;
-      }
+      // if (entry.title == "") {
+      //   const regexTitle = /(Title:).+/
+      //   const matches = totalText.match(regexTitle);
+      //   const title_string = matches[0].substring(7, matches[0].length); //Slice out the 'Title: '
+      //   entry.title = title_string;
+      // }
 
 
       var articleEntry = "<div id='" + entry.sha256 + "' class='row'>" +
