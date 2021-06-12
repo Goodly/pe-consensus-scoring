@@ -8,6 +8,7 @@ import argparse
 from UnitizingScoring import toArray, scorePercentageUnitizing, getIndicesFromUser
 from ThresholdMatrix import evalThresholdMatrix
 
+STRICT_MINIMUM_CONTRIBUTORS = 1
 
 path1 = 'SemanticsTriager1.3C2-2018-07-28T21.csv'
 path2 = 'FormTriager1.2C2-2018-07-28T21.csv'
@@ -29,7 +30,6 @@ def importData(path, out_path):
     article_shas = np.unique(data['article_sha256'])
     out = [['article_filename','article_sha256', 'source_task_uuid', 'namespace','start_pos', 'end_pos', 'topic_name', 'case_number', 'target_text']]
     for a in article_shas:
-        print('---------------------------')
         art_data = data.loc[data['article_sha256'] == a]
 
         filename = art_data['article_filename'].tolist()
@@ -47,7 +47,7 @@ def importData(path, out_path):
         #flagExclusions = exclusionList(users, flags, cats)
         flagExclusions = []
         #print(flagExclusions)
-        if annotator_count >= 2:
+        if annotator_count >= STRICT_MINIMUM_CONTRIBUTORS:
             cats = np.unique(art_data['topic_name'])
             for c in cats:
                 cat_data = art_data.loc[art_data['topic_name'] == c]
@@ -65,7 +65,6 @@ def importData(path, out_path):
                 source_text = addToSourceText(starts, ends, texts, source_text)
                 pstarts, pends, pflags = scoreTriager(starts, ends, users, numUsers, flags, length, c, flagExclusions)
                 out = appendData(filename[0], a, task_uuids, namespaces, pstarts, pends, c, pflags, out, source_text)
-    print('exporting to csv')
 
     scores = open(out_path, 'w', encoding = 'utf-8')
 
@@ -73,7 +72,6 @@ def importData(path, out_path):
         writer = csv.writer(scores)
         writer.writerows(out)
 
-    print("Table complete")
 
 def appendData(article_filename, article_sha256, task_uuids, namespaces,start_pos_list, end_pos_list, topic_name, case_numbers, data, source_text):
     if len(case_numbers) == 0:
@@ -115,10 +113,10 @@ def scoreTriager(starts,ends, users, numUsers, inFlags, length, category, global
     #print(coded, numUsers)
     newStarts, newEnds = toStartsEnds(passers)
     flags = determineFlags(starts, ends, newStarts, newEnds, coded, inFlags)
-    print('Starts:',newStarts)
-    print('Ends:',newEnds)
-    print('Flags:', flags)
-    print('---------------------------')
+    # print('Starts:',newStarts)
+    # print('Ends:',newEnds)
+    # print('Flags:', flags)
+    # print('---------------------------')
     return newStarts, newEnds,flags
 
 def findExcludedIndices(exclusions, users):
@@ -157,7 +155,7 @@ def exclusionList(users, flags,cats = None, minU= 8):
             score = oneCount/pot
         if score>.8 and pot > minU:
             excluded.append(u)
-    print('excl', excluded,'users', np.unique(users))
+    #print('excl', excluded,'users', np.unique(users))
     return excluded
 
 def codeNameDict(users):
@@ -237,7 +235,7 @@ def findPassingIndices(starts, ends, numUsers, users, length, passingFunc = eval
     """passingFunc must take in 3 arguments, first is a percentage, second is numberof users, 3rd is the scale
         what the scale is can very for different methods of evaluating passes/fails"""
     #print(starts)
-    print('findPI seu', len(starts), len(ends), len(users))
+    #print('findPI seu', len(starts), len(ends), len(users))
     answerMatrix = toArray(starts, ends, length, users)
     percentageArray = scorePercentageUnitizing(answerMatrix, length, numUsers)
     passersArray = np.zeros(len(percentageArray))
@@ -273,7 +271,7 @@ def toStartsEnds(passers):
             if prev == 0:
                 starts.append(i)
             elif prev == 1:
-                ends.append(i)
+                ends.append(i-1)
             prev = 1-prev
     if len(ends)<len(starts):
         ends.append(passers[-1])
@@ -336,16 +334,16 @@ def assignFlags(matrix):
 
 
 def determineFlags(starts, ends, nStarts, nEnds, codedUsers, flags):
-    print()
-    print('flags',flags)
-    print('users',codedUsers)
+    # print()
+    # print('flags',flags)
+    # print('users',codedUsers)
     matrix = toFlagMatrix(starts, ends, nStarts,nEnds, codedUsers, flags)
-    print('nStarts', nStarts)
-    print('mat',matrix)
+    # print('nStarts', nStarts)
+    # print('mat',matrix)
 
     if len(matrix)>0 and len(matrix[0])>0:
         outFlags = assignFlags(matrix)
-        print("OUTPUT\n",outFlags)
+       # print("OUTPUT\n",outFlags)
         return outFlags
     return []
 
@@ -382,7 +380,7 @@ def load_args():
 
 if __name__ == '__main__':
     args = load_args()
-    input_file = 'march2019SemTri-2019-04-02T2214-Highlighter.csv'
+    input_file = '../data/highlighter/ESTF_HardTriage-2021-05-14T0016-Highlighter.csv'
     if args.input_file:
         input_file = args.input_file
     dirname = os.path.dirname(input_file)

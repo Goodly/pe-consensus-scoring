@@ -1,4 +1,6 @@
 /data/
+/test_data/
+/test_data/*
 # Scripts and config with account specific parameters to avoid
 *-acct-*
 # Artifact from deploy-queues.sh

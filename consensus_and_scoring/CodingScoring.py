@@ -45,12 +45,7 @@ def evaluateCoding(answers, users, starts, ends, numUsers, length, sourceText, h
             highScore, winner, weights, firstSecondScoreDiff = scoreCoding(answers, users, 'ordinal', scale=2)
     # These all return tuples (array of answers, amount of scaling done), element at index 1 is same for all
     assert (len(answers) == len(users))
-    # weightScaledAnswers, weightScaledUsers, weightScaledHlUsers, \
-    #                                         weightScaledStarts, \
-    #                                         weightScaledEnds, \
-    #                                         weightScaledNumUsers,\
-    #                                         userWeightDict= weightScaleEverything(hlAns, weights, hlUsers, users,
-    #                                                                                      starts,ends, repDF)
+
     assert (len(np.unique(users)) >= len(np.unique(hlUsers)))
     weightScaledAnswers, weightScaledNumUsers, userWeightDict = scaleFromWeights(answers, answers, weights, users,
                                                                                  repDF, useRep=useRep)
@@ -121,7 +116,7 @@ def passToUnitizing(answers, hlusers, starts, ends, numUsers, length, \
         # fNumUsers = len(np.unique(fUsers))
         fNumUsers = scaledNumUsers
         # If somebody highlights something
-        if len(starts) >= 2:
+        if len(starts) >= STRICT_MINIMUM_CONTRIBUTORS:
             assert len(fStarts) == len(fhlusers)
             uScore, iScore, units = scoreNuUnitizing(fStarts, fEnds, length, fNumUsers, fhlusers,
                                                      userWeightDict, answers, winner, useRep = useRep,

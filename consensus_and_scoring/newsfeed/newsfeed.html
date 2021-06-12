@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,500,600,700,800" rel="stylesheet" type='text/css'>
 
     <!-- Relative Stylesheets -->
-    <link rel="stylesheet" href="assets/scoredArticleCSS.css">
+    <link rel="stylesheet" href="assets/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <script src="https://d3js.org/d3.v4.min.js" charset="utf-8"></script>
@@ -42,12 +42,12 @@
             </div>
             <div class="col-8">
                 <div class="searchbar"  id = "search">
-                    <form class="example">
+                    <!-- <form class="example">
                         <input id = "searchtext" type="text" placeholder="Search for an article ..." name="search">
                         <button id = "searchbutton"type="button" onclick="generateAndMove()">
                             Search
                         </button>
-                    </form>
+                    </form> -->
                     <br>
 
                     Filter By:
@@ -91,9 +91,10 @@
 
         <br>
 
+        <!-- Location of newsfeed articles -->
         <div id="articleList" class="container section"></div>
 
-        
+
 
         <!-- Grid end -->
 
@@ -101,9 +102,9 @@
           <div id = "showBox">
           Show:
           <select class = "sort" id = "showLimit">
-              <option value=5>5</option>
-              <option value=10>10</option>
-              <option value=15>15</option>
+              <option>all</option>
+              <option selected="selected">20</option>
+
           </select>
         </div>
         </div>

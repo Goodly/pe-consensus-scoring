@@ -1,0 +1,4 @@
+Article ID,Credibility Indicator ID,Credibility Indicator Category,Credibility Indicator Name,Points,Indices of Label in Article,Start,End,target_text
+6d18bf2107626a05465ea8ae8573bf2952e1d2d62ff486ba9d304f8f09e8cf7e,L0,Language,Exaggeration,-3.179988399581062,"range(405, 411)",405,411,nan
+6d18bf2107626a05465ea8ae8573bf2952e1d2d62ff486ba9d304f8f09e8cf7e,L0,Language,Exaggeration,0,"range(1605, 1620)",1605,1620,nan
+,,,,,,,,

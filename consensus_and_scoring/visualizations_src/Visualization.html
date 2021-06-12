@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,500,600,700,800" rel="stylesheet" type='text/css'>
 
     <!-- Relative Stylesheets -->
-    <link rel="stylesheet" href="/visualizations/assets/scoredArticleCSS-copy.css">
+    <link rel="stylesheet" href="/visualizations/assets/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
 
@@ -23,7 +23,9 @@
     <script type="text/javascript" src="/visualizations/assets/colorFinder.js"></script>
     <script type="text/javascript" src="/visualizations/assets/dataConverter.js"></script>
     <script type="text/javascript" src = "/visualizations/assets/embedder.js"></script>
-    
+    <script type="text/javascript" src ="/visualizations/assets/eta.js"></script>
+    <script type="text/javascript" src="/visualizations/assets/dropdown.js"></script>
+
     <!-- Squarespace section -->
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Poppins:300,400,700|Raleway:400"/>
     <script data-name="static-context">Static = window.Static || {}; Static.SQUARESPACE_CONTEXT = {"facebookAppId":"314192535267336","facebookApiVersion":"v6.0","rollups":{"squarespace-announcement-bar":{"js":"/assets_test/announcement-bar.js"},"squarespace-audio-player":{"css":"//assets.squarespace.com/universal/styles-compressed/audio-player-52bdd87acccf92a19703e60e09c654bd-min.css","js":"//assets_test/audio-player-1db7068d04990461f3772-min.en-US.js"},"squarespace-blog-collection-list":{"css":"//assets.squarespace.com/universal/styles-compressed/blog-collection-list-d41d8cd98f00b204e9800998ecf8427e-min.css","js":"//assets_test/blog-collection-list-342036262b204974aa269-min.en-US.js"},"squarespace-calendar-block-renderer":{"css":"//assets.squarespace.com/universal/styles-compressed/calendar-block-renderer-a0cc7f57176bc63d87bc9f4149fada5a-min.css","js":"//assets_test/calendar-block-renderer-6b73b84f9f857cc3176ef-min.en-US.js"},"squarespace-chartjs-helpers":{"css":"//assets.squarespace.com/universal/styles-compressed/chartjs-helpers-9935a41d63cf08ca108505d288c1712e-min.css","js":"//assets_test/chartjs-helpers-7cab3555622a21bf2d6ac-min.en-US.js"},"squarespace-comments":{"css":"//assets.squarespace.com/universal/styles-compressed/comments-1637eb4ee93bed59528921026e024bf4-min.css","js":"//assets_test/comments-0729b542c0a8edb4d1f92-min.en-US.js"},"squarespace-commerce-cart":{"js":"//assets_test/commerce-cart-bb624a5056e19e571fae7-min.en-US.js"},"squarespace-dialog":{"css":"//assets.squarespace.com/universal/styles-compressed/dialog-afeb96ba160fb642a2d98c892a956065-min.css","js":"//assets_test/dialog-77dc0982c433970c71f72-min.en-US.js"},"squarespace-events-collection":{"css":"//assets.squarespace.com/universal/styles-compressed/events-collection-a0cc7f57176bc63d87bc9f4149fada5a-min.css","js":"//assets_test/events-collection-de0735880b2d1a8372c4b-min.en-US.js"},"squarespace-form-rendering-utils":{"js":"//assets_test/form-rendering-utils-7965f3ab927721f10b620-min.en-US.js"},"squarespace-forms":{"css":"//assets.squarespace.com/universal/styles-compressed/forms-d21f3e517c32f4caba9f220beea0666d-min.css","js":"//assets_test/forms-0d4e3eb0b9cf07c8a5614-min.en-US.js"},"squarespace-gallery-collection-list":{"css":"//assets.squarespace.com/universal/styles-compressed/gallery-collection-list-d41d8cd98f00b204e9800998ecf8427e-min.css","js":"//assets_test/gallery-collection-list-e23ee315df466f1dba9ec-min.en-US.js"},"squarespace-image-zoom":{"css":"//assets.squarespace.com/universal/styles-compressed/image-zoom-72b0ab7796582588032aa6472e2e2f14-min.css","js":"//assets_test/image-zoom-5a660e03e667b16c7a076-min.en-US.js"},"squarespace-pinterest":{"css":"//assets.squarespace.com/universal/styles-compressed/pinterest-d41d8cd98f00b204e9800998ecf8427e-min.css","js":"//assets_test/pinterest-4725f00d98ee2610ca950-min.en-US.js"},"squarespace-popup-overlay":{"css":"//assets.squarespace.com/universal/styles-compressed/popup-overlay-e984c5797664760d617b07bce15392a1-min.css","js":"//assets_test/popup-overlay-4b53629e6694928bdeb5a-min.en-US.js"},"squarespace-product-quick-view":{"css":"//assets.squarespace.com/universal/styles-compressed/product-quick-view-3fa8fd4df0755e7a7878e60166ca3d61-min.css","js":"//assets_test/product-quick-view-7f89dbddab07879341663-min.en-US.js"},"squarespace-products-collection-item-v2":{"css":"//assets.squarespace.com/universal/styles-compressed/products-collection-item-v2-72b0ab7796582588032aa6472e2e2f14-min.css","js":"//assets_test/products-collection-item-v2-ddd7f4d1b8c7fa16b94a5-min.en-US.js"},"squarespace-products-collection-list-v2":{"css":"//assets.squarespace.com/universal/styles-compressed/products-collection-list-v2-72b0ab7796582588032aa6472e2e2f14-min.css","js":"//assets_test/products-collection-list-v2-3f6bb25ca3f726b1d318b-min.en-US.js"},"squarespace-search-page":{"css":"//assets.squarespace.com/universal/styles-compressed/search-page-207da8872118254c0a795bf9b187c205-min.css","js":"//assets_test/search-page-f7a5afc159c4f15bf0e83-min.en-US.js"},"squarespace-search-preview":{"js":"//assets_test/search-preview-b420b3949e7c3a971e180-min.en-US.js"},"squarespace-share-buttons":{"js":"//assets_test/share-buttons-8547bcc8e55d3d43d749d-min.en-US.js"},"squarespace-simple-liking":{"css":"//assets.squarespace.com/universal/styles-compressed/simple-liking-9ef41bf7ba753d65ec1acf18e093b88a-min.css","js":"//assets_test/simple-liking-1771e8072a5d48b7814da-min.en-US.js"},"squarespace-social-buttons":{"css":"//assets.squarespace.com/universal/styles-compressed/social-buttons-bf7788a87c794b73afd9d5c49f72f4f3-min.css","js":"//assets_test/social-buttons-c2a99f2700eeebb7dae55-min.en-US.js"},"squarespace-tourdates":{"css":"//assets.squarespace.com/universal/styles-compressed/tourdates-d41d8cd98f00b204e9800998ecf8427e-min.css","js":"//assets_test/tourdates-8cd208e3c1e14d1a4fceb-min.en-US.js"},"squarespace-website-overlays-manager":{"css":"//assets.squarespace.com/universal/styles-compressed/website-overlays-manager-68df56a8135961401cbd590171d6b04a-min.css","js":"//assets_test/website-overlays-manager-292d08f24d2821180c099-min.en-US.js"}},"pageType":2,"website":{"id":"5e6aa05e9fa71e5cea673ded","identifier":"mandolin-krill-x3br","websiteType":1,"contentModifiedOn":1590711502383,"cloneable":false,"siteStatus":{},"language":"en-US","timeZone":"America/Los_Angeles","machineTimeZoneOffset":-25200000,"timeZoneOffset":-25200000,"timeZoneAbbr":"PDT","siteTitle":"Public Editor","fullSiteTitle":"Public Editor","siteDescription":"","logoImageId":"5e7a7b0b89937a24edc6a392","shareButtonOptions":{"3":true,"6":true,"8":true,"7":true,"1":true,"2":true,"4":true},"logoImageUrl":"//static1.squarespace.com/static/5e6aa05e9fa71e5cea673ded/t/5e7a7b0b89937a24edc6a392/1590711502383/","authenticUrl":"https://www.publiceditor.io","internalUrl":"https://mandolin-krill-x3br.squarespace.com","baseUrl":"https://www.publiceditor.io","primaryDomain":"www.publiceditor.io","sslSetting":3,"isHstsEnabled":false,"socialAccounts":[{"serviceId":60,"addedOn":1584046174947,"profileUrl":"https://www.facebook.com/publiceditor.io/","iconEnabled":true,"serviceName":"facebook-unauth"},{"serviceId":62,"addedOn":1584046174952,"profileUrl":"https://twitter.com/Public_Editor_","iconEnabled":true,"serviceName":"twitter-unauth"}],"typekitId":"","statsMigrated":false,"imageMetadataProcessingEnabled":false,"captchaSettings":{"enabledForDonations":false},"showOwnerLogin":false},"websiteSettings":{"id":"5e6aa05e9fa71e5cea673df0","websiteId":"5e6aa05e9fa71e5cea673ded","subjects":[],"country":"US","state":"CA","simpleLikingEnabled":true,"mobileInfoBarSettings":{"isContactEmailEnabled":false,"isContactPhoneNumberEnabled":false,"isLocationEnabled":false,"isBusinessHoursEnabled":false},"announcementBarSettings":{"style":2,"text":"<p class=\"\" style=\"white-space:pre-wrap;\">Join our Fight Against COVID-19 Misinformation</p>","clickthroughUrl":{"url":"/join","newWindow":false}},"commentLikesAllowed":true,"commentAnonAllowed":true,"commentThreaded":true,"commentApprovalRequired":false,"commentAvatarsOn":true,"commentSortType":2,"commentFlagThreshold":0,"commentFlagsAllowed":true,"commentEnableByDefault":true,"commentDisableAfterDaysDefault":0,"disqusShortname":"","commentsEnabled":false,"storeSettings":{"returnPolicy":null,"termsOfService":null,"privacyPolicy":null,"expressCheckout":false,"continueShoppingLinkUrl":"/","useLightCart":false,"showNoteField":false,"shippingCountryDefaultValue":"US","billToShippingDefaultValue":false,"showShippingPhoneNumber":true,"isShippingPhoneRequired":false,"showBillingPhoneNumber":true,"isBillingPhoneRequired":false,"currenciesSupported":["USD","ARS","AUD","BRL","CAD","CHF","COP","CZK","DKK","EUR","GBP","HKD","IDR","ILS","INR","JPY","MXN","MYR","NOK","NZD","PHP","PLN","RUB","SEK","SGD","THB","ZAR"],"defaultCurrency":"USD","selectedCurrency":"USD","measurementStandard":1,"showCustomCheckoutForm":false,"enableMailingListOptInByDefault":false,"sameAsRetailLocation":false,"merchandisingSettings":{"scarcityEnabledOnProductItems":false,"scarcityEnabledOnProductBlocks":false,"scarcityMessageType":"DEFAULT_SCARCITY_MESSAGE","scarcityThreshold":10,"multipleQuantityAllowedForServices":true,"restockNotificationsEnabled":false,"restockNotificationsMailingListSignUpEnabled":false,"relatedProductsEnabled":false,"relatedProductsOrdering":"random","soldOutVariantsDropdownDisabled":false,"productComposerOptedIn":false},"isLive":true,"multipleQuantityAllowedForServices":true},"useEscapeKeyToLogin":true,"trialAssistantEnabled":true,"ssBadgeType":1,"ssBadgePosition":4,"ssBadgeVisibility":1,"ssBadgeDevices":1,"pinterestOverlayOptions":{"mode":"disabled"},"ampEnabled":false},"cookieSettings":{"isCookieBannerEnabled":false,"isRestrictiveCookiePolicyEnabled":false,"isRestrictiveCookiePolicyAbsolute":false,"cookieBannerText":"","cookieBannerTheme":"","cookieBannerVariant":"","cookieBannerPosition":"","cookieBannerCtaVariant":"","cookieBannerCtaText":""},"websiteCloneable":false,"collection":{"title":"HOME","id":"5e6aa323d5da6f080cd9c0d3","fullUrl":"/","type":10},"subscribed":false,"appDomain":"squarespace.com","templateTweakable":true,"tweakJSON":{"header-logo-height":"50px","header-mobile-logo-max-height":"30px","header-vert-padding":"3vw","header-width":"Full","maxPageWidth":"1400px","pagePadding":"3vw","tweak-blog-alternating-side-by-side-image-aspect-ratio":"1:1 Square","tweak-blog-alternating-side-by-side-image-spacing":"6%","tweak-blog-alternating-side-by-side-meta-spacing":"20px","tweak-blog-alternating-side-by-side-primary-meta":"Categories","tweak-blog-alternating-side-by-side-read-more-spacing":"20px","tweak-blog-alternating-side-by-side-secondary-meta":"Date","tweak-blog-basic-grid-columns":"2","tweak-blog-basic-grid-image-aspect-ratio":"2:3 Standard (Vertical)","tweak-blog-basic-grid-image-spacing":"50px","tweak-blog-basic-grid-meta-spacing":"25px","tweak-blog-basic-grid-primary-meta":"Categories","tweak-blog-basic-grid-read-more-spacing":"0px","tweak-blog-basic-grid-secondary-meta":"Date","tweak-blog-item-custom-width":"65","tweak-blog-item-show-author-profile":"false","tweak-blog-item-width":"Narrow","tweak-blog-masonry-columns":"2","tweak-blog-masonry-horizontal-spacing":"30px","tweak-blog-masonry-image-spacing":"20px","tweak-blog-masonry-meta-spacing":"20px","tweak-blog-masonry-primary-meta":"Categories","tweak-blog-masonry-read-more-spacing":"20px","tweak-blog-masonry-secondary-meta":"Date","tweak-blog-masonry-vertical-spacing":"30px","tweak-blog-side-by-side-image-aspect-ratio":"3:2 Standard","tweak-blog-side-by-side-image-spacing":"10%","tweak-blog-side-by-side-meta-spacing":"20px","tweak-blog-side-by-side-primary-meta":"Categories","tweak-blog-side-by-side-read-more-spacing":"20px","tweak-blog-side-by-side-secondary-meta":"None","tweak-blog-single-column-image-spacing":"50px","tweak-blog-single-column-meta-spacing":"30px","tweak-blog-single-column-primary-meta":"Categories","tweak-blog-single-column-read-more-spacing":"30px","tweak-blog-single-column-secondary-meta":"Date","tweak-events-stacked-show-thumbnails":"true","tweak-events-stacked-thumbnail-size":"3:2 Standard","tweak-fixed-header":"false","tweak-fixed-header-style":"Basic","tweak-global-animations-animation-curve":"ease","tweak-global-animations-animation-delay":"0.1s","tweak-global-animations-animation-duration":"0.1s","tweak-global-animations-animation-style":"fade","tweak-global-animations-animation-type":"none","tweak-global-animations-complexity-level":"detailed","tweak-global-animations-enabled":"false","tweak-portfolio-grid-basic-custom-height":"50","tweak-portfolio-grid-overlay-custom-height":"50","tweak-portfolio-hover-follow-acceleration":"10%","tweak-portfolio-hover-follow-animation-duration":"Medium","tweak-portfolio-hover-follow-animation-type":"Fade","tweak-portfolio-hover-follow-delimiter":"Forward Slash","tweak-portfolio-hover-follow-front":"false","tweak-portfolio-hover-follow-layout":"Inline","tweak-portfolio-hover-follow-size":"75","tweak-portfolio-hover-follow-text-spacing-x":"1.5","tweak-portfolio-hover-follow-text-spacing-y":"1.5","tweak-portfolio-hover-static-animation-duration":"Medium","tweak-portfolio-hover-static-animation-type":"Scale Up","tweak-portfolio-hover-static-delimiter":"Forward Slash","tweak-portfolio-hover-static-front":"false","tweak-portfolio-hover-static-layout":"Stacked","tweak-portfolio-hover-static-size":"75","tweak-portfolio-hover-static-text-spacing-x":"1.5","tweak-portfolio-hover-static-text-spacing-y":"1.5","tweak-portfolio-index-background-animation-duration":"Medium","tweak-portfolio-index-background-animation-type":"Fade","tweak-portfolio-index-background-custom-height":"50","tweak-portfolio-index-background-height":"Large","tweak-portfolio-index-background-horizontal-alignment":"Center","tweak-portfolio-index-background-link-format":"Stacked","tweak-portfolio-index-background-persist":"false","tweak-portfolio-index-background-vertical-alignment":"Middle","tweak-portfolio-index-background-width":"Full","tweak-portfolio-slides-cover-animation-style":"Vertical Slide","tweak-portfolio-slides-cover-content-width":"M","tweak-portfolio-slides-cover-content-width-custom-value":"50","tweak-portfolio-slides-cover-detail-placement-horizontal":"Left","tweak-portfolio-slides-cover-detail-placement-vertical":"Middle","tweak-portfolio-slides-cover-indicator-type":"Bar","tweak-portfolio-slides-cover-overlay-color":"#ffffff","tweak-portfolio-slides-cover-overlay-opacity":"10","tweak-portfolio-slides-cover-text-align":"Left","tweak-portfolio-slides-cover-view-link":"true","tweak-portfolio-slides-inset-animation-style":"Vertical Slide","tweak-portfolio-slides-inset-content-width":"M","tweak-portfolio-slides-inset-content-width-custom-value":"50","tweak-portfolio-slides-inset-detail-placement":"Middle Left","tweak-portfolio-slides-inset-image-margin":"M","tweak-portfolio-slides-inset-image-margin-custom-value":"10","tweak-portfolio-slides-inset-indicator-type":"Bar","tweak-portfolio-slides-inset-overlay-color":"#ffffff","tweak-portfolio-slides-inset-overlay-opacity":"10","tweak-portfolio-slides-inset-view-link":"true","tweak-portfolio-slides-split-animation-style":"Vertical Slide","tweak-portfolio-slides-split-content-width":"M","tweak-portfolio-slides-split-content-width-custom-value":"50","tweak-portfolio-slides-split-detail-placement-horizontal":"Left","tweak-portfolio-slides-split-detail-placement-vertical":"Middle","tweak-portfolio-slides-split-image-align":"Right","tweak-portfolio-slides-split-image-width":"M","tweak-portfolio-slides-split-image-width-custom-value":"50","tweak-portfolio-slides-split-indicator-type":"Bar","tweak-portfolio-slides-split-overlay-color":"#ffffff","tweak-portfolio-slides-split-overlay-opacity":"10","tweak-portfolio-slides-split-position":"Split Left","tweak-portfolio-slides-split-text-align":"Left","tweak-portfolio-slides-split-view-link":"true","tweak-product-basic-item-click-action":"None","tweak-product-basic-item-gallery-aspect-ratio":"3:4 Three-Four (Vertical)","tweak-product-basic-item-gallery-design":"Slideshow","tweak-product-basic-item-gallery-width":"50%","tweak-product-basic-item-hover-action":"None","tweak-product-basic-item-image-spacing":"2vw","tweak-product-basic-item-image-zoom-factor":"2","tweak-product-basic-item-thumbnail-placement":"Side","tweak-products-columns":"2","tweak-products-gutter-column":"2vw","tweak-products-gutter-row":"2vw","tweak-products-header-text-alignment":"Middle","tweak-products-image-aspect-ratio":"2:3 Standard (Vertical)","tweak-products-image-text-spacing":"0.5vw","tweak-products-text-alignment":"Left","tweak-transparent-header":"true"},"templateId":"5c5a519771c10ba3470d8101","templateVersion":"7.1","pageFeatures":[1,2,4],"gmRenderKey":"QUl6YVN5Q0JUUk9xNkx1dkZfSUUxcjQ2LVQ0QWVUU1YtMGQ3bXk4","betaFeatureFlags":["ORDERS-SERVICE-check-digital-good-access-with-service","ORDERS-SERVICE-reset-digital-goods-access-with-service","ORDER_SERVICE-submit-subscription-order-through-service","ORDER_SERVICE-submit-reoccurring-subscription-order-through-service","dg_downloads_from_fastly","generic_iframe_loader_for_campaigns","donations_customer_accounts","product-retriever-v2-enabled","domain_registration_via_registrar_service","domain_locking_via_registrar_service","domain_deletion_via_registrar_service","domain_info_via_registrar_service","demo_content_improvement","new_stacked_index","themes","site_header_footer","collection_typename_switching","override_block_styles","local_listings","onboarding_wizard_seven_one","seven_one_image_overlay_opacity","gallery_captions_71","commerce_restock_notifications","scripts_defer","global_animations","newsletter_block_captcha","gallery_settings_71","seven_one_portfolio_hover_layouts","commerce_minimum_order_amount","seven_one_theme_mapper_v3","domains_transfer_flow_improvements","domains_allow_async_gsuite","domains_use_new_domain_connect_strategy","commerce_instagram_product_checkout_links","campaigns_single_opt_in","seven_one_fonts_panel_targeting","seven_one_user_survey_on_mobile","commerce_subscription_order_delay","commerce_activation_experiment_payments_faq","commerce_activation_experiment_add_payment_processor_card","commerce_product_composer_all_types","trust_arc_on_config","new_billing_system"],"yuiEliminationExperimentList":[{"name":"statsMigrationJobWidget-enabled","experimentType":"AB_TEST","variant":"true","containsError":false,"status":"ACTIVE"},{"name":"ContributionConfirmed-enabled","experimentType":"AB_TEST","variant":"false","containsError":false,"status":"ACTIVE"},{"name":"TextPusher-enabled","experimentType":"AB_TEST","variant":"true","containsError":false,"status":"ACTIVE"},{"name":"MenuItemWithProgress-enabled","experimentType":"AB_TEST","variant":"true","containsError":false,"status":"ACTIVE"},{"name":"imageProcJobWidget-enabled","experimentType":"AB_TEST","variant":"true","containsError":false,"status":"ACTIVE"},{"name":"QuantityChangePreview-enabled","experimentType":"AB_TEST","variant":"true","containsError":false,"status":"ACTIVE"},{"name":"CompositeModel-enabled","experimentType":"AB_TEST","variant":"false","containsError":false,"status":"ACTIVE"},{"name":"HasPusherMixin-enabled","experimentType":"AB_TEST","variant":"true","containsError":false,"status":"INACTIVE"},{"name":"ProviderList-enabled","experimentType":"AB_TEST","variant":"true","containsError":false,"status":"ACTIVE"},{"name":"MediaTracker-enabled","experimentType":"AB_TEST","variant":"false","containsError":false,"status":"ACTIVE"},{"name":"pushJobWidget-enabled","experimentType":"AB_TEST","variant":"true","containsError":false,"status":"ACTIVE"},{"name":"internal-enabled","experimentType":"AB_TEST","variant":"true","containsError":false,"status":"ACTIVE"},{"name":"BillingPanel-enabled","experimentType":"AB_TEST","variant":"false","containsError":false,"status":"ACTIVE"},{"name":"PopupOverlayEditor-enabled","experimentType":"AB_TEST","variant":"true","containsError":false,"status":"ACTIVE"},{"name":"CoverPagePicker-enabled","experimentType":"AB_TEST","variant":"true","containsError":false,"status":"ACTIVE"}],"impersonatedSession":false,"demoCollections":[{"collectionId":"5ce8490671c10bc325d30348","deleted":true},{"collectionId":"5ceead91ee6eb045ddb0f56c","deleted":true},{"collectionId":"5ceead97eef1a1213eab6d6e","deleted":true},{"collectionId":"5ceeae88652deae4f566c165","deleted":true},{"collectionId":"5d52d00e84e16600012d2095","deleted":true},{"collectionId":"5d52d00f9a168500019a6083","deleted":true},{"collectionId":"5d52d01058996e00011e8938","deleted":true}],"tzData":{"zones":[[-480,"US","P%sT",null]],"rules":{"US":[[1967,2006,null,"Oct","lastSun","2:00","0","S"],[1987,2006,null,"Apr","Sun>=1","2:00","1:00","D"],[2007,"max",null,"Mar","Sun>=8","2:00","1:00","D"],[2007,"max",null,"Nov","Sun>=1","2:00","0","S"]]}}};</script><script type="application/ld+json">{"url":"https://www.publiceditor.io","name":"Public Editor","description":"","image":"//static1.squarespace.com/static/5e6aa05e9fa71e5cea673ded/t/5e7a7b0b89937a24edc6a392/1590711502383/","@context":"http://schema.org","@type":"WebSite"}</script><!--[if gte IE 9]> <link rel="stylesheet" type="text/css" href="//static1.squarespace.com/static/sitecss/5e6aa05e9fa71e5cea673ded/52/5c5a519771c10ba3470d8101/5e6aa05e9fa71e5cea673e09/843-05142015/1590705741467/site.css?&filterFeatures=false&part=1"/><link rel="stylesheet" type="text/css" href="//static1.squarespace.com/static/sitecss/5e6aa05e9fa71e5cea673ded/52/5c5a519771c10ba3470d8101/5e6aa05e9fa71e5cea673e09/843-05142015/1590705741467/site.css?&filterFeatures=false&part=2"/><link rel="stylesheet" type="text/css" href="//static1.squarespace.com/static/sitecss/5e6aa05e9fa71e5cea673ded/52/5c5a519771c10ba3470d8101/5e6aa05e9fa71e5cea673e09/843-05142015/1590705741467/site.css?&filterFeatures=false&part=3"/><link rel="stylesheet" type="text/css" href="//static1.squarespace.com/static/sitecss/5e6aa05e9fa71e5cea673ded/52/5c5a519771c10ba3470d8101/5e6aa05e9fa71e5cea673e09/843-05142015/1590705741467/site.css?&filterFeatures=false&part=4"/><![endif]-->
@@ -60,86 +62,109 @@
               <div class="header-nav">
                 <div class="header-nav-wrapper">
                   <nav class="header-nav-list">
-  
-    <div class="header-nav-item header-nav-item--collection" style="margin-right:40px;">
-      <a href="https://www.publiceditor.io/jointheteam" data-animation-role="header-element">
-        
-        JOIN THE TEAM
-      </a>
-    </div>
-  
-    <div class="header-nav-item header-nav-item--collection" style="margin-right:40px;">
-      <a href="https://www.publiceditor.io/blog" data-animation-role="header-element">
-        
-        BLOG
-      </a>
-    </div>
-  
-    <div class="header-nav-item header-nav-item--folder" style="margin-right:40px;">
-      <a class="header-nav-folder-title" href="https://www.publiceditor.io/public-editor" tabindex="-1" data-animation-role="header-element">ABOUT</a>
-      <div class="header-nav-folder-content">
-        
-            <div class="header-nav-folder-item">
-              <a href="https://www.publiceditor.io/public-editor">PUBLIC EDITOR</a>
-            </div>
-          
-            <div class="header-nav-folder-item">
-              <a href="https://www.publiceditor.io/annotate">HOW IT WORKS</a>
-            </div>
-          
-            <div class="header-nav-folder-item">
-              <a href="https://www.publiceditor.io/security">SECURITY</a>
-            </div>
-          
-          
-            <div class="header-nav-folder-item">
-              <a href="https://www.publiceditor.io/our-team">OUR TEAM</a>
-            </div>
-          
-      </div>
-    </div>
-  
-    <div class="header-nav-item header-nav-item--collection" style="margin-right:40px;">
-      <a href="https://www.publiceditor.io/donate" data-animation-role="header-element">
-        
-        DONATE
-      </a>
-    </div>
+
+                    <div class="header-nav-item header-nav-item--collection" style="margin-right:40px;">
+                      <a href="https://www.publiceditor.io/jointheteam" data-animation-role="header-element">
+                        JOIN THE TEAM
+                      </a>
+                    </div>
+
+                    <div class="header-nav-item header-nav-item--collection" style="margin-right:40px;">
+                      <a href="https://www.publiceditor.io/blog" data-animation-role="header-element">
+                        BLOG
+                      </a>
+                    </div>
+
+                    <div class="header-nav-item header-nav-item--folder" style="margin-right:40px;">
+                      <a class="header-nav-folder-title" href="https://www.publiceditor.io/public-editor" tabindex="-1" data-animation-role="header-element">ABOUT</a>
+                      <div class="header-nav-folder-content">
+
+                            <div class="header-nav-folder-item">
+                              <a href="https://www.publiceditor.io/public-editor">PUBLIC EDITOR</a>
+                            </div>
+
+                            <div class="header-nav-folder-item">
+                              <a href="https://www.publiceditor.io/annotate">HOW IT WORKS</a>
+                            </div>
+
+                            <div class="header-nav-folder-item">
+                              <a href="https://www.publiceditor.io/security">SECURITY</a>
+                            </div>
+
+
+                            <div class="header-nav-folder-item">
+                              <a href="https://www.publiceditor.io/our-team">OUR TEAM</a>
+                            </div>
+
+                      </div>
+                    </div>
+
+                    <div class="header-nav-item header-nav-item--collection" style="margin-right:40px;">
+                      <a href="https://www.publiceditor.io/tryitnow" data-animation-role="header-element">
+                        TRY IT NOW
+                      </a>
+                    </div>
+
+                    <div class="header-nav-item header-nav-item--collection" style="margin-right:40px;">
+                      <a href="https://www.publiceditor.io/donate" data-animation-role="header-element">
+                        DONATE
+                      </a>
+                    </div>
                   </nav>
                 </div>
               </div>
           </div>
-        
-          
+
+
           <!-- Actions -->
           <div class="header-actions header-actions--right">
-            
+
             <div class="header-actions-action header-actions-action--cta">
               <a class="btn btn--border theme-btn--primary-inverse" href="https://www.publiceditor.io/join" style="border-radius: 100px;">
                 JOIN US
               </a>
             </div>
-            
+
 
           </div>
-        
-          
-        
-        
       </div>
         </div>
     </div>
 
     <div class="nav-pad">
-        <div class="pills">
-            
-        
-        </div>
+
+    </div>
+
         <!-- Grid start -->
         <div class="homepage-section">
+
             <div class="categories" id="categories">
+
                 <!-- <h2 class="dropTitle">Categories</h2> -->
-                <div class="extra-small-space"></div>
+                <div class="options">
+                  <div class="dropdown">
+                      <button class="dropbtn" id = "explore_button">Explore the Article</button>
+                      <!-- <div class="dropdown-content"> -->
+                          <!-- <button type ="button" class = "article_elem_button" id = "article_elem_button"> Article Elements</button> -->
+                          <!-- <div class="hide">
+                            Which sections of this article are  arguments, quoted sources or assertions? Which sections need fact checking?
+                          </div> -->
+                          <!-- <button type ="button" class = "user_button" id = "user_button">Your Contribution</button>
+                          <div class="hide">
+                            What is your contribution to this article? What highlights and points did you give this article?<br>
+                            <i>Coming soon!</i>
+                          </div> -->
+
+                          <!-- <input type="text" class='hidden' id="userid" placeholder="User ID" autocomplete="off"> -->
+                          <!-- <div class='hidden' id='errormsg'>
+                            No highlights
+                          </div> -->
+                          <!-- <button type ="button" class = "classic_button" id = "classic_button">Classic View</button>
+                          <div class="hide" id="classic">How does the Public Editor algorithm evaluate this article?</div>
+                          <span id="close_button">CLOSE</span> -->
+                        <!-- </div> -->
+                    </div>
+                  </div>
             </div>
 
 
@@ -147,7 +172,7 @@
             <div class="text article">
                 <p id="headerArticle"></p>
                 <p class="p-article" id="textArticle">
-                  There seems to have been an issue with the loading of this page. Please reload and try again.
+                  If the article does not appear in a moment, please reload this page. If the issue persists, please know that we are in the process of resolving it, or contact us at info@publiceditor.io
                 </p>
             </div>
 
@@ -155,16 +180,80 @@
 
             <!-- Cred score begin -->
             <div class="cred-score-container">
+
                 <script type="text/javascript">
                   var textFileUrl = "$ARTICLE_TEXT_URL";
                   var dataFileUrl = "$DATA_CSV_URL";
-                  scoreArticle(textFileUrl, dataFileUrl);
+                  var triageFileUrl = "$TRIAGER_CSV_URL";
+
+                  // textFileUrl = "article_a09.txt";
+                  // dataFileUrl = "viz_data_a09.csv";
+                  // triageFileUrl = "triager_data_a09.csv";
+
+
+                  var userFileUrl = "user_contributions.csv";
+                  import("/visualizations/assets/createHighlights.js").then(scoreArticle(textFileUrl, dataFileUrl, triageFileUrl, userFileUrl));
                 </script>
                 <div class="sunburst">
+                  <button id="popup">
+                      ?
+                  </button>
+                  <div id="myModal" class="modal">
+                      <div class = "modal-content">
+                        <!-- <span class="close">
+                            &times;
+                        </span> -->
+                        <p>
+                          "Public Editor's Credibility Hallmark allows you to quickly understand an article's Credibility Score (from 0-100). Hover over the Credibility Hallmark to learn how many points were deducted from the article's total Credibility Score for each mistake. If you click the outer ring of the Credibility Hallmark, you will automatically scroll to the erroneous passage within the article. ... If a question mark - ? - appears in the center of the Credibility Hallmark, the accuracy of the article's credibility score cannot be determined until claims within the article are fact-checked."
+                        </p>
+                      </div>
+                  </div>
+                  <script>
+                    // Get the modal
+                    var modal = document.getElementById("myModal");
+
+                    // Get the button that opens the modal
+                    var btn = document.getElementById("popup");
+
+                    // Get the <span> element that closes the modal
+                    // var span = document.getElementsByClassName("close")[0];
+
+                    // When the user clicks on the button, open the modal
+                    btn.onclick = function() {
+                      if (modal.style.display === "block") {
+                        modal.style.display = "none";
+                        jQuery("#popup").html("?");
+                        jQuery("#popup").css("right", "312px");
+                      } else {
+                        modal.style.display = "block";
+                        jQuery("#popup").html("X");
+                        jQuery("#popup").css("right", "352px");
+                      }
+                    }
+
+                    // When the user clicks on <span> (x), close the modal
+                    // span.onclick = function() {
+                    //   modal.style.display = "none";
+                    // }
+
+                    // When the user clicks anywhere outside of the modal, close it
+                    window.onclick = function(event) {
+                      if (event.target == modal) {
+                        modal.style.display = "none";
+                      }
+                    }
+                  </script>
                   <svg id="chart">
                   </svg>
+
+                  <!-- <div class="userScore">
+                      Your score for this highlight:
+                  </div> -->
+
                 </div>
-                <script type="text/javascript">hallmark(dataFileUrl);</script>
+
+
+
             </div>
             <!-- Cred score end -->
 
@@ -173,7 +262,6 @@
 
         <div class="small-space"></div>
 
-
         <!-- Footer -->
 
         <div class="footer-span">
@@ -181,9 +269,9 @@
                 <div class="description_project">
                     <p>A Project of:</p>
                     <img class="goodly_lab_image" data-src="https://images.squarespace-cdn.com/content/v1/5e6aa05e9fa71e5cea673ded/1589511425872-8L815N42OFESMAGSTYU2/ke17ZwdGBToddI8pDm48kJXieiza_re_0w7lcce600xZw-zPPgdn4jUwVcJE1ZvWEtT5uBSRWt4vQZAgTJucoTqqXjS3CfNDSuuf31e0tVE_EuTX8ICh5MD_xF0tEUOnOWN-UP0RyL8jpYtPY1iroWbSd6kfRtgWHgNMDgGnmDY/goodnotalias.png" data-image="https://images.squarespace-cdn.com/content/v1/5e6aa05e9fa71e5cea673ded/1589511425872-8L815N42OFESMAGSTYU2/ke17ZwdGBToddI8pDm48kJXieiza_re_0w7lcce600xZw-zPPgdn4jUwVcJE1ZvWEtT5uBSRWt4vQZAgTJucoTqqXjS3CfNDSuuf31e0tVE_EuTX8ICh5MD_xF0tEUOnOWN-UP0RyL8jpYtPY1iroWbSd6kfRtgWHgNMDgGnmDY/goodnotalias.png" data-image-dimensions="374x273" data-image-focal-point="0.5,0.5" data-load="false" data-image-id="5ebe050151dadb2dcdb7bb5a" data-type="image" alt="goodnotalias.png" style="left: 0%; top: 100%; width: 140px; height: 100; position: absolute;" data-image-resolution="500w" src="https://images.squarespace-cdn.com/content/v1/5e6aa05e9fa71e5cea673ded/1589511425872-8L815N42OFESMAGSTYU2/ke17ZwdGBToddI8pDm48kJXieiza_re_0w7lcce600xZw-zPPgdn4jUwVcJE1ZvWEtT5uBSRWt4vQZAgTJucoTqqXjS3CfNDSuuf31e0tVE_EuTX8ICh5MD_xF0tEUOnOWN-UP0RyL8jpYtPY1iroWbSd6kfRtgWHgNMDgGnmDY/goodnotalias.png?format=500w">
-                    
+
                     <img class="thumb-image loaded" data-src="https://images.squarespace-cdn.com/content/v1/5e6aa05e9fa71e5cea673ded/1587693469652-3W9DI6RJLLBPE0X0S5EG/ke17ZwdGBToddI8pDm48kHSELQDgxijQ6O183EgIRv9Zw-zPPgdn4jUwVcJE1ZvWQUxwkmyExglNqGp0IvTJZamWLI2zvYWH8K3-s_4yszcp2ryTI0HqTOaaUohrI8PINHLZULKn5hywl2Pdh_eDIBfa1mm2CCUNqH0VV6g1Z9U/Berkeley_Institute_for_Data_Science_-_Logo.png" data-image="https://images.squarespace-cdn.com/content/v1/5e6aa05e9fa71e5cea673ded/1587693469652-3W9DI6RJLLBPE0X0S5EG/ke17ZwdGBToddI8pDm48kHSELQDgxijQ6O183EgIRv9Zw-zPPgdn4jUwVcJE1ZvWQUxwkmyExglNqGp0IvTJZamWLI2zvYWH8K3-s_4yszcp2ryTI0HqTOaaUohrI8PINHLZULKn5hywl2Pdh_eDIBfa1mm2CCUNqH0VV6g1Z9U/Berkeley_Institute_for_Data_Science_-_Logo.png" data-image-dimensions="813x588" data-image-focal-point="0.5,0.5" data-load="false" data-image-id="5ea2479d4475373b3d6d1a2c" data-type="image" style="left: 0%; top: 310%; width: 130%; height: 165%; position: absolute;" alt="Berkeley_Institute_for_Data_Science_-_Logo.png" data-image-resolution="500w" src="https://images.squarespace-cdn.com/content/v1/5e6aa05e9fa71e5cea673ded/1587693469652-3W9DI6RJLLBPE0X0S5EG/ke17ZwdGBToddI8pDm48kHSELQDgxijQ6O183EgIRv9Zw-zPPgdn4jUwVcJE1ZvWQUxwkmyExglNqGp0IvTJZamWLI2zvYWH8K3-s_4yszcp2ryTI0HqTOaaUohrI8PINHLZULKn5hywl2Pdh_eDIBfa1mm2CCUNqH0VV6g1Z9U/Berkeley_Institute_for_Data_Science_-_Logo.png?format=500w">
-                    
+
                 </div>
                 <div class="description_power">
                     <div class="icons">
@@ -195,23 +283,29 @@
                 <div class="links_1">
                     <a href="https://www.publiceditor.io/faq" style='text-decoration:underline;'>FAQ</a>
                     <br>
+                    <a href="https://www.publiceditor.io/tryitnow" style='text-decoration:underline;'>TRY IT NOW</a>
+                    <br>
                     <a href="https://www.publiceditor.io/our-team" style='text-decoration:underline;'>OUR TEAM</a>
                     <br>
                     <a href="https://www.publiceditor.io/security" style='text-decoration:underline;'>SECURITY</a>
                 </div>
                 <div class="links_2">
-                    <a href="https://www.publiceditor.io/donate" style='text-decoration:underline;'>DONATE </a>
+                    <a href="https://www.publiceditor.io/donate" style='text-decoration:underline;'>DONATE</a>
                     <br>
-                    <a href="https://www.publiceditor.io/public-editor" style='text-decoration:underline;'>ABOUT </a>
+                    <a href="https://www.publiceditor.io/public-editor" style='text-decoration:underline;'>ABOUT</a>
                     <br>
+                        <div class="svg_links" style = "position:relative; left:-25px;">
                         <a href="https://www.facebook.com/publiceditor.io/" target="_blank" style="display:inline-block;width:40px;height:40px;">
-                                <svg id="facebook-unauth-icon" viewbox="0 0 64 64" style="width:50px;height:50px;"><path d="M34.1,47V33.3h4.6l0.7-5.3h-5.3v-3.4c0-1.5,0.4-2.6,2.6-2.6l2.8,0v-4.8c-0.5-0.1-2.2-0.2-4.1-0.2 c-4.1,0-6.9,2.5-6.9,7V28H24v5.3h4.6V47H34.1z"></path></svg>
+
+                                <svg id="facebook-unauth-icon" viewbox="0 0 64 64" style="width:70px;height:70px; position: inherit"><path d="M34.1,47V33.3h4.6l0.7-5.3h-5.3v-3.4c0-1.5,0.4-2.6,2.6-2.6l2.8,0v-4.8c-0.5-0.1-2.2-0.2-4.1-0.2 c-4.1,0-6.9,2.5-6.9,7V28H24v5.3h4.6V47H34.1z"></path></svg>
                         </a>
+
                     <a href="https://twitter.com/Public_Editor_" target="_blank">
-                        <svg id="twitter-unauth-icon" viewbox="0 0 64 64" style="display:inline-block;width:50px;height:50px;">
+                        <svg id="twitter-unauth-icon" viewbox="0 0 64 64" style="display:inline-block;width:70px;height:70px;">
                         <path d="M48,22.1c-1.2,0.5-2.4,0.9-3.8,1c1.4-0.8,2.4-2.1,2.9-3.6c-1.3,0.8-2.7,1.3-4.2,1.6 C41.7,19.8,40,19,38.2,19c-3.6,0-6.6,2.9-6.6,6.6c0,0.5,0.1,1,0.2,1.5c-5.5-0.3-10.3-2.9-13.5-6.9c-0.6,1-0.9,2.1-0.9,3.3 c0,2.3,1.2,4.3,2.9,5.5c-1.1,0-2.1-0.3-3-0.8c0,0,0,0.1,0,0.1c0,3.2,2.3,5.8,5.3,6.4c-0.6,0.1-1.1,0.2-1.7,0.2c-0.4,0-0.8,0-1.2-0.1 c0.8,2.6,3.3,4.5,6.1,4.6c-2.2,1.8-5.1,2.8-8.2,2.8c-0.5,0-1.1,0-1.6-0.1c2.9,1.9,6.4,2.9,10.1,2.9c12.1,0,18.7-10,18.7-18.7 c0-0.3,0-0.6,0-0.8C46,24.5,47.1,23.4,48,22.1z"></path>
-        `               </svg>
+                       </svg>
                     </a>
+                    </div>
                     </div>
                 </div>
             </div>
@@ -231,7 +325,7 @@
                 }, 500);
             </script>
         </div>
-        
+
     </div>
 </div>
 </body>

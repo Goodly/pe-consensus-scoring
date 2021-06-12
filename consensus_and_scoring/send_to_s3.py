@@ -40,8 +40,8 @@ def s3_safe_path(unsafe_name, fallback):
         safe_name = re.sub(unsafe_chars, '-', fallback)
     return safe_name
 
-def send_s3(viz_dir, text_dir, metadata_dir, s3_bucket, s3_prefix):
-    viz_to_send = collect_files_to_send(viz_dir, text_dir, metadata_dir)
+def send_s3(viz_dir, text_dir, metadata_dir, concat_tags_dir, s3_bucket, s3_prefix):
+    viz_to_send = collect_files_to_send(viz_dir, text_dir, metadata_dir, concat_tags_dir)
 
     print("Sending visualization files to S3.")
     # Retrieve HTML template.
@@ -57,6 +57,12 @@ def send_s3(viz_dir, text_dir, metadata_dir, s3_bucket, s3_prefix):
         send_with_max_age(viz['data_filepath'], s3_bucket, data_s3_key,
                           ACL='public-read', max_age=10)
 
+        triager_data_filename_s3 = 'triager_data.csv'
+        triager_s3_key = os.path.join(s3_prefix, viz['article_shorter'], triager_data_filename_s3)
+        viz['triager_s3_key'] = triager_s3_key
+        send_with_max_age(viz['triager_data_filepath'], s3_bucket, triager_s3_key,
+                          ACL='public-read', max_age=10)
+
         article_filename_s3 = 'article.txt'
         article_s3_key = os.path.join(s3_prefix,  viz['article_shorter'], article_filename_s3)
         viz['article_s3_key'] = article_s3_key
@@ -69,6 +75,7 @@ def send_s3(viz_dir, text_dir, metadata_dir, s3_bucket, s3_prefix):
         # relative url is just the filename.
         context = {
             'DATA_CSV_URL': viz_data_filename_s3,
+            'TRIAGER_CSV_URL': triager_data_filename_s3,
             'ARTICLE_TEXT_URL': article_filename_s3,
             'ORIGINAL_URL': original_url,
         }
@@ -87,7 +94,7 @@ def send_s3(viz_dir, text_dir, metadata_dir, s3_bucket, s3_prefix):
     update_newsfeed(newsfeed_items, s3_bucket, "newsfeed/visData.json")
     return viz_to_send
 
-def collect_files_to_send(viz_dir, text_dir, metadata_dir):
+def collect_files_to_send(viz_dir, text_dir, metadata_dir, concat_tags_dir):
     # Collect the list of sha256 of by iterating over the VisualizationData_sha256.csv files
     print("Gathering files to send for visualization")
     viz_to_send = []
@@ -101,6 +108,10 @@ def collect_files_to_send(viz_dir, text_dir, metadata_dir):
                 article_filepath = os.path.join(text_dir, article_sha256 + ".txt")
                 metadata_filepath = os.path.join(metadata_dir, article_sha256 + ".metadata.json")
                 metadata = read_metadata(metadata_filepath)
+                # triager_data filename should also be using article_sha256 for consistency,
+                # but I don't think this algorithm will ever actually process multiple articles
+                # concurrently, that command line bulk data code path is long abandoned.
+                triager_data_filepath = os.path.join(concat_tags_dir, "triager_data.csv")
                 if os.path.exists(article_filepath):
                     viz = {
                         'sha_256': article_sha256,
@@ -110,6 +121,7 @@ def collect_files_to_send(viz_dir, text_dir, metadata_dir):
                         'article_filepath': article_filepath,
                         'metadata_filepath': metadata_filepath,
                         'metadata': metadata,
+                        'triager_data_filepath': triager_data_filepath,
                     }
                     viz_to_send.append(viz)
                 else:
@@ -209,8 +221,8 @@ def send_assets(asset_dir, s3_bucket, s3_prefix):
             common_path = os.path.commonpath([asset_dir, dirpath])
             subpath = dirpath[len(common_path):].lstrip('/')
             asset_s3_key = os.path.join(s3_prefix, subpath, asset_name)
-            send_command(source_path, s3_bucket, asset_s3_key,
-                         ACL='public-read')
+            send_with_max_age(source_path, s3_bucket, asset_s3_key,
+                              wait=True, ACL='public-read', max_age=10)
 
 def send_with_max_age(source_filename, s3_bucket, s3_key,
                       wait=False, ACL='private', max_age=24*60*60):

@@ -7,7 +7,7 @@ import argparse
 def post_adjudicator_master(tags_dir, schema_dir, new_s_iaa_dir, iaa_temp_dir, input_dir, scoring_dir, viz_dir,
                             tua_dir, text_dir, config_path, threshold_func):
     iaa_dir = calc_agreement_directory(input_dir, schema_dir, config_path, text_dir, repCSV=None,  outDirectory = iaa_temp_dir,
-                             useRep = False, threshold_func = 'raw_30')
+                             useRep = False, threshold_func = threshold_func)
     import_tags(iaa_dir, tags_dir, schema_dir, new_s_iaa_dir)
     scoring_only(input_dir, new_s_iaa_dir, schema_dir, scoring_dir, viz_dir, tua_dir, threshold_func)
 
@@ -37,7 +37,7 @@ def load_args():
         )
         parser.add_argument(
             '-v', '--viz_dir',
-            help='output directory for visulizations'
+            help='output directory for visualizations'
         )
         return parser.parse_args()
 
@@ -45,22 +45,17 @@ if __name__ == '__main__':
         args = load_args()
         # input
         config_path = './config/'
-        input_dir = '../data/datahunts/'
+        input_dir = '../data/evi_test'
         texts_dir = '../data/texts/'
-        adjudication_dir = '../data/adj_tags/'
+        adjudication_dir = '../data/empty'
         # metadata_dir = '../data/metadata/'
         tua_dir = '../data/focus_tags/'
         schema_dir = '../data/schemas/'
-
         #output data
-        iaa_temp_dir = make_directory('../data/out_temp_iaa/')
-
-
-
-
-        adjudicated_dir = make_directory('../data/out_adjudicated_iaa/')
-        scoring_dir = make_directory('../data/out_scoring/')
-        viz_dir = make_directory('../data/out_viz/')
+        iaa_temp_dir = make_directory('../data/output_temp_iaa/')
+        adjudicated_dir = make_directory('../data/output_adjudicated_iaa/')
+        scoring_dir = make_directory('../data/output_scoring/')
+        viz_dir = make_directory('../data/output_viz/')
         threshold_function = 'raw_30'
         if args.input_dir:
             input_dir = args.input_dir
@@ -78,5 +73,3 @@ if __name__ == '__main__':
             tua_dir = args.tua_dir
         post_adjudicator_master(adjudication_dir, schema_dir, adjudicated_dir, iaa_temp_dir, input_dir, scoring_dir, viz_dir,
                                 tua_dir, texts_dir, config_path, threshold_function)
-
-

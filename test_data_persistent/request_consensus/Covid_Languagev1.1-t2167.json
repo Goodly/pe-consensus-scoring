@@ -1,0 +1,45 @@
+{
+  "response_sqs_url": "https://sqs.us-west-2.amazonaws.com/507444306670/pe-tagworks-dev-listener",
+  "project_name": "Covid_Languagev1.1",
+  "pipeline_uuid": "df599191-18f7-4117-a8f8-b2ff49d917e3",
+  "Action": "request_consensus",
+  "Version": "1",
+  "pipeline_name": "Covid_v1",
+  "Highlighters": [],
+  "log_message": "request_consensus for project 'Covid_Languagev1.1' task_type 'QUIZ'",
+  "AdjTags": [],
+  "task_type": "QUIZ",
+  "user_id": 1,
+  "source_task_uuid": "795381ec-411a-48e6-af52-5ed9fbf3d8b2",
+  "project_uuid": "25e1034a-e4f1-4dc7-a46a-7a0930c3e40c",
+  "Tags": [],
+  "DataHunts": [
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "development/ProjectExports/Covid_Languagev1.1/DataHuntTask/Covid_Languagev1.1-Task-2167-DataHunt.csv.gz",
+      "filename": "Covid_Languagev1.1/DataHuntTask/Covid_Languagev1.1-Task-2167-DataHunt.csv.gz"
+    }
+  ],
+  "Texts": [
+    {
+      "metadata_location": {
+        "bucket_name": "tagworks.thusly.co",
+        "key": "development/Articles/7360da3cdcf83a48e365821654ef0750810f3483efb8e25ad792eed6f4bf0b6f/metadata.json.gz",
+        "filename": "7360da3cdcf83a48e365821654ef0750810f3483efb8e25ad792eed6f4bf0b6f/metadata.json.gz"
+      },
+      "bucket_name": "tagworks.thusly.co",
+      "article_sha256": "7360da3cdcf83a48e365821654ef0750810f3483efb8e25ad792eed6f4bf0b6f",
+      "key": "development/Articles/7360da3cdcf83a48e365821654ef0750810f3483efb8e25ad792eed6f4bf0b6f/text.txt.gz",
+      "filename": "7360da3cdcf83a48e365821654ef0750810f3483efb8e25ad792eed6f4bf0b6f/text.txt.gz"
+    }
+  ],
+  "NegativeTasks": [],
+  "AdjNegativeTasks": [],
+  "Schemas": [
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "development/ProjectExports/Covid_Languagev1.1/Schema/Covid_Languagev1.1-Schema.csv.gz",
+      "filename": "Covid_Languagev1.1/Schema/Covid_Languagev1.1-Schema.csv.gz"
+    }
+  ]
+}

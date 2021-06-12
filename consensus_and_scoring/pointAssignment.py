@@ -10,9 +10,10 @@ def pointSort(scoring_directory, input_dir = None, weights = None,
               scale_guide_dir = "./config/point_assignment_scaling_guide.csv", reporting = False, rep_direc = False,
               tua_dir = None):
 
-    dir_path = os.path.dirname(os.path.realpath(input_dir))
-
-    input_path = os.path.join(dir_path, input_dir)
+    print('tua_dir', tua_dir)
+    if input_dir != None:
+        dir_path = os.path.dirname(os.path.realpath(input_dir))
+        input_path = os.path.join(dir_path, input_dir)
     if not tua_dir:
         tua_path = os.path.join(input_path, 'tua')
         tua_location = ''
@@ -36,11 +37,14 @@ def pointSort(scoring_directory, input_dir = None, weights = None,
             except UnboundLocalError:
                 tuas = pd.read_csv(tua_location)
     #Load everything so that it's a pandas dataframe
+
     tuas_raw = tuas
-    scale_guide = pd.read_csv(scale_guide_dir)
+    dirname = os.path.dirname(__file__)
+    # can't use os.path.join, probably because windows uses \ as a  separator instead of /
+    scale_guide_path = dirname + os.sep + 'config' + os.sep + 'point_assignment_scaling_guide.csv'
+    scale_guide = pd.read_csv(scale_guide_path)
     if len(tua_location)<3:
         raise FileNotFoundError("TUA file not found")
-    #tuas = pd.read_csv(tua_location)
     files = getFiles(scoring_directory)
 
     if not rep_direc and reporting:
@@ -69,39 +73,39 @@ def pointSort(scoring_directory, input_dir = None, weights = None,
 
     if weights is None:
         weightFiles = files[2]
-        # if len(weightFiles)>0:
-        #     weights = pd.read_csv(weightFiles[0])
-        # else:
-        #     print("NO WEIGHTS FOUND")
-        #     return
         weight_list = []
+
         for i in range(len(weightFiles)):
-            #print('badone', i, weightFiles[i])
             wf = pd.read_csv(weightFiles[i])
             weight_list.append(wf)
-            #weights = weights.append(wf)
 
         weights = pd.concat(weight_list)
+    print("WEIGHTS_CONCAT")
+    print(weights)
+    print("COLUMNS")
+    for col in weights.columns:
+        print(col)
     weights['agreement_adjusted_points'] = weights['agreement_adjusted_points'].apply(float)
+
     weights = weights[weights['agreement_adjusted_points'] != 0]
+    weights = weights[~weights['agreement_adjusted_points'].isnull()]
+    if weights['Label'].isnull().any():
+        raise Exception("Couldn't find labels for a weight")
+
     if reporting:
         make_directory(rep_direc)
         weights.to_csv(rep_direc+'/weightsStacked'+'.csv')
     if hasArg or hasSource:
-        #('collapsing')
         tuas = collapse_all_tuas(tuas, hasArg, argRel, hasSource, sourceRel, reporting)
         if reporting:
             tuas.to_csv(rep_direc+'/collapsed_All_TUAS'+'.csv')
-        #print('enhancing')
         tuas = enhance_all_tuas(tuas, scale_guide, hasArg, argRel, hasSource, sourceRel)
         if reporting:
             tuas.to_csv(rep_direc+'/enhanced_All_TUAS'+'.csv')
-        #print('matching')
         tuas, weights = find_tua_match(tuas, weights)
         if reporting:
             tuas.to_csv(rep_direc+'/matched_All_TUAS'+'.csv')
             weights.to_csv(rep_direc + '/weightsMatched' +  '.csv')
-        #print('applying adj')
         weights = apply_point_adjustments(weights, scale_guide)
         if reporting:
             weights.to_csv(rep_direc + '/weightsAdjusted' +  '.csv')
@@ -109,8 +113,7 @@ def pointSort(scoring_directory, input_dir = None, weights = None,
         weights['points'] = weights['agreement_adjusted_points']
     #BUG: Someehere in there we're getting duplicates of everything: the following line shouldprevent it from hapening but should
     #investigate the root
-
-    weights = weights.drop_duplicates(subset=['source_task_uuid', 'schema_sha256', 'Answer_Number', 'Question_Number'])
+    weights = weights.drop_duplicates(subset=['source_task_uuid', 'Answer_Number', 'Question_Number'])
     if reporting:
         weights.to_csv(scoring_directory + '/SortedPts.csv')
     return tuas, weights, tuas_raw
@@ -156,10 +159,16 @@ def check_scale_match(weight, scale):
     found = False
     abs_point = 0
     point_scale = 1
+    # handle the case when no weight column for it because there is no arg tasks
+    if arg_ans != -1 and arg_col not in weight.keys():
+        return found, abs_point, point_scale
     if arg_ans == -1 or arg_ans == weight[arg_col]:
         src_col = "source_T"+str(math.floor(scale['source_topic']))+'.Q'+str(math.floor(scale['source_question_num']))
         src_ans = int(scale['source_answer_num'])
         #spec_ans = weight[src_col]
+        #handle the case when no weight column for it because there is no source tasks
+        if src_ans != -1 and src_col not in weight.keys():
+            return found, abs_point, point_scale
         if src_ans == -1 or src_ans == int(weight[src_col]):
             found = True
             abs_point = scale['absolute_points']
@@ -171,29 +180,15 @@ def getFiles(directory):
     #NEEDS: WeightingOutputs, sourceTriagerIAA, arg Source IAA
     sourceFile = None
     argRelevanceFile = None
-    weightOutputs = []
     if directory[-1]!='/':
         directory = directory + '/'
     for root, dir, files in os.walk(directory):
         for file in files:
-            #print(file)
-            if 'Dep_S_IAA' in file:
-                #print('depsiaa file-------------', file)
+            if 'Dep' in file:
                 if file.endswith('.csv')  and 'ource' in file:
-                    #print("found Sources File" + directory + '/' + file)
                     sourceFile = directory+file
-                   # print('Found Sources File ' + sourceFile)
                 if file.endswith('.csv')   and ('Arg' in file or 'arg' in file):
-
                     argRelevanceFile = directory+file
-                    #print('Found Arguments File ' + argRelevanceFile)
-            #Now weights are passed in as an input from the previous step
-            # if file.endswith('.csv')  and 'Point_recs' in file:
-            #     #print('Found Weights File '+ directory + file)
-            #     weightOutputs.append(directory+file)
-            #     #print('foud Weights File...', weightOutputs)
-
-
     return sourceFile, argRelevanceFile #, weightOutputs
 
 def find_tua_match(all_tuas, weights, arg_threshold = .8, source_threshold = .6):
@@ -226,7 +221,8 @@ def find_tua_match(all_tuas, weights, arg_threshold = .8, source_threshold = .6)
         #make sure the comparisons we find are to the right article
         art_tuas = all_tuas[all_tuas['article_sha256'] == w_art]
         w_h = w['highlighted_indices']
-
+        if isinstance(w_h, str):
+            w_h = json.loads(w_h)
         if not (isinstance(w_h, float)) and (not (isinstance(w_h, str)) or len(w_h)>1):
             weight_unit = get_indices_hard(w['highlighted_indices'])
             if len(weight_unit) > 0:
@@ -278,17 +274,9 @@ def add_indices_column(all_tuas):
         start = all_tuas['start_pos'].iloc[i]
         end = all_tuas['end_pos'].iloc[i]
         text += all_tuas['target_text'].iloc[i]+'//'
-        #Below from old version where there was an offsets column with a phat dictionary
-        # offs = json.loads(r['offsets'])
-        # for j in offs:
-        #     start = j[0]
-        #     end = j[1]
-        #     #TODO: decode this right so \u goes away
-        #     text +=j[2]+"//"
+
         for k in range(int(start), int(end+1)):
             ind.append(k)
-        #JSOn so the legnth of the array being added is 1;
-        #There's a better way but this works
         all_tuas.iloc[i,all_tuas.columns.get_loc('indices')] = json.dumps(ind)
         all_tuas.iloc[i, all_tuas.columns.get_loc('full_text')] = json.dumps(text)
 
@@ -342,7 +330,6 @@ def input_specialist_answers(all_tuas, spec, prefix):
                 for s in range(spec_crop.shape[0]):
                     qNum = spec_crop['question_Number'].iloc[s]
                     aNum = spec_crop['agreed_Answer'].iloc[s]
-
                     tq = convert_to_tq_format(1, qNum)
                     col_name = prefix+tq
                     #check the column exists; many times it won't; especially for the 'how did this go' questions at the
@@ -364,7 +351,6 @@ def add_q_columns(all_tuas, scaling_guide, prefix):
         for q in range(1,max_question+1):
             name = convert_to_tq_format(t,q)
             all_tuas[prefix+name] = np.zeros(length)
-
     return all_tuas
 
 def convert_to_tq_format(topic, question):

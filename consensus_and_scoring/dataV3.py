@@ -9,20 +9,20 @@ data_hunt_path_OLD = "nyu_reconfig/NYU_Arguments-2020-02-24T0112-DataHunt.csv"
 data_hunt_path = "COVID_new_format/Covid_Evidencev1-2020-04-02T1843-DataHunt.csv"
 schema_path = "covid/Covid_Evidence2020_03_21-2020-03-24T0540-Schema.csv"
 
-def testDataStorer():
+def stestDataStorer():
     # explore(data_hunt_path)
     uberDict = dataStorer(data_hunt_path, schema_path)
     firstKey = list(uberDict.keys())[0]
     print(uberDict[firstKey])
 
-def testQuestionLabelsList():
+def stestQuestionLabelsList():
     data_hunt = pd.read_csv(data_hunt_path, encoding='utf-8')
     task_question_answer_labels = data_hunt.loc[:, ["quiz_task_uuid", "question_label", "answer_label"]
                                   ].drop_duplicates()
     first_task = task_question_answer_labels["quiz_task_uuid"][0]
     print(getQuestionLabels(task_question_answer_labels, first_task))
 
-def testGetAnsAndAnsNum():
+def stestGetAnsAndAnsNum():
     data_hunt = pd.read_csv(data_hunt_path, encoding='utf-8')
     answer_id_text = data_hunt.loc[:,
                      ["quiz_task_uuid", "question_label", "answer_label", "answer_content", "answer_uuid",
@@ -35,7 +35,7 @@ def testGetAnsAndAnsNum():
     # print(getAns(answer_id_text, first_task, first_question))
     print(getAnsNumsList(task_question_answer_labels, first_task, first_question))
 
-def testGetFromUberDict():
+def stestGetFromUberDict():
     data = dataStorer(data_hunt_path, schema_path)
     lastTask = list(data.keys())[-1]
 
@@ -149,7 +149,6 @@ def dataStorer(data_hunt_path, schema_path):
 
         # computes the start and end lists
         starts_lists, ends_lists = getStartsEndsLists(starts_ends, uuid)
-
         # gets highlighted information
         usersGrouped = highlight.loc[uuid].groupby("question_label")
         contributors = usersGrouped["contributor_uuid"].apply(list)
@@ -220,7 +219,9 @@ def getStartsEndsLists(starts_ends, uuid):
     Gets the starts and ends DataFrame by uuid.
     Outputs a pair of DataFrames. Each entry is a LIST of start or end positions
     """
+    #print(starts_ends, uuid)
     grouped = starts_ends.loc[uuid].groupby("question_label")
+
     return grouped['start_pos'].apply(list), grouped['end_pos'].apply(list)
 
 def getQuestionLabels(task_question_answer_labels, task_uuid):
@@ -315,7 +316,7 @@ def dictAddendumDict(dict, key, newDict):
             if k in dict[key].keys():
                 dict[key][k].append(newDict[k][0])
             else:
-                dict[key][k] = newDict[k][0]
+                dict[key][k] = newDict[k]#[0]
     return dict
 
 def dictAddendumList(dict, key, newFriend):
@@ -571,8 +572,8 @@ def get_answer_text(data, task_id, question_num, answer_num):
         print("ZERROOR")
         return 'zeroeororororororo'
     contents = data[task_id]['quesData'][question_num]['answer_text']
-    print(answer_num)
-    print(contents)
+    #print(answer_num)
+    #print(contents)
     myAnswer = contents[answer_num]
     return myAnswer
 
@@ -588,7 +589,7 @@ def get_article_dependencies(data,task_id):
 def get_namespace(data, article, question_num):
     return data[article][question_num][1][7][0].iloc[0]
 
-def get_schema_topic(data, task_id):
+def f(data, task_id):
     return data[task_id]['taskData']["schema_topic"]
 
 def finder(ser, a):
@@ -601,8 +602,11 @@ def finder(ser, a):
 
 def make_directory(directory):
     print(directory)
-    if directory[-1] != '/':
-        directory = directory +'/'
+    try:
+        if directory[-1] != '/':
+            directory = directory +'/'
+    except TypeError:
+        pass
     try:
         os.mkdir(directory)
     except FileExistsError:
@@ -616,6 +620,36 @@ def get_type_json(type, ques, config_path):
 
     out = typing_dict[type][str(ques)]
     return out[0], out[1]
+
+#Input: config_path to a schema csv
+#Returns True if any of the last 3 questions in the schema at config_path are ordinal
+#Can set how many questions to check by the number in df.tail(<#>)
+def schema_has_dist_function(config_path):
+    df = pd.read_csv(config_path)
+    df = df.drop_duplicates('question_label')
+
+    ordinal_check = df.loc[df['alpha_distance'] == 'ordinal']
+    return not ordinal_check.empty
+
+#Input: ques is an integer question number, config_path is a string to a schema csv
+#Output: question_type and num_choices for the given question in the given schema
+def schema_to_type_and_num(ques, schema_path, config):
+    df = pd.read_csv(schema_path, encoding='utf-8')
+    override = pd.read_csv(config+'schema_override.csv')
+    ques = 'T1.Q' + str(ques)
+    qrows = df.loc[df['question_label'] == ques]
+    q_uuid = qrows['question_uuid'].iloc[0]
+    if len(override[override['question_uuid']==q_uuid])>0:
+        qrows = override[override['question_uuid']==q_uuid]
+    question_type = qrows['question_type'].iloc[0]
+    if question_type == 'CHECKBOX':
+        question_type = "checklist"
+    else:
+        question_type = qrows['alpha_distance'].iloc[0]
+    answer_count = qrows['answer_count'].iloc[0]
+    return question_type, answer_count
+
+
 def get_type_hard(type, ques):
     #ques = parse(ques, 'Q')
     #print('type', type, ques)
@@ -872,20 +906,10 @@ def get_type_hard(type, ques):
 
 #for purpose of naming outputFile
 def get_path(fileName):
-    name = ''
-    path = ''
-    for c in fileName:
-        name = name +c
-        if c == '/':
-            path = path + name
-            name = ''
-    return path, name
+    return os.path.dirname(fileName), os.path.basename(fileName)
 
 ###################### Helper Functions to Visualize a Dataframe #######################
 
 def printColumnUniqueVals(data):
     for col in data.columns:
         print("{:30} {:>8}".format("Column: " + col, len(data[col].unique())))
-
-
-

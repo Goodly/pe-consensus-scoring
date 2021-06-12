@@ -3,6 +3,7 @@ import pandas as pd
 import json
 from dataV3 import getAnsNumberFromLabel
 from dataV3 import  getQuestionNumberFromLabel
+
 #workflow
 
 #import all s_iaa, concat into a single df
@@ -25,17 +26,20 @@ def import_tags(old_s_iaa_dir, tags_dir, schema_dir, output_dir):
     for root, dir, files in os.walk(tags_dir):
         for file in files:
                     tag_files.append(tags_dir+'/'+file)
+    print('tag files: ', tags_dir, tag_files)
     iaa_files = []
     for root, dir, files in os.walk(old_s_iaa_dir):
         for file in files:
             if file.endswith('.csv') and 'iaa' in file.lower():
                     iaa_files.append(old_s_iaa_dir + '/' + file)
-
+    print('iaa files: ', old_s_iaa_dir, iaa_files)
     schema_files = []
     for root, dir, files in os.walk(schema_dir):
         for file in files:
             if file.endswith('.csv'):
                 schema_files.append(schema_dir + '/' + file)
+
+    print('schema files: ', schema_dir, schema_files)
     temp_dfs = []
     for i in range(len(iaa_files)):
         temp_dfs.append(pd.read_csv(iaa_files[i]))
@@ -44,6 +48,15 @@ def import_tags(old_s_iaa_dir, tags_dir, schema_dir, output_dir):
     temp_dfs = []
     for i in range(len(tag_files)):
         temp_dfs.append(pd.read_csv(tag_files[i]))
+    # if nothing's adjudicated then output and return
+    if len(temp_dfs) == 0:
+        for source_task_uuid in iaa['source_task_uuid'].unique():
+            task_tags = iaa[iaa['source_task_uuid'] == source_task_uuid]
+            namespace = task_tags['namespace'].iloc[0]
+            out_path = os.path.join(output_dir, namespace + '.adjudicated-untouched_iaa_result-' + source_task_uuid + '-Tags.csv')
+            print('IMPORT_TAGS OUTPUTTING_no adjud', out_path)
+            task_tags.to_csv(out_path)
+        return output_dir
     tags = pd.concat(temp_dfs)
     #Nan answer_uuid means it likely came from a triager task and we can disregard
     tags = tags.dropna(subset = ['answer_uuid'])
@@ -61,7 +74,6 @@ def import_tags(old_s_iaa_dir, tags_dir, schema_dir, output_dir):
     tags['tua_uuid'] = 'ERICYOUMISSEDASPOT'
     tags['agreement_score'] = 'ERICYOUMISSEDASPOT'
     tags['highlighted_indices'] = 'L'
-    tags['alpha_unitizing_score'] = 'N/A'
 
     for i in range(len(tags.index)):
         a_uid = tags['answer_uuid'].iloc[i]
@@ -106,16 +118,24 @@ def import_tags(old_s_iaa_dir, tags_dir, schema_dir, output_dir):
         tags.iloc[i, tags.columns.get_loc('tua_uuid')] = tua_id
         tags.iloc[i, tags.columns.get_loc('agreement_score')] = agreement_score
         tags.iloc[i, tags.columns.get_loc('highlighted_indices')] = json.dumps(highlight_indices)
-    for source_task_uuid in tags['source_task_uuid'].unique():
-        task_tags = tags[tags['source_task_uuid'] == source_task_uuid]
-        namespace = task_tags['namespace'].iloc[0]
+    #iaa tasks will always be a superset of the adjudicated tasks
 
-        out_path = os.path.join(output_dir, namespace+'.adjudicated-'+source_task_uuid+'-Tags.csv')
-        print('OUTPUTTING', out_path)
+    for source_task_uuid in iaa['source_task_uuid'].unique():
+        if source_task_uuid in tags['source_task_uuid'].values:
+            task_tags = tags[tags['source_task_uuid'] == source_task_uuid]
+            use_iaa = False
+        else:
+            task_tags = iaa[iaa['source_task_uuid'] == source_task_uuid]
+            use_iaa = True
+        namespace = task_tags['namespace'].iloc[0]
+        if use_iaa:
+            out_path = os.path.join(output_dir, namespace + '.adjudicated-untouched_iaa_result-' + source_task_uuid + '-Tags.csv')
+        else:
+            out_path = os.path.join(output_dir, namespace+'.adjudicated-'+source_task_uuid+'-Tags.csv')
+        print('IMport_tags outputting after adjudication', out_path)
         task_tags.to_csv(out_path)
 
-
-    return None
+    return output_dir
 
 def make_namespace_to_schema_dict(tags, iaa, schema_dir):
     names = tags['namespace'].unique()
@@ -127,9 +147,10 @@ def make_namespace_to_schema_dict(tags, iaa, schema_dir):
         schema_df = pd.read_csv(schema_dir+schema_uuid+".csv")
         dict[n] = schema_df
     return dict
+
 if __name__ == '__main__':
-    old_s_iaa_dir = '../data/out_temp_iaa/'
-    tags_dir = '../data/adj_tags/'
+    old_s_iaa_dir = '../test_data/imptags_iaa_1_iaa_1_adj_disagree/'
+    tags_dir = '../test_data/imptags_adj_1_iaa_1_adj_disagree/'
     schema_dir = '../data/schemas/'
     output_dir = '../data/out_adjudicated_iaa/'
     import_tags(old_s_iaa_dir, tags_dir, schema_dir, output_dir)

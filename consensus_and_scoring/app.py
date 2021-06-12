@@ -20,9 +20,6 @@ import unicodecsv
 import boto3
 from botocore.exceptions import ClientError
 
-from iaa_only import iaa_only
-from TriagerScoring import importData
-from post_adjudicator import post_adjudicator_master
 from send_to_s3 import send_s3, get_s3_config, s3_safe_path, send_command
 from send_to_s3 import handle_unpublish_article
 
@@ -34,6 +31,14 @@ S3_CONSENSUS_OUTPUT = os.getenv('S3_CONSENSUS_OUTPUT', 's3://dev.publiceditor.io
 consensus_s3_bucket, consensus_s3_prefix = get_s3_config(S3_CONSENSUS_OUTPUT)
 S3_VISUALIZATION_OUTPUT = os.getenv('S3_VISUALIZATION_OUTPUT', 's3://dev.publiceditor.io/visualizations')
 viz_s3_bucket, viz_s3_prefix = get_s3_config(S3_VISUALIZATION_OUTPUT)
+
+from process_dirs import (
+    configure_consensus_directories,
+    generate_highlighter_consensus,
+    generate_datahunt_consensus,
+    configure_publish_directories,
+    generate_article_to_publish,
+)
 
 def lambda_handler(event, context):
     """
@@ -55,6 +60,7 @@ def lambda_handler(event, context):
                 logger.info("Message '{}:{}' from pipeline '{}'"
                             .format(message_action, message_version, pipeline_name))
                 with tempfile.TemporaryDirectory() as parent_dirname:
+                    response = None
                     if message_action == "request_consensus" and message_version == "1":
                         response = handle_request_consensus(body, parent_dirname)
                     if message_action == "publish_article" and message_version == "1":
@@ -70,19 +76,19 @@ def handle_request_consensus(body, parent_dirname):
     logger.info("---BEGIN request_consensus handler---")
     project_name = body.get('project_name', '')
     project_uuid = body.get('project_uuid', '')
+    source_task_uuid = body.get('source_task_uuid', '')
+    tua_batch_uuid = body.get('tua_batch_uuid', '')
     task_type = body.get('task_type', '')
-
-    tags = body.get('Tags', [])
-    negative_tasks = body.get('NegativeTasks', [])
-    tags_dir = os.path.join(parent_dirname, 'tags')
-    negative_tasks_dir = os.path.join(parent_dirname, 'negative_tasks')
-    retrieve_file_list(tags, tags_dir)
-    retrieve_file_list(negative_tasks, negative_tasks_dir)
-
+    dir_dict = configure_consensus_directories(task_type, parent_dirname)
+    fetch_tags_files(body, dir_dict)
     if task_type == "HLTR":
-        consensus_dir = handle_highlighter_consensus(body, parent_dirname)
+        fetch_highlighter_files(body, dir_dict)
+        generate_highlighter_consensus(dir_dict)
+        consensus_dir = dir_dict['consensus_dir']
     elif task_type == "QUIZ":
-        consensus_dir = handle_datahunt_consensus(body, parent_dirname)
+        fetch_datahunt_files(body, dir_dict)
+        generate_datahunt_consensus(dir_dict)
+        consensus_dir = dir_dict['adjud_dir']
     else:
         raise Exception(u"request_consensus: Project '{}' has unknown task_type '{}'."
                         .format(project_name, task_type))
@@ -91,54 +97,31 @@ def handle_request_consensus(body, parent_dirname):
     project_s3_prefix = os.path.join(consensus_s3_prefix, project_path)
     s3_locations = send_consensus_files(consensus_dir, consensus_s3_bucket, project_s3_prefix)
     message = build_consensus_message(body, s3_locations)
+    message['source_task_uuid'] = source_task_uuid
+    message['tua_batch_uuid'] = tua_batch_uuid
     return message
 
-def handle_highlighter_consensus(body, parent_dirname):
-    highlighters = body.get('Highlighters', [])
-    highlighters_dir = os.path.join(parent_dirname, 'highlighters')
-    retrieve_file_list(highlighters, highlighters_dir)
-    logger.info("highlighters count {}".format(len(highlighters)))
-    logger.info("---FILES RETRIEVED SUCCESSFULLY in request_highlighter_consensus handler---")
-    output_dir = tempfile.mkdtemp(dir=parent_dirname)
-    for filename in os.listdir(highlighters_dir):
-        if filename.endswith(".csv"):
-            input_file = os.path.join(highlighters_dir, filename)
-            output_file = os.path.join(output_dir, "S_IAA_" + filename)
-            importData(input_file, output_file)
-    return output_dir
+def fetch_tags_files(body, dir_dict):
+    tags = body.get('Tags', [])
+    negative_tasks = body.get('NegativeTasks', [])
+    retrieve_file_list(tags, dir_dict['tags_dir'])
+    retrieve_file_list(negative_tasks, dir_dict['negative_tasks_dir'])
 
-def handle_datahunt_consensus(body, parent_dirname):
+def fetch_highlighter_files(body, dir_dict):
+    highlighters = body.get('Highlighters', [])
+    retrieve_file_list(highlighters, dir_dict['highlighters_dir'])
+    logger.info("---FILES RETRIEVED SUCCESSFULLY in request_highlighter_consensus handler---")
+
+def fetch_datahunt_files(body, dir_dict):
     texts = body.get('Texts', [])
     texts = use_article_sha256_filenames(texts)
     schemas = body.get('Schemas', [])
     datahunts = body.get('DataHunts', [])
-    texts_dir = os.path.join(parent_dirname, 'texts')
-    schemas_dir = os.path.join(parent_dirname, 'schemas')
-    datahunts_dir = os.path.join(parent_dirname, 'datahunts')
-    retrieve_file_list(texts, texts_dir)
-    retrieve_file_list(schemas, schemas_dir)
-    retrieve_file_list(datahunts, datahunts_dir)
-    rename_schema_files(schemas_dir)
-    logger.info("schemas count {}".format(len(schemas)))
-    logger.info("datahunts count {}".format(len(datahunts)))
+    retrieve_file_list(texts, dir_dict['texts_dir'])
+    retrieve_file_list(schemas, dir_dict['schemas_dir'])
+    retrieve_file_list(datahunts, dir_dict['datahunts_dir'])
+    rename_schema_files(dir_dict['schemas_dir'])
     logger.info("---FILES RETRIEVED SUCCESSFULLY in request_datahunt_consensus handler---")
-    config_path = './config/'
-    rep_file = './UserRepScores.csv'
-    output_dir = tempfile.mkdtemp(dir=parent_dirname)
-    scoring_dir = tempfile.mkdtemp(dir=parent_dirname)
-    adjud_dir = tempfile.mkdtemp(dir=parent_dirname)
-    result_dir = iaa_only(
-        datahunts_dir,
-        texts_dir,
-        config_path,
-        use_rep = False,
-        repCSV = None,
-        iaa_dir = output_dir,
-        schema_dir = schemas_dir,
-        adjud_dir = adjud_dir,
-        threshold_func = 'raw_30'
-    )
-    return result_dir
 
 def send_consensus_files(consensus_dir, consensus_s3_bucket, consensus_s3_prefix):
     s3_locations = []
@@ -190,72 +173,52 @@ def send_pipeline_message(response_sqs_url, message):
 
 def handle_publish_article(body, parent_dirname):
     logger.info("------BEGIN publish_article handler-------")
+    dir_dict = configure_publish_directories(parent_dirname)
+    fetch_publish_files(body, dir_dict)
+    generate_article_to_publish(dir_dict)
+    viz_files_sent = send_s3(
+        dir_dict['viz_dir'],
+        dir_dict['texts_dir'],
+        dir_dict['metadata_dir'],
+        dir_dict['concat_tags_dir'],
+        viz_s3_bucket,
+        s3_prefix=viz_s3_prefix
+    )
+    message = build_published_message(body, viz_s3_bucket, viz_files_sent)
+    logger.info("------END publish_article handler-------")
+    return message
+
+def fetch_publish_files(body, dir_dict):
     texts = body.get('Texts', [])
     texts = use_article_sha256_filenames(texts)
     metadata_for_texts = unnest_metadata_key(texts)
     schemas = body.get('Schemas', [])
     datahunts = body.get('DataHunts', [])
     focus_tags = body.get('FocusTags', [])
-    #tags = body.get('Tags', [])
-    #negative_tasks = body.get('NegativeTasks', [])
-    adj_tags = body.get('AdjTagsElseIAATags', [])
-    adj_negative_tasks = body.get('AdjNegativeTasksElseIAA', [])
+    tags = body.get('Tags', [])
+    negative_tasks = body.get('NegativeTasks', [])
+    adj_tags = body.get('AdjTags', [])
+    adj_negative_tasks = body.get('AdjNegativeTasks', [])
     logger.info("texts count {}".format(len(texts)))
     logger.info("metadata count {}".format(len(metadata_for_texts)))
     logger.info("schemas count {}".format(len(schemas)))
     logger.info("datahunts count {}".format(len(datahunts)))
     logger.info("focus_tags count {}".format(len(focus_tags)))
-    #logger.info("tags count {}".format(len(tags)))
-    #logger.info("negative_tasks count {}".format(len(negative_tasks)))
+    logger.info("tags count {}".format(len(tags)))
+    logger.info("negative_tasks count {}".format(len(negative_tasks)))
     logger.info("adj_tags count {}".format(len(adj_tags)))
     logger.info("adj_negative_tasks count {}".format(len(adj_negative_tasks)))
-    texts_dir = os.path.join(parent_dirname, 'texts')
-    metadata_dir = os.path.join(parent_dirname, 'metadata')
-    schemas_dir = os.path.join(parent_dirname, 'schemas')
-    datahunts_dir = os.path.join(parent_dirname, 'datahunts')
-    focus_tags_dir = os.path.join(parent_dirname, 'focus_tags')
-    #tags_dir = os.path.join(parent_dirname, 'tags')
-    #negative_tasks_dir = os.path.join(parent_dirname, 'negative_tasks')
-    adj_tags_dir = os.path.join(parent_dirname, 'adj_tags')
-    adj_negative_tasks_dir = os.path.join(parent_dirname, 'adj_negative_tasks')
-    retrieve_file_list(texts, texts_dir)
-    retrieve_file_list(metadata_for_texts, metadata_dir)
-    retrieve_file_list(schemas, schemas_dir)
-    retrieve_file_list(datahunts, datahunts_dir)
-    retrieve_file_list(focus_tags, focus_tags_dir)
-    #retrieve_file_list(tags, tags_dir)
-    #retrieve_file_list(negative_tasks, negative_tasks_dir)
-    retrieve_file_list(adj_tags, adj_tags_dir)
-    retrieve_file_list(adj_negative_tasks, adj_negative_tasks_dir)
-    rename_schema_files(schemas_dir)
+    retrieve_file_list(texts, dir_dict['texts_dir'])
+    retrieve_file_list(metadata_for_texts, dir_dict['metadata_dir'])
+    retrieve_file_list(schemas, dir_dict['schemas_dir'])
+    retrieve_file_list(datahunts, dir_dict['datahunts_dir'])
+    retrieve_file_list(focus_tags, dir_dict['focus_tags_dir'])
+    retrieve_file_list(tags, dir_dict['tags_dir'])
+    retrieve_file_list(negative_tasks, dir_dict['negative_tasks_dir'])
+    retrieve_file_list(adj_tags, dir_dict['adj_tags_dir'])
+    retrieve_file_list(adj_negative_tasks, dir_dict['adj_negative_tasks_dir'])
+    rename_schema_files(dir_dict['schemas_dir'])
     logger.info("------FILES RETRIEVED SUCCESSFULLY in publish_article handler-------")
-
-    # additional input config data
-    config_path = './config/'
-    rep_file = './UserRepScores.csv'
-    threshold_function = 'raw_30'
-    # outputs
-    output_dir = tempfile.mkdtemp(dir=parent_dirname)
-    iaa_temp_dir = tempfile.mkdtemp(dir=parent_dirname)
-    scoring_dir = tempfile.mkdtemp(dir=parent_dirname)
-    viz_dir = tempfile.mkdtemp(dir=parent_dirname)
-    post_adjudicator_master(
-        adj_tags_dir,
-        schemas_dir,
-        output_dir,
-        iaa_temp_dir,
-        datahunts_dir,
-        scoring_dir,
-        viz_dir,
-        focus_tags_dir,
-        texts_dir,
-        config_path,
-        threshold_function,
-    )
-    viz_files_sent = send_s3(viz_dir, texts_dir, metadata_dir, viz_s3_bucket, s3_prefix=viz_s3_prefix)
-    message = build_published_message(body, viz_s3_bucket, viz_files_sent)
-    logger.info("------END publish_article handler-------")
-    return message
 
 def build_published_message(body, viz_s3_bucket, viz_files_sent):
     viz_urls = [
@@ -319,7 +282,7 @@ def retrieve_s3_file(s3_location, dest_dirname):
     s3_obj.download_file(dest_path)
     # if gzipped, decompress
     if filename.endswith(".gz"):
-        new_path = os.path.join(dest_dirname, filename.rstrip(".gz"))
+        new_path = os.path.join(dest_dirname, filename[:-3])
         with gzip.open(dest_path, 'rb') as f_in, \
             open(new_path, 'wb') as f_out:
             shutil.copyfileobj(f_in, f_out)
@@ -365,23 +328,3 @@ def rename_schema_files(schemas_dir):
                 os.rename(filepath, new_path)
             else:
                 logger.warn("Failed to find SHA-256 for '{}'".format(filepath))
-
-# To use, send a message with TagWorks pipeline.sqs_notify.notify_all
-# and then call this to receive. Must use a queue that is NOT attached to
-# a lambda that will consume the event first.
-# Or to bypass queue testing, save the JSON from
-# pipeline.sqs_notify.build_notify_all_message and pass that to handle_notify_all.
-def test_receive_notify_all(input_SQS_url):
-    # SQS URL like 'https://sqs.us-west-2.amazonaws.com/012345678901/public-editor-covid'
-    queue = sqs.Queue(input_SQS_url)
-    # Long poll. Recommend queue be configured to longest poll time of 20 seconds.
-    messages = queue.receive_messages()
-    for message in messages:
-        body = json.loads(message.body)
-        if body.get('Action', '') == "notify_all" and body.get('Version','') == "1":
-            handle_notify_all(body)
-        message.delete()
-
-
-if __name__ == '__main__':
-    pass

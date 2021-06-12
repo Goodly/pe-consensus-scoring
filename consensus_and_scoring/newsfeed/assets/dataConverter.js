@@ -1,28 +1,43 @@
 var HOLISTIC_MAP;
 
+
+// Remove anything that might be used as a multiple ROOT
+// Mutates data
+function clean(data) {
+  for(var i in data){
+    if(data[i]["Article ID"]==""){
+      data.splice(i,1);
+      break;
+    }
+  }
+}
+
 //Add dummy data so that the data has the correct nodes to form a tree.
 function addDummyData(data) {
   HOLISTIC_MAP = new Map();
   var newData = [];
-  
+
   var line;
   for (line of data) {
-    //console.log(line);
-    if (line["End"] == "-1" || line["Start"] == "-1") {
-      if (HOLISTIC_MAP.has(line["Credibility Indicator Name"])) {
-        var score = HOLISTIC_MAP.get(line["Credibility Indicator Name"]) + parseFloat(line["Points"]);
-        HOLISTIC_MAP.set(line["Credibility Indicator Name"], score);
-      } else {
-        HOLISTIC_MAP.set(line["Credibility Indicator Name"], parseFloat(line["Points"]));
-      }
-    } else {
-      newData.push(line);
-    }
+    newData.push(line);
   }
-  
-  
-  
-  
+  // for (line of data) {
+  //   //console.log(line);
+  //   if (line["End"] == "-1" || line["Start"] == "-1") {
+  //     if (HOLISTIC_MAP.has(line["Credibility Indicator Name"])) {
+  //       var score = HOLISTIC_MAP.get(line["Credibility Indicator Name"]) + parseFloat(line["Points"]);
+  //       HOLISTIC_MAP.set(line["Credibility Indicator Name"], score);
+  //     } else {
+  //       HOLISTIC_MAP.set(line["Credibility Indicator Name"], parseFloat(line["Points"]));
+  //     }
+  //   } else {
+  //     newData.push(line);
+  //   }
+  // }
+
+
+
+
   var categories = new Set([]);
   var i = 0;
   //Get all categories that are non-empty.
@@ -37,12 +52,12 @@ function addDummyData(data) {
     newData[i] = {"Credibility Indicator Category": "CATEGORIES", "Credibility Indicator Name": category};
     i ++;
   })
-      
-  
+
+
 
   //Add root nodes.
   newData[i] = {"Credibility Indicator Category": undefined, "Credibility Indicator Name": "CATEGORIES"};
-        
+
 
   return newData;
 }
@@ -60,39 +75,33 @@ function convertToHierarchy(data) {
 }
 
 
-/** Takes a heirarchical json file and converts it into a tree with unique branches 
+/** Takes a heirarchical json file and converts it into a tree with unique branches
 and unique leaves.
 @param data: a heirarchicical json file outputted by convertToHeirarchy
 */
 function condense(d) {
     if (d.height == 1) {
+        var indicators = new Map();
         var niceIndicators = new Map();
         var naughtyIndicators = new Map();
         var indicator;
         for (indicator of d.children) {
-            if (indicator.data.data['End'] == -1 || indicator.data.data['Start'] == -1) {
-                var name = indicator.data.data["Credibility Indicator Name"];
-                if (naughtyIndicators.get(name)) {
-                    json = naughtyIndicators.get(name);
-                    json["Points"] = parseFloat(json["Points"]) + parseFloat(indicator.data.data["Points"]);
-                } else {
-                    naughtyIndicators.set(name, indicator);
-                }
-            } else if (niceIndicators.get(indicator.data.data["Credibility Indicator Name"])) {
-                json = niceIndicators.get(indicator.data.data["Credibility Indicator Name"]).data.data;
-                json["Points"] = parseFloat(json.Points) + parseFloat(indicator.data.data["Points"]);
-            } else {
-                //console.log(indicator.data.data["Credibility Indicator Name"]);
-                niceIndicators.set(indicator.data.data["Credibility Indicator Name"], indicator);
-            }
+          if (indicators.get(indicator.data.data["Credibility Indicator Name"])) {
+              json = indicators.get(indicator.data.data["Credibility Indicator Name"]).data.data;
+              json["Points"] = parseFloat(json.Points) + parseFloat(indicator.data.data["Points"]);
+              if (indicator.data.data["Start"] != -1 && indicator.data.data["End"] != -1) {
+                json["Start"] = indicator.data.data["Start"];
+                json["End"] = indicator.data.data["End"];
+                json["Credibility Indicator ID"] = indicator.data.data["Credibility Indicator ID"];
+              }
+          } else {
+              indicators.set(indicator.data.data["Credibility Indicator Name"], indicator);
+          }
         }
-        //console.log(indicators);
-        var newChildren = Array.from(niceIndicators.values());
-        newChildren = newChildren.concat(Array.from(naughtyIndicators.values()));
+
+        var newChildren = Array.from(indicators.values());
         d.children = newChildren;
         d.data.children = newChildren;
-        //d.children = newChildren;
-        
     } else {
         var child;
         for (child of d.children) {

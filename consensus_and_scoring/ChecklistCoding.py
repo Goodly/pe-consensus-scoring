@@ -50,7 +50,7 @@ def evaluateChecklist(answers, users, starts, ends, numUsers, length, repDF,sour
                                                         weightScaledNumUsers, userWeightDict, sourceText, useRep=useRep,
                                                         threshold_func = threshold_func)
         firstSecondDiff = 1 - codingScore
-        out.append([winner,units,uScore,iScore, codingScore, numUsers, selectedText, firstSecondDiff, 'checklist', num_choices])
+        out.append([winner,units,uScore,iScore, codingScore, numUsers, selectedText, firstSecondDiff, 'checklist', num_choices, length])
         #do_rep_calculation_nominal(users, answers, out[0], units, starts, ends, length, repDF,last30, checkListScale=(1/num_choices))
 
     return out

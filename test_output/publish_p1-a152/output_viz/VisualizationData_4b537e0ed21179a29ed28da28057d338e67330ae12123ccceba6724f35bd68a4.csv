@@ -1,0 +1,13 @@
+Article ID,Credibility Indicator ID,Credibility Indicator Category,Credibility Indicator Name,Points,Indices of Label in Article,Start,End,target_text
+4b537e0ed21179a29ed28da28057d338e67330ae12123ccceba6724f35bd68a4,L0,Language,Denigration,-0.25,"range(380, 387)",380,387,nan
+4b537e0ed21179a29ed28da28057d338e67330ae12123ccceba6724f35bd68a4,L0,Language,Denigration,0,"range(6678, 6698)",6678,6698,nan
+4b537e0ed21179a29ed28da28057d338e67330ae12123ccceba6724f35bd68a4,P0,Probability,Doesn’t acknowledge uncertainty,-1.2298643266317522,N,-1,-1,nan
+4b537e0ed21179a29ed28da28057d338e67330ae12123ccceba6724f35bd68a4,P1,Probability,Numeric context,-1.6,"range(4819, 4829)",4819,4829,26 percent
+4b537e0ed21179a29ed28da28057d338e67330ae12123ccceba6724f35bd68a4,P1,Probability,Numeric context,0,"range(4881, 4891)",4881,4891,26 percent
+4b537e0ed21179a29ed28da28057d338e67330ae12123ccceba6724f35bd68a4,P1,Probability,Numeric context,0,"range(4962, 4972)",4962,4972,26 percent
+4b537e0ed21179a29ed28da28057d338e67330ae12123ccceba6724f35bd68a4,P2,Probability,Acknowledges uncertainty,0.353759374819711,"range(5960, 5975)",5960,5975,studies suggest
+4b537e0ed21179a29ed28da28057d338e67330ae12123ccceba6724f35bd68a4,P3,Probability,Acknowledges uncertainty,0.353759374819711,"range(2875, 2902)",2875,2902,research elsewhere suggests
+4b537e0ed21179a29ed28da28057d338e67330ae12123ccceba6724f35bd68a4,P4,Probability,Acknowledges uncertainty,0.8,"range(2238, 2272)",2238,2272,Certain factors increased the risk
+4b537e0ed21179a29ed28da28057d338e67330ae12123ccceba6724f35bd68a4,P5,Probability,Acknowledges uncertainty,0.353759374819711,"range(5401, 5406)",5401,5406,could
+4b537e0ed21179a29ed28da28057d338e67330ae12123ccceba6724f35bd68a4,P6,Probability,Acknowledges uncertainty,0.353759374819711,"range(343, 348)",343,348,could
+,,,,,,,,

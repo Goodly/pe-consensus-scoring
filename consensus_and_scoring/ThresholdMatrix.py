@@ -1,4 +1,7 @@
 from math import exp
+
+STRICT_MINIMUM_CONTRIBUTORS = 1
+
 def evalThresholdMatrix(percentage, num_of_users, scale = 1, q = 1, func = 'logis_0'):
     """
     To learn more about the different candidate threshold functions:
@@ -20,6 +23,8 @@ def evalThresholdMatrix(percentage, num_of_users, scale = 1, q = 1, func = 'logi
     # if percentage >= threshold/2:
     #     return 'M'
     #return 'L'
+    if num_of_users < STRICT_MINIMUM_CONTRIBUTORS:
+        return 'U'
     if func == 'logis_0':
         percentage = percentage * scale
         kappa = num_of_users + 3
@@ -55,8 +60,6 @@ def evalThresholdMatrix(percentage, num_of_users, scale = 1, q = 1, func = 'logi
             return 'L'
     if func == 'raw_70':
         threshold = .7
-        if num_of_users<2:
-            return 'U'
         if percentage>=threshold:
             return 'H'
         if percentage >= threshold/2:
@@ -64,8 +67,6 @@ def evalThresholdMatrix(percentage, num_of_users, scale = 1, q = 1, func = 'logi
         return 'L'
     if func == 'raw_50':
         threshold = .5
-        if num_of_users<2:
-            return 'U'
         if percentage>=threshold:
             return 'H'
         if percentage >= threshold/2:
@@ -73,8 +74,6 @@ def evalThresholdMatrix(percentage, num_of_users, scale = 1, q = 1, func = 'logi
         return 'L'
     if func == 'raw_30':
         threshold = .30
-        if num_of_users<2:
-            return 'U'
         if percentage>=threshold:
             return 'H'
         if percentage >= threshold/2:

@@ -1,0 +1,39 @@
+{
+  "response_sqs_url": "https://sqs.us-west-2.amazonaws.com/507444306670/pe-tagworks-dev-listener",
+  "project_name": "Covid_Form1.0",
+  "pipeline_uuid": "df599191-18f7-4117-a8f8-b2ff49d917e3",
+  "Action": "request_consensus",
+  "Version": "1",
+  "pipeline_name": "Covid_v1",
+  "Highlighters": [
+    {
+      "bucket_name": "tagworks.thusly.co",
+      "key": "development/ProjectExports/Covid_Form1.0/HighlighterTask/Covid_Form1.0-Task-863-Highlighter.csv.gz",
+      "filename": "Covid_Form1.0/HighlighterTask/Covid_Form1.0-Task-863-Highlighter.csv.gz"
+    }
+  ],
+  "log_message": "request_consensus for project 'Covid_Form1.0' task_type 'HLTR'",
+  "AdjTags": [],
+  "task_type": "HLTR",
+  "user_id": 1,
+  "source_task_uuid": "ad78b76b-69c0-4a8d-90a9-668975f45199",
+  "project_uuid": "ceb607c3-bbb8-49b2-a7ac-ade3fab0fbd3",
+  "Tags": [],
+  "DataHunts": [],
+  "Texts": [
+    {
+      "metadata_location": {
+        "bucket_name": "tagworks.thusly.co",
+        "key": "development/Articles/09a894f06d1157dd7a22a198c6ef78c2b9f4116266d2b0a177d7bb129a51f6e8/metadata.json.gz",
+        "filename": "09a894f06d1157dd7a22a198c6ef78c2b9f4116266d2b0a177d7bb129a51f6e8/metadata.json.gz"
+      },
+      "bucket_name": "tagworks.thusly.co",
+      "article_sha256": "09a894f06d1157dd7a22a198c6ef78c2b9f4116266d2b0a177d7bb129a51f6e8",
+      "key": "development/Articles/09a894f06d1157dd7a22a198c6ef78c2b9f4116266d2b0a177d7bb129a51f6e8/text.txt.gz",
+      "filename": "09a894f06d1157dd7a22a198c6ef78c2b9f4116266d2b0a177d7bb129a51f6e8/text.txt.gz"
+    }
+  ],
+  "NegativeTasks": [],
+  "AdjNegativeTasks": [],
+  "Schemas": []
+}

@@ -8,10 +8,27 @@ function colorFinder(jsonLine) {
       return d3.rgb(0, 191, 255);
   } else if (jsonLine["Credibility Indicator Category"] == "Language") {
       return d3.rgb(43, 82, 230);
-  } else {
+  } else if (jsonLine["Credibility Indicator Category"] == "Holistic"){
       return d3.rgb(255, 180, 0);
+  } else if (jsonLine["Credibility Indicator Category"] == "Sourcing") {
+      return d3.rgb(201, 87, 198)
+  } else {
+    return d3.rgb(255, 255, 255);
   }
 }
+
+function colorFinderTriage(jsonLine) {
+    if (jsonLine["topic_name"] === "Arguments") {
+    return d3.rgb(239, 92, 84);
+  } else if (jsonLine["topic_name"] === "Quoted Sources") {
+    return d3.rgb(0, 165, 150);
+  } else if (jsonLine["topic_name"] === "Assertions") {
+      return d3.rgb(0, 191, 255);
+  } else if (jsonLine["topic_name"] == "Needs Fact-Check") {
+      return d3.rgb(43, 82, 230);
+  }
+}
+
 
 
 function colorFinderPills(categoryInitial) {
@@ -26,4 +43,26 @@ function colorFinderPills(categoryInitial) {
     } else {
         return "#FDB515";
     }
+}
+/*
+    Given a category, output the corresponding color
+
+
+*/
+function colorFinderCategory(category) {
+  if (category === "Reasoning") {
+    return d3.rgb(239, 92, 84);
+  } else if (category === "Evidence") {
+    return d3.rgb(0, 165, 150);
+  } else if (category == "Probability") {
+      return d3.rgb(0, 191, 255);
+  } else if (category == "Language") {
+      return d3.rgb(43, 82, 230);
+  } else if (category == "Holistic"){
+      return d3.rgb(255, 180, 0);
+  } else if (category == "Sourcing") {
+    return d3.rgb(201, 87, 198)
+  } else {
+    return d3.rgb(255, 255, 255);
+  }
 }
