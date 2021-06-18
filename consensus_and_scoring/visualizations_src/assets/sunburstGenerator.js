@@ -94,7 +94,7 @@ function hallmark(data) {
   // var newheight = sunburst_div.clientHeight + document.getElementById('chart').clientHeight;
   // sunburst_div.style.height = newheight.toString() + "px";
   ROOT = root;
-  totalScore = 100 + scoreSum(root);
+  totalScore = 90 + scoreSum(root);
   root.sum(function(d) {
 
     return Math.abs(parseFloat(d.data.Points));

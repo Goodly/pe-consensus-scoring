@@ -88,7 +88,7 @@ function hallmark(dataFileName, triageDataFileName, id) {
       }
 
       ROOT = root;
-      totalScore = 100 + scoreSum(root) + holistic_score;
+      totalScore = 90 + scoreSum(root) + holistic_score;
 
       document.querySelector("svg[articleID='" + id + "']").setAttribute("score", totalScore);
       root.sum(function(d) {
@@ -452,7 +452,7 @@ function drawVis(d, root, me, graphObject) {
 
 /*
 Recursive function that returns a number that represents the total score of the given arc.
-For the center, we simply return the score of the article (100 plus the collected points).
+For the center, we simply return the score of the article (90 plus the collected points).
     @param d = the node of the hierarchy.
     @return : the cumulative score of a certain path.
               These are the points lost. The
