@@ -1,0 +1,14 @@
+Article ID,Credibility Indicator ID,Credibility Indicator Category,Credibility Indicator Name,Points,Indices of Label in Article,Start,End,target_text
+6d18bf2107626a05465ea8ae8573bf2952e1d2d62ff486ba9d304f8f09e8cf7e,H0,Holistic,Vague Sourcing,-2.0,"range(10861, 11246)",10861,11246,nan
+6d18bf2107626a05465ea8ae8573bf2952e1d2d62ff486ba9d304f8f09e8cf7e,H1,Holistic,Vague Sourcing,-2.0,"range(13599, 14523)",13599,14523,nan
+6d18bf2107626a05465ea8ae8573bf2952e1d2d62ff486ba9d304f8f09e8cf7e,H2,Holistic,Vague Sourcing,-2.0,"range(11201, 11246)",11201,11246,nan
+6d18bf2107626a05465ea8ae8573bf2952e1d2d62ff486ba9d304f8f09e8cf7e,H2,Holistic,Vague Sourcing,0,"range(11573, 11947)",11573,11947,nan
+6d18bf2107626a05465ea8ae8573bf2952e1d2d62ff486ba9d304f8f09e8cf7e,L0,Language,Exaggeration,-3.179988399581062,"range(405, 411)",405,411,nan
+6d18bf2107626a05465ea8ae8573bf2952e1d2d62ff486ba9d304f8f09e8cf7e,L0,Language,Exaggeration,0,"range(1605, 1620)",1605,1620,nan
+6d18bf2107626a05465ea8ae8573bf2952e1d2d62ff486ba9d304f8f09e8cf7e,P0,Probability,False precision,-0.5397260720196897,[],-1,-1,nan
+6d18bf2107626a05465ea8ae8573bf2952e1d2d62ff486ba9d304f8f09e8cf7e,S0,Source,Qualified Source,0.7795100207414974,[],-1,-1,nan
+6d18bf2107626a05465ea8ae8573bf2952e1d2d62ff486ba9d304f8f09e8cf7e,S1,Source,Qualified Source,0.9172226761959515,[],-1,-1,nan
+6d18bf2107626a05465ea8ae8573bf2952e1d2d62ff486ba9d304f8f09e8cf7e,S2,Source,Qualified Source,0.9172226761959515,[],-1,-1,nan
+6d18bf2107626a05465ea8ae8573bf2952e1d2d62ff486ba9d304f8f09e8cf7e,S3,Source,Qualified Source,0.8715699480384027,[],-1,-1,nan
+6d18bf2107626a05465ea8ae8573bf2952e1d2d62ff486ba9d304f8f09e8cf7e,S4,Source,Qualified Source,1.834445352391903,[],-1,-1,nan
+,,,,,,,,

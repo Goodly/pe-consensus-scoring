@@ -1,0 +1,41 @@
+Article ID,Credibility Indicator ID,Credibility Indicator Category,Credibility Indicator Name,Points,Indices of Label in Article,Start,End,target_text
+9bb07aedeb39fcc3fa6f76b7b1e06cf7367d1be62b621ea092959b4aedc9e4c8,H0,Holistic,Minor Bias,-0.8479969065549499,[],-1,-1,nan
+9bb07aedeb39fcc3fa6f76b7b1e06cf7367d1be62b621ea092959b4aedc9e4c8,L0,Language,Writing errors,-0.8648259251435817,"range(3803, 3828)",3803,3828,nan
+9bb07aedeb39fcc3fa6f76b7b1e06cf7367d1be62b621ea092959b4aedc9e4c8,L1,Language,Writing errors,-1.7296518502871634,"range(4297, 4305)",4297,4305,nan
+9bb07aedeb39fcc3fa6f76b7b1e06cf7367d1be62b621ea092959b4aedc9e4c8,L2,Language,Writing errors,-0.713213089364642,"range(4966, 4973)",4966,4973,nan
+9bb07aedeb39fcc3fa6f76b7b1e06cf7367d1be62b621ea092959b4aedc9e4c8,L3,Language,Metaphor Unhelpful,-6.0,"range(1121, 1135)",1121,1135,nan
+9bb07aedeb39fcc3fa6f76b7b1e06cf7367d1be62b621ea092959b4aedc9e4c8,L4,Language,Problematic tone,-3.0,"range(1121, 1152)",1121,1152,nan
+9bb07aedeb39fcc3fa6f76b7b1e06cf7367d1be62b621ea092959b4aedc9e4c8,L5,Language,Exaggeration,-1.0,"range(3879, 3883)",3879,3883,nan
+9bb07aedeb39fcc3fa6f76b7b1e06cf7367d1be62b621ea092959b4aedc9e4c8,L6,Language,Problematic tone,-2.0,"range(3879, 3883)",3879,3883,nan
+9bb07aedeb39fcc3fa6f76b7b1e06cf7367d1be62b621ea092959b4aedc9e4c8,L7,Language,Inappropriate Slang,-0.25,"range(4862, 4870)",4862,4870,nan
+9bb07aedeb39fcc3fa6f76b7b1e06cf7367d1be62b621ea092959b4aedc9e4c8,L7,Language,Inappropriate Slang,0,"range(5039, 5047)",5039,5047,nan
+9bb07aedeb39fcc3fa6f76b7b1e06cf7367d1be62b621ea092959b4aedc9e4c8,L8,Language,Denigration,-0.5,"range(4862, 4870)",4862,4870,nan
+9bb07aedeb39fcc3fa6f76b7b1e06cf7367d1be62b621ea092959b4aedc9e4c8,L8,Language,Denigration,0,"range(5039, 5047)",5039,5047,nan
+9bb07aedeb39fcc3fa6f76b7b1e06cf7367d1be62b621ea092959b4aedc9e4c8,L9,Language,Writing errors,-1.0,"range(4862, 4870)",4862,4870,nan
+9bb07aedeb39fcc3fa6f76b7b1e06cf7367d1be62b621ea092959b4aedc9e4c8,L9,Language,Writing errors,0,"range(5039, 5047)",5039,5047,nan
+9bb07aedeb39fcc3fa6f76b7b1e06cf7367d1be62b621ea092959b4aedc9e4c8,S0,Sourcing,Vague Sourcing,-2.0,"range(4309, 4323)",4309,4323,nan
+9bb07aedeb39fcc3fa6f76b7b1e06cf7367d1be62b621ea092959b4aedc9e4c8,S0,Sourcing,Vague Sourcing,0,"range(4325, 4388)",4325,4388,nan
+9bb07aedeb39fcc3fa6f76b7b1e06cf7367d1be62b621ea092959b4aedc9e4c8,S1,Sourcing,Vague Sourcing,-2.0,"range(1586, 1602)",1586,1602,nan
+9bb07aedeb39fcc3fa6f76b7b1e06cf7367d1be62b621ea092959b4aedc9e4c8,S1,Sourcing,Vague Sourcing,0,"range(1610, 1667)",1610,1667,nan
+9bb07aedeb39fcc3fa6f76b7b1e06cf7367d1be62b621ea092959b4aedc9e4c8,S2,Sourcing,Vague Sourcing,-2.0,"range(149, 189)",149,189,nan
+9bb07aedeb39fcc3fa6f76b7b1e06cf7367d1be62b621ea092959b4aedc9e4c8,S2,Sourcing,Vague Sourcing,0,"range(227, 375)",227,375,nan
+9bb07aedeb39fcc3fa6f76b7b1e06cf7367d1be62b621ea092959b4aedc9e4c8,S2,Sourcing,Vague Sourcing,0,"range(512, 787)",512,787,nan
+9bb07aedeb39fcc3fa6f76b7b1e06cf7367d1be62b621ea092959b4aedc9e4c8,S2,Sourcing,Vague Sourcing,0,"range(791, 1151)",791,1151,nan
+9bb07aedeb39fcc3fa6f76b7b1e06cf7367d1be62b621ea092959b4aedc9e4c8,S2,Sourcing,Vague Sourcing,0,"range(1155, 1575)",1155,1575,nan
+9bb07aedeb39fcc3fa6f76b7b1e06cf7367d1be62b621ea092959b4aedc9e4c8,S2,Sourcing,Vague Sourcing,0,"range(1689, 1975)",1689,1975,nan
+9bb07aedeb39fcc3fa6f76b7b1e06cf7367d1be62b621ea092959b4aedc9e4c8,S2,Sourcing,Vague Sourcing,0,"range(1979, 2315)",1979,2315,nan
+9bb07aedeb39fcc3fa6f76b7b1e06cf7367d1be62b621ea092959b4aedc9e4c8,S2,Sourcing,Vague Sourcing,0,"range(2350, 2567)",2350,2567,nan
+9bb07aedeb39fcc3fa6f76b7b1e06cf7367d1be62b621ea092959b4aedc9e4c8,S2,Sourcing,Vague Sourcing,0,"range(2571, 2607)",2571,2607,nan
+9bb07aedeb39fcc3fa6f76b7b1e06cf7367d1be62b621ea092959b4aedc9e4c8,S2,Sourcing,Vague Sourcing,0,"range(2630, 2863)",2630,2863,nan
+9bb07aedeb39fcc3fa6f76b7b1e06cf7367d1be62b621ea092959b4aedc9e4c8,S2,Sourcing,Vague Sourcing,0,"range(2872, 2962)",2872,2962,nan
+9bb07aedeb39fcc3fa6f76b7b1e06cf7367d1be62b621ea092959b4aedc9e4c8,S2,Sourcing,Vague Sourcing,0,"range(2983, 3267)",2983,3267,nan
+9bb07aedeb39fcc3fa6f76b7b1e06cf7367d1be62b621ea092959b4aedc9e4c8,S2,Sourcing,Vague Sourcing,0,"range(3271, 3535)",3271,3535,nan
+9bb07aedeb39fcc3fa6f76b7b1e06cf7367d1be62b621ea092959b4aedc9e4c8,S2,Sourcing,Vague Sourcing,0,"range(3539, 3610)",3539,3610,nan
+9bb07aedeb39fcc3fa6f76b7b1e06cf7367d1be62b621ea092959b4aedc9e4c8,S2,Sourcing,Vague Sourcing,0,"range(3631, 3852)",3631,3852,nan
+9bb07aedeb39fcc3fa6f76b7b1e06cf7367d1be62b621ea092959b4aedc9e4c8,S2,Sourcing,Vague Sourcing,0,"range(3874, 3946)",3874,3946,nan
+9bb07aedeb39fcc3fa6f76b7b1e06cf7367d1be62b621ea092959b4aedc9e4c8,S2,Sourcing,Vague Sourcing,0,"range(3971, 4304)",3971,4304,nan
+9bb07aedeb39fcc3fa6f76b7b1e06cf7367d1be62b621ea092959b4aedc9e4c8,S2,Sourcing,Vague Sourcing,0,"range(4410, 4685)",4410,4685,nan
+9bb07aedeb39fcc3fa6f76b7b1e06cf7367d1be62b621ea092959b4aedc9e4c8,S2,Sourcing,Vague Sourcing,0,"range(4750, 4990)",4750,4990,nan
+9bb07aedeb39fcc3fa6f76b7b1e06cf7367d1be62b621ea092959b4aedc9e4c8,S2,Sourcing,Vague Sourcing,0,"range(5031, 5398)",5031,5398,nan
+9bb07aedeb39fcc3fa6f76b7b1e06cf7367d1be62b621ea092959b4aedc9e4c8,S2,Sourcing,Vague Sourcing,0,"range(5441, 5495)",5441,5495,nan
+,,,,,,,,
