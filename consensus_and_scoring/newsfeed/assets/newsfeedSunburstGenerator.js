@@ -8,10 +8,6 @@ A rough roadmap of the contents:
 
 **/
 
-
-//var dataFileName = "VisualizationData_1712.csv";
-var chartDiv = document.getElementById("chart");
-
 var width = 200,
     height = 200,
     radius = (Math.min(width, height) / 2) + 10;
@@ -49,9 +45,13 @@ var ROOT;
 var SVG_IDS = []; // SVG_IDS has an element for every SVG we need to remove upon
                   // page change
 
-function hallmark(dataFileName, triageDataFileName, id) {
+async function hallmark(entry) {
+  dataFileName = entry.highlightData;
+  triageDataFileName = entry.triageData;
+  id = entry.sha256;
   SVG_IDS.push(13);
   SVG_IDS.push(13);
+  console.log(id);
   var svg = d3.select("body").append("svg")
     .attr("articleID", id)
     .attr("width", width)
@@ -65,18 +65,21 @@ function hallmark(dataFileName, triageDataFileName, id) {
       .attr("class", "tooltip")
       .style("opacity", 0);
 
+  d3.select(self.frameElement).style("height", height + "px");
+
   //This code block takes the csv and creates the visualization.
-  d3.csv(dataFileName, function(error, data) {
+  return d3.csv(dataFileName, function(error, data) {
     if (error) {
       console.log(error);
       return;
     }
     d3.csv(triageDataFileName, function(error, triageData) {
       if (error) {
-        console.log(error);
+        // console.log(error);
         return;
       }
-      moveFactCheckLabels(triageData, data, id);
+      moveFactCheckLabels(triageData, data, entry.sha256);
+      console.log(NUM_NFC);
       delete data["columns"];
       clean(data);
       data = addDummyData(data);
@@ -89,14 +92,15 @@ function hallmark(dataFileName, triageDataFileName, id) {
 
       ROOT = root;
       totalScore = 90 + scoreSum(root) + holistic_score;
-
-      document.querySelector("svg[articleID='" + id + "']").setAttribute("score", totalScore);
+      entry.credibilityScore = totalScore;
+      // console.log(entry.credibilityScore)
+      // document.querySelector("svg[articleID='" + id + "']").setAttribute("score", totalScore);
       root.sum(function(d) {
         return Math.abs(parseFloat(d.data.Points));
       });
 
       //Fill in the colors
-    svg.selectAll("path")
+      svg.selectAll("path")
         .data(partition(root).descendants())
         .enter().append("path")
           .attr("d", arc)
@@ -108,51 +112,50 @@ function hallmark(dataFileName, triageDataFileName, id) {
                 return "none";
             }
         });
+      var center_style = getCenterStyle(NUM_NFC[entry.sha256]);
+      var text_x = center_style[0];
+      var text_y = center_style[1];
+      var text_size = center_style[2];
+      var question_x = center_style[3];
+      var question_y = center_style[4];
+      var question_size = center_style[5]
+      var double_question = center_style[6];
 
-    var center_style = getCenterStyle(NUM_NFC[id]);
-    var text_x = center_style[0];
-    var text_y = center_style[1];
-    var text_size = center_style[2];
-    var question_x = center_style[3];
-    var question_y = center_style[4];
-    var question_size = center_style[5]
-    var double_question = center_style[6];
-
-    //Setting the center circle to the score
-    svg.selectAll(".center-text")
-      .style("display", "none")
-    svg.append("text")
-      .attr("class", "center-text")
-      .attr("x", text_x)
-      .attr("y", text_y)
-      .style("font-size", text_size)
-      .style("text-anchor", "middle")
-      .html((totalScore));
-
-    if (double_question) {
+      //Setting the center circle to the score
+      svg.selectAll(".center-text")
+        .style("display", "none")
       svg.append("text")
-        .attr("class", "center-question")
-        .attr("x", question_x)
-        .attr("y", question_y)
-        .style("font-size", question_size)
-        .html("??")
-    } else {
-      svg.append("text")
-        .attr("class", "center-question")
-        .attr("x", question_x)
-        .attr("y", question_y)
-        .style("font-size", question_size)
-        .html("?")
-    }
+        .attr("class", "center-text")
+        .attr("x", text_x)
+        .attr("y", text_y)
+        .style("font-size", text_size)
+        .style("text-anchor", "middle")
+        .html((totalScore));
 
-    //Setting the outer and inside rings to be transparent.
-    d3.selectAll("path").transition().each(function(d) {
-        if (!d.children) {
-            this.style.display = "none";
-        } else if (d.height == 2) {
-            this.style.opacity = 0;
-        }
-    })
+      if (double_question) {
+        svg.append("text")
+          .attr("class", "center-question")
+          .attr("x", question_x)
+          .attr("y", question_y)
+          .style("font-size", question_size)
+          .html("??")
+      } else {
+        svg.append("text")
+          .attr("class", "center-question")
+          .attr("x", question_x)
+          .attr("y", question_y)
+          .style("font-size", question_size)
+          .html("?")
+      }
+
+      //Setting the outer and inside rings to be transparent.
+      d3.selectAll("path").transition().each(function(d) {
+          if (!d.children) {
+              this.style.display = "none";
+          } else if (d.height == 2) {
+              this.style.opacity = 0;
+          }
+      });
 
 
 
@@ -162,7 +165,7 @@ function hallmark(dataFileName, triageDataFileName, id) {
             if (d.height == 2) {
                 return;
             }
-            //console.log(d);
+            console.log(NUM_NFC[entry.sha256]);
             d3.select(nodeToPath.get(d))
           	            .transition()
           	            .duration(300)
@@ -217,10 +220,11 @@ function hallmark(dataFileName, triageDataFileName, id) {
                 div.transition()
                     .duration(10)
                     .style("opacity", 0);
+                    
             }
         })
         .on('mouseleave', function(d) {
-          var pointsGained = nodeToPath.get(d).parentElement.parentElement.getAttribute("score");
+          var pointsGained = totalScore = 90 + scoreSum(root) + holistic_score;
           d3.select(nodeToPath.get(d))
               .transition()
               .duration(300)
@@ -231,8 +235,8 @@ function hallmark(dataFileName, triageDataFileName, id) {
                   .delay(200)
                   .duration(600)
                   .style("opacity", 0);
-
-          var center_style = getCenterStyle(NUM_NFC[id]);
+          
+          var center_style = getCenterStyle(NUM_NFC[entry.sha256]);
           var text_x = center_style[0];
           var text_y = center_style[1];
           var text_size = center_style[2];
@@ -272,7 +276,6 @@ function hallmark(dataFileName, triageDataFileName, id) {
         visualizationOn = false;
     });
   });
-  d3.select(self.frameElement).style("height", height + "px");
 
 }
 
@@ -345,7 +348,7 @@ function resetVis(d, graphObject) {
     graphObject.selectAll(".center-text").style('display', 'none');
 
 
-    var center_style = getCenterStyle(NUM_NFC);
+    var center_style = getCenterStyle(NUM_NFC[entry.sha256]);
     var text_x = center_style[0];
     var text_y = center_style[1];
     var text_size = center_style[2];

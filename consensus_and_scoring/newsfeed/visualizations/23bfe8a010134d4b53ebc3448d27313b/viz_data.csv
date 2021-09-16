@@ -1,0 +1,20 @@
+Article ID,Credibility Indicator ID,Credibility Indicator Category,Credibility Indicator Name,Points,Indices of Label in Article,Start,End,target_text
+23bfe8a010134d4b53ebc3448d27313b0c2157e0c895d24efc1a0759e0c1e39b,E0,Evidence,Data-Driven Evidence,2.0,"range(353, 439)",353,439,"Of the 18 District Councils, 452 of 479 seats (71%) went to “pro-democracy” candidates//break//And this with 70% of eligible voters going to the polls//break//"
+23bfe8a010134d4b53ebc3448d27313b0c2157e0c895d24efc1a0759e0c1e39b,E0,Evidence,Data-Driven Evidence,0,"range(671, 726)",671,726,"Of the 18 District Councils, 452 of 479 seats (71%) went to “pro-democracy” candidates//break//And this with 70% of eligible voters going to the polls//break//"
+23bfe8a010134d4b53ebc3448d27313b0c2157e0c895d24efc1a0759e0c1e39b,E1,Evidence,Statistical confidence,1.0,"range(353, 439)",353,439,nan
+23bfe8a010134d4b53ebc3448d27313b0c2157e0c895d24efc1a0759e0c1e39b,E1,Evidence,Statistical confidence,0,"range(671, 726)",671,726,nan
+23bfe8a010134d4b53ebc3448d27313b0c2157e0c895d24efc1a0759e0c1e39b,E2,Evidence,Faulty Research Methods,-3.0,"range(353, 439)",353,439,nan
+23bfe8a010134d4b53ebc3448d27313b0c2157e0c895d24efc1a0759e0c1e39b,E2,Evidence,Faulty Research Methods,0,"range(671, 726)",671,726,nan
+23bfe8a010134d4b53ebc3448d27313b0c2157e0c895d24efc1a0759e0c1e39b,E3,Evidence,Unopen to Evidence,-1.0,[],-1,-1,nan
+23bfe8a010134d4b53ebc3448d27313b0c2157e0c895d24efc1a0759e0c1e39b,E4,Evidence,Alternative explanation,-3.0,[],-1,-1,nan
+23bfe8a010134d4b53ebc3448d27313b0c2157e0c895d24efc1a0759e0c1e39b,H0,Holistic,Vague Sourcing,-2.0,"range(2726, 2743)",2726,2743,nan
+23bfe8a010134d4b53ebc3448d27313b0c2157e0c895d24efc1a0759e0c1e39b,H0,Holistic,Vague Sourcing,0,"range(2757, 2836)",2757,2836,nan
+23bfe8a010134d4b53ebc3448d27313b0c2157e0c895d24efc1a0759e0c1e39b,L0,Language,Metaphor unhelpful,-1.0,"range(139, 145)",139,145,nan
+23bfe8a010134d4b53ebc3448d27313b0c2157e0c895d24efc1a0759e0c1e39b,L1,Language,Exaggeration,-2.1199922663873747,"range(1625, 1640)",1625,1640,nan
+23bfe8a010134d4b53ebc3448d27313b0c2157e0c895d24efc1a0759e0c1e39b,L2,Language,Inappropriately emotional,-1.3561438102252754,"range(139, 145)",139,145,nan
+23bfe8a010134d4b53ebc3448d27313b0c2157e0c895d24efc1a0759e0c1e39b,L2,Language,Inappropriately emotional,0,"range(1601, 1650)",1601,1650,nan
+23bfe8a010134d4b53ebc3448d27313b0c2157e0c895d24efc1a0759e0c1e39b,L3,Language,Writing errors,-1.7296518502871634,"range(5347, 5381)",5347,5381,nan
+23bfe8a010134d4b53ebc3448d27313b0c2157e0c895d24efc1a0759e0c1e39b,S0,Source,Qualified Source,1.0,[],-1,-1,nan
+23bfe8a010134d4b53ebc3448d27313b0c2157e0c895d24efc1a0759e0c1e39b,S1,Source,Qualified Source,1.834445352391903,[],-1,-1,nan
+23bfe8a010134d4b53ebc3448d27313b0c2157e0c895d24efc1a0759e0c1e39b,S2,Source,Qualified Source,0.9172226761959515,[],-1,-1,nan
+,,,,,,,,

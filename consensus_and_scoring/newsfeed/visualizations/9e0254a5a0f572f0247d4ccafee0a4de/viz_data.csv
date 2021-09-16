@@ -1,0 +1,13 @@
+Article ID,Credibility Indicator ID,Credibility Indicator Category,Credibility Indicator Name,Points,Indices of Label in Article,Start,End,target_text
+9e0254a5a0f572f0247d4ccafee0a4deb3241c8bdc31a42b2d19f061c3723894,E0,Evidence,Unopen to Evidence,-1.0,[],-1,-1,nan
+9e0254a5a0f572f0247d4ccafee0a4deb3241c8bdc31a42b2d19f061c3723894,E1,Evidence,Alternative explanation,-3.0,[],-1,-1,nan
+9e0254a5a0f572f0247d4ccafee0a4deb3241c8bdc31a42b2d19f061c3723894,E2,Evidence,Alternative explanation,-1.0,[],-1,-1,nan
+9e0254a5a0f572f0247d4ccafee0a4deb3241c8bdc31a42b2d19f061c3723894,H0,Holistic,Minor Bias,-3.0,[],-1,-1,nan
+9e0254a5a0f572f0247d4ccafee0a4deb3241c8bdc31a42b2d19f061c3723894,L0,Language,Exaggeration,-1.0,"range(219, 239)",219,239,nan
+9e0254a5a0f572f0247d4ccafee0a4deb3241c8bdc31a42b2d19f061c3723894,L0,Language,Exaggeration,0,"range(1877, 1887)",1877,1887,nan
+9e0254a5a0f572f0247d4ccafee0a4deb3241c8bdc31a42b2d19f061c3723894,L1,Language,Manufactured Scandal,-0.5,"range(227, 239)",227,239,nan
+9e0254a5a0f572f0247d4ccafee0a4deb3241c8bdc31a42b2d19f061c3723894,L2,Language,Inappropriately Emotional,-0.4854268271702417,"range(219, 239)",219,239,nan
+9e0254a5a0f572f0247d4ccafee0a4deb3241c8bdc31a42b2d19f061c3723894,L3,Language,Inappropriate Slang,-0.75,"range(1883, 1887)",1883,1887,nan
+9e0254a5a0f572f0247d4ccafee0a4deb3241c8bdc31a42b2d19f061c3723894,L4,Language,Denigration,-1.5,"range(1883, 1887)",1883,1887,nan
+9e0254a5a0f572f0247d4ccafee0a4deb3241c8bdc31a42b2d19f061c3723894,L5,Language,Problematic tone,-0.5,"range(219, 226)",219,226,nan
+,,,,,,,,

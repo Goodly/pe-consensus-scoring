@@ -1,0 +1,7 @@
+Article ID,Credibility Indicator ID,Credibility Indicator Category,Credibility Indicator Name,Points,Indices of Label in Article,Start,End,target_text
+f771c6d6ee8125df981cfb6f7b27f77b15784fc3d7705b5a2088990d6a393f73,E0,Evidence,Alternative explanation,-1.0,[],-1,-1,nan
+f771c6d6ee8125df981cfb6f7b27f77b15784fc3d7705b5a2088990d6a393f73,E1,Evidence,Alternative explanation,-1.0,[],-1,-1,nan
+f771c6d6ee8125df981cfb6f7b27f77b15784fc3d7705b5a2088990d6a393f73,L0,Language,Metaphor Unhelpful,-2.0,"range(278, 284)",278,284,nan
+f771c6d6ee8125df981cfb6f7b27f77b15784fc3d7705b5a2088990d6a393f73,L1,Language,Writing errors,-0.42399845327747493,"range(272, 284)",272,284,nan
+f771c6d6ee8125df981cfb6f7b27f77b15784fc3d7705b5a2088990d6a393f73,L1,Language,Writing errors,0,"range(1984, 1998)",1984,1998,nan
+,,,,,,,,

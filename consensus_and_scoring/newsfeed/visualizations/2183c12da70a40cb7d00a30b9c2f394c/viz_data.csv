@@ -1,0 +1,58 @@
+Article ID,Credibility Indicator ID,Credibility Indicator Category,Credibility Indicator Name,Points,Indices of Label in Article,Start,End,target_text
+2183c12da70a40cb7d00a30b9c2f394ca66ce8b895bb78c43614659c6fc28f3d,H0,Holistic,Very Biased,-6.0,[],-1,-1,nan
+2183c12da70a40cb7d00a30b9c2f394ca66ce8b895bb78c43614659c6fc28f3d,L0,Language,Exaggeration,-0.5,"range(1488, 1500)",1488,1500,nan
+2183c12da70a40cb7d00a30b9c2f394ca66ce8b895bb78c43614659c6fc28f3d,L1,Language,Manufactured Scandal,-1.0,"range(1484, 1549)",1484,1549,nan
+2183c12da70a40cb7d00a30b9c2f394ca66ce8b895bb78c43614659c6fc28f3d,L2,Language,Exaggeration,-0.5,"range(1605, 1609)",1605,1609,nan
+2183c12da70a40cb7d00a30b9c2f394ca66ce8b895bb78c43614659c6fc28f3d,L3,Language,Manufactured Scandal,-3.0,"range(1555, 1630)",1555,1630,nan
+2183c12da70a40cb7d00a30b9c2f394ca66ce8b895bb78c43614659c6fc28f3d,L4,Language,Problematic tone,-0.25,"range(1555, 1630)",1555,1630,nan
+2183c12da70a40cb7d00a30b9c2f394ca66ce8b895bb78c43614659c6fc28f3d,L5,Language,Exaggeration,-0.25,"range(5056, 5073)",5056,5073,nan
+2183c12da70a40cb7d00a30b9c2f394ca66ce8b895bb78c43614659c6fc28f3d,L6,Language,Manufactured Scandal,-1.6959938131098997,"range(5019, 5092)",5019,5092,nan
+2183c12da70a40cb7d00a30b9c2f394ca66ce8b895bb78c43614659c6fc28f3d,L7,Language,Writing errors,-1.0,"range(5019, 5080)",5019,5080,nan
+2183c12da70a40cb7d00a30b9c2f394ca66ce8b895bb78c43614659c6fc28f3d,L8,Language,Exaggeration,-0.75,"range(4696, 4716)",4696,4716,nan
+2183c12da70a40cb7d00a30b9c2f394ca66ce8b895bb78c43614659c6fc28f3d,L9,Language,Problematic tone,-1.125,"range(4681, 4716)",4681,4716,nan
+2183c12da70a40cb7d00a30b9c2f394ca66ce8b895bb78c43614659c6fc28f3d,L10,Language,Exaggeration,-0.8479969065549499,"range(287, 304)",287,304,nan
+2183c12da70a40cb7d00a30b9c2f394ca66ce8b895bb78c43614659c6fc28f3d,L11,Language,Problematic tone,-1.0,"range(283, 304)",283,304,nan
+2183c12da70a40cb7d00a30b9c2f394ca66ce8b895bb78c43614659c6fc28f3d,L12,Language,Writing errors,-0.356606544682321,"range(3822, 3831)",3822,3831,nan
+2183c12da70a40cb7d00a30b9c2f394ca66ce8b895bb78c43614659c6fc28f3d,L13,Language,Exaggeration,-0.5,"range(3832, 3842)",3832,3842,nan
+2183c12da70a40cb7d00a30b9c2f394ca66ce8b895bb78c43614659c6fc28f3d,L14,Language,Manufactured Scandal,-2.0,"range(3832, 3859)",3832,3859,nan
+2183c12da70a40cb7d00a30b9c2f394ca66ce8b895bb78c43614659c6fc28f3d,L15,Language,Exaggeration,-0.75,"range(3340, 3398)",3340,3398,nan
+2183c12da70a40cb7d00a30b9c2f394ca66ce8b895bb78c43614659c6fc28f3d,L16,Language,Manufactured Scandal,-2.0,"range(3340, 3398)",3340,3398,nan
+2183c12da70a40cb7d00a30b9c2f394ca66ce8b895bb78c43614659c6fc28f3d,L17,Language,Exaggeration,-0.24271341358512086,"range(309, 327)",309,327,nan
+2183c12da70a40cb7d00a30b9c2f394ca66ce8b895bb78c43614659c6fc28f3d,L18,Language,Inappropriately Emotional,-0.5,"range(5433, 5441)",5433,5441,nan
+2183c12da70a40cb7d00a30b9c2f394ca66ce8b895bb78c43614659c6fc28f3d,L19,Language,Problematic tone,-0.5,"range(5433, 5480)",5433,5480,nan
+2183c12da70a40cb7d00a30b9c2f394ca66ce8b895bb78c43614659c6fc28f3d,L20,Language,Exaggeration,-0.75,"range(2938, 2952)",2938,2952,nan
+2183c12da70a40cb7d00a30b9c2f394ca66ce8b895bb78c43614659c6fc28f3d,L21,Language,Manufactured Scandal,-3.0,"range(2917, 2952)",2917,2952,nan
+2183c12da70a40cb7d00a30b9c2f394ca66ce8b895bb78c43614659c6fc28f3d,L22,Language,Problematic tone,-1.0,"range(2917, 2952)",2917,2952,nan
+2183c12da70a40cb7d00a30b9c2f394ca66ce8b895bb78c43614659c6fc28f3d,L23,Language,Exaggeration,-0.5,"range(2510, 2518)",2510,2518,nan
+2183c12da70a40cb7d00a30b9c2f394ca66ce8b895bb78c43614659c6fc28f3d,R0,Reasoning,Distraction|Red Herring,-1.0,"range(2877, 3194)",2877,3194,nan
+2183c12da70a40cb7d00a30b9c2f394ca66ce8b895bb78c43614659c6fc28f3d,R1,Reasoning,Before therefore Because,-1.0,"range(2877, 3194)",2877,3194,nan
+2183c12da70a40cb7d00a30b9c2f394ca66ce8b895bb78c43614659c6fc28f3d,R2,Reasoning,Personal Attack|Ad Hominem,-1.0,"range(2877, 2952)",2877,2952,nan
+2183c12da70a40cb7d00a30b9c2f394ca66ce8b895bb78c43614659c6fc28f3d,R2,Reasoning,Personal Attack|Ad Hominem,0,"range(3029, 3068)",3029,3068,nan
+2183c12da70a40cb7d00a30b9c2f394ca66ce8b895bb78c43614659c6fc28f3d,R3,Reasoning,Before therefore Because,-1.6959938131098997,"range(2455, 2874)",2455,2874,nan
+2183c12da70a40cb7d00a30b9c2f394ca66ce8b895bb78c43614659c6fc28f3d,R4,Reasoning,Straw Man Fallacy,-1.0,"range(2404, 2874)",2404,2874,nan
+2183c12da70a40cb7d00a30b9c2f394ca66ce8b895bb78c43614659c6fc28f3d,R5,Reasoning,Misleading Assumption,-3.0,"range(283, 304)",283,304,nan
+2183c12da70a40cb7d00a30b9c2f394ca66ce8b895bb78c43614659c6fc28f3d,R6,Reasoning,Personal Attack|Ad Hominem,-0.7853812700750918,"range(156, 304)",156,304,nan
+2183c12da70a40cb7d00a30b9c2f394ca66ce8b895bb78c43614659c6fc28f3d,R7,Reasoning,Hindsight Bias,-1.0,"range(1484, 1548)",1484,1548,nan
+2183c12da70a40cb7d00a30b9c2f394ca66ce8b895bb78c43614659c6fc28f3d,R8,Reasoning,Distraction|Red Herring,-1.0,"range(1445, 1548)",1445,1548,nan
+2183c12da70a40cb7d00a30b9c2f394ca66ce8b895bb78c43614659c6fc28f3d,R9,Reasoning,Egregious Straw Man,-3.0,"range(1484, 1548)",1484,1548,nan
+2183c12da70a40cb7d00a30b9c2f394ca66ce8b895bb78c43614659c6fc28f3d,R10,Reasoning,Distraction|Red Herring,-1.0,"range(3626, 3866)",3626,3866,nan
+2183c12da70a40cb7d00a30b9c2f394ca66ce8b895bb78c43614659c6fc28f3d,R11,Reasoning,Personal Attack|Ad Hominem,-2.0,"range(3626, 3866)",3626,3866,nan
+2183c12da70a40cb7d00a30b9c2f394ca66ce8b895bb78c43614659c6fc28f3d,R12,Reasoning,False Dilemma,-2.0,"range(3560, 3715)",3560,3715,nan
+2183c12da70a40cb7d00a30b9c2f394ca66ce8b895bb78c43614659c6fc28f3d,S0,Sourcing,Vague Sourcing,-2.0,"range(170, 210)",170,210,nan
+2183c12da70a40cb7d00a30b9c2f394ca66ce8b895bb78c43614659c6fc28f3d,S0,Sourcing,Vague Sourcing,0,"range(212, 518)",212,518,nan
+2183c12da70a40cb7d00a30b9c2f394ca66ce8b895bb78c43614659c6fc28f3d,S0,Sourcing,Vague Sourcing,0,"range(699, 1123)",699,1123,nan
+2183c12da70a40cb7d00a30b9c2f394ca66ce8b895bb78c43614659c6fc28f3d,S0,Sourcing,Vague Sourcing,0,"range(1127, 1144)",1127,1144,nan
+2183c12da70a40cb7d00a30b9c2f394ca66ce8b895bb78c43614659c6fc28f3d,S0,Sourcing,Vague Sourcing,0,"range(1170, 1836)",1170,1836,nan
+2183c12da70a40cb7d00a30b9c2f394ca66ce8b895bb78c43614659c6fc28f3d,S0,Sourcing,Vague Sourcing,0,"range(1840, 2019)",1840,2019,nan
+2183c12da70a40cb7d00a30b9c2f394ca66ce8b895bb78c43614659c6fc28f3d,S0,Sourcing,Vague Sourcing,0,"range(2041, 2400)",2041,2400,nan
+2183c12da70a40cb7d00a30b9c2f394ca66ce8b895bb78c43614659c6fc28f3d,S0,Sourcing,Vague Sourcing,0,"range(2455, 2873)",2455,2873,nan
+2183c12da70a40cb7d00a30b9c2f394ca66ce8b895bb78c43614659c6fc28f3d,S0,Sourcing,Vague Sourcing,0,"range(2877, 3193)",2877,3193,nan
+2183c12da70a40cb7d00a30b9c2f394ca66ce8b895bb78c43614659c6fc28f3d,S0,Sourcing,Vague Sourcing,0,"range(3197, 3241)",3197,3241,nan
+2183c12da70a40cb7d00a30b9c2f394ca66ce8b895bb78c43614659c6fc28f3d,S0,Sourcing,Vague Sourcing,0,"range(3267, 3397)",3267,3397,nan
+2183c12da70a40cb7d00a30b9c2f394ca66ce8b895bb78c43614659c6fc28f3d,S0,Sourcing,Vague Sourcing,0,"range(3869, 3930)",3869,3930,nan
+2183c12da70a40cb7d00a30b9c2f394ca66ce8b895bb78c43614659c6fc28f3d,S0,Sourcing,Vague Sourcing,0,"range(3961, 4085)",3961,4085,nan
+2183c12da70a40cb7d00a30b9c2f394ca66ce8b895bb78c43614659c6fc28f3d,S1,Sourcing,Vague Sourcing,-2.0,"range(5179, 5221)",5179,5221,nan
+2183c12da70a40cb7d00a30b9c2f394ca66ce8b895bb78c43614659c6fc28f3d,S1,Sourcing,Vague Sourcing,0,"range(5227, 5561)",5227,5561,nan
+2183c12da70a40cb7d00a30b9c2f394ca66ce8b895bb78c43614659c6fc28f3d,S1,Sourcing,Vague Sourcing,0,"range(5565, 5899)",5565,5899,nan
+2183c12da70a40cb7d00a30b9c2f394ca66ce8b895bb78c43614659c6fc28f3d,S1,Sourcing,Vague Sourcing,0,"range(5903, 6093)",5903,6093,nan
+,,,,,,,,

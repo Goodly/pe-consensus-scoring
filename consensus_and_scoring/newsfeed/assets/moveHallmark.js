@@ -1,12 +1,19 @@
 async function moveHallmarks() {
   var item;
-  for (item of listofarticles) {
+  for (item of LIST_OF_ARTICLES) {
       var divID = item['sha256'];
       var hallmark = document.querySelector("svg[articleID='" + divID +"']");
       waitForElementToDisplay("#"+divID, "svg[articleID='" + divID +"']", 100, item);
   }
 }
 
+
+async function moveHallmark(articleIndex) {
+    const entry = LIST_OF_ARTICLES[articleIndex];
+    var divID = entry['sha256'];
+    var hallmark = document.querySelector("svg[articleID='" + divID +"']");
+    waitForElementToDisplay("#"+divID, "svg[articleID='" + divID +"']", 100, entry);
+}
 
 async function removeHallmarks() {
   var id;

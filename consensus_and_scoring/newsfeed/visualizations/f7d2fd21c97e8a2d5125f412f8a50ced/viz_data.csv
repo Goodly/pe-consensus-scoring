@@ -1,0 +1,12 @@
+Article ID,Credibility Indicator ID,Credibility Indicator Category,Credibility Indicator Name,Points,Indices of Label in Article,Start,End,target_text
+f7d2fd21c97e8a2d5125f412f8a50ceda92377cb6d5c026f33f3cb04b8949d6d,E0,Evidence,Alternative explanation,-1.0,[],-1,-1,nan
+f7d2fd21c97e8a2d5125f412f8a50ceda92377cb6d5c026f33f3cb04b8949d6d,H0,Holistic,Misleading Title,-1.8889686876112561,[],-1,-1,nan
+f7d2fd21c97e8a2d5125f412f8a50ceda92377cb6d5c026f33f3cb04b8949d6d,H1,Holistic,Biased,-2.6986303600984485,[],-1,-1,nan
+f7d2fd21c97e8a2d5125f412f8a50ceda92377cb6d5c026f33f3cb04b8949d6d,L0,Language,Writing errors,-0.3926906350375459,"range(3582, 3595)",3582,3595,nan
+f7d2fd21c97e8a2d5125f412f8a50ceda92377cb6d5c026f33f3cb04b8949d6d,P0,Probability,False precision,-2.852852357458568,"range(5921, 6076)",5921,6076,"The OPCW management is simply covering up for the criminal elements that have staged the Douma incident, and that could have triggered an all-out world war//break//"
+f7d2fd21c97e8a2d5125f412f8a50ceda92377cb6d5c026f33f3cb04b8949d6d,P1,Probability,Overconfident,-2.0,[],-1,-1,nan
+f7d2fd21c97e8a2d5125f412f8a50ceda92377cb6d5c026f33f3cb04b8949d6d,S0,Sourcing,Qualified Source,0.9172226761959515,[],-1,-1,nan
+f7d2fd21c97e8a2d5125f412f8a50ceda92377cb6d5c026f33f3cb04b8949d6d,S1,Sourcing,Qualified Source,0.9172226761959515,[],-1,-1,nan
+f7d2fd21c97e8a2d5125f412f8a50ceda92377cb6d5c026f33f3cb04b8949d6d,S2,Sourcing,Vague Sourcing,-2.0,"range(5166, 5175)",5166,5175,nan
+f7d2fd21c97e8a2d5125f412f8a50ceda92377cb6d5c026f33f3cb04b8949d6d,S2,Sourcing,Vague Sourcing,0,"range(5230, 5549)",5230,5549,nan
+,,,,,,,,

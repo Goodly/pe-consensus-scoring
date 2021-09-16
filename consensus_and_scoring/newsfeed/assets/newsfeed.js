@@ -1,75 +1,147 @@
+var ARTICLES_PER_LOAD = 2;
+var TOTAL_ARTICLES_DISPLAYED = 2;
+var LIST_OF_ARTICLES = [];
+var NUM_ARTICLES = -1;
+var LOADING = false;
+
 window.addEventListener('load', (event) => {
-    SVG_IDS = [];
-    const visPromise = readVisData();
-    visPromise.then(function() {
-        generateAndMove("all;");
-
+    $.get("visData.json").done((data) => {
+        readVisData(data, 0);
+        var entry;
+        console.log(LIST_OF_ARTICLES);
+        var articleIndex = 0;
+        LIST_OF_ARTICLES.forEach(function (entry, _) {
+            $.get(entry.plainText).done((data) => {
+                entry.totalText = data;
+                const entryPromise = generateEntry(entry);
+                entryPromise.then(() => {
+                    moveHallmark(articleIndex);
+                    articleIndex += 1;
+                })
+                // moveHallmark(articleIndex);
+            })
+        })
+            
     });
+        // generateAndMove("all;");
 
 });
 
 
-// On showLimit selection change, regenerate hallmarks and move them into place
-//
 
-$(document).on('change','#showLimit',function(e){
-    var limit = this.options[e.target.selectedIndex].text;
-    generateAndMove(limit);
-});
-
-var listofarticles = [];
-
-function readVisData() {
-    return $.get("visData.json").done(function(data) {
-        for (var i = 0; i < Object.keys(data).length; i++) {
-            var article = data[i];
-            var triage_path = "/visualizations/" + article["article_sha256"].substring(0, 32) +"/triager_data.csv";
-            var articleEntry = new ArticleData(article["Title"], article["Author"], article["Date"], article["ID"],
-                                              article["Article Link"], article["Visualization Link"], article["Plain Text"],
-                                              article["Highlight Data"], triage_path, article["article_sha256"]);
-
-            listofarticles.push(articleEntry);
+window.onscroll = function() {
+    
+    if (window.innerHeight + window.pageYOffset - 39 >= document.body.offsetHeight) {
+        // you're at the bottom of the page
+        if (TOTAL_ARTICLES_DISPLAYED < NUM_ARTICLES) {
+            if (!LOADING) {
+                $('.loader').css('display', 'block');
+                // console.log("loadArticle called");
+                LOADING = true;
+                setTimeout(loadArticlesOnScroll, 2000);
+            }
         }
-    });
-}
+    } else if (window.innerHeight + window.pageYOffset + 100 < document.body.offsetHeight) {
+        LOADING = false;
+        $('.loader').css('display', 'none');
+    }
+};
 
-function setScores() {
+function loadArticlesOnScroll() {
+    // console.log('Scroll height', window.innerHeight + window.pageYOffset);
+    // console.log('document height', document.body.offsetHeight);
+    if (window.innerHeight + window.pageYOffset + 90 >= document.body.offsetHeight) {
+        const newArticleStartIndex = TOTAL_ARTICLES_DISPLAYED;
+        TOTAL_ARTICLES_DISPLAYED = TOTAL_ARTICLES_DISPLAYED + ARTICLES_PER_LOAD;
+        var articleIndex = newArticleStartIndex;
+        $.get("visData.json").done((data) => {
+            $('.loader').css('display', 'none');
+            readVisData(data, articleIndex);
+            LIST_OF_ARTICLES.slice(articleIndex, TOTAL_ARTICLES_DISPLAYED).forEach(function (entry, _) {
+                console.log(entry.plainText);
+                $.get(entry.plainText).done((data) => {
+                    entry.totalText = data;
+                    const entryPromise = generateEntry(entry);
+                    entryPromise.then(() => {
+                        moveHallmark(articleIndex);
+                        articleIndex += 1;
+                    });
+                    // moveHallmark(articleIndex);
+                });
+            });
+            LOADING = false;
 
-    var articleObject;
-    for (articleObject of listofarticles) {
-        var artSVG = document.querySelector("svg[articleID='" + articleObject.id + "'");
-        articleObject.credibilityScore = parseInt(artSVG.getAttribute("score"));
+        });          
     }
 }
 
 
-async function generateList(limit) {
+
+
+
+function readVisData(data, start) {
+    NUM_ARTICLES = Object.keys(data).length;
+    // console.log(TOTAL_ARTICLES_DISPLAYED);
+    for (var i = start; i < TOTAL_ARTICLES_DISPLAYED; i++) {
+        var article = data[i];
+        var triage_path = "/visualizations/" + article["article_sha256"].substring(0, 32) +"/triager_data.csv";
+        // await getScore(article['high'])
+        var articleEntry = new ArticleData(
+                                    article["Title"], 
+                                    article["Author"], 
+                                    article["Date"], 
+                                    article["ID"],
+                                    article["Visualization Link"], 
+                                    article["Plain Text"],
+                                    article["Highlight Data"], 
+                                    triage_path,
+                                    article["article_sha256"]);
+
+        LIST_OF_ARTICLES.push(articleEntry);
+    }
+}
+
+// async function readVisData() {
+//     $.get("visData.json").done(function(data) {
+        
+//         // console.log(LIST_OF_ARTICLES)
+//     });
+// }
+
+// function setScores() {
+
+//     var articleObject;
+//     for (articleObject of LIST_OF_ARTICLES) {
+//         console.log(artSVG.getAttribute("score"));
+//         var artSVG = document.querySelector("svg[articleID='" + articleObject.id + "'");
+//         articleObject.credibilityScore = parseInt(artSVG.getAttribute("score"));
+//     }
+// }
+
+
+function generateList(limit) {
     // Collect values from the HTML
     //Sort by... Most Recent, Alphabetical, Credibility Score (High to Low & Low to High)
     var sortOptions = document.getElementById("sortByList");
     var sortBy = sortOptions.options[sortOptions.selectedIndex].value;
-    var orderOptions = document.getElementById("order")
+    var orderOptions = document.getElementById("order");
     var order = orderOptions.options[orderOptions.selectedIndex].value;
-    // var search = document.getElementById("searchtext").value;
-
-    //search
-    // var searchedArticles = unlimitedSearchWorks(search, listofarticles);
 
     //sort
-    var sortedArticles = sortArticles(listofarticles, sortBy, order);
+    sortArticles(sortBy, order);
     //Filter by tags (Needs additional information)
 
     //Only show the top 20 results
     if (limit == 20) {
       var showLimit = 20;
     } else {
-      var showLimit = sortedArticles.length;
+      var showLimit = LIST_OF_ARTICLES.length;
     }
-    sortedArticles = sortedArticles.slice(0, showLimit);
+    LIST_OF_ARTICLES = LIST_OF_ARTICLES.slice(0, showLimit);
     document.getElementById("articleList").innerHTML = "";
 
-    for (var i = 0; i < sortedArticles.length; i++) {
-        generateEntry(sortedArticles[i]);
+    for (var i = 0; i < LIST_OF_ARTICLES.length; i++) {
+        generateEntry(LIST_OF_ARTICLES[i]);
     }
     return false;
 }
@@ -85,50 +157,27 @@ function scrollContinue() {
   $('body').removeClass('stop-scrolling');
 }
 
-function unlimitedSearchWorks(query, listofarticles) {
-    output = [];
-
-
-    for (var i = 0; i < listofarticles.length; i++) {
-      $.get(listofarticles[i].plainText).done(function(data) {
-        var totalText = data.toString()
-        totalText = totalText.toLowerCase();
-        console.log(query);
-        if (query === "") {
-          output.push(listofarticles[i]);
-
-
-        } else if (totalText.includes(query) && query !== "") {
-            output.push(listofarticles[i]);
-      }
-    });
-  }
-  console.log(output);
-  return output;
-}
-
-function sortArticles(listofarticles, sortBy, order) {
+function sortArticles(sortBy, order) {
     if (sortBy == "title") {
         if (order == "revAlpha") {
-            listofarticles.sort((a, b) => (a.title < b.title) ? 1 : -1)
+            LIST_OF_ARTICLES = LIST_OF_ARTICLES.sort((a, b) => (a.title < b.title) ? 1 : -1)
         } else {
-            listofarticles.sort((a, b) => (a.title > b.title) ? 1 : -1)
+            LIST_OF_ARTICLES = LIST_OF_ARTICLES.sort((a, b) => (a.title >= b.title) ? 1 : -1)
         }
     } else if (sortBy == "date") {
         if (order == "older") {
-            listofarticles.sort((a, b) => (Date.parse(a.date) > Date.parse(b.date)) ? 1 : -1)
+            LIST_OF_ARTICLES = LIST_OF_ARTICLES.sort((a, b) => (Date.parse(a.date) > Date.parse(b.date)) ? 1 : -1)
         } else {
-            listofarticles.sort((a, b) => (Date.parse(a.date) < Date.parse(b.date)) ? 1 : -1)
+            LIST_OF_ARTICLES = LIST_OF_ARTICLES.sort((a, b) => (Date.parse(a.date) < Date.parse(b.date)) ? 1 : -1)
         }
     } else {
         if (order == "high") {
-
-            listofarticles.sort((a, b) => (a.credibilityScore < b.credibilityScore) ? 1 : -1)
+            
+            LIST_OF_ARTICLES = LIST_OF_ARTICLES.sort((a, b) => (a.credibilityScore < b.credibilityScore) ? 1 : -1)
         } else {
-            listofarticles.sort((a, b) => (a.credibilityScore > b.credibilityScore) ? 1 : -1)
+            LIST_OF_ARTICLES = LIST_OF_ARTICLES.sort((a, b) => (a.credibilityScore >= b.credibilityScore) ? 1 : -1)
         }
     }
-    return listofarticles;
 }
 
 async function generateAndMove(limit) {
@@ -141,44 +190,37 @@ async function generateAndMove(limit) {
 }
 
 
-function generateEntry(entry) {
-
-    var previewPromise = $.get(entry.plainText).done(function(data) {
-      var totalText = data.toString()
-      var previewText = totalText.substring(0, 200);
+async function generateEntry(entry) {
+    var totalText = entry.totalText;
+    var previewText = totalText.substring(0, 200);
       // Empty string checks
-      if (entry.title == "") {
+    if (entry.title == "") {
         const regexTitle = /(Title:).+/
         const matches = totalText.match(regexTitle);
-        const title_string = matches[0].substring(7, matches[0].length); //Slice out the 'Title: '
-        entry.title = title_string;
-      }
-
-
-      var articleEntry = "<div id='" + entry.sha256 + "' class='row'>" +
-                            "<div class='col-2 date'>" + entry.date + "</div>" +
-                            "<div class='col-6'>" +
-                                "<a class='hyperlink' href='" + entry.visLink + "' target='_blank'> <h3>" + entry.title + "</h3></a>" +
-                                "<p class='articleText'>" + previewText + "</p>" +
-                                "<p class='author'>" + entry.author + "</p>" +
+        if (matches.length != 0) {
+            const title_string = matches[0].substring(7, matches[0].length); //Slice out the 'Title: '
+            entry.title = title_string;
+        }
+    }
+    var articleEntry = "<div id='" + entry.sha256 + "' class='row'>" +
+                        "<div class='col-2 date'>" + entry.date + "</div>" +
+                        "<div class='col-6'>" +
+                            "<a class='hyperlink' href='" + entry.visLink + "' target='_blank'> <h3>" + entry.title + "</h3></a>" +
+                            "<p class='articleText'>" + previewText + "</p>" +
+                            "<p class='author'>" + entry.author + "</p>" +
+                        "</div>" +
+                        "<div class='cred-score-container col-4'>" +
+                            "<div class='sunburst'>" +
+                                "<svg id='sunburst_" + entry.sha256 + "' viewBox= '0 0 200 200'></svg>" +
                             "</div>" +
-                            "<div class='cred-score-container col-4'>" +
-                                "<div class='sunburst'>" +
-                                    "<svg id='sunburst_" + entry.sha256 + "' viewBox= '0 0 200 200'></svg>" +
-                                "</div>" +
-                            "</div>" +
-                       "</div>" +
-                       "<hr>";
-      document.getElementById("articleList").innerHTML += articleEntry;
-      console.log(document.getElementById(entry.sha256));
-      if (document.querySelector("svg[articleID='" + entry.id +"']") != null) {
-          document.querySelector("svg[articleID='" + entry.id +"']").remove();
-      }
-      hallmark(entry.highlightData, entry.triageData, entry.sha256);
-
-
-    });
-
+                        "</div>" +
+                    "</div>" +
+                    "<hr>";
+    document.getElementById("articleList").innerHTML += articleEntry;
+    if (document.querySelector("svg[articleID='" + entry.id +"']") != null) {
+        document.querySelector("svg[articleID='" + entry.id +"']").remove();
+    }
+    return hallmark(entry);
 }
 
 function csvJSON(csv){

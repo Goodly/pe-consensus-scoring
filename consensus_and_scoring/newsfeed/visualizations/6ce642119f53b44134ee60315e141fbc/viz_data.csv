@@ -1,0 +1,4 @@
+Article ID,Credibility Indicator ID,Credibility Indicator Category,Credibility Indicator Name,Points,Indices of Label in Article,Start,End,target_text
+6ce642119f53b44134ee60315e141fbc257e23d295334714c5b884c7a5609507,H0,Holistic,Minor Bias,-2.034215715337913,[],-1,-1,nan
+6ce642119f53b44134ee60315e141fbc257e23d295334714c5b884c7a5609507,S0,Sourcing,Qualified Source,0.9172226761959515,[],-1,-1,nan
+,,,,,,,,
