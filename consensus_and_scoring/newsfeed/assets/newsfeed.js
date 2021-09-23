@@ -210,3 +210,16 @@ function reformatDate(date_string) {
   const month = new Intl.DateTimeFormat('en-US', options).format(date_object)
   return month + " " + day + ", " + year;
 }
+COUNTER = 0
+function OnNextButtonClick() {
+   if (COUNTER + 5 > article.length)
+    return;
+   COUNTER += 5;
+   RenderArticles(COUNTER, COUNTER + 5)  
+}
+function OnPrevButtonClick() {
+   if (COUNTER = 0)
+    return;
+   COUNTER -= 5;
+   RenderArticles(COUNTER, COUNTER + 5)  
+}
