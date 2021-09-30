@@ -18,10 +18,13 @@ $(document).on('change','#showLimit',function(e){
 });
 
 var listofarticles = [];
-
+ARTICLE_LENGTH = -1
 function readVisData() {
+    listofarticles = [];
     return $.get("visData.json").done(function(data) {
-        for (var i = 0; i < Object.keys(data).length; i++) {
+        ARTICLE_LENGTH = Object.keys(data).length
+        for (var i = COUNTER; i < Math.min(COUNTER + ARTICLES_PER_PAGE, Object.keys(data).length) + 1; i++) {
+            console.log(i);
             var article = data[i];
             var triage_path = "/visualizations/" + article["article_sha256"].substring(0, 32) +"/triager_data.csv";
             var articleEntry = new ArticleData(article["Title"], article["Author"], article["Date"], article["ID"],
@@ -210,16 +213,35 @@ function reformatDate(date_string) {
   const month = new Intl.DateTimeFormat('en-US', options).format(date_object)
   return month + " " + day + ", " + year;
 }
-COUNTER = 0
+COUNTER = 0;
+ARTICLES_PER_PAGE = 1;
 function OnNextButtonClick() {
-   if (COUNTER + 5 > article.length)
+    
+   if (COUNTER + ARTICLES_PER_PAGE > ARTICLE_LENGTH) {
     return;
-   COUNTER += 5;
-   RenderArticles(COUNTER, COUNTER + 5)  
+   }
+   console.log('Counter was at', COUNTER)
+   COUNTER += ARTICLES_PER_PAGE;
+   const visPromise = readVisData();
+    visPromise.then(function() {
+        generateAndMove("all;");
+
+    });
+    console.log('Counter is now at', COUNTER);
+//    RenderArticles(COUNTER, COUNTER + 5); 
+
 }
 function OnPrevButtonClick() {
-   if (COUNTER = 0)
+   console.log('Our counter was at', COUNTER);
+   if (COUNTER == 0) {
     return;
-   COUNTER -= 5;
-   RenderArticles(COUNTER, COUNTER + 5)  
+   }
+   COUNTER -= ARTICLES_PER_PAGE;
+   const visPromise = readVisData();
+    visPromise.then(function() {
+        generateAndMove("all;");
+
+    });
+   console.log('Our counter is now at', COUNTER);
+//    RenderArticles(COUNTER, COUNTER + 5);
 }
