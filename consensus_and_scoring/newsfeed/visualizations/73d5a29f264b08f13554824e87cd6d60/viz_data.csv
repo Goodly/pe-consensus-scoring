@@ -1,0 +1,9 @@
+Article ID,Credibility Indicator ID,Credibility Indicator Category,Credibility Indicator Name,Points,Indices of Label in Article,Start,End,target_text
+73d5a29f264b08f13554824e87cd6d60849a535e3b539f6a9011b524e321bf1e,H0,Holistic,Low Information,-2.0,[],-1,-1,nan
+73d5a29f264b08f13554824e87cd6d60849a535e3b539f6a9011b524e321bf1e,L0,Language,Writing errors,-0.5,"range(11251, 11261)",11251,11261,nan
+73d5a29f264b08f13554824e87cd6d60849a535e3b539f6a9011b524e321bf1e,R0,Reasoning,Availability Bias,-2.0,"range(3628, 3811)",3628,3811,nan
+73d5a29f264b08f13554824e87cd6d60849a535e3b539f6a9011b524e321bf1e,R1,Reasoning,Circular Reasoning,-1.0,"range(3628, 3811)",3628,3811,nan
+73d5a29f264b08f13554824e87cd6d60849a535e3b539f6a9011b524e321bf1e,R2,Reasoning,Hindsight Bias,-1.0,"range(3813, 3897)",3813,3897,nan
+73d5a29f264b08f13554824e87cd6d60849a535e3b539f6a9011b524e321bf1e,R3,Reasoning,Distraction|Red Herring,-1.0,"range(3818, 3897)",3818,3897,nan
+73d5a29f264b08f13554824e87cd6d60849a535e3b539f6a9011b524e321bf1e,S0,Sourcing,Qualified Source,0.9172226761959515,[],-1,-1,nan
+,,,,,,,,
