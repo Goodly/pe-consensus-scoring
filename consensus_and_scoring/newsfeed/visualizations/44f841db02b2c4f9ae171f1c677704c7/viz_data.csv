@@ -1,0 +1,6 @@
+Article ID,Credibility Indicator ID,Credibility Indicator Category,Credibility Indicator Name,Points,Indices of Label in Article,Start,End,target_text
+44f841db02b2c4f9ae171f1c677704c718fffcbd36854fedcec2190dd9c75df0,H0,Holistic,Misleading Title,-1.7548875021634687,[],-1,-1,nan
+44f841db02b2c4f9ae171f1c677704c718fffcbd36854fedcec2190dd9c75df0,H1,Holistic,Biased,-2.4271341358512086,[],-1,-1,nan
+44f841db02b2c4f9ae171f1c677704c718fffcbd36854fedcec2190dd9c75df0,L0,Language,Inappropriate Slang,-0.25,"range(4790, 4796)",4790,4796,nan
+44f841db02b2c4f9ae171f1c677704c718fffcbd36854fedcec2190dd9c75df0,L1,Language,Denigration,-1.242951914999244,"range(4790, 4796)",4790,4796,nan
+,,,,,,,,
