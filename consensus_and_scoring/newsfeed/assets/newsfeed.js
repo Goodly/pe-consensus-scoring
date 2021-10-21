@@ -8,6 +8,32 @@ window.addEventListener('load', (event) => {
 
 });
 
+var TOTAL_ARTICLES_DISPLAYED = 1;
+
+window.onscroll = function(ev) {
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight + 45) {
+        // you're at the bottom of the page
+        if (TOTAL_ARTICLES_DISPLAYED < NUM_ARTICLES) {
+            $('.loader').css('display', 'block');
+            setTimeout(() => {
+                console.log("We want to wait to make sure user is actually scrolling to bottom")
+                
+                if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 90) {
+                    TOTAL_ARTICLES_DISPLAYED = TOTAL_ARTICLES_DISPLAYED + 1;
+                    console.log('limit is now', TOTAL_ARTICLES_DISPLAYED);
+                    const visPromise = readVisData();
+                    visPromise.then(function() {
+                        $('.loader').css('display', 'none');
+                        generateAndMove("all;");
+
+                    });
+                }
+            }, 1000);
+            console.log('Bottom of screen reached!');
+        }
+    }
+};
+
 
 // On showLimit selection change, regenerate hallmarks and move them into place
 //
@@ -18,13 +44,12 @@ $(document).on('change','#showLimit',function(e){
 });
 
 var listofarticles = [];
-ARTICLE_LENGTH = -1
+NUM_ARTICLES = -1
 function readVisData() {
     listofarticles = [];
     return $.get("visData.json").done(function(data) {
-        ARTICLE_LENGTH = Object.keys(data).length
-        for (var i = COUNTER; i < Math.min(COUNTER + ARTICLES_PER_PAGE, Object.keys(data).length) + 1; i++) {
-            console.log(i);
+        NUM_ARTICLES = Object.keys(data).length
+        for (var i = 0; i < TOTAL_ARTICLES_DISPLAYED; i++) {
             var article = data[i];
             var triage_path = "/visualizations/" + article["article_sha256"].substring(0, 32) +"/triager_data.csv";
             var articleEntry = new ArticleData(article["Title"], article["Author"], article["Date"], article["ID"],
@@ -173,7 +198,6 @@ function generateEntry(entry) {
                        "</div>" +
                        "<hr>";
       document.getElementById("articleList").innerHTML += articleEntry;
-      console.log(document.getElementById(entry.sha256));
       if (document.querySelector("svg[articleID='" + entry.id +"']") != null) {
           document.querySelector("svg[articleID='" + entry.id +"']").remove();
       }
@@ -217,7 +241,7 @@ COUNTER = 0;
 ARTICLES_PER_PAGE = 1;
 function OnNextButtonClick() {
     
-   if (COUNTER + ARTICLES_PER_PAGE > ARTICLE_LENGTH) {
+   if (COUNTER + ARTICLES_PER_PAGE > NUM_ARTICLES) {
     return;
    }
    console.log('Counter was at', COUNTER)
