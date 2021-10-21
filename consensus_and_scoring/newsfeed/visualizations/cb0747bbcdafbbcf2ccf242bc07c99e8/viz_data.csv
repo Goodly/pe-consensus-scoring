@@ -1,0 +1,15 @@
+Article ID,Credibility Indicator ID,Credibility Indicator Category,Credibility Indicator Name,Points,Indices of Label in Article,Start,End,target_text
+cb0747bbcdafbbcf2ccf242bc07c99e8b49189f7f33458723ea692887c44104e,H0,Holistic,Misleading Title,-1.7548875021634687,[],-1,-1,nan
+cb0747bbcdafbbcf2ccf242bc07c99e8b49189f7f33458723ea692887c44104e,H1,Holistic,Very Biased,-6.0,[],-1,-1,nan
+cb0747bbcdafbbcf2ccf242bc07c99e8b49189f7f33458723ea692887c44104e,H2,Holistic,Low Information,-2.0,[],-1,-1,nan
+cb0747bbcdafbbcf2ccf242bc07c99e8b49189f7f33458723ea692887c44104e,L0,Language,Exaggeration,-0.5,"range(779, 797)",779,797,nan
+cb0747bbcdafbbcf2ccf242bc07c99e8b49189f7f33458723ea692887c44104e,R0,Reasoning,Availability Bias,-1.0,"range(776, 857)",776,857,nan
+cb0747bbcdafbbcf2ccf242bc07c99e8b49189f7f33458723ea692887c44104e,R1,Reasoning,Straw Man Fallacy,-2.0,"range(773, 857)",773,857,nan
+cb0747bbcdafbbcf2ccf242bc07c99e8b49189f7f33458723ea692887c44104e,R2,Reasoning,Misleading Assumption,-3.0,"range(523, 570)",523,570,nan
+cb0747bbcdafbbcf2ccf242bc07c99e8b49189f7f33458723ea692887c44104e,R3,Reasoning,Distraction|Red Herring,-1.0,"range(523, 570)",523,570,nan
+cb0747bbcdafbbcf2ccf242bc07c99e8b49189f7f33458723ea692887c44104e,R4,Reasoning,Availability Bias,-2.0,"range(4027, 4180)",4027,4180,nan
+cb0747bbcdafbbcf2ccf242bc07c99e8b49189f7f33458723ea692887c44104e,R5,Reasoning,Slippery Slope,-2.0,"range(4027, 4180)",4027,4180,nan
+cb0747bbcdafbbcf2ccf242bc07c99e8b49189f7f33458723ea692887c44104e,R6,Reasoning,Egregious Sterotyping,-3.0,"range(372, 520)",372,520,nan
+cb0747bbcdafbbcf2ccf242bc07c99e8b49189f7f33458723ea692887c44104e,R7,Reasoning,Personal Attack|Ad Hominem,-1.6959938131098997,"range(372, 520)",372,520,nan
+cb0747bbcdafbbcf2ccf242bc07c99e8b49189f7f33458723ea692887c44104e,S0,Sourcing,Qualified Source,0.9172226761959515,[],-1,-1,nan
+,,,,,,,,

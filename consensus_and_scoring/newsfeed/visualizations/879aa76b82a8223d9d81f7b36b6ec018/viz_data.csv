@@ -1,0 +1,10 @@
+Article ID,Credibility Indicator ID,Credibility Indicator Category,Credibility Indicator Name,Points,Indices of Label in Article,Start,End,target_text
+879aa76b82a8223d9d81f7b36b6ec018a0252ddee3e47047a0c1ef743ae6de21,H0,Holistic,Misleading Title,-2.1699250014423126,[],-1,-1,nan
+879aa76b82a8223d9d81f7b36b6ec018a0252ddee3e47047a0c1ef743ae6de21,H1,Holistic,Minor Bias,-2.3561438102252756,[],-1,-1,nan
+879aa76b82a8223d9d81f7b36b6ec018a0252ddee3e47047a0c1ef743ae6de21,L0,Language,Metaphor Unhelpful,-1.0,"range(4733, 4737)",4733,4737,nan
+879aa76b82a8223d9d81f7b36b6ec018a0252ddee3e47047a0c1ef743ae6de21,L1,Language,Writing errors,-0.3926906350375459,"range(2022, 2026)",2022,2026,nan
+879aa76b82a8223d9d81f7b36b6ec018a0252ddee3e47047a0c1ef743ae6de21,L1,Language,Writing errors,0,"range(3227, 3232)",3227,3232,nan
+879aa76b82a8223d9d81f7b36b6ec018a0252ddee3e47047a0c1ef743ae6de21,L1,Language,Writing errors,0,"range(4733, 4745)",4733,4745,nan
+879aa76b82a8223d9d81f7b36b6ec018a0252ddee3e47047a0c1ef743ae6de21,S0,Sourcing,Qualified Source,0.9172226761959515,[],-1,-1,nan
+879aa76b82a8223d9d81f7b36b6ec018a0252ddee3e47047a0c1ef743ae6de21,S1,Sourcing,Qualified Source,1.0,[],-1,-1,nan
+,,,,,,,,

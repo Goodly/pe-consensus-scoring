@@ -1,0 +1,7 @@
+Article ID,Credibility Indicator ID,Credibility Indicator Category,Credibility Indicator Name,Points,Indices of Label in Article,Start,End,target_text
+7049993bdabd1b6ca7829c81930f2e2ed25cabd25ffe02b1e378d54f7908f1e1,E0,Evidence,Anecdote not Data,-2.0,[],-1,-1,nan
+7049993bdabd1b6ca7829c81930f2e2ed25cabd25ffe02b1e378d54f7908f1e1,E1,Evidence,Statistical certainty,2.0,[],-1,-1,nan
+7049993bdabd1b6ca7829c81930f2e2ed25cabd25ffe02b1e378d54f7908f1e1,E2,Evidence,Alternative explanation,-1.0,[],-1,-1,nan
+7049993bdabd1b6ca7829c81930f2e2ed25cabd25ffe02b1e378d54f7908f1e1,H0,Holistic,Biased,-2.4271341358512086,[],-1,-1,nan
+7049993bdabd1b6ca7829c81930f2e2ed25cabd25ffe02b1e378d54f7908f1e1,S0,Sourcing,Qualified Source,1.0,[],-1,-1,nan
+,,,,,,,,
