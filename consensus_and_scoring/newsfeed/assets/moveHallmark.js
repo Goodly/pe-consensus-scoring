@@ -8,6 +8,13 @@ async function moveHallmarks() {
 }
 
 
+async function moveHallmark(articleIndex) {
+    const entry = listofarticles[articleIndex];
+    var divID = entry['sha256'];
+    var hallmark = document.querySelector("svg[articleID='" + divID +"']");
+    waitForElementToDisplay("#"+divID, "svg[articleID='" + divID +"']", 100, entry);
+}
+
 async function removeHallmarks() {
   var id;
   for (id of SVG_IDS) {

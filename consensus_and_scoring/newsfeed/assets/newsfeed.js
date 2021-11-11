@@ -15,25 +15,36 @@ window.onscroll = function(ev) {
         // you're at the bottom of the page
         if (TOTAL_ARTICLES_DISPLAYED < NUM_ARTICLES) {
             $('.loader').css('display', 'block');
-            setTimeout(() => {
-                console.log("We want to wait to make sure user is actually scrolling to bottom")
-                
-                if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 90) {
-                    TOTAL_ARTICLES_DISPLAYED = TOTAL_ARTICLES_DISPLAYED + 1;
-                    console.log('limit is now', TOTAL_ARTICLES_DISPLAYED);
-                    const visPromise = readVisData();
-                    visPromise.then(function() {
-                        $('.loader').css('display', 'none');
-                        generateAndMove("all;");
-
-                    });
-                }
-            }, 1000);
-            console.log('Bottom of screen reached!');
+            setTimeout(loadArticlesOnScroll, 2000);
         }
     }
 };
 
+function loadArticlesOnScroll() {
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 90) {
+        
+        const newArticleStartIndex = TOTAL_ARTICLES_DISPLAYED;
+        TOTAL_ARTICLES_DISPLAYED = TOTAL_ARTICLES_DISPLAYED + ARTICLES_PER_LOAD;
+        const visPromise = readVisData();
+        visPromise.then(function() {
+            $('.loader').css('display', 'none');
+            var articleIndex = newArticleStartIndex;
+            while (articleIndex < TOTAL_ARTICLES_DISPLAYED) {
+                if (articleIndex < listofarticles.length) {
+                    newEntry = listofarticles[articleIndex];
+                    generateEntry(newEntry);
+                    moveHallmark(articleIndex);
+                    articleIndex += 1;
+                    // newEntry.credibilityScore =  
+                    //console.log("svg[articleID='" + newEntry.sha256 + "']");
+                    console.log('[articleID="'+ newEntry.sha256+'"]');
+                    var artSVG = document.querySelector('[articleID="'+ newEntry.sha256+'"]');
+                }
+            }
+            
+        });
+    }
+}
 
 // On showLimit selection change, regenerate hallmarks and move them into place
 //
@@ -52,9 +63,18 @@ function readVisData() {
         for (var i = 0; i < TOTAL_ARTICLES_DISPLAYED; i++) {
             var article = data[i];
             var triage_path = "/visualizations/" + article["article_sha256"].substring(0, 32) +"/triager_data.csv";
-            var articleEntry = new ArticleData(article["Title"], article["Author"], article["Date"], article["ID"],
-                                              article["Article Link"], article["Visualization Link"], article["Plain Text"],
-                                              article["Highlight Data"], triage_path, article["article_sha256"]);
+            // await getScore(article['high'])
+            var articleEntry = new ArticleData(
+                                        article["Title"], 
+                                        article["Author"], 
+                                        article["Date"], 
+                                        article["ID"],
+                                        article["Article Link"], 
+                                        article["Visualization Link"], 
+                                        article["Plain Text"],
+                                        article["Highlight Data"], 
+                                        triage_path,
+                                        article["article_sha256"]);
 
             listofarticles.push(articleEntry);
         }
@@ -65,18 +85,19 @@ function setScores() {
 
     var articleObject;
     for (articleObject of listofarticles) {
+        console.log(artSVG.getAttribute("score"));
         var artSVG = document.querySelector("svg[articleID='" + articleObject.id + "'");
         articleObject.credibilityScore = parseInt(artSVG.getAttribute("score"));
     }
 }
 
 
-async function generateList(limit) {
+function generateList(limit) {
     // Collect values from the HTML
     //Sort by... Most Recent, Alphabetical, Credibility Score (High to Low & Low to High)
     var sortOptions = document.getElementById("sortByList");
     var sortBy = sortOptions.options[sortOptions.selectedIndex].value;
-    var orderOptions = document.getElementById("order")
+    var orderOptions = document.getElementById("order");
     var order = orderOptions.options[orderOptions.selectedIndex].value;
     // var search = document.getElementById("searchtext").value;
 
@@ -121,7 +142,6 @@ function unlimitedSearchWorks(query, listofarticles) {
       $.get(listofarticles[i].plainText).done(function(data) {
         var totalText = data.toString()
         totalText = totalText.toLowerCase();
-        console.log(query);
         if (query === "") {
           output.push(listofarticles[i]);
 
@@ -131,29 +151,28 @@ function unlimitedSearchWorks(query, listofarticles) {
       }
     });
   }
-  console.log(output);
   return output;
 }
 
 function sortArticles(listofarticles, sortBy, order) {
     if (sortBy == "title") {
         if (order == "revAlpha") {
-            listofarticles.sort((a, b) => (a.title < b.title) ? 1 : -1)
+            listofarticles = listofarticles.sort((a, b) => (a.title < b.title) ? 1 : -1)
         } else {
-            listofarticles.sort((a, b) => (a.title > b.title) ? 1 : -1)
+            listofarticles = listofarticles.sort((a, b) => (a.title > b.title) ? 1 : -1)
         }
     } else if (sortBy == "date") {
         if (order == "older") {
-            listofarticles.sort((a, b) => (Date.parse(a.date) > Date.parse(b.date)) ? 1 : -1)
+            listofarticles = listofarticles.sort((a, b) => (Date.parse(a.date) > Date.parse(b.date)) ? 1 : -1)
         } else {
-            listofarticles.sort((a, b) => (Date.parse(a.date) < Date.parse(b.date)) ? 1 : -1)
+            listofarticles = listofarticles.sort((a, b) => (Date.parse(a.date) < Date.parse(b.date)) ? 1 : -1)
         }
     } else {
         if (order == "high") {
-
-            listofarticles.sort((a, b) => (a.credibilityScore < b.credibilityScore) ? 1 : -1)
+            console.log(listofarticles);
+            listofarticles = listofarticles.sort((a, b) => (a.credibilityScore < b.credibilityScore) ? 1 : -1)
         } else {
-            listofarticles.sort((a, b) => (a.credibilityScore > b.credibilityScore) ? 1 : -1)
+            listofarticles = listofarticles.sort((a, b) => (a.credibilityScore > b.credibilityScore) ? 1 : -1)
         }
     }
     return listofarticles;
@@ -169,9 +188,9 @@ async function generateAndMove(limit) {
 }
 
 
-function generateEntry(entry) {
+async function generateEntry(entry) {
 
-    var previewPromise = $.get(entry.plainText).done(function(data) {
+    return previewPromise = $.get(entry.plainText).done(function(data) {
       var totalText = data.toString()
       var previewText = totalText.substring(0, 200);
       // Empty string checks
@@ -201,7 +220,7 @@ function generateEntry(entry) {
       if (document.querySelector("svg[articleID='" + entry.id +"']") != null) {
           document.querySelector("svg[articleID='" + entry.id +"']").remove();
       }
-      hallmark(entry.highlightData, entry.triageData, entry.sha256);
+      hallmark(entry);
 
 
     });
@@ -239,6 +258,7 @@ function reformatDate(date_string) {
 }
 COUNTER = 0;
 ARTICLES_PER_PAGE = 1;
+ARTICLES_PER_LOAD = 5;
 function OnNextButtonClick() {
     
    if (COUNTER + ARTICLES_PER_PAGE > NUM_ARTICLES) {

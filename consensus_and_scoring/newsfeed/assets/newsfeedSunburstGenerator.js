@@ -49,7 +49,11 @@ var ROOT;
 var SVG_IDS = []; // SVG_IDS has an element for every SVG we need to remove upon
                   // page change
 
-function hallmark(dataFileName, triageDataFileName, id) {
+function hallmark(entry) {
+  dataFileName = entry.highlightData
+  triageDataFileName = entry.triageData
+  id = entry.sha256
+  console.log(entry)
   SVG_IDS.push(13);
   SVG_IDS.push(13);
   var svg = d3.select("body").append("svg")
@@ -89,7 +93,7 @@ function hallmark(dataFileName, triageDataFileName, id) {
 
       ROOT = root;
       totalScore = 90 + scoreSum(root) + holistic_score;
-
+      entry.credibilityScore = totalScore;
       document.querySelector("svg[articleID='" + id + "']").setAttribute("score", totalScore);
       root.sum(function(d) {
         return Math.abs(parseFloat(d.data.Points));

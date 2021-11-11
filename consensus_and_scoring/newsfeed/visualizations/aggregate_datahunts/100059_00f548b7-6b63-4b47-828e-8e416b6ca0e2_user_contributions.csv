@@ -1,0 +1,610 @@
+,Credibility Indicator Category,Question Number,Answer Number,Point Recommendation,Credibility Indicator Name,Start,End
+76,Evidence,2.0,1.0,0.0,Quality of evidence,3375,3384
+76,Evidence,2.0,1.0,0.0,Quality of evidence,3375,3528
+89,Evidence,4.0,5.0,-4.0,Sample representativeness,0,0
+99,Evidence,8.0,1.0,-4.0,Alternative explanation,0,0
+117,Evidence,12.0,4.0,0.0,Open to evidence,0,0
+79,Evidence,2.0,4.0,0.0,Quality of evidence,3197,3307
+79,Evidence,2.0,4.0,0.0,Quality of evidence,3318,3528
+82,Evidence,2.0,7.0,0.0,Quality of evidence,3129,3195
+82,Evidence,2.0,7.0,0.0,Quality of evidence,3583,3702
+102,Evidence,8.0,4.0,-1.0,Alternative explanation,0,0
+107,Evidence,10.0,4.0,-0.5,Statistical uncertainty,0,0
+111,Evidence,11.0,3.0,-1.0,Systematic uncertainty,0,0
+116,Evidence,12.0,3.0,0.0,Open to evidence,0,0
+84,Evidence,2.0,9.0,0.0,Quality of evidence,0,0
+102,Evidence,8.0,4.0,-1.0,Alternative explanation,0,0
+116,Evidence,12.0,3.0,0.0,Open to evidence,0,0
+82,Evidence,2.0,7.0,0.0,Quality of evidence,3129,3316
+103,Evidence,8.0,5.0,0.0,Alternative explanation,0,0
+116,Evidence,12.0,3.0,0.0,Open to evidence,0,0
+170,Holistic,8.0,4.0,-1.0,Minor Bias,0,0
+63,Reasoning,6.0,3.0,-4.0,Straw Man Argument,6257,6407
+72,Reasoning,7.0,3.0,-3.0,Misleading argument,0,0
+48,Reasoning,2.0,6.0,0.0,,0,0
+79,Evidence,2.0,4.0,0.0,Quality of evidence,3764,4041
+80,Evidence,2.0,5.0,0.0,Quality of evidence,4511,5011
+80,Evidence,2.0,5.0,0.0,Quality of evidence,4043,4345
+82,Evidence,2.0,7.0,0.0,Quality of evidence,4407,4509
+87,Evidence,4.0,3.0,-1.0,Sample representativeness,0,0
+94,Evidence,5.0,4.0,-2.0,Control condition,0,0
+102,Evidence,8.0,4.0,-1.0,Alternative explanation,0,0
+107,Evidence,10.0,4.0,-0.5,Statistical uncertainty,0,0
+111,Evidence,11.0,3.0,-1.0,Systematic uncertainty,0,0
+117,Evidence,12.0,4.0,0.0,Open to evidence,0,0
+79,Evidence,2.0,4.0,0.0,Quality of evidence,3911,4041
+82,Evidence,2.0,7.0,0.0,Quality of evidence,4511,5011
+102,Evidence,8.0,4.0,-1.0,Alternative explanation,0,0
+107,Evidence,10.0,4.0,-0.5,Statistical uncertainty,0,0
+112,Evidence,11.0,4.0,-0.5,Systematic uncertainty,0,0
+116,Evidence,12.0,3.0,0.0,Open to evidence,0,0
+80,Evidence,2.0,5.0,0.0,Quality of evidence,4043,4345
+90,Evidence,4.0,6.0,-2.0,Sample representativeness,0,0
+95,Evidence,5.0,5.0,-3.0,Control condition,0,0
+102,Evidence,8.0,4.0,-1.0,Alternative explanation,0,0
+108,Evidence,10.0,5.0,0.0,Statistical uncertainty,0,0
+112,Evidence,11.0,4.0,-0.5,Systematic uncertainty,0,0
+117,Evidence,12.0,4.0,0.0,Open to evidence,0,0
+127,Probability,5.0,2.0,0.5,Acknowledges uncertainty,343,348
+127,Probability,5.0,2.0,0.5,Acknowledges uncertainty,6478,6486
+127,Probability,5.0,2.0,0.5,Acknowledges uncertainty,6478,6486
+127,Probability,5.0,2.0,0.5,Acknowledges uncertainty,343,348
+127,Probability,5.0,2.0,0.5,Acknowledges uncertainty,711,719
+126,Probability,5.0,1.0,1.0,Acknowledges uncertainty,343,348
+126,Probability,5.0,1.0,1.0,Acknowledges uncertainty,698,724
+126,Probability,5.0,1.0,1.0,Acknowledges uncertainty,6478,6486
+149,Probability,12.0,3.0,1.0,Open to evidence,331,387
+128,Probability,5.0,3.0,-2.0,Doesn‰Ûªt acknowledge uncertainty,0,0
+126,Probability,5.0,1.0,1.0,Acknowledges uncertainty,2536,2584
+126,Probability,5.0,1.0,1.0,Acknowledges uncertainty,2740,2792
+128,Probability,5.0,3.0,-2.0,Doesn‰Ûªt acknowledge uncertainty,0,0
+130,Probability,7.0,2.0,-2.0,Numeric context,1682,1738
+130,Probability,7.0,2.0,-2.0,Numeric context,1896,1906
+130,Probability,7.0,2.0,-2.0,Numeric context,2004,2024
+130,Probability,7.0,2.0,-2.0,Numeric context,2340,2347
+145,Probability,10.0,2.0,-1.0,False precision,1682,1738
+145,Probability,10.0,2.0,-1.0,False precision,1896,1906
+128,Probability,5.0,3.0,-2.0,Doesn‰Ûªt acknowledge uncertainty,0,0
+126,Probability,5.0,1.0,1.0,Acknowledges uncertainty,2238,2272
+127,Probability,5.0,2.0,0.5,Acknowledges uncertainty,5467,5492
+127,Probability,5.0,2.0,0.5,Acknowledges uncertainty,5633,5639
+127,Probability,5.0,2.0,0.5,Acknowledges uncertainty,5755,5768
+151,Probability,12.0,5.0,0.0,Open to evidence,0,0
+127,Probability,5.0,2.0,0.5,Acknowledges uncertainty,5401,5406
+127,Probability,5.0,2.0,0.5,Acknowledges uncertainty,5467,5492
+128,Probability,5.0,3.0,-2.0,Doesn‰Ûªt acknowledge uncertainty,0,0
+126,Probability,5.0,1.0,1.0,Acknowledges uncertainty,5401,5406
+126,Probability,5.0,1.0,1.0,Acknowledges uncertainty,5467,5492
+126,Probability,5.0,1.0,1.0,Acknowledges uncertainty,5606,5639
+126,Probability,5.0,1.0,1.0,Acknowledges uncertainty,5755,5789
+149,Probability,12.0,3.0,1.0,Open to evidence,5467,5492
+128,Probability,5.0,3.0,-2.0,Doesn‰Ûªt acknowledge uncertainty,0,0
+133,Probability,7.0,5.0,0.0,Numeric context,4806,4815
+133,Probability,7.0,5.0,0.0,Numeric context,4758,4815
+146,Probability,10.0,3.0,0.0,False precision,0,0
+128,Probability,5.0,3.0,-2.0,Doesn‰Ûªt acknowledge uncertainty,0,0
+133,Probability,7.0,5.0,0.0,Numeric context,4819,4995
+146,Probability,10.0,3.0,0.0,False precision,0,0
+128,Probability,5.0,3.0,-2.0,Doesn‰Ûªt acknowledge uncertainty,0,0
+118,Probability,2.0,1.0,0.0,Inappropriate confidence,0,0
+126,Probability,5.0,1.0,1.0,Acknowledges uncertainty,4511,4582
+130,Probability,7.0,2.0,-2.0,Numeric context,4819,4829
+130,Probability,7.0,2.0,-2.0,Numeric context,4881,4891
+130,Probability,7.0,2.0,-2.0,Numeric context,4962,4972
+146,Probability,10.0,3.0,0.0,False precision,0,0
+119,Probability,2.0,2.0,-0.5,Inappropriate confidence,0,0
+128,Probability,5.0,3.0,-2.0,Doesn‰Ûªt acknowledge uncertainty,0,0
+130,Probability,7.0,2.0,-2.0,Numeric context,4819,4829
+130,Probability,7.0,2.0,-2.0,Numeric context,4881,4891
+130,Probability,7.0,2.0,-2.0,Numeric context,4962,4972
+146,Probability,10.0,3.0,0.0,False precision,0,0
+4,Language,2.0,5.0,0.0,Metaphor unhelpful,0,0
+23,Language,9.0,5.0,0.0,Inappropriate slang,0,0
+27,Language,10.0,4.0,-0.25,Denigration,0,0
+39,Language,12.0,1.0,0.0,Well-balanced,0,0
+2,Language,2.0,3.0,-2.0,Metaphor unhelpful,0,0
+23,Language,9.0,5.0,0.0,Inappropriate slang,0,0
+27,Language,10.0,4.0,-0.25,Denigration,0,0
+42,Language,12.0,4.0,2.0,Well-balanced,6668,6714
+4,Language,2.0,5.0,0.0,Metaphor unhelpful,0,0
+39,Language,12.0,1.0,0.0,Well-balanced,0,0
+23,Language,9.0,5.0,0.0,Inappropriate slang,0,0
+27,Language,10.0,4.0,-0.25,Denigration,0,0
+40,Language,12.0,2.0,1.0,Well-balanced,6668,6714
+80,Evidence,2.0,5.0,0.0,Quality of evidence,5954,5975
+90,Evidence,4.0,6.0,-2.0,Sample representativeness,0,0
+95,Evidence,5.0,5.0,-3.0,Control condition,0,0
+101,Evidence,8.0,3.0,-2.0,Alternative explanation,0,0
+117,Evidence,12.0,4.0,0.0,Open to evidence,0,0
+80,Evidence,2.0,5.0,0.0,Quality of evidence,5954,5975
+78,Evidence,2.0,3.0,0.0,Quality of evidence,5954,5975
+79,Evidence,2.0,4.0,0.0,Quality of evidence,5859,6096
+79,Evidence,2.0,4.0,0.0,Quality of evidence,6545,6654
+82,Evidence,2.0,7.0,0.0,Quality of evidence,6545,6665
+82,Evidence,2.0,7.0,0.0,Quality of evidence,6469,6543
+90,Evidence,4.0,6.0,-2.0,Sample representativeness,0,0
+95,Evidence,5.0,5.0,-3.0,Control condition,0,0
+102,Evidence,8.0,4.0,-1.0,Alternative explanation,0,0
+117,Evidence,12.0,4.0,0.0,Open to evidence,0,0
+82,Evidence,2.0,7.0,0.0,Quality of evidence,6545,6665
+82,Evidence,2.0,7.0,0.0,Quality of evidence,6414,6467
+103,Evidence,8.0,5.0,0.0,Alternative explanation,0,0
+117,Evidence,12.0,4.0,0.0,Open to evidence,0,0
+127,Probability,5.0,2.0,0.5,Acknowledges uncertainty,3461,3466
+127,Probability,5.0,2.0,0.5,Acknowledges uncertainty,2894,2902
+127,Probability,5.0,2.0,0.5,Acknowledges uncertainty,3461,3466
+127,Probability,5.0,2.0,0.5,Acknowledges uncertainty,4541,4544
+127,Probability,5.0,2.0,0.5,Acknowledges uncertainty,2894,2902
+128,Probability,5.0,3.0,-2.0,Doesn‰Ûªt acknowledge uncertainty,0,0
+126,Probability,5.0,1.0,1.0,Acknowledges uncertainty,2875,2902
+126,Probability,5.0,1.0,1.0,Acknowledges uncertainty,3246,3253
+126,Probability,5.0,1.0,1.0,Acknowledges uncertainty,3461,3474
+126,Probability,5.0,1.0,1.0,Acknowledges uncertainty,4531,4549
+150,Probability,12.0,4.0,1.0,Open to evidence,3461,3488
+127,Probability,5.0,2.0,0.5,Acknowledges uncertainty,6005,6013
+127,Probability,5.0,2.0,0.5,Acknowledges uncertainty,5968,5975
+127,Probability,5.0,2.0,0.5,Acknowledges uncertainty,6005,6013
+128,Probability,5.0,3.0,-2.0,Doesn‰Ûªt acknowledge uncertainty,0,0
+126,Probability,5.0,1.0,1.0,Acknowledges uncertainty,5960,5975
+126,Probability,5.0,1.0,1.0,Acknowledges uncertainty,5995,6037
+149,Probability,12.0,3.0,1.0,Open to evidence,5960,5975
+117,Evidence,12.0,4.0,0.0,Open to evidence,0,0
+117,Evidence,12.0,4.0,0.0,Open to evidence,0,0
+79,Evidence,2.0,4.0,0.0,Quality of evidence,2359,2403
+76,Evidence,2.0,1.0,0.0,Quality of evidence,2123,2236
+87,Evidence,4.0,3.0,-1.0,Sample representativeness,0,0
+100,Evidence,8.0,2.0,-3.0,Alternative explanation,0,0
+105,Evidence,10.0,2.0,-2.0,Statistical uncertainty,0,0
+111,Evidence,11.0,3.0,-1.0,Systematic uncertainty,0,0
+117,Evidence,12.0,4.0,0.0,Open to evidence,0,0
+76,Evidence,2.0,1.0,0.0,Quality of evidence,1939,2236
+79,Evidence,2.0,4.0,0.0,Quality of evidence,2238,2534
+90,Evidence,4.0,6.0,-2.0,Sample representativeness,0,0
+101,Evidence,8.0,3.0,-2.0,Alternative explanation,0,0
+105,Evidence,10.0,2.0,-2.0,Statistical uncertainty,0,0
+110,Evidence,11.0,2.0,-2.0,Systematic uncertainty,0,0
+117,Evidence,12.0,4.0,0.0,Open to evidence,0,0
+77,Evidence,2.0,2.0,0.0,Quality of evidence,2098,2403
+102,Evidence,8.0,4.0,-1.0,Alternative explanation,0,0
+106,Evidence,10.0,3.0,-1.0,Statistical uncertainty,0,0
+111,Evidence,11.0,3.0,-1.0,Systematic uncertainty,0,0
+117,Evidence,12.0,4.0,0.0,Open to evidence,0,0
+80,Evidence,2.0,5.0,0.0,Quality of evidence,1939,2035
+86,Evidence,4.0,2.0,-0.5,Sample representativeness,0,0
+95,Evidence,5.0,5.0,-3.0,Control condition,0,0
+103,Evidence,8.0,5.0,0.0,Alternative explanation,0,0
+107,Evidence,10.0,4.0,-0.5,Statistical uncertainty,0,0
+113,Evidence,11.0,5.0,0.0,Systematic uncertainty,0,0
+117,Evidence,12.0,4.0,0.0,Open to evidence,0,0
+76,Evidence,2.0,1.0,0.0,Quality of evidence,2037,2236
+77,Evidence,2.0,2.0,0.0,Quality of evidence,2163,2180
+79,Evidence,2.0,4.0,0.0,Quality of evidence,2238,2534
+87,Evidence,4.0,3.0,-1.0,Sample representativeness,0,0
+101,Evidence,8.0,3.0,-2.0,Alternative explanation,0,0
+106,Evidence,10.0,3.0,-1.0,Statistical uncertainty,0,0
+111,Evidence,11.0,3.0,-1.0,Systematic uncertainty,0,0
+115,Evidence,12.0,2.0,1.0,Open to evidence,3030,3035
+115,Evidence,12.0,2.0,1.0,Open to evidence,2559,2584
+115,Evidence,12.0,2.0,1.0,Open to evidence,2894,2902
+76,Evidence,2.0,1.0,0.0,Quality of evidence,1401,1937
+77,Evidence,2.0,2.0,0.0,Quality of evidence,1213,1266
+78,Evidence,2.0,3.0,0.0,Quality of evidence,1326,1399
+90,Evidence,4.0,6.0,-2.0,Sample representativeness,0,0
+102,Evidence,8.0,4.0,-1.0,Alternative explanation,0,0
+108,Evidence,10.0,5.0,0.0,Statistical uncertainty,0,0
+112,Evidence,11.0,4.0,-0.5,Systematic uncertainty,0,0
+115,Evidence,12.0,2.0,1.0,Open to evidence,1794,1806
+76,Evidence,2.0,1.0,0.0,Quality of evidence,1401,1490
+77,Evidence,2.0,2.0,0.0,Quality of evidence,1679,1937
+78,Evidence,2.0,3.0,0.0,Quality of evidence,1165,1197
+78,Evidence,2.0,3.0,0.0,Quality of evidence,1313,1490
+80,Evidence,2.0,5.0,0.0,Quality of evidence,1562,1677
+87,Evidence,4.0,3.0,-1.0,Sample representativeness,0,0
+95,Evidence,5.0,5.0,-3.0,Control condition,0,0
+103,Evidence,8.0,5.0,0.0,Alternative explanation,0,0
+107,Evidence,10.0,4.0,-0.5,Statistical uncertainty,0,0
+112,Evidence,11.0,4.0,-0.5,Systematic uncertainty,0,0
+115,Evidence,12.0,2.0,1.0,Open to evidence,1023,1106
+78,Evidence,2.0,3.0,0.0,Quality of evidence,1679,1937
+76,Evidence,2.0,1.0,0.0,Quality of evidence,1401,1560
+77,Evidence,2.0,2.0,0.0,Quality of evidence,1401,1560
+79,Evidence,2.0,4.0,0.0,Quality of evidence,1679,1937
+88,Evidence,4.0,4.0,-2.0,Sample representativeness,0,0
+102,Evidence,8.0,4.0,-1.0,Alternative explanation,0,0
+117,Evidence,12.0,4.0,0.0,Open to evidence,0,0
+80,Evidence,2.0,5.0,0.0,Quality of evidence,1213,1399
+76,Evidence,2.0,1.0,0.0,Quality of evidence,1679,1786
+76,Evidence,2.0,1.0,0.0,Quality of evidence,1882,1937
+78,Evidence,2.0,3.0,0.0,Quality of evidence,1306,1399
+90,Evidence,4.0,6.0,-2.0,Sample representativeness,0,0
+92,Evidence,5.0,2.0,-0.5,Control condition,1882,1937
+97,Evidence,6.0,2.0,-2.0,Randomized Assignment,0,0
+101,Evidence,8.0,3.0,-2.0,Alternative explanation,0,0
+107,Evidence,10.0,4.0,-0.5,Statistical uncertainty,0,0
+110,Evidence,11.0,2.0,-2.0,Systematic uncertainty,0,0
+114,Evidence,12.0,1.0,2.0,Open to evidence,1023,1163
+116,Evidence,12.0,3.0,0.0,Open to evidence,0,0
+116,Evidence,12.0,3.0,0.0,Open to evidence,0,0
+76,Evidence,2.0,1.0,0.0,Quality of evidence,1679,1937
+77,Evidence,2.0,2.0,0.0,Quality of evidence,1679,1937
+90,Evidence,4.0,6.0,-2.0,Sample representativeness,0,0
+103,Evidence,8.0,5.0,0.0,Alternative explanation,0,0
+106,Evidence,10.0,3.0,-1.0,Statistical uncertainty,0,0
+111,Evidence,11.0,3.0,-1.0,Systematic uncertainty,0,0
+115,Evidence,12.0,2.0,1.0,Open to evidence,1023,1106
+76,Evidence,2.0,1.0,0.0,Quality of evidence,1401,1797
+76,Evidence,2.0,1.0,0.0,Quality of evidence,1401,1481
+78,Evidence,2.0,3.0,0.0,Quality of evidence,1165,1399
+86,Evidence,4.0,2.0,-0.5,Sample representativeness,0,0
+102,Evidence,8.0,4.0,-1.0,Alternative explanation,0,0
+107,Evidence,10.0,4.0,-0.5,Statistical uncertainty,0,0
+110,Evidence,11.0,2.0,-2.0,Systematic uncertainty,0,0
+117,Evidence,12.0,4.0,0.0,Open to evidence,0,0
+78,Evidence,2.0,3.0,0.0,Quality of evidence,1679,1806
+79,Evidence,2.0,4.0,0.0,Quality of evidence,1401,1613
+80,Evidence,2.0,5.0,0.0,Quality of evidence,1562,1677
+86,Evidence,4.0,2.0,-0.5,Sample representativeness,0,0
+94,Evidence,5.0,4.0,-2.0,Control condition,0,0
+102,Evidence,8.0,4.0,-1.0,Alternative explanation,0,0
+116,Evidence,12.0,3.0,0.0,Open to evidence,0,0
+116,Evidence,12.0,3.0,0.0,Open to evidence,0,0
+80,Evidence,2.0,5.0,0.0,Quality of evidence,1576,1677
+76,Evidence,2.0,1.0,0.0,Quality of evidence,1401,1560
+86,Evidence,4.0,2.0,-0.5,Sample representativeness,0,0
+91,Evidence,5.0,1.0,0.0,Control condition,1614,1641
+97,Evidence,6.0,2.0,-2.0,Randomized Assignment,0,0
+102,Evidence,8.0,4.0,-1.0,Alternative explanation,0,0
+105,Evidence,10.0,2.0,-2.0,Statistical uncertainty,0,0
+112,Evidence,11.0,4.0,-0.5,Systematic uncertainty,0,0
+117,Evidence,12.0,4.0,0.0,Open to evidence,0,0
+76,Evidence,2.0,1.0,0.0,Quality of evidence,1165,1399
+76,Evidence,2.0,1.0,0.0,Quality of evidence,1679,1937
+77,Evidence,2.0,2.0,0.0,Quality of evidence,1165,1399
+77,Evidence,2.0,2.0,0.0,Quality of evidence,1679,1937
+78,Evidence,2.0,3.0,0.0,Quality of evidence,1165,1399
+78,Evidence,2.0,3.0,0.0,Quality of evidence,1679,1937
+80,Evidence,2.0,5.0,0.0,Quality of evidence,1165,1399
+80,Evidence,2.0,5.0,0.0,Quality of evidence,1679,1937
+79,Evidence,2.0,4.0,0.0,Quality of evidence,1165,1399
+79,Evidence,2.0,4.0,0.0,Quality of evidence,1679,1937
+86,Evidence,4.0,2.0,-0.5,Sample representativeness,0,0
+95,Evidence,5.0,5.0,-3.0,Control condition,0,0
+101,Evidence,8.0,3.0,-2.0,Alternative explanation,0,0
+107,Evidence,10.0,4.0,-0.5,Statistical uncertainty,0,0
+110,Evidence,11.0,2.0,-2.0,Systematic uncertainty,0,0
+117,Evidence,12.0,4.0,0.0,Open to evidence,0,0
+77,Evidence,2.0,2.0,0.0,Quality of evidence,1586,1651
+77,Evidence,2.0,2.0,0.0,Quality of evidence,1580,1585
+77,Evidence,2.0,2.0,0.0,Quality of evidence,1562,1579
+77,Evidence,2.0,2.0,0.0,Quality of evidence,1651,1652
+77,Evidence,2.0,2.0,0.0,Quality of evidence,1652,1937
+101,Evidence,8.0,3.0,-2.0,Alternative explanation,0,0
+116,Evidence,12.0,3.0,0.0,Open to evidence,0,0
+76,Evidence,2.0,1.0,0.0,Quality of evidence,1165,1937
+77,Evidence,2.0,2.0,0.0,Quality of evidence,1401,1560
+78,Evidence,2.0,3.0,0.0,Quality of evidence,1326,1377
+80,Evidence,2.0,5.0,0.0,Quality of evidence,1187,1197
+80,Evidence,2.0,5.0,0.0,Quality of evidence,1562,1937
+86,Evidence,4.0,2.0,-0.5,Sample representativeness,0,0
+91,Evidence,5.0,1.0,0.0,Control condition,1576,1641
+98,Evidence,6.0,3.0,-1.0,Randomized Assignment,0,0
+101,Evidence,8.0,3.0,-2.0,Alternative explanation,0,0
+108,Evidence,10.0,5.0,0.0,Statistical uncertainty,0,0
+112,Evidence,11.0,4.0,-0.5,Systematic uncertainty,0,0
+115,Evidence,12.0,2.0,1.0,Open to evidence,1023,1106
+78,Evidence,2.0,3.0,0.0,Quality of evidence,1165,1399
+82,Evidence,2.0,7.0,0.0,Quality of evidence,2536,2688
+82,Evidence,2.0,7.0,0.0,Quality of evidence,3531,3702
+82,Evidence,2.0,7.0,0.0,Quality of evidence,4348,4509
+82,Evidence,2.0,7.0,0.0,Quality of evidence,5700,5853
+82,Evidence,2.0,7.0,0.0,Quality of evidence,6098,6123
+82,Evidence,2.0,7.0,0.0,Quality of evidence,6257,6467
+76,Evidence,2.0,1.0,0.0,Quality of evidence,1165,1399
+86,Evidence,4.0,2.0,-0.5,Sample representativeness,0,0
+101,Evidence,8.0,3.0,-2.0,Alternative explanation,0,0
+106,Evidence,10.0,3.0,-1.0,Statistical uncertainty,0,0
+111,Evidence,11.0,3.0,-1.0,Systematic uncertainty,0,0
+116,Evidence,12.0,3.0,0.0,Open to evidence,0,0
+78,Evidence,2.0,3.0,0.0,Quality of evidence,1187,1197
+76,Evidence,2.0,1.0,0.0,Quality of evidence,1401,1560
+76,Evidence,2.0,1.0,0.0,Quality of evidence,7,57
+82,Evidence,2.0,7.0,0.0,Quality of evidence,920,1021
+79,Evidence,2.0,4.0,0.0,Quality of evidence,1740,1937
+90,Evidence,4.0,6.0,-2.0,Sample representativeness,0,0
+100,Evidence,8.0,2.0,-3.0,Alternative explanation,0,0
+105,Evidence,10.0,2.0,-2.0,Statistical uncertainty,0,0
+110,Evidence,11.0,2.0,-2.0,Systematic uncertainty,0,0
+114,Evidence,12.0,1.0,2.0,Open to evidence,1053,1106
+76,Evidence,2.0,1.0,0.0,Quality of evidence,1401,1490
+77,Evidence,2.0,2.0,0.0,Quality of evidence,1562,1677
+78,Evidence,2.0,3.0,0.0,Quality of evidence,1306,1399
+86,Evidence,4.0,2.0,-0.5,Sample representativeness,0,0
+99,Evidence,8.0,1.0,-4.0,Alternative explanation,0,0
+117,Evidence,12.0,4.0,0.0,Open to evidence,0,0
+76,Evidence,2.0,1.0,0.0,Quality of evidence,1708,1718
+76,Evidence,2.0,1.0,0.0,Quality of evidence,1688,1706
+78,Evidence,2.0,3.0,0.0,Quality of evidence,1177,1197
+80,Evidence,2.0,5.0,0.0,Quality of evidence,1586,1641
+86,Evidence,4.0,2.0,-0.5,Sample representativeness,0,0
+92,Evidence,5.0,2.0,-0.5,Control condition,1896,1937
+97,Evidence,6.0,2.0,-2.0,Randomized Assignment,0,0
+102,Evidence,8.0,4.0,-1.0,Alternative explanation,0,0
+108,Evidence,10.0,5.0,0.0,Statistical uncertainty,0,0
+112,Evidence,11.0,4.0,-0.5,Systematic uncertainty,0,0
+115,Evidence,12.0,2.0,1.0,Open to evidence,1023,1106
+102,Evidence,8.0,4.0,-1.0,Alternative explanation,0,0
+117,Evidence,12.0,4.0,0.0,Open to evidence,0,0
+76,Evidence,2.0,1.0,0.0,Quality of evidence,1679,1937
+77,Evidence,2.0,2.0,0.0,Quality of evidence,1401,1490
+77,Evidence,2.0,2.0,0.0,Quality of evidence,1213,1266
+78,Evidence,2.0,3.0,0.0,Quality of evidence,1165,1417
+78,Evidence,2.0,3.0,0.0,Quality of evidence,1418,1429
+78,Evidence,2.0,3.0,0.0,Quality of evidence,1165,1176
+78,Evidence,2.0,3.0,0.0,Quality of evidence,920,1021
+78,Evidence,2.0,3.0,0.0,Quality of evidence,1401,1560
+82,Evidence,2.0,7.0,0.0,Quality of evidence,1108,1136
+80,Evidence,2.0,5.0,0.0,Quality of evidence,1187,1266
+86,Evidence,4.0,2.0,-0.5,Sample representativeness,0,0
+92,Evidence,5.0,2.0,-0.5,Control condition,1562,1677
+92,Evidence,5.0,2.0,-0.5,Control condition,1882,1937
+92,Evidence,5.0,2.0,-0.5,Control condition,1882,1890
+92,Evidence,5.0,2.0,-0.5,Control condition,1882,1937
+92,Evidence,5.0,2.0,-0.5,Control condition,1882,1937
+92,Evidence,5.0,2.0,-0.5,Control condition,1937,1937
+98,Evidence,6.0,3.0,-1.0,Randomized Assignment,0,0
+102,Evidence,8.0,4.0,-1.0,Alternative explanation,0,0
+107,Evidence,10.0,4.0,-0.5,Statistical uncertainty,0,0
+111,Evidence,11.0,3.0,-1.0,Systematic uncertainty,0,0
+114,Evidence,12.0,1.0,2.0,Open to evidence,1023,1106
+76,Evidence,2.0,1.0,0.0,Quality of evidence,1679,1937
+78,Evidence,2.0,3.0,0.0,Quality of evidence,1165,1266
+80,Evidence,2.0,5.0,0.0,Quality of evidence,1562,1677
+90,Evidence,4.0,6.0,-2.0,Sample representativeness,0,0
+92,Evidence,5.0,2.0,-0.5,Control condition,1586,1641
+97,Evidence,6.0,2.0,-2.0,Randomized Assignment,0,0
+100,Evidence,8.0,2.0,-3.0,Alternative explanation,0,0
+105,Evidence,10.0,2.0,-2.0,Statistical uncertainty,0,0
+109,Evidence,11.0,1.0,-3.0,Systematic uncertainty,0,0
+114,Evidence,12.0,1.0,2.0,Open to evidence,1023,1106
+116,Evidence,12.0,3.0,0.0,Open to evidence,0,0
+84,Evidence,2.0,9.0,0.0,Quality of evidence,0,0
+102,Evidence,8.0,4.0,-1.0,Alternative explanation,0,0
+116,Evidence,12.0,3.0,0.0,Open to evidence,0,0
+107,Evidence,10.0,4.0,-0.5,Statistical uncertainty,0,0
+112,Evidence,11.0,4.0,-0.5,Systematic uncertainty,0,0
+115,Evidence,12.0,2.0,1.0,Open to evidence,1023,1106
+117,Evidence,12.0,4.0,0.0,Open to evidence,0,0
+77,Evidence,2.0,2.0,0.0,Quality of evidence,1239,1266
+77,Evidence,2.0,2.0,0.0,Quality of evidence,1406,1560
+77,Evidence,2.0,2.0,0.0,Quality of evidence,1679,1937
+78,Evidence,2.0,3.0,0.0,Quality of evidence,1306,1399
+80,Evidence,2.0,5.0,0.0,Quality of evidence,1679,1937
+90,Evidence,4.0,6.0,-2.0,Sample representativeness,0,0
+91,Evidence,5.0,1.0,0.0,Control condition,1882,1937
+97,Evidence,6.0,2.0,-2.0,Randomized Assignment,0,0
+101,Evidence,8.0,3.0,-2.0,Alternative explanation,0,0
+104,Evidence,10.0,1.0,-3.0,Statistical uncertainty,0,0
+111,Evidence,11.0,3.0,-1.0,Systematic uncertainty,0,0
+115,Evidence,12.0,2.0,1.0,Open to evidence,1023,1106
+76,Evidence,2.0,1.0,0.0,Quality of evidence,1401,1560
+78,Evidence,2.0,3.0,0.0,Quality of evidence,1401,1560
+90,Evidence,4.0,6.0,-2.0,Sample representativeness,0,0
+102,Evidence,8.0,4.0,-1.0,Alternative explanation,0,0
+106,Evidence,10.0,3.0,-1.0,Statistical uncertainty,0,0
+110,Evidence,11.0,2.0,-2.0,Systematic uncertainty,0,0
+115,Evidence,12.0,2.0,1.0,Open to evidence,1023,1106
+117,Evidence,12.0,4.0,0.0,Open to evidence,0,0
+80,Evidence,2.0,5.0,0.0,Quality of evidence,1580,1677
+80,Evidence,2.0,5.0,0.0,Quality of evidence,1679,1748
+80,Evidence,2.0,5.0,0.0,Quality of evidence,1882,1937
+90,Evidence,4.0,6.0,-2.0,Sample representativeness,0,0
+92,Evidence,5.0,2.0,-0.5,Control condition,1271,1399
+98,Evidence,6.0,3.0,-1.0,Randomized Assignment,0,0
+101,Evidence,8.0,3.0,-2.0,Alternative explanation,0,0
+105,Evidence,10.0,2.0,-2.0,Statistical uncertainty,0,0
+110,Evidence,11.0,2.0,-2.0,Systematic uncertainty,0,0
+115,Evidence,12.0,2.0,1.0,Open to evidence,1023,1106
+76,Evidence,2.0,1.0,0.0,Quality of evidence,1198,1399
+77,Evidence,2.0,2.0,0.0,Quality of evidence,1198,1399
+78,Evidence,2.0,3.0,0.0,Quality of evidence,1198,1399
+79,Evidence,2.0,4.0,0.0,Quality of evidence,1580,1677
+80,Evidence,2.0,5.0,0.0,Quality of evidence,1679,1937
+81,Evidence,2.0,6.0,0.0,Quality of evidence,1679,1937
+86,Evidence,4.0,2.0,-0.5,Sample representativeness,0,0
+91,Evidence,5.0,1.0,0.0,Control condition,1679,1738
+98,Evidence,6.0,3.0,-1.0,Randomized Assignment,0,0
+102,Evidence,8.0,4.0,-1.0,Alternative explanation,0,0
+107,Evidence,10.0,4.0,-0.5,Statistical uncertainty,0,0
+112,Evidence,11.0,4.0,-0.5,Systematic uncertainty,0,0
+117,Evidence,12.0,4.0,0.0,Open to evidence,0,0
+116,Evidence,12.0,3.0,0.0,Open to evidence,0,0
+80,Evidence,2.0,5.0,0.0,Quality of evidence,1679,1786
+90,Evidence,4.0,6.0,-2.0,Sample representativeness,0,0
+91,Evidence,5.0,1.0,0.0,Control condition,1562,1677
+98,Evidence,6.0,3.0,-1.0,Randomized Assignment,0,0
+101,Evidence,8.0,3.0,-2.0,Alternative explanation,0,0
+117,Evidence,12.0,4.0,0.0,Open to evidence,0,0
+117,Evidence,12.0,4.0,0.0,Open to evidence,0,0
+116,Evidence,12.0,3.0,0.0,Open to evidence,0,0
+76,Evidence,2.0,1.0,0.0,Quality of evidence,1401,1560
+81,Evidence,2.0,6.0,0.0,Quality of evidence,1708,1710
+81,Evidence,2.0,6.0,0.0,Quality of evidence,1679,1937
+78,Evidence,2.0,3.0,0.0,Quality of evidence,1326,1399
+78,Evidence,2.0,3.0,0.0,Quality of evidence,1187,1197
+86,Evidence,4.0,2.0,-0.5,Sample representativeness,0,0
+101,Evidence,8.0,3.0,-2.0,Alternative explanation,0,0
+107,Evidence,10.0,4.0,-0.5,Statistical uncertainty,0,0
+110,Evidence,11.0,2.0,-2.0,Systematic uncertainty,0,0
+115,Evidence,12.0,2.0,1.0,Open to evidence,1023,1106
+116,Evidence,12.0,3.0,0.0,Open to evidence,0,0
+78,Evidence,2.0,3.0,0.0,Quality of evidence,1165,1197
+78,Evidence,2.0,3.0,0.0,Quality of evidence,1187,1189
+78,Evidence,2.0,3.0,0.0,Quality of evidence,1023,1399
+78,Evidence,2.0,3.0,0.0,Quality of evidence,1177,1186
+78,Evidence,2.0,3.0,0.0,Quality of evidence,1023,1399
+78,Evidence,2.0,3.0,0.0,Quality of evidence,1023,1399
+78,Evidence,2.0,3.0,0.0,Quality of evidence,1239,1245
+78,Evidence,2.0,3.0,0.0,Quality of evidence,1023,1399
+80,Evidence,2.0,5.0,0.0,Quality of evidence,1165,1197
+80,Evidence,2.0,5.0,0.0,Quality of evidence,1165,1197
+80,Evidence,2.0,5.0,0.0,Quality of evidence,1576,1677
+86,Evidence,4.0,2.0,-0.5,Sample representativeness,0,0
+95,Evidence,5.0,5.0,-3.0,Control condition,0,0
+100,Evidence,8.0,2.0,-3.0,Alternative explanation,0,0
+107,Evidence,10.0,4.0,-0.5,Statistical uncertainty,0,0
+112,Evidence,11.0,4.0,-0.5,Systematic uncertainty,0,0
+115,Evidence,12.0,2.0,1.0,Open to evidence,1023,1106
+78,Evidence,2.0,3.0,0.0,Quality of evidence,1342,1429
+103,Evidence,8.0,5.0,0.0,Alternative explanation,0,0
+107,Evidence,10.0,4.0,-0.5,Statistical uncertainty,0,0
+112,Evidence,11.0,4.0,-0.5,Systematic uncertainty,0,0
+115,Evidence,12.0,2.0,1.0,Open to evidence,1891,1937
+76,Evidence,2.0,1.0,0.0,Quality of evidence,1882,1937
+80,Evidence,2.0,5.0,0.0,Quality of evidence,1187,1245
+80,Evidence,2.0,5.0,0.0,Quality of evidence,1442,1560
+79,Evidence,2.0,4.0,0.0,Quality of evidence,1442,1560
+78,Evidence,2.0,3.0,0.0,Quality of evidence,1401,1429
+77,Evidence,2.0,2.0,0.0,Quality of evidence,1246,1266
+90,Evidence,4.0,6.0,-2.0,Sample representativeness,0,0
+92,Evidence,5.0,2.0,-0.5,Control condition,1576,1677
+98,Evidence,6.0,3.0,-1.0,Randomized Assignment,0,0
+101,Evidence,8.0,3.0,-2.0,Alternative explanation,0,0
+104,Evidence,10.0,1.0,-3.0,Statistical uncertainty,0,0
+109,Evidence,11.0,1.0,-3.0,Systematic uncertainty,0,0
+116,Evidence,12.0,3.0,0.0,Open to evidence,0,0
+80,Evidence,2.0,5.0,0.0,Quality of evidence,1165,1266
+80,Evidence,2.0,5.0,0.0,Quality of evidence,1562,1937
+76,Evidence,2.0,1.0,0.0,Quality of evidence,1401,1560
+76,Evidence,2.0,1.0,0.0,Quality of evidence,1165,1399
+78,Evidence,2.0,3.0,0.0,Quality of evidence,1306,1377
+78,Evidence,2.0,3.0,0.0,Quality of evidence,1576,1677
+87,Evidence,4.0,3.0,-1.0,Sample representativeness,0,0
+94,Evidence,5.0,4.0,-2.0,Control condition,0,0
+100,Evidence,8.0,2.0,-3.0,Alternative explanation,0,0
+107,Evidence,10.0,4.0,-0.5,Statistical uncertainty,0,0
+111,Evidence,11.0,3.0,-1.0,Systematic uncertainty,0,0
+115,Evidence,12.0,2.0,1.0,Open to evidence,1023,1106
+76,Evidence,2.0,1.0,0.0,Quality of evidence,1401,1490
+76,Evidence,2.0,1.0,0.0,Quality of evidence,1679,1786
+86,Evidence,4.0,2.0,-0.5,Sample representativeness,0,0
+101,Evidence,8.0,3.0,-2.0,Alternative explanation,0,0
+107,Evidence,10.0,4.0,-0.5,Statistical uncertainty,0,0
+110,Evidence,11.0,2.0,-2.0,Systematic uncertainty,0,0
+116,Evidence,12.0,3.0,0.0,Open to evidence,0,0
+107,Evidence,10.0,4.0,-0.5,Statistical uncertainty,0,0
+109,Evidence,11.0,1.0,-3.0,Systematic uncertainty,0,0
+117,Evidence,12.0,4.0,0.0,Open to evidence,0,0
+117,Evidence,12.0,4.0,0.0,Open to evidence,0,0
+77,Evidence,2.0,2.0,0.0,Quality of evidence,1227,1304
+80,Evidence,2.0,5.0,0.0,Quality of evidence,1177,1197
+76,Evidence,2.0,1.0,0.0,Quality of evidence,1313,1387
+76,Evidence,2.0,1.0,0.0,Quality of evidence,1669,1937
+76,Evidence,2.0,1.0,0.0,Quality of evidence,1213,1226
+79,Evidence,2.0,4.0,0.0,Quality of evidence,1271,1304
+78,Evidence,2.0,3.0,0.0,Quality of evidence,1313,1399
+86,Evidence,4.0,2.0,-0.5,Sample representativeness,0,0
+91,Evidence,5.0,1.0,0.0,Control condition,1614,1641
+98,Evidence,6.0,3.0,-1.0,Randomized Assignment,0,0
+101,Evidence,8.0,3.0,-2.0,Alternative explanation,0,0
+107,Evidence,10.0,4.0,-0.5,Statistical uncertainty,0,0
+112,Evidence,11.0,4.0,-0.5,Systematic uncertainty,0,0
+116,Evidence,12.0,3.0,0.0,Open to evidence,0,0
+117,Evidence,12.0,4.0,0.0,Open to evidence,0,0
+76,Evidence,2.0,1.0,0.0,Quality of evidence,1401,1560
+81,Evidence,2.0,6.0,0.0,Quality of evidence,1679,1937
+86,Evidence,4.0,2.0,-0.5,Sample representativeness,0,0
+101,Evidence,8.0,3.0,-2.0,Alternative explanation,0,0
+107,Evidence,10.0,4.0,-0.5,Statistical uncertainty,0,0
+112,Evidence,11.0,4.0,-0.5,Systematic uncertainty,0,0
+114,Evidence,12.0,1.0,2.0,Open to evidence,1023,1106
+80,Evidence,2.0,5.0,0.0,Quality of evidence,1165,1937
+82,Evidence,2.0,7.0,0.0,Quality of evidence,900,1021
+82,Evidence,2.0,7.0,0.0,Quality of evidence,2633,2688
+82,Evidence,2.0,7.0,0.0,Quality of evidence,3129,3195
+82,Evidence,2.0,7.0,0.0,Quality of evidence,4422,4509
+82,Evidence,2.0,7.0,0.0,Quality of evidence,6098,6123
+83,Evidence,2.0,8.0,0.0,Quality of evidence,1939,2236
+87,Evidence,4.0,3.0,-1.0,Sample representativeness,0,0
+92,Evidence,5.0,2.0,-0.5,Control condition,1607,1641
+92,Evidence,5.0,2.0,-0.5,Control condition,2186,2236
+98,Evidence,6.0,3.0,-1.0,Randomized Assignment,0,0
+102,Evidence,8.0,4.0,-1.0,Alternative explanation,0,0
+105,Evidence,10.0,2.0,-2.0,Statistical uncertainty,0,0
+110,Evidence,11.0,2.0,-2.0,Systematic uncertainty,0,0
+116,Evidence,12.0,3.0,0.0,Open to evidence,0,0
+116,Evidence,12.0,3.0,0.0,Open to evidence,0,0
+117,Evidence,12.0,4.0,0.0,Open to evidence,0,0
+78,Evidence,2.0,3.0,0.0,Quality of evidence,1306,1399
+76,Evidence,2.0,1.0,0.0,Quality of evidence,1562,1677
+82,Evidence,2.0,7.0,0.0,Quality of evidence,1165,1197
+86,Evidence,4.0,2.0,-0.5,Sample representativeness,0,0
+101,Evidence,8.0,3.0,-2.0,Alternative explanation,0,0
+115,Evidence,12.0,2.0,1.0,Open to evidence,1023,1106
+76,Evidence,2.0,1.0,0.0,Quality of evidence,1679,1937
+82,Evidence,2.0,7.0,0.0,Quality of evidence,807,1021
+80,Evidence,2.0,5.0,0.0,Quality of evidence,1562,1677
+78,Evidence,2.0,3.0,0.0,Quality of evidence,4511,5011
+79,Evidence,2.0,4.0,0.0,Quality of evidence,5855,6096
+90,Evidence,4.0,6.0,-2.0,Sample representativeness,0,0
+92,Evidence,5.0,2.0,-0.5,Control condition,1614,1641
+98,Evidence,6.0,3.0,-1.0,Randomized Assignment,0,0
+102,Evidence,8.0,4.0,-1.0,Alternative explanation,0,0
+105,Evidence,10.0,2.0,-2.0,Statistical uncertainty,0,0
+112,Evidence,11.0,4.0,-0.5,Systematic uncertainty,0,0
+115,Evidence,12.0,2.0,1.0,Open to evidence,1023,1106
+76,Evidence,2.0,1.0,0.0,Quality of evidence,1401,1560
+81,Evidence,2.0,6.0,0.0,Quality of evidence,1562,1786
+82,Evidence,2.0,7.0,0.0,Quality of evidence,1939,1952
+82,Evidence,2.0,7.0,0.0,Quality of evidence,1576,1594
+82,Evidence,2.0,7.0,0.0,Quality of evidence,1108,1143
+78,Evidence,2.0,3.0,0.0,Quality of evidence,1326,1399
+86,Evidence,4.0,2.0,-0.5,Sample representativeness,0,0
+100,Evidence,8.0,2.0,-3.0,Alternative explanation,0,0
+105,Evidence,10.0,2.0,-2.0,Statistical uncertainty,0,0
+110,Evidence,11.0,2.0,-2.0,Systematic uncertainty,0,0
+115,Evidence,12.0,2.0,1.0,Open to evidence,1023,1106
+80,Evidence,2.0,5.0,0.0,Quality of evidence,1562,1677
+76,Evidence,2.0,1.0,0.0,Quality of evidence,1679,1937
+90,Evidence,4.0,6.0,-2.0,Sample representativeness,0,0
+91,Evidence,5.0,1.0,0.0,Control condition,1607,1641
+97,Evidence,6.0,2.0,-2.0,Randomized Assignment,0,0
+102,Evidence,8.0,4.0,-1.0,Alternative explanation,0,0
+115,Evidence,12.0,2.0,1.0,Open to evidence,1023,1106
+115,Evidence,12.0,2.0,1.0,Open to evidence,1679,1937
+77,Evidence,2.0,2.0,0.0,Quality of evidence,1239,1266
+83,Evidence,2.0,8.0,0.0,Quality of evidence,1114,1136
+83,Evidence,2.0,8.0,0.0,Quality of evidence,1058,1060
+83,Evidence,2.0,8.0,0.0,Quality of evidence,1153,1176
+76,Evidence,2.0,1.0,0.0,Quality of evidence,1023,1067
+87,Evidence,4.0,3.0,-1.0,Sample representativeness,0,0
+102,Evidence,8.0,4.0,-1.0,Alternative explanation,0,0
+107,Evidence,10.0,4.0,-0.5,Statistical uncertainty,0,0
+112,Evidence,11.0,4.0,-0.5,Systematic uncertainty,0,0
+115,Evidence,12.0,2.0,1.0,Open to evidence,1939,1952
+116,Evidence,12.0,3.0,0.0,Open to evidence,0,0
+78,Evidence,2.0,3.0,0.0,Quality of evidence,1165,1560
+80,Evidence,2.0,5.0,0.0,Quality of evidence,1165,1937
+83,Evidence,2.0,8.0,0.0,Quality of evidence,1114,1143
+79,Evidence,2.0,4.0,0.0,Quality of evidence,1401,1560
+79,Evidence,2.0,4.0,0.0,Quality of evidence,1679,1937
+90,Evidence,4.0,6.0,-2.0,Sample representativeness,0,0
+92,Evidence,5.0,2.0,-0.5,Control condition,1882,1937
+98,Evidence,6.0,3.0,-1.0,Randomized Assignment,0,0
+102,Evidence,8.0,4.0,-1.0,Alternative explanation,0,0
+106,Evidence,10.0,3.0,-1.0,Statistical uncertainty,0,0
+111,Evidence,11.0,3.0,-1.0,Systematic uncertainty,0,0
+114,Evidence,12.0,1.0,2.0,Open to evidence,1023,1106
+76,Evidence,2.0,1.0,0.0,Quality of evidence,1679,1937
+86,Evidence,4.0,2.0,-0.5,Sample representativeness,0,0
+102,Evidence,8.0,4.0,-1.0,Alternative explanation,0,0
+106,Evidence,10.0,3.0,-1.0,Statistical uncertainty,0,0
+111,Evidence,11.0,3.0,-1.0,Systematic uncertainty,0,0
+116,Evidence,12.0,3.0,0.0,Open to evidence,0,0
+80,Evidence,2.0,5.0,0.0,Quality of evidence,1562,1677
+85,Evidence,4.0,1.0,0.0,Sample representativeness,0,0
+91,Evidence,5.0,1.0,0.0,Control condition,1679,1937
+97,Evidence,6.0,2.0,-2.0,Randomized Assignment,0,0
+103,Evidence,8.0,5.0,0.0,Alternative explanation,0,0
+108,Evidence,10.0,5.0,0.0,Statistical uncertainty,0,0
+112,Evidence,11.0,4.0,-0.5,Systematic uncertainty,0,0
+115,Evidence,12.0,2.0,1.0,Open to evidence,1023,1106
