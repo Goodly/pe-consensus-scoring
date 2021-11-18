@@ -1,95 +1,145 @@
-window.addEventListener('load', (event) => {
-    SVG_IDS = [];
-    const visPromise = readVisData();
-    visPromise.then(function() {
-        generateAndMove("all;");
+var ARTICLES_PER_LOAD = 2;
+var TOTAL_ARTICLES_DISPLAYED = 2;
+var LIST_OF_ARTICLES = [];
+var NUM_ARTICLES = -1;
+var LOADING = false;
 
+window.addEventListener('load', (event) => {
+    $.get("visData.json").done((data) => {
+        readVisData(data, 0);
+        var entry;
+        console.log(LIST_OF_ARTICLES);
+        var articleIndex = 0;
+        LIST_OF_ARTICLES.forEach(function (entry, _) {
+            $.get(entry.plainText).done((data) => {
+                entry.totalText = data;
+                const entryPromise = generateEntry(entry);
+                entryPromise.then(() => {
+                    moveHallmark(articleIndex);
+                    articleIndex += 1;
+                })
+                // moveHallmark(articleIndex);
+            })
+        })
+            
     });
+        // generateAndMove("all;");
 
 });
 
-var TOTAL_ARTICLES_DISPLAYED = 1;
+
 
 window.onscroll = function(ev) {
-    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight + 45) {
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight + 25) {
         // you're at the bottom of the page
         if (TOTAL_ARTICLES_DISPLAYED < NUM_ARTICLES) {
-            $('.loader').css('display', 'block');
-            setTimeout(loadArticlesOnScroll, 2000);
+            if (!LOADING) {
+                $('.loader').css('display', 'block');
+                // console.log("loadArticle called");
+                LOADING = true;
+                setTimeout(loadArticlesOnScroll, 2000);
+            }
         }
     }
 };
 
 function loadArticlesOnScroll() {
     if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 90) {
-        
         const newArticleStartIndex = TOTAL_ARTICLES_DISPLAYED;
         TOTAL_ARTICLES_DISPLAYED = TOTAL_ARTICLES_DISPLAYED + ARTICLES_PER_LOAD;
-        const visPromise = readVisData();
-        visPromise.then(function() {
+        var articleIndex = newArticleStartIndex;
+        $.get("visData.json").done((data) => {
             $('.loader').css('display', 'none');
-            var articleIndex = newArticleStartIndex;
-            while (articleIndex < TOTAL_ARTICLES_DISPLAYED) {
-                if (articleIndex < listofarticles.length) {
-                    newEntry = listofarticles[articleIndex];
-                    generateEntry(newEntry);
-                    moveHallmark(articleIndex);
-                    articleIndex += 1;
-                    // newEntry.credibilityScore =  
-                    //console.log("svg[articleID='" + newEntry.sha256 + "']");
-                    console.log('[articleID="'+ newEntry.sha256+'"]');
-                    var artSVG = document.querySelector('[articleID="'+ newEntry.sha256+'"]');
-                }
-            }
-            
+            readVisData(data, articleIndex);
+            LIST_OF_ARTICLES.slice(articleIndex, TOTAL_ARTICLES_DISPLAYED).forEach(function (entry, _) {
+                console.log(entry.plainText);
+                $.get(entry.plainText).done((data) => {
+                    entry.totalText = data;
+                    const entryPromise = generateEntry(entry);
+                    entryPromise.then(() => {
+                        moveHallmark(articleIndex);
+                        articleIndex += 1;
+                    })
+                    // moveHallmark(articleIndex);
+                })
+            })
+            LOADING = false;
+
         });
+        // const visPromise = readVisData();
+        // visPromise.done(() => {
+        //     $('.loader').css('display', 'none');
+        //     var articleIndex = newArticleStartIndex;
+        //     // console.log("The article index is "+ articleIndex)
+        //     while (articleIndex < TOTAL_ARTICLES_DISPLAYED) {
+        //         if (articleIndex < LIST_OF_ARTICLES.length) {
+        //             newEntry = LIST_OF_ARTICLES[articleIndex];
+        //             const entryPromise = generateEntry(newEntry);
+                    
+        //             entryPromise.done(() => {
+        //                 await moveHallmark(articleIndex);
+        //                 articleIndex += 1
+        //                 LOADING = false;
+        //             })
+                    
+                    
+        //             // newEntry.credibilityScore =  
+        //             //console.log("svg[articleID='" + newEntry.sha256 + "']");
+        //             // console.log('[articleID="'+ newEntry.sha256+'"]');
+        //         }
+        //     }
+        // });            
     }
 }
 
 // On showLimit selection change, regenerate hallmarks and move them into place
 //
 
-$(document).on('change','#showLimit',function(e){
-    var limit = this.options[e.target.selectedIndex].text;
-    generateAndMove(limit);
-});
+// $(document).on('change','#showLimit',function(e){
+//     var limit = this.options[e.target.selectedIndex].text;
+//     generateAndMove(limit);
+// });
 
-var listofarticles = [];
-NUM_ARTICLES = -1
-function readVisData() {
-    listofarticles = [];
-    return $.get("visData.json").done(function(data) {
-        NUM_ARTICLES = Object.keys(data).length
-        for (var i = 0; i < TOTAL_ARTICLES_DISPLAYED; i++) {
-            var article = data[i];
-            var triage_path = "/visualizations/" + article["article_sha256"].substring(0, 32) +"/triager_data.csv";
-            // await getScore(article['high'])
-            var articleEntry = new ArticleData(
-                                        article["Title"], 
-                                        article["Author"], 
-                                        article["Date"], 
-                                        article["ID"],
-                                        article["Article Link"], 
-                                        article["Visualization Link"], 
-                                        article["Plain Text"],
-                                        article["Highlight Data"], 
-                                        triage_path,
-                                        article["article_sha256"]);
 
-            listofarticles.push(articleEntry);
-        }
-    });
-}
 
-function setScores() {
+function readVisData(data, start) {
+    NUM_ARTICLES = Object.keys(data).length;
+    // console.log(TOTAL_ARTICLES_DISPLAYED);
+    for (var i = start; i < TOTAL_ARTICLES_DISPLAYED; i++) {
+        var article = data[i];
+        var triage_path = "/visualizations/" + article["article_sha256"].substring(0, 32) +"/triager_data.csv";
+        // await getScore(article['high'])
+        var articleEntry = new ArticleData(
+                                    article["Title"], 
+                                    article["Author"], 
+                                    article["Date"], 
+                                    article["ID"],
+                                    article["Visualization Link"], 
+                                    article["Plain Text"],
+                                    article["Highlight Data"], 
+                                    triage_path,
+                                    article["article_sha256"]);
 
-    var articleObject;
-    for (articleObject of listofarticles) {
-        console.log(artSVG.getAttribute("score"));
-        var artSVG = document.querySelector("svg[articleID='" + articleObject.id + "'");
-        articleObject.credibilityScore = parseInt(artSVG.getAttribute("score"));
+        LIST_OF_ARTICLES.push(articleEntry);
     }
 }
+
+// async function readVisData() {
+//     $.get("visData.json").done(function(data) {
+        
+//         // console.log(LIST_OF_ARTICLES)
+//     });
+// }
+
+// function setScores() {
+
+//     var articleObject;
+//     for (articleObject of LIST_OF_ARTICLES) {
+//         console.log(artSVG.getAttribute("score"));
+//         var artSVG = document.querySelector("svg[articleID='" + articleObject.id + "'");
+//         articleObject.credibilityScore = parseInt(artSVG.getAttribute("score"));
+//     }
+// }
 
 
 function generateList(limit) {
@@ -99,26 +149,22 @@ function generateList(limit) {
     var sortBy = sortOptions.options[sortOptions.selectedIndex].value;
     var orderOptions = document.getElementById("order");
     var order = orderOptions.options[orderOptions.selectedIndex].value;
-    // var search = document.getElementById("searchtext").value;
-
-    //search
-    // var searchedArticles = unlimitedSearchWorks(search, listofarticles);
 
     //sort
-    var sortedArticles = sortArticles(listofarticles, sortBy, order);
+    sortArticles(sortBy, order);
     //Filter by tags (Needs additional information)
 
     //Only show the top 20 results
     if (limit == 20) {
       var showLimit = 20;
     } else {
-      var showLimit = sortedArticles.length;
+      var showLimit = LIST_OF_ARTICLES.length;
     }
-    sortedArticles = sortedArticles.slice(0, showLimit);
+    LIST_OF_ARTICLES = LIST_OF_ARTICLES.slice(0, showLimit);
     document.getElementById("articleList").innerHTML = "";
 
-    for (var i = 0; i < sortedArticles.length; i++) {
-        generateEntry(sortedArticles[i]);
+    for (var i = 0; i < LIST_OF_ARTICLES.length; i++) {
+        generateEntry(LIST_OF_ARTICLES[i]);
     }
     return false;
 }
@@ -134,48 +180,27 @@ function scrollContinue() {
   $('body').removeClass('stop-scrolling');
 }
 
-function unlimitedSearchWorks(query, listofarticles) {
-    output = [];
-
-
-    for (var i = 0; i < listofarticles.length; i++) {
-      $.get(listofarticles[i].plainText).done(function(data) {
-        var totalText = data.toString()
-        totalText = totalText.toLowerCase();
-        if (query === "") {
-          output.push(listofarticles[i]);
-
-
-        } else if (totalText.includes(query) && query !== "") {
-            output.push(listofarticles[i]);
-      }
-    });
-  }
-  return output;
-}
-
-function sortArticles(listofarticles, sortBy, order) {
+function sortArticles(sortBy, order) {
     if (sortBy == "title") {
         if (order == "revAlpha") {
-            listofarticles = listofarticles.sort((a, b) => (a.title < b.title) ? 1 : -1)
+            LIST_OF_ARTICLES = LIST_OF_ARTICLES.sort((a, b) => (a.title < b.title) ? 1 : -1)
         } else {
-            listofarticles = listofarticles.sort((a, b) => (a.title > b.title) ? 1 : -1)
+            LIST_OF_ARTICLES = LIST_OF_ARTICLES.sort((a, b) => (a.title >= b.title) ? 1 : -1)
         }
     } else if (sortBy == "date") {
         if (order == "older") {
-            listofarticles = listofarticles.sort((a, b) => (Date.parse(a.date) > Date.parse(b.date)) ? 1 : -1)
+            LIST_OF_ARTICLES = LIST_OF_ARTICLES.sort((a, b) => (Date.parse(a.date) > Date.parse(b.date)) ? 1 : -1)
         } else {
-            listofarticles = listofarticles.sort((a, b) => (Date.parse(a.date) < Date.parse(b.date)) ? 1 : -1)
+            LIST_OF_ARTICLES = LIST_OF_ARTICLES.sort((a, b) => (Date.parse(a.date) < Date.parse(b.date)) ? 1 : -1)
         }
     } else {
         if (order == "high") {
-            console.log(listofarticles);
-            listofarticles = listofarticles.sort((a, b) => (a.credibilityScore < b.credibilityScore) ? 1 : -1)
+            
+            LIST_OF_ARTICLES = LIST_OF_ARTICLES.sort((a, b) => (a.credibilityScore < b.credibilityScore) ? 1 : -1)
         } else {
-            listofarticles = listofarticles.sort((a, b) => (a.credibilityScore > b.credibilityScore) ? 1 : -1)
+            LIST_OF_ARTICLES = LIST_OF_ARTICLES.sort((a, b) => (a.credibilityScore >= b.credibilityScore) ? 1 : -1)
         }
     }
-    return listofarticles;
 }
 
 async function generateAndMove(limit) {
@@ -189,42 +214,36 @@ async function generateAndMove(limit) {
 
 
 async function generateEntry(entry) {
-
-    return previewPromise = $.get(entry.plainText).done(function(data) {
-      var totalText = data.toString()
-      var previewText = totalText.substring(0, 200);
+    var totalText = entry.totalText;
+    var previewText = totalText.substring(0, 200);
       // Empty string checks
-      if (entry.title == "") {
+    if (entry.title == "") {
         const regexTitle = /(Title:).+/
         const matches = totalText.match(regexTitle);
-        const title_string = matches[0].substring(7, matches[0].length); //Slice out the 'Title: '
-        entry.title = title_string;
-      }
-
-
-      var articleEntry = "<div id='" + entry.sha256 + "' class='row'>" +
-                            "<div class='col-2 date'>" + entry.date + "</div>" +
-                            "<div class='col-6'>" +
-                                "<a class='hyperlink' href='" + entry.visLink + "' target='_blank'> <h3>" + entry.title + "</h3></a>" +
-                                "<p class='articleText'>" + previewText + "</p>" +
-                                "<p class='author'>" + entry.author + "</p>" +
+        if (matches.length != 0) {
+            const title_string = matches[0].substring(7, matches[0].length); //Slice out the 'Title: '
+            entry.title = title_string;
+        }
+    }
+    var articleEntry = "<div id='" + entry.sha256 + "' class='row'>" +
+                        "<div class='col-2 date'>" + entry.date + "</div>" +
+                        "<div class='col-6'>" +
+                            "<a class='hyperlink' href='" + entry.visLink + "' target='_blank'> <h3>" + entry.title + "</h3></a>" +
+                            "<p class='articleText'>" + previewText + "</p>" +
+                            "<p class='author'>" + entry.author + "</p>" +
+                        "</div>" +
+                        "<div class='cred-score-container col-4'>" +
+                            "<div class='sunburst'>" +
+                                "<svg id='sunburst_" + entry.sha256 + "' viewBox= '0 0 200 200'></svg>" +
                             "</div>" +
-                            "<div class='cred-score-container col-4'>" +
-                                "<div class='sunburst'>" +
-                                    "<svg id='sunburst_" + entry.sha256 + "' viewBox= '0 0 200 200'></svg>" +
-                                "</div>" +
-                            "</div>" +
-                       "</div>" +
-                       "<hr>";
-      document.getElementById("articleList").innerHTML += articleEntry;
-      if (document.querySelector("svg[articleID='" + entry.id +"']") != null) {
-          document.querySelector("svg[articleID='" + entry.id +"']").remove();
-      }
-      hallmark(entry);
-
-
-    });
-
+                        "</div>" +
+                    "</div>" +
+                    "<hr>";
+    document.getElementById("articleList").innerHTML += articleEntry;
+    if (document.querySelector("svg[articleID='" + entry.id +"']") != null) {
+        document.querySelector("svg[articleID='" + entry.id +"']").remove();
+    }
+    return hallmark(entry);
 }
 
 function csvJSON(csv){
@@ -255,37 +274,4 @@ function reformatDate(date_string) {
   const year = date_object.getFullYear();
   const month = new Intl.DateTimeFormat('en-US', options).format(date_object)
   return month + " " + day + ", " + year;
-}
-COUNTER = 0;
-ARTICLES_PER_PAGE = 1;
-ARTICLES_PER_LOAD = 5;
-function OnNextButtonClick() {
-    
-   if (COUNTER + ARTICLES_PER_PAGE > NUM_ARTICLES) {
-    return;
-   }
-   console.log('Counter was at', COUNTER)
-   COUNTER += ARTICLES_PER_PAGE;
-   const visPromise = readVisData();
-    visPromise.then(function() {
-        generateAndMove("all;");
-
-    });
-    console.log('Counter is now at', COUNTER);
-//    RenderArticles(COUNTER, COUNTER + 5); 
-
-}
-function OnPrevButtonClick() {
-   console.log('Our counter was at', COUNTER);
-   if (COUNTER == 0) {
-    return;
-   }
-   COUNTER -= ARTICLES_PER_PAGE;
-   const visPromise = readVisData();
-    visPromise.then(function() {
-        generateAndMove("all;");
-
-    });
-   console.log('Our counter is now at', COUNTER);
-//    RenderArticles(COUNTER, COUNTER + 5);
 }

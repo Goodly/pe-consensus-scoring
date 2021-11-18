@@ -49,11 +49,10 @@ var ROOT;
 var SVG_IDS = []; // SVG_IDS has an element for every SVG we need to remove upon
                   // page change
 
-function hallmark(entry) {
-  dataFileName = entry.highlightData
+async function hallmark(entry) {
+  dataFileName = entry.highlightData;
   triageDataFileName = entry.triageData
   id = entry.sha256
-  console.log(entry)
   SVG_IDS.push(13);
   SVG_IDS.push(13);
   var svg = d3.select("body").append("svg")
@@ -69,15 +68,17 @@ function hallmark(entry) {
       .attr("class", "tooltip")
       .style("opacity", 0);
 
+  d3.select(self.frameElement).style("height", height + "px");
+
   //This code block takes the csv and creates the visualization.
-  d3.csv(dataFileName, function(error, data) {
+  return d3.csv(dataFileName, function(error, data) {
     if (error) {
       console.log(error);
       return;
     }
     d3.csv(triageDataFileName, function(error, triageData) {
       if (error) {
-        console.log(error);
+        // console.log(error);
         return;
       }
       moveFactCheckLabels(triageData, data, id);
@@ -94,6 +95,7 @@ function hallmark(entry) {
       ROOT = root;
       totalScore = 90 + scoreSum(root) + holistic_score;
       entry.credibilityScore = totalScore;
+      // console.log(entry.credibilityScore)
       document.querySelector("svg[articleID='" + id + "']").setAttribute("score", totalScore);
       root.sum(function(d) {
         return Math.abs(parseFloat(d.data.Points));
@@ -276,7 +278,6 @@ function hallmark(entry) {
         visualizationOn = false;
     });
   });
-  d3.select(self.frameElement).style("height", height + "px");
 
 }
 
