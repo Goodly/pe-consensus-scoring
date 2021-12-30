@@ -29,8 +29,9 @@ window.addEventListener('load', (event) => {
 
 
 
-window.onscroll = function(ev) {
-    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight + 25) {
+window.onscroll = function() {
+    
+    if (window.innerHeight + window.pageYOffset - 39 >= document.body.offsetHeight) {
         // you're at the bottom of the page
         if (TOTAL_ARTICLES_DISPLAYED < NUM_ARTICLES) {
             if (!LOADING) {
@@ -40,11 +41,16 @@ window.onscroll = function(ev) {
                 setTimeout(loadArticlesOnScroll, 2000);
             }
         }
+    } else if (window.innerHeight + window.pageYOffset + 100 < document.body.offsetHeight) {
+        LOADING = false;
+        $('.loader').css('display', 'none');
     }
 };
 
 function loadArticlesOnScroll() {
-    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 90) {
+    // console.log('Scroll height', window.innerHeight + window.pageYOffset);
+    // console.log('document height', document.body.offsetHeight);
+    if (window.innerHeight + window.pageYOffset + 90 >= document.body.offsetHeight) {
         const newArticleStartIndex = TOTAL_ARTICLES_DISPLAYED;
         TOTAL_ARTICLES_DISPLAYED = TOTAL_ARTICLES_DISPLAYED + ARTICLES_PER_LOAD;
         var articleIndex = newArticleStartIndex;
@@ -59,46 +65,17 @@ function loadArticlesOnScroll() {
                     entryPromise.then(() => {
                         moveHallmark(articleIndex);
                         articleIndex += 1;
-                    })
+                    });
                     // moveHallmark(articleIndex);
-                })
-            })
+                });
+            });
             LOADING = false;
 
-        });
-        // const visPromise = readVisData();
-        // visPromise.done(() => {
-        //     $('.loader').css('display', 'none');
-        //     var articleIndex = newArticleStartIndex;
-        //     // console.log("The article index is "+ articleIndex)
-        //     while (articleIndex < TOTAL_ARTICLES_DISPLAYED) {
-        //         if (articleIndex < LIST_OF_ARTICLES.length) {
-        //             newEntry = LIST_OF_ARTICLES[articleIndex];
-        //             const entryPromise = generateEntry(newEntry);
-                    
-        //             entryPromise.done(() => {
-        //                 await moveHallmark(articleIndex);
-        //                 articleIndex += 1
-        //                 LOADING = false;
-        //             })
-                    
-                    
-        //             // newEntry.credibilityScore =  
-        //             //console.log("svg[articleID='" + newEntry.sha256 + "']");
-        //             // console.log('[articleID="'+ newEntry.sha256+'"]');
-        //         }
-        //     }
-        // });            
+        });          
     }
 }
 
-// On showLimit selection change, regenerate hallmarks and move them into place
-//
 
-// $(document).on('change','#showLimit',function(e){
-//     var limit = this.options[e.target.selectedIndex].text;
-//     generateAndMove(limit);
-// });
 
 
 
