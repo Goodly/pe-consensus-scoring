@@ -4,27 +4,28 @@ var LIST_OF_ARTICLES = [];
 var NUM_ARTICLES = -1;
 var LOADING = false;
 
-window.addEventListener('load', (event) => {
-    $.get("visData.json").done((data) => {
-        readVisData(data, 0);
-        var entry;
-        console.log(LIST_OF_ARTICLES);
-        var articleIndex = 0;
-        LIST_OF_ARTICLES.forEach(function (entry, _) {
-            $.get(entry.plainText).done((data) => {
-                entry.totalText = data;
-                const entryPromise = generateEntry(entry);
-                entryPromise.then(() => {
-                    moveHallmark(articleIndex);
-                    articleIndex += 1;
-                })
-                // moveHallmark(articleIndex);
-            })
-        })
-            
-    });
-        // generateAndMove("all;");
 
+async function loadInitial() {
+    $.get("visData.json").done((data) => {
+        readVisData(data, 0).then(() => {
+            var articleIndex = 0;
+            console.log(LIST_OF_ARTICLES);
+            LIST_OF_ARTICLES.forEach(function (entry, _) {
+                $.get(entry.plainText).done((data) => {
+                    entry.totalText = data;
+                    const entryPromise = generateEntry(entry);
+                    entryPromise.then(() => {
+                        moveHallmark(articleIndex);
+                        articleIndex += 1;
+                    });
+                });
+            })
+        });    
+    });
+}
+
+window.addEventListener('load', (event) => {
+    loadInitial();
 });
 
 
@@ -56,94 +57,57 @@ function loadArticlesOnScroll() {
         var articleIndex = newArticleStartIndex;
         $.get("visData.json").done((data) => {
             $('.loader').css('display', 'none');
-            readVisData(data, articleIndex);
-            LIST_OF_ARTICLES.slice(articleIndex, TOTAL_ARTICLES_DISPLAYED).forEach(function (entry, _) {
-                console.log(entry.plainText);
-                $.get(entry.plainText).done((data) => {
-                    entry.totalText = data;
-                    const entryPromise = generateEntry(entry);
-                    entryPromise.then(() => {
-                        moveHallmark(articleIndex);
-                        articleIndex += 1;
+            readVisData(data, articleIndex).then(() => {
+                LIST_OF_ARTICLES.slice(articleIndex, TOTAL_ARTICLES_DISPLAYED).forEach(function (entry, _) {
+                    $.get(entry.plainText).done((data) => {
+                        entry.totalText = data;
+                        const entryPromise = generateEntry(entry);
+                        entryPromise.then(() => {
+                            moveHallmark(articleIndex);
+                            articleIndex += 1;
+                        });
+                        // moveHallmark(articleIndex);
                     });
-                    // moveHallmark(articleIndex);
                 });
+                LOADING = false;
             });
-            LOADING = false;
-
         });          
     }
 }
 
-
-
-
-
 function readVisData(data, start) {
+    promises = [];
     NUM_ARTICLES = Object.keys(data).length;
-    // console.log(TOTAL_ARTICLES_DISPLAYED);
-    for (var i = start; i < TOTAL_ARTICLES_DISPLAYED; i++) {
-        var article = data[i];
+    data.slice(start, start+ARTICLES_PER_LOAD).forEach(function (entry, _) {
+        var article = entry;
         var triage_path = "/visualizations/" + article["article_sha256"].substring(0, 32) +"/triager_data.csv";
         // await getScore(article['high'])
-        var articleEntry = new ArticleData(
-                                    article["Title"], 
-                                    article["Author"], 
-                                    article["Date"], 
-                                    article["ID"],
-                                    article["Visualization Link"], 
-                                    article["Plain Text"],
-                                    article["Highlight Data"], 
-                                    triage_path,
-                                    article["article_sha256"]);
-
-        LIST_OF_ARTICLES.push(articleEntry);
-    }
-}
-
-// async function readVisData() {
-//     $.get("visData.json").done(function(data) {
         
-//         // console.log(LIST_OF_ARTICLES)
-//     });
-// }
-
-// function setScores() {
-
-//     var articleObject;
-//     for (articleObject of LIST_OF_ARTICLES) {
-//         console.log(artSVG.getAttribute("score"));
-//         var artSVG = document.querySelector("svg[articleID='" + articleObject.id + "'");
-//         articleObject.credibilityScore = parseInt(artSVG.getAttribute("score"));
-//     }
-// }
-
-
-function generateList(limit) {
-    // Collect values from the HTML
-    //Sort by... Most Recent, Alphabetical, Credibility Score (High to Low & Low to High)
-    var sortOptions = document.getElementById("sortByList");
-    var sortBy = sortOptions.options[sortOptions.selectedIndex].value;
-    var orderOptions = document.getElementById("order");
-    var order = orderOptions.options[orderOptions.selectedIndex].value;
-
-    //sort
-    sortArticles(sortBy, order);
-    //Filter by tags (Needs additional information)
-
-    //Only show the top 20 results
-    if (limit == 20) {
-      var showLimit = 20;
-    } else {
-      var showLimit = LIST_OF_ARTICLES.length;
-    }
-    LIST_OF_ARTICLES = LIST_OF_ARTICLES.slice(0, showLimit);
-    document.getElementById("articleList").innerHTML = "";
-
-    for (var i = 0; i < LIST_OF_ARTICLES.length; i++) {
-        generateEntry(LIST_OF_ARTICLES[i]);
-    }
-    return false;
+        promises.push(
+            new Promise(resolve => {
+                d3.csv(triage_path, function(error, _) {
+                    if (error) {    
+                        console.log(error);
+                        console.log('couldnt find articles triage data');
+                        resolve();
+                    } else {
+                        var articleEntry = new ArticleData(
+                            article["Title"], 
+                            article["Author"], 
+                            article["Date"], 
+                            article["ID"],
+                            article["Visualization Link"], 
+                            article["Plain Text"],
+                            article["Highlight Data"], 
+                            triage_path,
+                            article["article_sha256"]);
+                        LIST_OF_ARTICLES.push(articleEntry);
+                        resolve();
+                    }
+                });
+            }));
+    });
+    return Promise.all(promises);
 }
 
 // As the hallmarks are generated and placed, we don't want the user to scroll and
@@ -178,15 +142,6 @@ function sortArticles(sortBy, order) {
             LIST_OF_ARTICLES = LIST_OF_ARTICLES.sort((a, b) => (a.credibilityScore >= b.credibilityScore) ? 1 : -1)
         }
     }
-}
-
-async function generateAndMove(limit) {
-  await removeHallmarks();
-  await scrollPause();
-  await generateList(limit);
-
-  await moveHallmarks();
-  scrollContinue();
 }
 
 

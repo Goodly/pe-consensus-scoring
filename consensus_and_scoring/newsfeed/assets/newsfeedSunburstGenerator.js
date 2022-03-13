@@ -51,7 +51,6 @@ async function hallmark(entry) {
   id = entry.sha256;
   SVG_IDS.push(13);
   SVG_IDS.push(13);
-  console.log(id);
   var svg = d3.select("body").append("svg")
     .attr("articleID", id)
     .attr("width", width)
@@ -79,7 +78,6 @@ async function hallmark(entry) {
         return;
       }
       moveFactCheckLabels(triageData, data, entry.sha256);
-      console.log(NUM_NFC);
       delete data["columns"];
       clean(data);
       data = addDummyData(data);
