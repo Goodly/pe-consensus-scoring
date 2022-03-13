@@ -197,7 +197,10 @@ async function generateEntry(entry) {
     if (entry.title == "") {
         const regexTitle = /(Title:).+/
         const matches = totalText.match(regexTitle);
-        if (matches.length != 0) {
+        if (matches === null) {
+            const title_string = totalText.split(/\s+/).slice(0,5).join(' ');
+            entry.title = title_string + '...';
+        } else if (matches.length != 0) {
             const title_string = matches[0].substring(7, matches[0].length); //Slice out the 'Title: '
             entry.title = title_string;
         }
