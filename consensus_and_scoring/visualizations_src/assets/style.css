@@ -248,7 +248,7 @@ div.pseudobox {
 
 #chart {
   position: absolute;
-  top: -20px;
+  top: -50px;
   left: 0;
   height: 400px;
   width: 400px;
@@ -1508,6 +1508,7 @@ This is mobile
   position: relative;
   left: -65px;
   padding-left: 00px;
+  top: 100px;
 }
 
 
