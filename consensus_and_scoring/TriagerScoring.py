@@ -225,6 +225,11 @@ def determinePassingIndices(starts, ends, numUsers, users, length, category):
                 'passingFunc': evalThresholdMatrix,
                 'scale': 1.8
             },
+        'Junk Text':
+            {
+                'passingFunc': ignoreThis,
+                'scale': 0
+            }
     }
     passFunc = actionDeterminant[category]['passingFunc']
     scale = actionDeterminant[category]['scale']
@@ -245,6 +250,9 @@ def findPassingIndices(starts, ends, numUsers, users, length, passingFunc = eval
             passersArray[i] = 1
     return passersArray
 
+def ignoreThis(percent, TotalNumUsers, scale):
+    return 'X'
+    
 def minPercent(percent, totalNumUsers, scale):
     if percent>=scale:
         return 'H'
@@ -351,8 +359,12 @@ def addToSourceText(starts, ends, texts, sourceText):
     for i in range(len(starts)):
         pointer = 0
         for c in range(starts[i], ends[i]):
-            sourceText[c] = texts[i][pointer]
-            pointer +=1
+            #print(f"{texts=}\n {i=}\n {c=}\n {pointer=}")
+            try:
+                sourceText[c] = texts[i][pointer]
+                pointer +=1
+            except IndexError:
+                pass
     return sourceText
 def makeList(size):
     out = []
