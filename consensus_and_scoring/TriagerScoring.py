@@ -43,7 +43,7 @@ def importData(path, out_path):
         #redundancy = art_data['']
         length = art_data['article_text_length'].iloc[0]
         #print(length)
-        source_text = makeList(length)
+        source_text = makeList(length + 1)
         #flagExclusions = exclusionList(users, flags, cats)
         flagExclusions = []
         #print(flagExclusions)
@@ -359,9 +359,8 @@ def addToSourceText(starts, ends, texts, sourceText):
     for i in range(len(starts)):
         pointer = 0
         for c in range(starts[i], ends[i]):
-            if pointer<len(texts[i]) and c < len(sourceText):
-                sourceText[c] = texts[i][pointer]
-                pointer +=1
+            sourceText[c] = texts[i][pointer]
+            pointer +=1
     return sourceText
 
 def makeList(size):
@@ -373,7 +372,8 @@ def makeList(size):
 def getText(start,end, sourceText):
     out = ''
     for i in range(int(start),int(end)):
-        out = out+sourceText[i]
+        if i < len(sourceText) - 1:
+            out = out+ str(sourceText[i])
     return out
 
 
