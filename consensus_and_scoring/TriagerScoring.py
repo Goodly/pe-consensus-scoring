@@ -359,13 +359,11 @@ def addToSourceText(starts, ends, texts, sourceText):
     for i in range(len(starts)):
         pointer = 0
         for c in range(starts[i], ends[i]):
-            #print(f"{texts=}\n {i=}\n {c=}\n {pointer=}")
-            try:
+            if pointer<len(texts[i]) and c < len(sourceText):
                 sourceText[c] = texts[i][pointer]
                 pointer +=1
-            except IndexError:
-                pass
     return sourceText
+
 def makeList(size):
     out = []
     for i in range(size):
