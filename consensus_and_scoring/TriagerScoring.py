@@ -225,6 +225,11 @@ def determinePassingIndices(starts, ends, numUsers, users, length, category):
                 'passingFunc': evalThresholdMatrix,
                 'scale': 1.8
             },
+            'Junk Text':
+            {
+                'passingFunc': ignoreThis,
+                'scale': 0
+            },
     }
     passFunc = actionDeterminant[category]['passingFunc']
     scale = actionDeterminant[category]['scale']
@@ -244,6 +249,9 @@ def findPassingIndices(starts, ends, numUsers, users, length, passingFunc = eval
         if passingFunc(percentageArray[i], numUsers, scale) == 'H':
             passersArray[i] = 1
     return passersArray
+
+def ignoreThis(percent, TotalNumUsers, scale):
+    return 'X'
 
 def minPercent(percent, totalNumUsers, scale):
     if percent>=scale:
