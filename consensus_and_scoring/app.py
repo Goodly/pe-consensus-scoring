@@ -110,6 +110,9 @@ def fetch_tags_files(body, dir_dict):
 def fetch_highlighter_files(body, dir_dict):
     highlighters = body.get('Highlighters', [])
     retrieve_file_list(highlighters, dir_dict['highlighters_dir'])
+    texts = body.get('Texts', [])
+    texts = use_article_sha256_filenames(texts)
+    retrieve_file_list(texts, dir_dict['texts_dir'])
     logger.info("---FILES RETRIEVED SUCCESSFULLY in request_highlighter_consensus handler---")
 
 def fetch_datahunt_files(body, dir_dict):
