@@ -75,10 +75,10 @@ def importData(path, out_path, texts_dir = None):
                 namespaces = cat_data['namespace'].tolist()
 
                 length = floor(cat_data['article_text_length'].tolist()[0])
-                texts = cat_data['target_text'].str.decode('unicode-escape').tolist()
 
                 print('//Article:', a, 'Category:', c, 'numUsers:', numUsers)
                 if texts_dir is None:
+                    texts = cat_data['target_text'].str.decode('unicode-escape').tolist()
                     source_text = addToSourceText(starts, ends, texts, source_text)
                 pstarts, pends, pflags = scoreTriager(starts, ends, users, numUsers, flags, length, c, flagExclusions)
                 out = appendData(filename[0], a, task_uuids, namespaces, pstarts, pends, c, pflags, out, source_text)
@@ -95,7 +95,7 @@ def appendData(article_filename, article_sha256, task_uuids, namespaces,start_po
         case_numbers = np.zeros(len(start_pos_list))
     for i in range(len(start_pos_list)):
         text = getText(start_pos_list[i], end_pos_list[i],source_text)
-        text = text.encode('unicode-escape').decode('utf-8')
+        #text = text.encode('unicode-escape').decode('utf-8')
         #print(len(namespaces), len(start_pos_list), len(end_pos_list), len(case_numbers))
         data.append([article_filename, article_sha256, task_uuids[i], namespaces[i], start_pos_list[i], end_pos_list[i], topic_name, int(case_numbers[i]), text])
     return data
