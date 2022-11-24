@@ -2,7 +2,7 @@ from math import exp
 
 STRICT_MINIMUM_CONTRIBUTORS = 1
 
-def evalThresholdMatrix(percentage, num_of_users, scale = 1, q = 1, func = 'logis_0'):
+def check_threshold(percentage, num_of_users, scale = 1, q = 1, func ='logis_0'):
     """
     To learn more about the different candidate threshold functions:
     https://docs.google.com/document/d/1YE4Gx1g7bRTz8Jq_Ic4voyKE0hBLwB4PloBVUTnDp8w/edit?usp=sharing
@@ -86,7 +86,7 @@ def checkThreshold():
         for u in range(3,11):
             p = float(i)/100
             print(str(p)+"%", u, 'users')
-            print(evalThresholdMatrix(p, u))
+            print(check_threshold(p, u))
             # print(evalThresholdMatrix(p, u, 1.4))
             # print(evalThresholdMatrix(p, u, 1.4,1.2))
             # print(evalThresholdMatrix(p, u, 1.4, 1.2))

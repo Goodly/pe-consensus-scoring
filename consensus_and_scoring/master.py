@@ -87,8 +87,8 @@ def calculate_scores_master(directory, texts_path, config_path,
                                            useRep=use_rep, threshold_func=threshold_func)
     else:
 
-        iaa_dir = calc_scores(highlights_file, repCSV=repCSV,  schemaFile = schema_file,
-                              outDirectory = iaa_dir, useRep = use_rep, threshold_func=threshold_func)
+        iaa_dir = calc_scores(highlights_file, rep_csv=repCSV, schema_file= schema_file,
+                              output_directory= iaa_dir, use_reputation= use_rep, threshold_func=threshold_func)
 
     if reporting:
         make_iaa_human_readable(iaa_dir, rep_direc)

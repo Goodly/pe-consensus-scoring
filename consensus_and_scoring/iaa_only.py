@@ -1,11 +1,11 @@
 import argparse
 
 from IAA import calc_agreement_directory
-from Dependency import eval_dependency
 from export_tags import export_datahunt_tags
 
-def iaa_only(directory, texts_path, config_path, use_rep = False, repCSV = None, iaa_dir = None, schema_dir = None,
-             adjud_dir = None, threshold_func = 'raw_30'):
+
+def iaa_only(directory, texts_path, config_path, use_rep=False, repCSV=None, iaa_dir=None, schema_dir=None,
+             adjud_dir=None, threshold_func='raw_30'):
     """
 
     :param directory: the directory that holds all files from the tagworks datahunt export
@@ -30,9 +30,10 @@ def iaa_only(directory, texts_path, config_path, use_rep = False, repCSV = None,
         useRep=use_rep,
         threshold_func=threshold_func
     )
-    #eval_dependency(directory, iaa_dir, schema_dir, out_dir=scoring_dir)
+    # eval_dependency(directory, iaa_dir, schema_dir, out_dir=scoring_dir)
     export_datahunt_tags(iaa_dir, adjud_dir)
     return adjud_dir
+
 
 def load_args():
     parser = argparse.ArgumentParser()
@@ -57,11 +58,11 @@ def load_args():
         help='True if we want to use reputation scores, false otherwise')
     parser.add_argument(
         '-tf', '--threshold_function',
-        help= 'the threshold function used to check for inter annotator agreement'
+        help='the threshold function used to check for inter annotator agreement'
     )
     parser.add_argument(
         '-v', '--viz_dir',
-        help= 'output directory for visulizations'
+        help='output directory for visulizations'
     )
     return parser.parse_args()
 
@@ -101,10 +102,10 @@ if __name__ == '__main__':
         input_dir,
         texts_dir,
         config_path,
-        use_rep = use_rep,
-        repCSV = rep_file,
-        iaa_dir = output_dir,
-        schema_dir = schema_dir,
-        adjud_dir = adjud_dir,
-        threshold_func = threshold_function
+        use_rep=use_rep,
+        repCSV=rep_file,
+        iaa_dir=output_dir,
+        schema_dir=schema_dir,
+        adjud_dir=adjud_dir,
+        threshold_func=threshold_function
     )

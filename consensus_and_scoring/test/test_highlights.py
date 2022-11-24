@@ -62,7 +62,7 @@ def test_highlights(config, tmpdir):
 #      schema_path = data_path + '/schemas'
 #
 #      iaa_out = calc_agreement_directory(dh_files_path, schema_path, config['IAA_config_dir'], test_utils.texts_dir,
-#                                         outDirectory=out_path)
+#                                         output_directory=out_path)
 #      for root, dir, files in os.walk(iaa_out):
 #          for file in files:
 #              # should be only 1 file for this case, so just run it on the only one

@@ -40,7 +40,7 @@ def evaluateCoding(answers, users, starts, ends, numUsers, length, sourceText, h
         # and misclicks
 
         # It seemed like this made every ordinal q way more lenient without the extra clause
-        if evalThresholdMatrix(highScore, numUsers, func = threshold_func) != 'H' and \
+        if check_threshold(highScore, numUsers, func = threshold_func) != 'H' and \
                 (num_choices > 3 and winner == 1 or winner == num_choices):
             highScore, winner, weights, firstSecondScoreDiff = scoreCoding(answers, users, 'ordinal', scale=2)
     # These all return tuples (array of answers, amount of scaling done), element at index 1 is same for all
@@ -108,7 +108,7 @@ def passToUnitizing(answers, hlusers, starts, ends, numUsers, length, \
     Only calculates unitizing agreement amongst users who selected the most agreed-upon answer"""
     # assert len(starts) == len(users), 'starts, users mismatched'
     # TOPTWO metric change next line to have the score difference as an arg
-    if evalThresholdMatrix(highScore, numUsers, func=threshold_func) == 'H':
+    if check_threshold(highScore, numUsers, func=threshold_func) == 'H':
         # f for filtered
         starts, ends, hlusers = np.array(starts), np.array(ends), np.array(hlusers)
         # fStarts, fEnds, fUsers = starts[goodIndices], ends[goodIndices], users[goodIndices]
@@ -134,7 +134,7 @@ def passToUnitizing(answers, hlusers, starts, ends, numUsers, length, \
             selectedText = 'NA'
         return winner, units, uScore, iScore, selectedText
     else:
-        status = evalThresholdMatrix(highScore, numUsers, func=threshold_func)
+        status = check_threshold(highScore, numUsers, func=threshold_func)
         return status, status, status, status, status
 
 

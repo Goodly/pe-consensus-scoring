@@ -6,7 +6,7 @@ import os
 import argparse
 
 from UnitizingScoring import toArray, scorePercentageUnitizing, getIndicesFromUser
-from ThresholdMatrix import evalThresholdMatrix
+from ThresholdMatrix import check_threshold
 
 STRICT_MINIMUM_CONTRIBUTORS = 1
 
@@ -177,13 +177,13 @@ def determinePassingIndices(starts, ends, numUsers, users, length, category):
     actionDeterminant = {
         'Language':
             {
-                'passingFunc':evalThresholdMatrix,
+                'passingFunc':check_threshold,
                 'scale':2.5
             },
         #hard to do, should be more lenient
         'Reasoning':
             {
-                'passingFunc': evalThresholdMatrix,
+                'passingFunc': check_threshold,
                 'scale': 2.5
             },
         #specialist can be stricter
@@ -195,34 +195,34 @@ def determinePassingIndices(starts, ends, numUsers, users, length, category):
             },
         'Probability':
             {
-                'passingFunc': evalThresholdMatrix,
+                'passingFunc': check_threshold,
                 'scale': 1.7
             },
         'Confidence':
             {
-                'passingFunc': evalThresholdMatrix,
+                'passingFunc': check_threshold,
                 'scale': 2.1
             },
         'Quoted Sources':
             {
-                'passingFunc': evalThresholdMatrix,
+                'passingFunc': check_threshold,
                 'scale': 1.6
             },
         #keepstrict
         'Needs Fact-Check':
             {
-                'passingFunc': evalThresholdMatrix,
+                'passingFunc': check_threshold,
                 'scale': 1.6
             },
         #wait formore training, see what happens
         'Arguments':
             {
-                'passingFunc': evalThresholdMatrix,
+                'passingFunc': check_threshold,
                 'scale': 2.5
             },
         'Assertions':
             {
-                'passingFunc': evalThresholdMatrix,
+                'passingFunc': check_threshold,
                 'scale': 1.8
             },
             'Junk Text':
@@ -236,7 +236,7 @@ def determinePassingIndices(starts, ends, numUsers, users, length, category):
 
     return findPassingIndices(starts, ends, numUsers, users, length, passFunc , scale)
 
-def findPassingIndices(starts, ends, numUsers, users, length, passingFunc = evalThresholdMatrix, scale = 1.4):
+def findPassingIndices(starts, ends, numUsers, users, length, passingFunc = check_threshold, scale = 1.4):
     """passingFunc must take in 3 arguments, first is a percentage, second is numberof users, 3rd is the scale
         what the scale is can very for different methods of evaluating passes/fails"""
     #print(starts)

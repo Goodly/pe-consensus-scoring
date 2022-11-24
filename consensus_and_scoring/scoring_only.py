@@ -1,13 +1,13 @@
 import argparse
 
-
-from Dependency import  eval_dependency
-from Weighting import  launch_Weighting
-from pointAssignment import pointSort
+from Dependency import eval_dependency
+from Separator import splitcsv
+from Weighting import launch_Weighting
 from holistic_eval import eval_triage_scoring
-from Separator import  splitcsv
+from pointAssignment import pointSort
 
-def scoring_only(directory, iaa_dir, schema_dir, scoring_dir, viz_dir, tua_dir, threshold_func, reporting = False):
+
+def scoring_only(directory, iaa_dir, schema_dir, scoring_dir, viz_dir, tua_dir, threshold_func, reporting=False):
     eval_dependency(directory, iaa_dir, schema_dir, out_dir=scoring_dir)
     print("WEIGHTING")
     weights = launch_Weighting(scoring_dir, reporting=reporting)
@@ -21,6 +21,7 @@ def scoring_only(directory, iaa_dir, schema_dir, scoring_dir, viz_dir, tua_dir, 
         x += 1
         viz_dir = '../../visualization_' + directory[x:]
     splitcsv(scoring_dir, pointsFile=points, viz_dir=viz_dir, reporting=reporting)
+
 
 def load_args():
     parser = argparse.ArgumentParser()
@@ -39,15 +40,15 @@ def load_args():
         help='Pathname to use for output files for scoring of articles.')
     parser.add_argument(
         '-tf', '--threshold_function',
-        help= 'the threshold function used to check for inter annotator agreement'
+        help='the threshold function used to check for inter annotator agreement'
     )
     parser.add_argument(
         '-u', '--tua_dir',
-        help= 'input directory for TUA data'
+        help='input directory for TUA data'
     )
     parser.add_argument(
         '-v', '--viz_dir',
-        help= 'output directory for visulizations'
+        help='output directory for visulizations'
     )
     return parser.parse_args()
 
@@ -58,7 +59,7 @@ if __name__ == '__main__':
     config_path = './config/'
     input_dir = '../data/datahunts/'
     texts_dir = '../data/texts/'
-    #metadata_dir = '../data/metadata/'
+    # metadata_dir = '../data/metadata/'
     tua_dir = '../data/focus_tags/'
     schema_dir = '../data/schemas/'
     # output
@@ -81,7 +82,6 @@ if __name__ == '__main__':
     if args.tua_dir:
         tua_dir = args.tua_dir
 
-
     scoring_only(
         input_dir,
         output_dir,
@@ -90,6 +90,5 @@ if __name__ == '__main__':
         viz_dir,
         tua_dir,
         threshold_function,
-        reporting = True
+        reporting=True
     )
-

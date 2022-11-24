@@ -1,6 +1,6 @@
 #import krippendorff
 import numpy as np
-from ThresholdMatrix import evalThresholdMatrix
+from ThresholdMatrix import check_threshold
 
 def scoreNuUnitizing(starts,ends,length,numUsers,users, userWeightDict, answers, winner, useRep = False,
                      threshold_func = 'logis_0'):
@@ -116,7 +116,7 @@ def filterSingular(percentageScoresArray, numUsers,users,starts,ends, threshold_
 #TODO: get math done for minpasspercent
 #        if percentageScoresArray[i]>minPassPercent:
 
-        if evalThresholdMatrix(percentageScoresArray[i], num_reals, scale = 2, func=threshold_func) == 'H':
+        if check_threshold(percentageScoresArray[i], num_reals, scale = 2, func=threshold_func) == 'H':
             passingIndexes[i] = i
     passingIndexes = np.nonzero(passingIndexes)[0]
     assert len(starts) == len(users)
