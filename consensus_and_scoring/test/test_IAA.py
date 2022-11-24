@@ -1,9 +1,7 @@
 import sys
-import os
-import pandas as pd
 
-import test_utils
-from filegen_utils import *
+from mockAnnotatorData import test_utils
+from mockAnnotatorData.filegen_utils import *
 from IAA import *
 
 sys.path.append('../../')

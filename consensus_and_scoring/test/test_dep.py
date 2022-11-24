@@ -1,11 +1,7 @@
-import sys
-import os
-import pandas as pd
+from mockAnnotatorData.filegen_utils import IAA_task
+from mockAnnotatorData import test_utils
 
-import test_utils
-from filegen_utils import *
 from Dependency import *
-import conftest
 
 def test_dep_sample(config):
     iaa_files_path = test_utils.make_test_directory(config, 'dep_sample')
