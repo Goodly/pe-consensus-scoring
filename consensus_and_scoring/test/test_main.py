@@ -2,8 +2,8 @@ import os
 import pandas as pd
 import numpy as np
 
-import test_utils
-from filegen_utils import *
+import mockAnnotatorData.test_utils
+from mockAnnotatorData.filegen_utils import *
 from master import *
 
 all_schemas = []

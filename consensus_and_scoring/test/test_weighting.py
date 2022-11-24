@@ -2,8 +2,8 @@ import pandas as pd
 import os
 import random
 
-import test_utils
-from filegen_utils import *
+import mockAnnotatorData.test_utils
+from mockAnnotatorData.filegen_utils import *
 from Weighting import *
 
 weight_path = '../config/weight_key.csv'

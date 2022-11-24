@@ -8,7 +8,7 @@ import pandas as pd
 
 #functions to help setup testing 
 def get_config():
-    with open('test_config.json') as json_file:
+    with open('../test/test_config.json') as json_file:
         data = json.load(json_file)
     return data
 

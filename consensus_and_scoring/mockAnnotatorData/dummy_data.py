@@ -1,7 +1,7 @@
-import json
 import pandas as pd
 from pathlib import Path
-import test_utils
+from mockAnnotatorData import test_utils
+
 import os
 
 class dummy_data:
@@ -58,7 +58,7 @@ class dummy_data:
                 new_row[p] = params[p]
         new_row = self.fill_in_logic(new_row, params)
 
-            # todo: logically fill in other rows; ie given schema name fill in schema_id, given answer/schema fill in answer_uuid
+        # todo: logically fill in other rows; ie given schema name fill in schema_id, given answer/schema fill in answer_uuid
         self.df = self.df.append(new_row, ignore_index=True)
         # todo Add more helper functions to make it easier to add multiple rows at a time
 

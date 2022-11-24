@@ -1,9 +1,9 @@
-from filegen_utils import IAA_task
 import pytest
 import json
 import os
-import test_utils
-from filegen_utils import *
+import mockAnnotatorData.test_utils
+from mockAnnotatorData.filegen_utils import IAA_task
+from mockAnnotatorData.filegen_utils import *
 from IAA import *
 
 

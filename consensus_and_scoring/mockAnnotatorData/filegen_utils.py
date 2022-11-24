@@ -1,18 +1,13 @@
 import json
-import pandas as pd
-from dummy_data import dummy_data
-import test_utils
+from mockAnnotatorData.dummy_data import dummy_data
+import mockAnnotatorData.test_utils as test_utils
 import re
 
 #this is gonna be a helper class that all the fixtures can use
-#todo make something like this for every other intermediate file
 class IAA_task(dummy_data):
     def __init__(self, *args, **kwargs):
         self.filetype = 'iaa'
         super().__init__(*args, **kwargs)
-
-
-
 
     def fill_in_logic(self, new_row, params):
         keys = params.keys()
@@ -195,7 +190,7 @@ class point_assignment(dummy_data):
 
 if __name__ == '__main__':
     #this is broken cause it's not a path data
-    with open('test_config.json') as json_file:
+    with open('../test/test_config.json') as json_file:
         config = json.load(json_file)
     dh_path = test_utils.make_test_directory(config, 'mn_dh_')
     dh = datahunt(out_folder=dh_path, source_task_id='dh13', article_num='520', article_text_length=2900)
