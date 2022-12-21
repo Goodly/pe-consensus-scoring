@@ -94,8 +94,7 @@ async function hallmark(entry) {
         .enter().append("path")
           .attr("d", arc)
           .style("fill", function(d) {
-            nodeToPath.set(d, this)
-            console.log('test');
+            nodeToPath.set(d, this);
             return color(d.data.data["Credibility Indicator Category"]);
           }).style("display", function(d) {
             if (d.height == 0 || d.height == 2) {

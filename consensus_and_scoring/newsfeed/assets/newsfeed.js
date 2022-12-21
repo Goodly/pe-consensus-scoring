@@ -59,7 +59,6 @@ function loadArticlesOnScroll() {
                         moveHallmark(articleIndex);
                         articleIndex += 1;
                     });
-                    // moveHallmark(articleIndex);
                 });
             });
             LOADING = false;
@@ -68,7 +67,21 @@ function loadArticlesOnScroll() {
     }
 }
 
-
+var width = $(window).width(); 
+$(window).resize(function() {
+    // do nothing if the width is the same
+    if ($(window).width()==width) {
+        return;
+    } else {
+        width = $(window).width();
+        var index = 0;
+        console.log('test');
+        while (index < TOTAL_ARTICLES_DISPLAYED) {
+            moveHallmark(index);
+            index += 1;
+        }
+    }
+});
 
 
 
@@ -192,7 +205,7 @@ async function generateEntry(entry) {
     var articleEntry = "<div id='" + entry.sha256 + "' class='articleEntry'>" +
                         "<div class='entryDate'>" + entry.date + "</div>" +
                         "<div class='entryText'>" +
-                            "<a href='" + entry.visLink + "' target='_blank'> <h3>" + entry.title + "</h3></a>" +
+                            "<a href='" + entry.visLink + "' target='_blank'> <h3>" + entry.title + "</h3><span class='spanLink'></span></a>" +
                             "<p class='articleText'>" + previewText + "</p>" +
                             "<p class='author'>" + entry.author + "</p>" +
                         "</div>" +
