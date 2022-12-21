@@ -41,16 +41,11 @@ var arc = d3.arc()
 
 //This variable creates the floating textbox on the hallmark
 var DIV;
-var ROOT;
-var SVG_IDS = []; // SVG_IDS has an element for every SVG we need to remove upon
-                  // page change
 
 async function hallmark(entry) {
-  dataFileName = entry.highlightData;
-  triageDataFileName = entry.triageData;
-  id = entry.sha256;
-  SVG_IDS.push(13);
-  SVG_IDS.push(13);
+  const dataFileName = entry.highlightData;
+  const triageDataFileName = entry.triageData;
+  const id = entry.sha256;
   var svg = d3.select("body").append("svg")
     .attr("articleID", id)
     .attr("width", width)
@@ -64,7 +59,6 @@ async function hallmark(entry) {
       .attr("class", "tooltip")
       .style("opacity", 0);
 
-  d3.select(self.frameElement).style("height", height + "px");
 
   //This code block takes the csv and creates the visualization.
   return d3.csv(dataFileName, function(error, data) {
@@ -74,7 +68,7 @@ async function hallmark(entry) {
     }
     d3.csv(triageDataFileName, function(error, triageData) {
       if (error) {
-        // console.log(error);
+        console.err(error);
         return;
       }
       moveFactCheckLabels(triageData, data, entry.sha256);
@@ -87,23 +81,21 @@ async function hallmark(entry) {
       for (let [key, value] of HOLISTIC_MAP) {
         holistic_score += Math.round(value);
       }
-
-      ROOT = root;
       totalScore = 90 + scoreSum(root) + holistic_score;
       entry.credibilityScore = totalScore;
-      // console.log(entry.credibilityScore)
-      // document.querySelector("svg[articleID='" + id + "']").setAttribute("score", totalScore);
       root.sum(function(d) {
         return Math.abs(parseFloat(d.data.Points));
       });
 
       //Fill in the colors
+      console.log('Creating vis for ' + entry.sha256)
       svg.selectAll("path")
         .data(partition(root).descendants())
         .enter().append("path")
           .attr("d", arc)
           .style("fill", function(d) {
             nodeToPath.set(d, this)
+            console.log('test');
             return color(d.data.data["Credibility Indicator Category"]);
           }).style("display", function(d) {
             if (d.height == 0 || d.height == 2) {
@@ -477,29 +469,6 @@ function scoreSum(d) {
         }
         return sum;
     }
-}
-
-function scrolltoView(x) {
-    if (x.height == 0) {
-        let textToView = document.getElementsByName(x.data.data["Credibility Indicator ID"] + '-' + x.data.data.Start + '-' + x.data.data.End);
-        textToView[0].scrollIntoView({behavior: "smooth"});
-    }
-}
-
-
-function highlightSun(x) {
-  var color = x.style.borderBottomColor;      // grab color of border underline in rgb form
-  var color = color.match(/\d+/g);                      // split rgb into r, g, b, components
-
-  x.style.setProperty("background-color", "rgba(" + color[0] + "," + color[1] + "," + color[2] + "," + "0.25");
-  x.style.setProperty("background-clip", "content-box");
-}
-
-function normalSun() {
-  var allSpans = document.getElementsByTagName('span');
-  for (var i = 0; i < allSpans.length; i++) {
-    allSpans[i].style.setProperty("background-color", "transparent");
-  }
 }
 
 function moveFactCheckLabels(triageData, visDataArray, id) {
