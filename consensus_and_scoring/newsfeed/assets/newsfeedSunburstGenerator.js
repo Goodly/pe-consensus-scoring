@@ -46,7 +46,10 @@ async function hallmark(entry) {
   const dataFileName = entry.highlightData;
   const triageDataFileName = entry.triageData;
   const id = entry.sha256;
-  var svg = d3.select("body").append("svg")
+  var svg = d3.select("body").append("a")
+    .attr("target", "_blank")
+    .attr("href", entry.visLink)  
+    .append("svg")
     .attr("articleID", id)
     .attr("width", width)
     .attr("height", height)
