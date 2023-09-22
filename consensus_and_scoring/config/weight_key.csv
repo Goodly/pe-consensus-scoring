@@ -567,3 +567,253 @@ Evidence2021_05_19,14,2,Alternative explanation,-2,-2
 Evidence2021_05_19,14,3,Alternative explanation,-1,-1
 Evidence2021_05_19,14,4,Alternative explanation,0,0
 Evidence2021_05_19,14,5,Alternative explanation,0,0
+Probability_2021_03_19_All4EU,2,1,Inappropriate confidence,0,0
+Probability_2021_03_19_All4EU,2,2,Inappropriate confidence,-0.5,-0.5
+Probability_2021_03_19_All4EU,2,3,Inappropriate confidence,-1,-1
+Probability_2021_03_19_All4EU,2,4,Inappropriate confidence,-2,-2
+Probability_2021_03_19_All4EU,2,5,Inappropriate confidence,-3,-3
+Probability_2021_03_19_All4EU,7,1,Base rate neglect,-2,-2
+Probability_2021_03_19_All4EU,7,2,Base rate neglect,-1,-1
+Probability_2021_03_19_All4EU,7,3,Numeric context,1,1
+Probability_2021_03_19_All4EU,10,1,False precision,0,0
+Probability_2021_03_19_All4EU,10,2,False precision,-2,0
+Probability_2021_03_19_All4EU,10,3,Calibrated precision,1,1
+Probability_2021_03_19_All4EU,10,4,Calibrated precision,2,2
+Probability_2021_03_19_All4EU,10,5,Calibrated precision,3,3
+Probability_2021_03_19_All4EU,11,1,Open to evidence,2,2
+Probability_2021_03_19_All4EU,11,2,Open to evidence,1,1
+Probability_2021_03_19_All4EU,11,3,Overconfident,-1,0
+Probability_2021_03_19_All4EU,11,4,Overconfident,-2,0
+Probability_2021_03_19_All4EU,12,1,Open to evidence,1,1
+Probability_2021_03_19_All4EU,12,2,Open to evidence,2,2
+Probability_2021_03_19_All4EU,12,3,Open to evidence,1,1
+Probability_2021_03_19_All4EU,12,4,,0,0
+Probability_2021_03_19_All4EU,12,5,,0,0
+Probability_2021_03_19_All4EU,11,2,Misleading Title,-2,-2
+Probability_2021_03_19_All4EU,11,3,Misleading Title,-4,-4
+Probability_2021_03_19_All4EU,11,4,ClickBait title,-8,-8
+Sources2021_02_23_All4EU,2,1,Qualified Source,1,1
+Sources2021_02_23_All4EU,2,7,Unqualified Source,-2,-1
+Sources2021_02_23_All4EU,2,8,Unqualified Source,-3,-2
+Language2021_02_18_All4EU,2,1,Metaphor Unhelpful,-4,-3
+Language2021_02_18_All4EU,2,2,Metaphor Unhelpful,-3,-2
+Language2021_02_18_All4EU,2,3,Metaphor Unhelpful,-2,-1
+Language2021_02_18_All4EU,2,4,Metaphor Unhelpful,-1,0
+Language2021_02_18_All4EU,2,5,Metaphor Unhelpful,0,0
+Language2021_02_18_All4EU,3,1,Exaggeration,-2,-1
+Language2021_02_18_All4EU,3,2,Exaggeration,-1.5,-0.75
+Language2021_02_18_All4EU,3,3,Exaggeration,-1,-0.5
+Language2021_02_18_All4EU,3,4,Exaggeration,-0.5,-0.25
+Language2021_02_18_All4EU,3,5,Exaggeration,0,0
+Language2021_02_18_All4EU,4,1,Manufactured Scandal,-3,-3
+Language2021_02_18_All4EU,4,2,Manufactured Scandal,-2,-2
+Language2021_02_18_All4EU,4,3,Manufactured Scandal,-1,-1
+Language2021_02_18_All4EU,4,4,Manufactured Scandal,-0.5,0
+Language2021_02_18_All4EU,4,5,Manufactured Scandal,0,0
+Language2021_02_18_All4EU,5,1,Inappropriately Emotional,-2,-1
+Language2021_02_18_All4EU,5,2,Inappropriately Emotional,-1.5,-0.75
+Language2021_02_18_All4EU,5,3,Inappropriately Emotional,-1,-0.5
+Language2021_02_18_All4EU,5,4,Inappropriately Emotional,-0.5,-0.25
+Language2021_02_18_All4EU,8,3,Feigned Shock,-2,-1
+Language2021_02_18_All4EU,8,4,Feigned Shock,-3,-2
+Language2021_02_18_All4EU,9,1,Inappropriate Slang,-2,-1
+Language2021_02_18_All4EU,9,2,Inappropriate Slang,-1,-0.5
+Language2021_02_18_All4EU,9,3,Inappropriate Slang,-0.5,-0.25
+Language2021_02_18_All4EU,9,4,Inappropriate Slang,-0.25,0
+Language2021_02_18_All4EU,9,5,Inappropriate Slang,0,0
+Language2021_02_18_All4EU,10,1,Denigration,-3,-3
+Language2021_02_18_All4EU,10,2,Denigration,-1.5,-1.5
+Language2021_02_18_All4EU,10,3,Denigration,-0.5,-0.5
+Language2021_02_18_All4EU,11,1,Writing errors,-4,-2
+Language2021_02_18_All4EU,11,2,Writing errors,-3,-1.5
+Language2021_02_18_All4EU,11,3,Writing errors,-2,-1
+Language2021_02_18_All4EU,11,4,Writing errors,-1,-0.5
+Language2021_02_18_All4EU,11,5,Writing errors,0,0
+Language2021_02_18_All4EU,12,1,Problematic tone,-3,-1
+Language2021_02_18_All4EU,12,2,Problematic tone,-2,-0.75
+Language2021_02_18_All4EU,12,3,Problematic tone,-1,-0.5
+Language2021_02_18_All4EU,12,4,Problematic tone,-0.5,-0.25
+Language2021_02_18_All4EU,13,1,Problematic Languge,-3,-1
+Language2021_02_18_All4EU,13,2,Problematic Languge,-2,-0.75
+Language2021_02_18_All4EU,13,3,Problematic Languge,-1,-0.5
+Language2021_02_18_All4EU,13,4,Problematic Languge,-0.5,-0.25
+Language2021_02_18_All4EU,14,2,Well-balanced,1,1
+Language2021_02_18_All4EU,14,3,Well-balanced,2,2
+Language2021_02_18_All4EU,14,4,Well-balanced,3,3
+Reasoning2022_01_24_All4EU,3,1,Misleading Assumption,-4,-3
+Reasoning2022_01_24_All4EU,3,2,Bogus Assumption,-3,-2
+Reasoning2022_01_24_All4EU,3,3,Faulty Assumption,-2,-1
+Reasoning2022_01_24_All4EU,3,4,Dubious Assumption,-1,0
+Reasoning2022_01_24_All4EU,3,5,Questionable Assumption,0,0
+Reasoning2022_01_24_All4EU,6,1,Egregious Just World Fallacy,-4,-2
+Reasoning2022_01_24_All4EU,6,2,Just World Fallacy,-3,-1
+Reasoning2022_01_24_All4EU,6,3,Just World Fallacy,-2,0
+Reasoning2022_01_24_All4EU,6,4,Just World Fallacy,-1,0
+Reasoning2022_01_24_All4EU,6,5,Just World Fallacy,0,0
+Reasoning2022_01_24_All4EU,7,1,Egregious Good Old Days Fallacy,-4,-2
+Reasoning2022_01_24_All4EU,7,2,Good Old Days Fallacy,-3,-1
+Reasoning2022_01_24_All4EU,7,3,Good Old Days Fallacy,-2,0
+Reasoning2022_01_24_All4EU,7,4,Good Old Days Fallacy,-1,0
+Reasoning2022_01_24_All4EU,7,5,Good Old Days Fallacy,0,0
+Reasoning2022_01_24_All4EU,8,1,Egregious Naturalistic Fallacy,-4,-2
+Reasoning2022_01_24_All4EU,8,2,Naturalistic Fallacy,-3,-1
+Reasoning2022_01_24_All4EU,8,3,Naturalistic Fallacy,-2,0
+Reasoning2022_01_24_All4EU,8,4,Naturalistic Fallacy,-1,0
+Reasoning2022_01_24_All4EU,8,5,Naturalistic Fallacy,0,0
+Reasoning2022_01_24_All4EU,9,1,Egregious Slippery Slope,-4,-3
+Reasoning2022_01_24_All4EU,9,2,Slippery Slope,-3,-2
+Reasoning2022_01_24_All4EU,9,3,Slippery Slope,-2,-1
+Reasoning2022_01_24_All4EU,9,4,Slippery Slope,-1,0
+Reasoning2022_01_24_All4EU,9,5,Slippery Slope,0,0
+Reasoning2022_01_24_All4EU,10,1,Egregious Status Quo Bias,-4,-3
+Reasoning2022_01_24_All4EU,10,2,Status Quo Bias,-3,-2
+Reasoning2022_01_24_All4EU,10,3,Status Quo Bias,-2,-1
+Reasoning2022_01_24_All4EU,10,4,Status Quo Bias,-1,0
+Reasoning2022_01_24_All4EU,10,5,Status Quo Bias,0,0
+Reasoning2022_01_24_All4EU,11,1,Egregious Sunk Cost Fallacy,-4,-3
+Reasoning2022_01_24_All4EU,11,2,Sunk Cost Fallacy,-3,-2
+Reasoning2022_01_24_All4EU,11,3,Sunk Cost Fallacy,-2,-1
+Reasoning2022_01_24_All4EU,11,4,Sunk Cost Fallacy,-1,0
+Reasoning2022_01_24_All4EU,11,5,Sunk Cost Fallacy,0,0
+Reasoning2022_01_24_All4EU,12,1,Egregious Moral Judgment,-4,-3
+Reasoning2022_01_24_All4EU,12,2,Faulty Moral Judgment,-3,-2
+Reasoning2022_01_24_All4EU,12,3,Faulty Moral Judgment,-2,-1
+Reasoning2022_01_24_All4EU,12,4,Faulty Moral Judgment,-1,0
+Reasoning2022_01_24_All4EU,12,5,Faulty Moral Judgment,0,0
+Reasoning2022_01_24_All4EU,14,1,Egregious Gambler's Fallacy,-4,-3
+Reasoning2022_01_24_All4EU,14,2,Gambler's Fallacy,-3,-2
+Reasoning2022_01_24_All4EU,14,3,Gambler's Fallacy,-2,-1
+Reasoning2022_01_24_All4EU,14,4,Gambler's Fallacy,-1,0
+Reasoning2022_01_24_All4EU,14,5,Gambler's Fallacy,0,0
+Reasoning2022_01_24_All4EU,15,1,Egregious Stereotyping,-4,-3
+Reasoning2022_01_24_All4EU,15,2,Stereotyping,-3,-2
+Reasoning2022_01_24_All4EU,15,3,Stereotyping,-2,-1
+Reasoning2022_01_24_All4EU,15,4,Stereotyping,-1,0
+Reasoning2022_01_24_All4EU,15,5,Stereotyping,0,0
+Reasoning2022_01_24_All4EU,16,1,Egregious Availability Bias,-4,-3
+Reasoning2022_01_24_All4EU,16,2,Availability Bias,-3,-2
+Reasoning2022_01_24_All4EU,16,3,Availability Bias,-2,-1
+Reasoning2022_01_24_All4EU,16,4,Availability Bias,-1,0
+Reasoning2022_01_24_All4EU,16,5,Availability Bias,0,0
+Reasoning2022_01_24_All4EU,17,1,Egregious Hindsight Bias,-4,-3
+Reasoning2022_01_24_All4EU,17,2,Hindsight Bias,-3,-2
+Reasoning2022_01_24_All4EU,17,3,Hindsight Bias,-2,-1
+Reasoning2022_01_24_All4EU,17,4,Hindsight Bias,-1,0
+Reasoning2022_01_24_All4EU,17,5,Hindsight Bias,0,0
+Reasoning2022_01_24_All4EU,18,1,Egregious Likelihood Estimation,-4,-3
+Reasoning2022_01_24_All4EU,18,2,Faulty Likelihood Estimation,-3,-2
+Reasoning2022_01_24_All4EU,18,3,Faulty Likelihood Estimation,-2,-1
+Reasoning2022_01_24_All4EU,18,4,Faulty Likelihood Estimation,-1,0
+Reasoning2022_01_24_All4EU,18,5,Faulty Likelihood Estimation,0,0
+Reasoning2022_01_24_All4EU,20,1,Egregious Straw Man Fallacy,-4,-3
+Reasoning2022_01_24_All4EU,20,2,Straw Man Fallacy,-3,-2
+Reasoning2022_01_24_All4EU,20,3,Straw Man Fallacy,-2,-1
+Reasoning2022_01_24_All4EU,20,4,Straw Man Fallacy,-1,0
+Reasoning2022_01_24_All4EU,20,5,Straw Man Fallacy,0,0
+Reasoning2022_01_24_All4EU,21,1,Egregious Ad Hominem,-4,-3
+Reasoning2022_01_24_All4EU,21,2,Ad Hominem,-3,-2
+Reasoning2022_01_24_All4EU,21,3,Ad Hominem,-2,-1
+Reasoning2022_01_24_All4EU,21,4,Ad Hominem,-1,0
+Reasoning2022_01_24_All4EU,21,5,Ad Hominem,0,0
+Reasoning2022_01_24_All4EU,22,1,Egregious False Equivalence,-4,-3
+Reasoning2022_01_24_All4EU,22,2,False Equivalence,-3,-2
+Reasoning2022_01_24_All4EU,22,3,False Equivalence,-2,-1
+Reasoning2022_01_24_All4EU,22,4,False Equivalence,-1,0
+Reasoning2022_01_24_All4EU,22,5,False Equivalence,0,0
+Reasoning2022_01_24_All4EU,23,1,Egregious False Dilemma,-4,-3
+Reasoning2022_01_24_All4EU,23,2,False Dilemma,-3,-2
+Reasoning2022_01_24_All4EU,23,3,False Dilemma,-2,-1
+Reasoning2022_01_24_All4EU,23,4,False Dilemma,-1,0
+Reasoning2022_01_24_All4EU,23,5,False Dilemma,0,0
+Reasoning2022_01_24_All4EU,24,1,Egregious Misrepresentation,-4,-3
+Reasoning2022_01_24_All4EU,24,2,Misrepresentation,-3,-2
+Reasoning2022_01_24_All4EU,24,3,Misrepresentation,-2,-1
+Reasoning2022_01_24_All4EU,24,4,Misrepresentation,-1,0
+Reasoning2022_01_24_All4EU,24,5,Misrepresentation,0,0
+Reasoning2022_01_24_All4EU,26,1,Egregious False Dilemma,-4,-3
+Reasoning2022_01_24_All4EU,26,2,False Dilemma,-3,-2
+Reasoning2022_01_24_All4EU,26,3,False Dilemma,-2,-1
+Reasoning2022_01_24_All4EU,26,4,False Dilemma,-1,0
+Reasoning2022_01_24_All4EU,26,5,False Dilemma,0,0
+Reasoning2022_01_24_All4EU,27,1,Egregious Circular Logic,-4,-3
+Reasoning2022_01_24_All4EU,27,2,Circular Logic,-3,-2
+Reasoning2022_01_24_All4EU,27,3,Circular Logic,-2,-1
+Reasoning2022_01_24_All4EU,27,4,Circular Logic,-1,0
+Reasoning2022_01_24_All4EU,27,5,Circular Logic,0,0
+Reasoning2022_01_24_All4EU,28,1,Egregious Equivocation,-4,-3
+Reasoning2022_01_24_All4EU,28,2,Equivocation,-3,-2
+Reasoning2022_01_24_All4EU,28,3,Equivocation,-2,-1
+Reasoning2022_01_24_All4EU,28,4,Equivocation,-1,0
+Reasoning2022_01_24_All4EU,28,5,Equivocation,0,0
+Reasoning2022_01_24_All4EU,29,1,Egregious Red Herring,-4,-3
+Reasoning2022_01_24_All4EU,29,2,Red Herring,-3,-2
+Reasoning2022_01_24_All4EU,29,3,Red Herring,-2,-1
+Reasoning2022_01_24_All4EU,29,4,Red Herring,-1,0
+Reasoning2022_01_24_All4EU,29,5,Red Herring,0,0
+Reasoning2022_01_24_All4EU,30,1,Egregious After Therefore Because,-4,-3
+Reasoning2022_01_24_All4EU,30,2,After Therefore Because,-3,-2
+Reasoning2022_01_24_All4EU,30,3,After Therefore Because,-2,-1
+Reasoning2022_01_24_All4EU,30,4,After Therefore Because,-1,0
+Reasoning2022_01_24_All4EU,30,5,After Therefore Because,0,0
+Reasoning2022_01_24_All4EU,31,1,Egregious Appeal to Ignorance,-4,-3
+Reasoning2022_01_24_All4EU,31,2,Appeal to Ignorance,-3,-2
+Reasoning2022_01_24_All4EU,31,3,Appeal to Ignorance,-2,-1
+Reasoning2022_01_24_All4EU,31,4,Appeal to Ignorance,-1,0
+Reasoning2022_01_24_All4EU,31,5,Appeal to Ignorance,0,0
+Reasoning2022_01_24_All4EU,32,1,Egregious False Equivalence,-4,-3
+Reasoning2022_01_24_All4EU,32,2,False Equivalence,-3,-2
+Reasoning2022_01_24_All4EU,32,3,False Equivalence,-2,-1
+Reasoning2022_01_24_All4EU,32,4,False Equivalence,-1,0
+Reasoning2022_01_24_All4EU,32,5,False Equivalence,0,0
+Reasoning2022_01_24_All4EU,33,1,Egregious Both-Sidesing,-4,-3
+Reasoning2022_01_24_All4EU,33,2,Both Sidesing,-3,-2
+Reasoning2022_01_24_All4EU,33,3,Both Sidesing,-2,-1
+Reasoning2022_01_24_All4EU,33,4,Both Sidesing,-1,0
+Reasoning2022_01_24_All4EU,33,5,Both Sidesing,0,0
+Reasoning2022_01_24_All4EU,34,1,Egregious Rhetorical Misdirection,-4,-3
+Reasoning2022_01_24_All4EU,34,2,Rhetorical Misdirection,-3,-2
+Reasoning2022_01_24_All4EU,34,3,Rhetorical Misdirection,-2,-1
+Reasoning2022_01_24_All4EU,34,4,Rhetorical Misdirection,-1,0
+Reasoning2022_01_24_All4EU,34,5,Rhetorical Misdirection,0,0
+Evidence2022_01_27_All4EU,2,1,Data-Driven Evidence,1,1
+Evidence2022_01_27_All4EU,2,3,Anecdote not Data,-2,0
+Evidence2022_01_27_All4EU,4,1,Representative Sample,2,2
+Evidence2022_01_27_All4EU,4,2,Representative Sample,1,1
+Evidence2022_01_27_All4EU,4,6,Unrepresentative Sample,-2,-1
+Evidence2022_01_27_All4EU,5,1,Statistical Error,-2,-2
+Evidence2022_01_27_All4EU,5,2,Statistical Error,-1,-1
+Evidence2022_01_27_All4EU,5,1,Systematic Error,-2,-2
+Evidence2022_01_27_All4EU,5,2,Systematic Error,-1,-1
+Evidence2022_01_27_All4EU,8,1,Control Group,1,1
+Evidence2022_01_27_All4EU,8,2,Randomized Assignment,1,1
+Evidence2022_01_27_All4EU,8,3,Faulty Experiment,-2,-1
+Evidence2022_01_27_All4EU,8,4,Faulty Experiment,-3,-2
+Evidence2022_01_27_All4EU,11,1,Correlation,0,0
+Evidence2022_01_27_All4EU,11,4,Plausible Mechanism,1,1
+Evidence2022_01_27_All4EU,11,6,Dose-Response Curve,1,1
+Evidence2022_01_27_All4EU,11,10,Weak Causal Evidence,-3,-2
+Evidence2022_01_27_All4EU,13,1,Open to Evidence,2,2
+Evidence2022_01_27_All4EU,13,2,Open to Evidence,1,1
+Evidence2022_01_27_All4EU,15,1,Alternative Explanation,-2,-1
+Evidence2022_01_27_All4EU,15,2,Alternative Explanation,-1,0
+Evidence2022_01_27,2,1,Data-Driven Evidence,1,1
+Evidence2022_01_28,2,3,Anecdote not Data,-2,0
+Evidence2022_01_29,4,1,Representative Sample,2,2
+Evidence2022_01_30,4,2,Representative Sample,1,1
+Evidence2022_01_31,4,6,Unrepresentative Sample,-2,-1
+Evidence2022_01_32,5,1,Statistical Error,-2,-2
+Evidence2022_01_33,5,2,Statistical Error,-1,-1
+Evidence2022_01_34,5,1,Systematic Error,-2,-2
+Evidence2022_01_35,5,2,Systematic Error,-1,-1
+Evidence2022_01_36,8,1,Control Group,1,1
+Evidence2022_01_37,8,2,Randomized Assignment,1,1
+Evidence2022_01_38,8,3,Faulty Experiment,-2,-1
+Evidence2022_01_39,8,4,Faulty Experiment,-3,-2
+Evidence2022_01_40,11,1,Correlation,0,0
+Evidence2022_01_41,11,4,Plausible Mechanism,1,1
+Evidence2022_01_42,11,6,Dose-Response Curve,1,1
+Evidence2022_01_43,11,10,Weak Causal Evidence,-3,-2
+Evidence2022_01_44,13,1,Open to Evidence,2,2
+Evidence2022_01_45,13,2,Open to Evidence,1,1
+Evidence2022_01_46,15,1,Alternative Explanation,-2,-1
+Evidence2022_01_47,15,2,Alternative Explanation,-1,0
