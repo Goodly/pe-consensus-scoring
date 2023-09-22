@@ -205,7 +205,7 @@ async function generateEntry(entry) {
     var articleEntry = "<div id='" + entry.sha256 + "' class='articleEntry'>" +
                         "<div class='entryDate'>" + entry.date + "</div>" +
                         "<div class='entryText'>" +
-                            "<a href='" + entry.visLink + "' target='_blank'> <h3>" + entry.title + "</h3><span class='spanLink'></span></a>" +
+                            "<a href='http://pe-newsreader.vercel.app/" + entry.sha256 + "' target='_blank'> <h3>" + entry.title + "</h3><span class='spanLink'></span></a>" +
                             "<p class='articleText'>" + previewText + "</p>" +
                             "<p class='author'>" + entry.author + "</p>" +
                         "</div>" +
