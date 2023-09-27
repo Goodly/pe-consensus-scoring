@@ -797,23 +797,158 @@ Evidence2022_01_27_All4EU,13,2,Open to Evidence,1,1
 Evidence2022_01_27_All4EU,15,1,Alternative Explanation,-2,-1
 Evidence2022_01_27_All4EU,15,2,Alternative Explanation,-1,0
 Evidence2022_01_27,2,1,Data-Driven Evidence,1,1
-Evidence2022_01_28,2,3,Anecdote not Data,-2,0
-Evidence2022_01_29,4,1,Representative Sample,2,2
-Evidence2022_01_30,4,2,Representative Sample,1,1
-Evidence2022_01_31,4,6,Unrepresentative Sample,-2,-1
-Evidence2022_01_32,5,1,Statistical Error,-2,-2
-Evidence2022_01_33,5,2,Statistical Error,-1,-1
-Evidence2022_01_34,5,1,Systematic Error,-2,-2
-Evidence2022_01_35,5,2,Systematic Error,-1,-1
-Evidence2022_01_36,8,1,Control Group,1,1
-Evidence2022_01_37,8,2,Randomized Assignment,1,1
-Evidence2022_01_38,8,3,Faulty Experiment,-2,-1
-Evidence2022_01_39,8,4,Faulty Experiment,-3,-2
-Evidence2022_01_40,11,1,Correlation,0,0
-Evidence2022_01_41,11,4,Plausible Mechanism,1,1
-Evidence2022_01_42,11,6,Dose-Response Curve,1,1
-Evidence2022_01_43,11,10,Weak Causal Evidence,-3,-2
-Evidence2022_01_44,13,1,Open to Evidence,2,2
-Evidence2022_01_45,13,2,Open to Evidence,1,1
-Evidence2022_01_46,15,1,Alternative Explanation,-2,-1
-Evidence2022_01_47,15,2,Alternative Explanation,-1,0
+Evidence2022_01_27,2,3,Anecdote not Data,-2,0
+Evidence2022_01_27,4,1,Representative Sample,2,2
+Evidence2022_01_27,4,2,Representative Sample,1,1
+Evidence2022_01_27,4,6,Unrepresentative Sample,-2,-1
+Evidence2022_01_27,5,1,Statistical Error,-2,-2
+Evidence2022_01_27,5,2,Statistical Error,-1,-1
+Evidence2022_01_27,5,1,Systematic Error,-2,-2
+Evidence2022_01_27,5,2,Systematic Error,-1,-1
+Evidence2022_01_27,8,1,Control Group,1,1
+Evidence2022_01_27,8,2,Randomized Assignment,1,1
+Evidence2022_01_27,8,3,Faulty Experiment,-2,-1
+Evidence2022_01_27,8,4,Faulty Experiment,-3,-2
+Evidence2022_01_27,11,1,Correlation,0,0
+Evidence2022_01_27,11,4,Plausible Mechanism,1,1
+Evidence2022_01_27,11,6,Dose-Response Curve,1,1
+Evidence2022_01_27,11,10,Weak Causal Evidence,-3,-2
+Evidence2022_01_27,13,1,Open to Evidence,2,2
+Evidence2022_01_27,13,2,Open to Evidence,1,1
+Evidence2022_01_27,15,1,Alternative Explanation,-2,-1
+Evidence2022_01_27,15,2,Alternative Explanation,-1,0
+Reasoning2022_01_24,3,1,Misleading Assumption,-4,-3
+Reasoning2022_01_24,3,2,Bogus Assumption,-3,-2
+Reasoning2022_01_24,3,3,Faulty Assumption,-2,-1
+Reasoning2022_01_24,3,4,Dubious Assumption,-1,0
+Reasoning2022_01_24,3,5,Questionable Assumption,0,0
+Reasoning2022_01_24,6,1,Egregious Just World Fallacy,-4,-2
+Reasoning2022_01_24,6,2,Just World Fallacy,-3,-1
+Reasoning2022_01_24,6,3,Just World Fallacy,-2,0
+Reasoning2022_01_24,6,4,Just World Fallacy,-1,0
+Reasoning2022_01_24,6,5,Just World Fallacy,0,0
+Reasoning2022_01_24,7,1,Egregious Good Old Days Fallacy,-4,-2
+Reasoning2022_01_24,7,2,Good Old Days Fallacy,-3,-1
+Reasoning2022_01_24,7,3,Good Old Days Fallacy,-2,0
+Reasoning2022_01_24,7,4,Good Old Days Fallacy,-1,0
+Reasoning2022_01_24,7,5,Good Old Days Fallacy,0,0
+Reasoning2022_01_24,8,1,Egregious Naturalistic Fallacy,-4,-2
+Reasoning2022_01_24,8,2,Naturalistic Fallacy,-3,-1
+Reasoning2022_01_24,8,3,Naturalistic Fallacy,-2,0
+Reasoning2022_01_24,8,4,Naturalistic Fallacy,-1,0
+Reasoning2022_01_24,8,5,Naturalistic Fallacy,0,0
+Reasoning2022_01_24,9,1,Egregious Slippery Slope,-4,-3
+Reasoning2022_01_24,9,2,Slippery Slope,-3,-2
+Reasoning2022_01_24,9,3,Slippery Slope,-2,-1
+Reasoning2022_01_24,9,4,Slippery Slope,-1,0
+Reasoning2022_01_24,9,5,Slippery Slope,0,0
+Reasoning2022_01_24,10,1,Egregious Status Quo Bias,-4,-3
+Reasoning2022_01_24,10,2,Status Quo Bias,-3,-2
+Reasoning2022_01_24,10,3,Status Quo Bias,-2,-1
+Reasoning2022_01_24,10,4,Status Quo Bias,-1,0
+Reasoning2022_01_24,10,5,Status Quo Bias,0,0
+Reasoning2022_01_24,11,1,Egregious Sunk Cost Fallacy,-4,-3
+Reasoning2022_01_24,11,2,Sunk Cost Fallacy,-3,-2
+Reasoning2022_01_24,11,3,Sunk Cost Fallacy,-2,-1
+Reasoning2022_01_24,11,4,Sunk Cost Fallacy,-1,0
+Reasoning2022_01_24,11,5,Sunk Cost Fallacy,0,0
+Reasoning2022_01_24,12,1,Egregious Moral Judgment,-4,-3
+Reasoning2022_01_24,12,2,Faulty Moral Judgment,-3,-2
+Reasoning2022_01_24,12,3,Faulty Moral Judgment,-2,-1
+Reasoning2022_01_24,12,4,Faulty Moral Judgment,-1,0
+Reasoning2022_01_24,12,5,Faulty Moral Judgment,0,0
+Reasoning2022_01_24,14,1,Egregious Gambler's Fallacy,-4,-3
+Reasoning2022_01_24,14,2,Gambler's Fallacy,-3,-2
+Reasoning2022_01_24,14,3,Gambler's Fallacy,-2,-1
+Reasoning2022_01_24,14,4,Gambler's Fallacy,-1,0
+Reasoning2022_01_24,14,5,Gambler's Fallacy,0,0
+Reasoning2022_01_24,15,1,Egregious Stereotyping,-4,-3
+Reasoning2022_01_24,15,2,Stereotyping,-3,-2
+Reasoning2022_01_24,15,3,Stereotyping,-2,-1
+Reasoning2022_01_24,15,4,Stereotyping,-1,0
+Reasoning2022_01_24,15,5,Stereotyping,0,0
+Reasoning2022_01_24,16,1,Egregious Availability Bias,-4,-3
+Reasoning2022_01_24,16,2,Availability Bias,-3,-2
+Reasoning2022_01_24,16,3,Availability Bias,-2,-1
+Reasoning2022_01_24,16,4,Availability Bias,-1,0
+Reasoning2022_01_24,16,5,Availability Bias,0,0
+Reasoning2022_01_24,17,1,Egregious Hindsight Bias,-4,-3
+Reasoning2022_01_24,17,2,Hindsight Bias,-3,-2
+Reasoning2022_01_24,17,3,Hindsight Bias,-2,-1
+Reasoning2022_01_24,17,4,Hindsight Bias,-1,0
+Reasoning2022_01_24,17,5,Hindsight Bias,0,0
+Reasoning2022_01_24,18,1,Egregious Likelihood Estimation,-4,-3
+Reasoning2022_01_24,18,2,Faulty Likelihood Estimation,-3,-2
+Reasoning2022_01_24,18,3,Faulty Likelihood Estimation,-2,-1
+Reasoning2022_01_24,18,4,Faulty Likelihood Estimation,-1,0
+Reasoning2022_01_24,18,5,Faulty Likelihood Estimation,0,0
+Reasoning2022_01_24,20,1,Egregious Straw Man Fallacy,-4,-3
+Reasoning2022_01_24,20,2,Straw Man Fallacy,-3,-2
+Reasoning2022_01_24,20,3,Straw Man Fallacy,-2,-1
+Reasoning2022_01_24,20,4,Straw Man Fallacy,-1,0
+Reasoning2022_01_24,20,5,Straw Man Fallacy,0,0
+Reasoning2022_01_24,21,1,Egregious Ad Hominem,-4,-3
+Reasoning2022_01_24,21,2,Ad Hominem,-3,-2
+Reasoning2022_01_24,21,3,Ad Hominem,-2,-1
+Reasoning2022_01_24,21,4,Ad Hominem,-1,0
+Reasoning2022_01_24,21,5,Ad Hominem,0,0
+Reasoning2022_01_24,22,1,Egregious False Equivalence,-4,-3
+Reasoning2022_01_24,22,2,False Equivalence,-3,-2
+Reasoning2022_01_24,22,3,False Equivalence,-2,-1
+Reasoning2022_01_24,22,4,False Equivalence,-1,0
+Reasoning2022_01_24,22,5,False Equivalence,0,0
+Reasoning2022_01_24,23,1,Egregious False Dilemma,-4,-3
+Reasoning2022_01_24,23,2,False Dilemma,-3,-2
+Reasoning2022_01_24,23,3,False Dilemma,-2,-1
+Reasoning2022_01_24,23,4,False Dilemma,-1,0
+Reasoning2022_01_24,23,5,False Dilemma,0,0
+Reasoning2022_01_24,24,1,Egregious Misrepresentation,-4,-3
+Reasoning2022_01_24,24,2,Misrepresentation,-3,-2
+Reasoning2022_01_24,24,3,Misrepresentation,-2,-1
+Reasoning2022_01_24,24,4,Misrepresentation,-1,0
+Reasoning2022_01_24,24,5,Misrepresentation,0,0
+Reasoning2022_01_24,26,1,Egregious False Dilemma,-4,-3
+Reasoning2022_01_24,26,2,False Dilemma,-3,-2
+Reasoning2022_01_24,26,3,False Dilemma,-2,-1
+Reasoning2022_01_24,26,4,False Dilemma,-1,0
+Reasoning2022_01_24,26,5,False Dilemma,0,0
+Reasoning2022_01_24,27,1,Egregious Circular Logic,-4,-3
+Reasoning2022_01_24,27,2,Circular Logic,-3,-2
+Reasoning2022_01_24,27,3,Circular Logic,-2,-1
+Reasoning2022_01_24,27,4,Circular Logic,-1,0
+Reasoning2022_01_24,27,5,Circular Logic,0,0
+Reasoning2022_01_24,28,1,Egregious Equivocation,-4,-3
+Reasoning2022_01_24,28,2,Equivocation,-3,-2
+Reasoning2022_01_24,28,3,Equivocation,-2,-1
+Reasoning2022_01_24,28,4,Equivocation,-1,0
+Reasoning2022_01_24,28,5,Equivocation,0,0
+Reasoning2022_01_24,29,1,Egregious Red Herring,-4,-3
+Reasoning2022_01_24,29,2,Red Herring,-3,-2
+Reasoning2022_01_24,29,3,Red Herring,-2,-1
+Reasoning2022_01_24,29,4,Red Herring,-1,0
+Reasoning2022_01_24,29,5,Red Herring,0,0
+Reasoning2022_01_24,30,1,Egregious After Therefore Because,-4,-3
+Reasoning2022_01_24,30,2,After Therefore Because,-3,-2
+Reasoning2022_01_24,30,3,After Therefore Because,-2,-1
+Reasoning2022_01_24,30,4,After Therefore Because,-1,0
+Reasoning2022_01_24,30,5,After Therefore Because,0,0
+Reasoning2022_01_24,31,1,Egregious Appeal to Ignorance,-4,-3
+Reasoning2022_01_24,31,2,Appeal to Ignorance,-3,-2
+Reasoning2022_01_24,31,3,Appeal to Ignorance,-2,-1
+Reasoning2022_01_24,31,4,Appeal to Ignorance,-1,0
+Reasoning2022_01_24,31,5,Appeal to Ignorance,0,0
+Reasoning2022_01_24,32,1,Egregious False Equivalence,-4,-3
+Reasoning2022_01_24,32,2,False Equivalence,-3,-2
+Reasoning2022_01_24,32,3,False Equivalence,-2,-1
+Reasoning2022_01_24,32,4,False Equivalence,-1,0
+Reasoning2022_01_24,32,5,False Equivalence,0,0
+Reasoning2022_01_24,33,1,Egregious Both-Sidesing,-4,-3
+Reasoning2022_01_24,33,2,Both Sidesing,-3,-2
+Reasoning2022_01_24,33,3,Both Sidesing,-2,-1
+Reasoning2022_01_24,33,4,Both Sidesing,-1,0
+Reasoning2022_01_24,33,5,Both Sidesing,0,0
+Reasoning2022_01_24,34,1,Egregious Rhetorical Misdirection,-4,-3
+Reasoning2022_01_24,34,2,Rhetorical Misdirection,-3,-2
+Reasoning2022_01_24,34,3,Rhetorical Misdirection,-2,-1
+Reasoning2022_01_24,34,4,Rhetorical Misdirection,-1,0
+Reasoning2022_01_24,34,5,Rhetorical Misdirection,0,0
