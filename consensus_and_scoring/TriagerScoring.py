@@ -15,7 +15,7 @@ path2 = 'FormTriager1.2C2-2018-07-28T21.csv'
 jpath1 = 'FormTriager1.2C2-2018-07-25T23.json'
 jpath2 = 'SemanticsTriager1.3C2-2018-07-25T23.json'
 
-def importData(path, out_path):
+def importData(path, out_path, texts_dir = None):
     '''
 
     :param path: location of the triage data
@@ -47,6 +47,22 @@ def importData(path, out_path):
         #flagExclusions = exclusionList(users, flags, cats)
         flagExclusions = []
         #print(flagExclusions)
+
+        #try to handle texts if path is provided:
+        if texts_dir:
+            text_file = os.path.join(texts_dir, a + ".txt")
+            if not(os.path.exists(text_file)):
+                for root, dir, files in os.walk(text_file):
+                    for file in files:
+                        print(file)
+                raise  Exception("Couldn't find text_file for article {}".format(text_file))
+
+            if text_file == None:
+                raise Exception("Couldn't find text_file for article", a)
+
+            with open(text_file, 'r', encoding='utf-8') as file:
+                source_text = file.read()
+
         if annotator_count >= STRICT_MINIMUM_CONTRIBUTORS:
             cats = np.unique(art_data['topic_name'])
             for c in cats:
@@ -59,10 +75,11 @@ def importData(path, out_path):
                 namespaces = cat_data['namespace'].tolist()
 
                 length = floor(cat_data['article_text_length'].tolist()[0])
-                texts = cat_data['target_text'].str.decode('unicode-escape').tolist()
 
                 print('//Article:', a, 'Category:', c, 'numUsers:', numUsers)
-                source_text = addToSourceText(starts, ends, texts, source_text)
+                if texts_dir is None:
+                    texts = cat_data['target_text'].str.decode('unicode-escape').tolist()
+                    source_text = addToSourceText(starts, ends, texts, source_text)
                 pstarts, pends, pflags = scoreTriager(starts, ends, users, numUsers, flags, length, c, flagExclusions)
                 out = appendData(filename[0], a, task_uuids, namespaces, pstarts, pends, c, pflags, out, source_text)
 
@@ -78,7 +95,7 @@ def appendData(article_filename, article_sha256, task_uuids, namespaces,start_po
         case_numbers = np.zeros(len(start_pos_list))
     for i in range(len(start_pos_list)):
         text = getText(start_pos_list[i], end_pos_list[i],source_text)
-        text = text.encode('unicode-escape').decode('utf-8')
+        #text = text.encode('unicode-escape').decode('utf-8')
         #print(len(namespaces), len(start_pos_list), len(end_pos_list), len(case_numbers))
         data.append([article_filename, article_sha256, task_uuids[i], namespaces[i], start_pos_list[i], end_pos_list[i], topic_name, int(case_numbers[i]), text])
     return data
@@ -388,7 +405,9 @@ def load_args():
 
 if __name__ == '__main__':
     args = load_args()
-    input_file = '../data/highlighter/ESTF_HardTriage-2021-05-14T0016-Highlighter.csv'
+    input_file = '../data/highlighter/DK_off.csv'
+    texts_dir = '../data/texts/'
+
     if args.input_file:
         input_file = args.input_file
     dirname = os.path.dirname(input_file)
@@ -398,4 +417,4 @@ if __name__ == '__main__':
         output_file = args.output_file
     print("Input: {}".format(input_file))
     print("Output: {}".format(output_file))
-    importData(input_file, output_file)
+    importData(input_file, output_file, texts_dir)
