@@ -952,3 +952,69 @@ Reasoning2022_01_24,34,2,Rhetorical Misdirection,-3,-2
 Reasoning2022_01_24,34,3,Rhetorical Misdirection,-2,-1
 Reasoning2022_01_24,34,4,Rhetorical Misdirection,-1,0
 Reasoning2022_01_24,34,5,Rhetorical Misdirection,0,0
+Language2021_02_18_All4EU,2,1,Metaphor Unhelpful,-4,-3
+Language2021_02_18_All4EU,2,2,Metaphor Unhelpful,-3,-2
+Language2021_02_18_All4EU,2,3,Metaphor Unhelpful,-2,-1
+Language2021_02_18_All4EU,2,4,Metaphor Unhelpful,-1,0
+Language2021_02_18_All4EU,2,5,Metaphor Unhelpful,0,0
+Language2021_02_18_All4EU,3,1,Exaggeration,-2,-1
+Language2021_02_18_All4EU,3,2,Exaggeration,-1.5,-0.75
+Language2021_02_18_All4EU,3,3,Exaggeration,-1,-0.5
+Language2021_02_18_All4EU,3,4,Exaggeration,-0.5,-0.25
+Language2021_02_18_All4EU,3,5,Exaggeration,0,0
+Language2021_02_18_All4EU,4,1,Manufactured Scandal,-3,-3
+Language2021_02_18_All4EU,4,2,Manufactured Scandal,-2,-2
+Language2021_02_18_All4EU,4,3,Manufactured Scandal,-1,-1
+Language2021_02_18_All4EU,4,4,Manufactured Scandal,-0.5,0
+Language2021_02_18_All4EU,4,5,Manufactured Scandal,0,0
+Language2021_02_18_All4EU,5,1,Inappropriately Emotional,-2,-1
+Language2021_02_18_All4EU,5,2,Inappropriately Emotional,-1.5,-0.75
+Language2021_02_18_All4EU,5,3,Inappropriately Emotional,-1,-0.5
+Language2021_02_18_All4EU,5,4,Inappropriately Emotional,-0.5,-0.25
+Language2021_02_18_All4EU,8,3,Feigned Shock,-2,-1
+Language2021_02_18_All4EU,8,4,Feigned Shock,-3,-2
+Language2021_02_18_All4EU,9,1,Inappropriate Slang,-2,-1
+Language2021_02_18_All4EU,9,2,Inappropriate Slang,-1,-0.5
+Language2021_02_18_All4EU,9,3,Inappropriate Slang,-0.5,-0.25
+Language2021_02_18_All4EU,9,4,Inappropriate Slang,-0.25,0
+Language2021_02_18_All4EU,9,5,Inappropriate Slang,0,0
+Language2021_02_18_All4EU,10,1,Denigration,-3,-3
+Language2021_02_18_All4EU,10,2,Denigration,-1.5,-1.5
+Language2021_02_18_All4EU,10,3,Denigration,-0.5,-0.5
+Language2021_02_18_All4EU,11,1,Writing errors,-4,-2
+Language2021_02_18_All4EU,11,2,Writing errors,-3,-1.5
+Language2021_02_18_All4EU,11,3,Writing errors,-2,-1
+Language2021_02_18_All4EU,11,4,Writing errors,-1,-0.5
+Language2021_02_18_All4EU,11,5,Writing errors,0,0
+Language2021_02_18_All4EU,12,1,Problematic tone,-3,-1
+Language2021_02_18_All4EU,12,2,Problematic tone,-2,-0.75
+Language2021_02_18_All4EU,12,3,Problematic tone,-1,-0.5
+Language2021_02_18_All4EU,12,4,Problematic tone,-0.5,-0.25
+Language2021_02_18_All4EU,13,1,Problematic Languge,-3,-1
+Language2021_02_18_All4EU,13,2,Problematic Languge,-2,-0.75
+Language2021_02_18_All4EU,13,3,Problematic Languge,-1,-0.5
+Language2021_02_18_All4EU,13,4,Problematic Languge,-0.5,-0.25
+Language2021_02_18_All4EU,14,2,Well-balanced,1,1
+Language2021_02_18_All4EU,14,3,Well-balanced,2,2
+Language2021_02_18_All4EU,14,4,Well-balanced,3,3
+Evidence2022_01_27_All4EU,2,1,Data-Driven Evidence,1,1
+Evidence2022_01_27_All4EU,2,3,Anecdote not Data,-2,0
+Evidence2022_01_27_All4EU,4,1,Representative Sample,2,2
+Evidence2022_01_27_All4EU,4,2,Representative Sample,1,1
+Evidence2022_01_27_All4EU,4,6,Unrepresentative Sample,-2,-1
+Evidence2022_01_27_All4EU,5,1,Statistical Error,-2,-2
+Evidence2022_01_27_All4EU,5,2,Statistical Error,-1,-1
+Evidence2022_01_27_All4EU,5,1,Systematic Error,-2,-2
+Evidence2022_01_27_All4EU,5,2,Systematic Error,-1,-1
+Evidence2022_01_27_All4EU,8,1,Control Group,1,1
+Evidence2022_01_27_All4EU,8,2,Randomized Assignment,1,1
+Evidence2022_01_27_All4EU,8,3,Faulty Experiment,-2,-1
+Evidence2022_01_27_All4EU,8,4,Faulty Experiment,-3,-2
+Evidence2022_01_27_All4EU,11,1,Correlation,0,0
+Evidence2022_01_27_All4EU,11,4,Plausible Mechanism,1,1
+Evidence2022_01_27_All4EU,11,6,Dose-Response Curve,1,1
+Evidence2022_01_27_All4EU,11,10,Weak Causal Evidence,-3,-2
+Evidence2022_01_27_All4EU,13,1,Open to Evidence,2,2
+Evidence2022_01_27_All4EU,13,2,Open to Evidence,1,1
+Evidence2022_01_27_All4EU,15,1,Alternative Explanation,-2,-1
+Evidence2022_01_27_All4EU,15,2,Alternative Explanation,-1,0
