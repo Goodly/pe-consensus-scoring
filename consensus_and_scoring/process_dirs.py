@@ -33,6 +33,7 @@ def configure_consensus_directories(task_type, parent_dirname):
     if task_type == "HLTR":
         dir_dict['highlighters_dir'] = make_dir(parent_dirname, 'highlighters')
         dir_dict['consensus_dir']= make_dir(parent_dirname, "output_HLTR_consensus")
+        dir_dict['texts_dir'] = make_dir(parent_dirname, 'texts')
         clean_output_csvs(dir_dict['consensus_dir'])
     elif task_type == "QUIZ":
         dir_dict['config_path'] = './config/'
@@ -54,7 +55,7 @@ def generate_highlighter_consensus(dir_dict):
         if filename.endswith(".csv"):
             input_file = os.path.join(highlighters_dir, filename)
             output_file = os.path.join(consensus_dir, "S_IAA_" + filename)
-            importData(input_file, output_file)
+            importData(input_file, output_file, dir_dict['texts_dir'])
 
 def generate_datahunt_consensus(dir_dict):
     uuids_to_filter = read_filter_uuids('./data_patches/')
